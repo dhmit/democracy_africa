@@ -96,6 +96,3 @@ export class MapQuizD3 extends React.Component {
     }
 }
 
-
-
-

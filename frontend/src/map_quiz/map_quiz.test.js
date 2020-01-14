@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import MapQuizD3 from './map_quiz_d3';
+import { MapQuizD3 } from './map_quiz_d3';
 
 it('renders without crashing', () => {
     const div = document.createElement('div');
