@@ -86,8 +86,8 @@ export class MapQuizD3 extends React.Component {
             <>
                 <div>{this.state.mouseover_country}</div>
                 <svg
-                    height="10000"
-                    width="10000"
+                    height="1000"
+                    width="1000"
                     id="content"
                     ref={this.map_ref}>
                 </svg>
