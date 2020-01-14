@@ -19,13 +19,15 @@ from django.urls import path
 from django.conf.urls import url
 
 from app.common import render_react_view
+from app.views import africa_map_geojson
 
 urlpatterns = [
     # Django admin page
     path('admin/', admin.site.urls),
 
     # API endpoints
+    path('api/africa_map_geojson/', africa_map_geojson),
 
     # React views
-    url('', render_react_view, {'component_name': 'MainView'}),
+    url('', render_react_view, {'component_name': 'MapQuizD3'}),
 ]

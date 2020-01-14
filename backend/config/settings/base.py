@@ -13,6 +13,7 @@ import os
 CONFIG_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BACKEND_DIR = os.path.dirname(CONFIG_DIR)
 PROJECT_ROOT = os.path.dirname(BACKEND_DIR)
+BACKEND_DATA_DIR = os.path.join(BACKEND_DIR, 'data')
 
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
@@ -61,7 +62,7 @@ TEMPLATES = [
         'DIRS': [
             os.path.join(BACKEND_DIR, 'templates'),
         ],
-        'APP_DIRS': False,  # we don't use app-specific templates
+        'APP_DIRS': True,  # our app doesn't, but our third party apps do!
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',

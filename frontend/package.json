@@ -17,6 +17,7 @@
     "camelcase": "^5.2.0",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
     "css-loader": "2.1.1",
+    "d3": "^5.15.0",
     "dotenv": "6.2.0",
     "dotenv-expand": "4.2.0",
     "eslint": "^6.4.0",
@@ -130,6 +131,9 @@
   },
   "devDependencies": {
     "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-react": "^7.12.4"
+    "eslint-plugin-react": "^7.12.4",
+    "leaflet": "^1.6.0",
+    "react-leaflet": "^2.6.1",
+    "require": "^2.4.20"
   }
 }
