@@ -16,7 +16,7 @@ import './map_quiz.css';
  * Handles all logic, displays information, and makes database query/posts
  */
 
-export class MapQuiz extends React.Component {
+export class MapQuizLeaflet extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -55,14 +55,14 @@ export class MapQuiz extends React.Component {
                 weight: 3,
             }
         }
-        const blue_countries = this.state.map_data.features;
+        const green_countries = this.state.map_data.features;
         const red_countries = this.state.map_data.features.slice(0, 10);
 
         return (
             <Map center={position} zoom={this.state.zoom}>
                 <GeoJSON
-                    data={blue_countries}
-                    style={() => color_me('blue')}
+                    data={green_countries}
+                    style={() => color_me('green')}
                 />
                 <GeoJSON
                     data={red_countries}

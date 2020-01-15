@@ -29,5 +29,7 @@ urlpatterns = [
     path('api/africa_map_geojson/', africa_map_geojson),
 
     # React views
-    url('', render_react_view, {'component_name': 'MapQuizD3'}),
+    url('d3/', render_react_view, {'component_name': 'MapQuizD3'}),
+    url('leaflet/', render_react_view, {'component_name': 'MapQuizLeaflet'}),
+    url('svg/', render_react_view, {'component_name': 'MapQuizSVG'}),
 ]

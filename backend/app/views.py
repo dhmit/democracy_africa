@@ -10,17 +10,22 @@ from rest_framework.response import Response
 
 from django.conf import settings
 
-@api_view(['GET'])
-def africa_map_geojson(request):
+
+def load_africa_geojson() -> dict:
     """
-    Load Africa map GeoJSON for frontend
+    Read the GeoJSON file of the countries in Africa from disk
+    and return a dict of the parsed json
     """
     filename = 'africa.geo.json'
     path = Path(settings.BACKEND_DATA_DIR, filename)
     with open(path, encoding='utf-8') as africa_geojson_file:
         africa_geojson_string = africa_geojson_file.read()
+    return json.loads(africa_geojson_string)
 
-    africa_geojson = json.loads(africa_geojson_string)
-    print(africa_geojson)
-
+@api_view(['GET'])
+def africa_map_geojson(request):
+    """
+    Load Africa map GeoJSON for frontend
+    """
+    africa_geojson = load_africa_geojson()
     return Response(africa_geojson)
