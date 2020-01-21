@@ -2,3 +2,21 @@ html, body, #map {
     height: 100%;
     width: 100%;
 }
+
+.countries_table {
+    border: 2px solid black;
+    border-collapse: collapse;
+}
+
+.countries_table_rows {
+    align-content: center;
+}
+
+.countries_table_data {
+    border: 1px solid black;
+    text-align: center;
+}
+
+.table_head {
+    text-align: center;
+}
