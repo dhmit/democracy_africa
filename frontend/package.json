@@ -132,8 +132,6 @@
   "devDependencies": {
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-react": "^7.12.4",
-    "leaflet": "^1.6.0",
-    "react-leaflet": "^2.6.1",
     "require": "^2.4.20"
   }
 }
