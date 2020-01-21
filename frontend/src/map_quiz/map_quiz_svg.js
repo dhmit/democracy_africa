@@ -21,9 +21,22 @@ export class MapQuizSVG extends React.Component {
             map_data: null,
             mouseover_country: 'Nothing',
             selected_country: "",
+            geo_json: null,
+            width: window.innerWidth,
+            height: window.innerHeight,
         };
         this.csrftoken = getCookie('csrftoken');
         this.map_ref = React.createRef();
+    }
+
+    handle_resize() {
+        const map_data = this.project_features_and_create_svg_paths(this.state.geo_json);
+
+        this.setState({
+            width: window.innerWidth,
+            height: window.innerHeight,
+            map_data: map_data,
+        });
     }
 
     /**
@@ -34,12 +47,24 @@ export class MapQuizSVG extends React.Component {
             const res = await fetch('/api/africa_map_geojson/');
             const geo_json = await res.json();
             const map_data = this.project_features_and_create_svg_paths(geo_json);
+
             this.setState({
+                geo_json: geo_json,
                 map_data: map_data,
             });
+
         } catch (e) {
             console.log(e);
         }
+        this.handle_resize();
+        window.addEventListener("resize", () => this.handle_resize());
+    }
+
+    /**
+   * Remove event listener
+   */
+    componentWillUnmount() {
+        window.removeEventListener("resize", () => this.handle_resize());
     }
 
     project_features_and_create_svg_paths(geo_json) {
@@ -106,12 +131,13 @@ export class MapQuizSVG extends React.Component {
                     this.state.selected_country}</div>
                 <div className="row">
                     <svg
-                        height="800"
-                        width="800"
+                        height={Math.min(800,this.state.height)}
+                        width={Math.min(800,this.state.width)}
                         id="content"
                         display="inline-block"
                         className="col-9"
                     >
+
                         {this.state.map_data.map((country, i) =>
                             (
                                 <MapPath
