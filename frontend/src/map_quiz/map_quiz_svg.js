@@ -19,7 +19,7 @@ export class MapQuizSVG extends React.Component {
             lat: -22,
             zoom: 4,
             map_data: null,
-            mouseover_country: 'Nothing',
+            click_country: 'Nothing',
         };
         this.csrftoken = getCookie('csrftoken');
         this.map_ref = React.createRef();
@@ -60,9 +60,9 @@ export class MapQuizSVG extends React.Component {
         return map_data;
     }
 
-    handle_country_mouseover(country) {
+    handle_country_click(country) {
         this.setState({
-            mouseover_country: country.name,
+            click_country: country.name,
         })
     }
 
@@ -72,45 +72,75 @@ export class MapQuizSVG extends React.Component {
         }
         return (
             <>
-                <div>{this.state.mouseover_country}</div>
-                <svg
-                    height="1000"
-                    width="1000"
-                    id="content"
-                >
-                    {this.state.map_data.map((country, i) =>
-                        (
-                            <MapPath
-                                key={i}
-                                path={country.svg_path}
-                                id={country.postal}
-                                fill={
-                                    this.state.mouseover_country === country.name
-                                        ? 'green'
-                                        : 'red'
-                                }
-                                handle_country_mouseover={
-                                    () => this.handle_country_mouseover(country)
-                                }
-                            />
-                        )
-                    )}
-                </svg>
+                <div className="u-flex map-wrapper">
+                    <svg
+                        height="1000"
+                        width="800"
+                        id="content"
+                    >
+                        {this.state.map_data.map((country, i) =>
+                            (
+                                <MapPath
+                                    key={i}
+                                    path={country.svg_path}
+                                    id={country.postal}
+                                    fill={
+                                        this.state.click_country === country.name
+                                            ? '#C17767'
+                                            : '#E7D7C1'
+                                    }
+                                    handle_country_click={
+                                        () => this.handle_country_click(country)
+                                    }
+                                />
+                            )
+                        )}
+                    </svg>
+                </div>
+                <div className="u-flex list-wrapper">
+                    <CountryList
+                        map_data={this.state.map_data}
+                        click_country={this.state.click_country}
+                    />
+                </div>
             </>
         )
     }
 }
+
+export class CountryList extends React.Component {
+    render() {
+        return (
+            <span>
+                <h3>Countries</h3>
+                {this.props.map_data.map((country, i) => (
+                    <div key={i}>
+                        {this.props.click_country === country.name ?
+                            <span className={"u-red"}>{country.name}</span> :
+                            country.name
+                        }
+                    </div>
+                ))}
+            </span>
+        );
+    }
+}
+CountryList.propTypes = {
+    map_data: PropTypes.array,
+    click_country: PropTypes.string,
+}
+
 
 export class MapPath extends React.Component {
     render() {
         return (
             <path
                 d={this.props.path}
-                stroke="blue"
+                stroke="white"
                 strokeWidth="1"
                 fill={this.props.fill}
                 id={this.props.id}
-                onMouseOver={this.props.handle_country_mouseover}
+                onClick={this.props.handle_country_click}
             ></path>
         );
     }
@@ -119,5 +149,5 @@ MapPath.propTypes = {
     path: PropTypes.string,
     id: PropTypes.string,
     fill: PropTypes.string,
-    handle_country_mouseover: PropTypes.func,
+    handle_country_click: PropTypes.func,
 }
