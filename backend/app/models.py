@@ -75,9 +75,9 @@ class Citizen:
 
         return returnString
 
-
-cit1 = Citizen("Jordan", "apartment", "urban", True, True, True, "Caucasion", "Male")
-print(cit1)
+#
+# cit1 = Citizen("Jordan", "apartment", "urban", True, True, True, "Caucasion", "Male")
+# print(cit1)
 
 
 class StatisticalDistributions:
