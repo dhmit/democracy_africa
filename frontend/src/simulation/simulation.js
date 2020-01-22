@@ -1,4 +1,6 @@
 import React from 'react';
+// import { getCookie }from "../common";
+
 // import PropTypes from 'prop-types';
 
 /**
@@ -46,12 +48,47 @@ const FAKE_PEOPLE = [
 
 
 export class Simulation extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            population: FAKE_PEOPLE,
+            budgetResponse: null,
+        }
+
+    }
+    simulateCitizenResponse = async () => {
+        const url = '/api/budget_response/';
+        const response = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify({}),
+            headers: {
+                'Content-type': 'application/json',
+            }
+        });
+        const response_json = await response.json();
+        console.log(response_json);
+        this.setState({
+            budgetResponse: response_json,
+        })
+    }
+
     render() {
-        let data;
-        // accumulate the data
+        let result = "Submit budget";
+        if (this.state.budgetResponse) {
+            result = `yay = ${this.state.budgetResponse.yay} 
+            and nay = ${this.state.budgetResponse.nay}`
+        }
         return(
             <>
-                Hello World
+                <button
+                    type="submit"
+                    onClick={this.simulateCitizenResponse}
+                >
+                    Submit
+                </button>
+
+                {result}
+
             </>
         )
     }
