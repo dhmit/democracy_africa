@@ -178,13 +178,13 @@ export class NameForm extends React.Component {
     }
 
     handleSubmit(event) {
-        if (MapQuizSVG.click_country === this.state.value) {
+        if (this.props.click_country === this.state.value) {
             alert(this.state.value + " is correct!");
             event.preventDefault();
         }
         else {
             alert(this.state.value + " is incorrect...");
-            alert("This country's name is: " + MapQuizSVG.click_country)
+            alert("This country's name is: " + this.props.click_country)
             event.preventDefault();
         }
 
@@ -201,6 +201,10 @@ export class NameForm extends React.Component {
             </form>
         );
     }
+}
+NameForm.propTypes = {
+    map_data: PropTypes.array,
+    click_country: PropTypes.string,
 }
 
 MapPath.propTypes = {
