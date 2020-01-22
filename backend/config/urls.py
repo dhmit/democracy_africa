@@ -20,6 +20,7 @@ from django.conf.urls import url
 
 from app.common import render_react_view
 from app.views import africa_map_geojson
+from app.views import budget_response
 
 urlpatterns = [
     # Django admin page
@@ -27,6 +28,7 @@ urlpatterns = [
 
     # API endpoints
     path('api/africa_map_geojson/', africa_map_geojson),
+    path('api/budget_response/', budget_response),
 
     # React views
     url('d3/', render_react_view, {'component_name': 'MapQuizD3'}),

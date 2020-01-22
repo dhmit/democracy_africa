@@ -7,6 +7,9 @@ import json
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+# from .serializers import (
+#     CitizenSerializer,
+# )
 
 from django.conf import settings
 
@@ -29,3 +32,15 @@ def africa_map_geojson(request):
     """
     africa_geojson = load_africa_geojson()
     return Response(africa_geojson)
+
+@api_view(['POST'])
+def budget_response(request):
+    """
+    Takes in budget allocation and citizen
+    and returns the percentage of yays and nays
+    """
+    return Response({"yay" : 0.5,
+                     "nay" : 0.5,})
+
+
+
