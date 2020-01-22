@@ -19,6 +19,11 @@ body {
     margin-top: 16px;
 }
 
+.input-wrapper {
+    position: fixed;
+    margin-left: 1150px;
+}
+
 .u-flex {
     display: flex;
 }

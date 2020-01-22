@@ -111,7 +111,13 @@ export class MapQuizSVG extends React.Component {
                         handle_country_list_click={this.handle_country_list_click}
                     />
                 </div>
-            </div>
+                <div className="u-flex input-wrapper">
+                    <NameForm
+                        map_data={this.state.map_data}
+                        click_country={this.state.click_country}
+                    />
+                </div>
+            </>
         )
     }
 }
@@ -157,6 +163,38 @@ export class MapPath extends React.Component {
         );
     }
 }
+
+export class NameForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {value: ''};
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({value: event.target.value});
+    }
+
+    handleSubmit(event) {
+        alert('A name was submitted: ' + this.state.value);
+        event.preventDefault();
+    }
+
+    render() {
+        return (
+            <form onSubmit={this.handleSubmit}>
+                <label>
+                    Country Name:
+                    <input type="text" value={this.state.value} onChange={this.handleChange} />
+                </label>
+                <input type="submit" value="Submit" />
+            </form>
+        );
+    }
+}
+
 MapPath.propTypes = {
     path: PropTypes.string,
     id: PropTypes.string,
