@@ -17,8 +17,7 @@ What counts as meets the needs? When a percentage of the budget is allocated to 
         has_access_to_electricity: boolean,             // affects desire for furthering electricity
         has_access_to_water: boolean,                   // affects desire for furthering water
         has_access_to_sanitation: boolean,              // affects desire for furthering sanitation
-        finished_high_school: boolean,                  // together with college, affects desire
-        finished_college: boolean,                      // for furthering education
+        has_had_some_education                          //Affects desire for more money to education
     }
     will_support: boolean,
 }
@@ -28,22 +27,18 @@ What counts as meets the needs? When a percentage of the budget is allocated to 
 
 # TODO: do a simple Python class with properties. Once we have real data, convert to Django models.
 class Citizen:
-    def __init__(self, id, age, poverty_level, housing_type, house_location, water_access,
-                 education_level, electricity_access, toilet_access, refuse_disposal, tenure,
-                 coethnicity, sex):
-        self.id = id
-        self.age = age
-        self.education_level = education_level
-        self.poverty_level = poverty_level
-        self.housing_type = housing_type
-        self.house_location = house_location
-        self.water_access = water_access
-        self.electricity_access = electricity_access
-        self.toilet_access = toilet_access
-        self.coethnicity = coethnicity
-        self.sex = sex
-        self.refuse_disposal = refuse_disposal
-        self.housing_tenure = tenure
+    def __init__(self, name, lives_in_rural_area, has_access_to_electricity, has_access_to_water,
+                 has_access_to_sanitation, has_had_some_education):
+        self.name = name
+        self.lives_in_rural_area = lives_in_rural_area
+        self.has_access_to_electricity = has_access_to_electricity
+        self.has_access_to_water = has_access_to_water
+        self.has_access_to_sanitation = has_access_to_sanitation
+        self.is_educated = has_had_some_education
+
+    def will_support(self, budget_amounts):
+        # TODO implement whether someone will support the budget or not based on our discussion
+        pass
 
     # Don't think we actually need this, but I already wrote it and didn't want to delete it yet
     def __str__(self):
@@ -74,10 +69,6 @@ class Citizen:
         returnString += "Identifies ethnically as " + self.coethnicity + " and as a " + self.sex
 
         return returnString
-
-
-cit1 = Citizen("Jordan", "apartment", "urban", True, True, True, "Caucasion", "Male")
-print(cit1)
 
 
 class StatisticalDistributions:
