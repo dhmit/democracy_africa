@@ -117,7 +117,7 @@ export class MapQuizSVG extends React.Component {
                         click_country={this.state.click_country}
                     />
                 </div>
-            </>
+            </div>
         )
     }
 }
