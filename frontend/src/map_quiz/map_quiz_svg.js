@@ -178,8 +178,16 @@ export class NameForm extends React.Component {
     }
 
     handleSubmit(event) {
-        alert('A name was submitted: ' + this.state.value);
-        event.preventDefault();
+        if (this.props.click_country === this.state.value) {
+            alert(this.state.value + " is correct!");
+            event.preventDefault();
+        }
+        else {
+            alert(this.state.value + " is incorrect...");
+            alert("This country's name is: " + this.props.click_country)
+            event.preventDefault();
+        }
+
     }
 
     render() {
@@ -193,6 +201,10 @@ export class NameForm extends React.Component {
             </form>
         );
     }
+}
+NameForm.propTypes = {
+    map_data: PropTypes.array,
+    click_country: PropTypes.string,
 }
 
 MapPath.propTypes = {
