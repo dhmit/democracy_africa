@@ -64,6 +64,9 @@ export class MapQuizSVG extends React.Component {
         this.setState({
             click_country: country.name,
         })
+        CountryList.setState({
+            click_country: country.name,
+        })
     }
 
     render() {
@@ -109,7 +112,7 @@ export class MapQuizSVG extends React.Component {
                         click_country={this.state.click_country}
                     />
                 </div>
-            </>
+            </div>
         )
     }
 }
@@ -166,8 +169,16 @@ export class NameForm extends React.Component {
     }
 
     handleSubmit(event) {
-        alert('A name was submitted: ' + this.state.value);
-        event.preventDefault();
+        if (MapQuizSVG.click_country === this.state.value) {
+            alert(this.state.value + " is correct!");
+            event.preventDefault();
+        }
+        else {
+            alert(this.state.value + " is incorrect...");
+            alert("This country's name is: " + MapQuizSVG.click_country)
+            event.preventDefault();
+        }
+
     }
 
     render() {
