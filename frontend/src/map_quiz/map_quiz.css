@@ -11,6 +11,11 @@ body {
     margin-left: 750px;
 }
 
+.input-wrapper {
+    position: fixed;
+    margin-left: 1150px;
+}
+
 .u-flex {
     display: inline-block;
 }
