@@ -9,7 +9,15 @@ from .models import (
 )
 
 #  TODO: implement me!
-class CitizenSriealizer(serializers.modelSerializer):
+class CitizenSerializer(serializers.modelSerializer):
     """
     Serializes a Citizen
     """
+
+    class Meta:
+        model = Citizen
+        fields = (
+            'id',
+            'name',
+        )
+
