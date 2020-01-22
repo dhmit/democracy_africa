@@ -60,13 +60,16 @@ export class MapQuizSVG extends React.Component {
         return map_data;
     }
 
-    handle_country_click(country) {
+    handle_country_map_click(country) {
         this.setState({
             click_country: country.name,
-        })
-        CountryList.setState({
+        });
+    }
+
+    handle_country_list_click = (country) => {
+        this.setState({
             click_country: country.name,
-        })
+        });
     }
 
     render() {
@@ -93,17 +96,19 @@ export class MapQuizSVG extends React.Component {
                                             : '#E7D7C1'
                                     }
                                     handle_country_click={
-                                        () => this.handle_country_click(country)
+                                        () => this.handle_country_map_click(country)
                                     }
                                 />
                             )
                         )}
                     </svg>
                 </div>
-                <div className="list-wrapper">
+                <div>
                     <CountryList
+                        className="list-wrapper"
                         map_data={this.state.map_data}
                         click_country={this.state.click_country}
+                        handle_country_list_click={this.handle_country_list_click}
                     />
                 </div>
                 <div className="u-flex input-wrapper">
@@ -123,12 +128,15 @@ export class CountryList extends React.Component {
             <span>
                 <h3>Countries</h3>
                 {this.props.map_data.map((country, i) => (
-                    <div key={i}>
-                        {this.props.click_country === country.name ?
-                            <span className={"u-red"}>{country.name}</span> :
-                            country.name
-                        }
-                    </div>
+                    this.props.click_country === country.name ?
+                        <button key={i} className={"u-red country-btn"}
+                            onClick={() => this.props.handle_country_list_click(country)}>
+                            {country.name}
+                        </button> :
+                        <button key={i} className={"country-btn"}
+                            onClick={() => this.props.handle_country_list_click(country)}>
+                            {country.name}
+                        </button>
                 ))}
             </span>
         );
@@ -137,6 +145,7 @@ export class CountryList extends React.Component {
 CountryList.propTypes = {
     map_data: PropTypes.array,
     click_country: PropTypes.string,
+    handle_country_list_click: PropTypes.func,
 }
 
 
