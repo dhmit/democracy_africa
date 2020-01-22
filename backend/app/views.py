@@ -4,6 +4,7 @@ These classes describe one way of entering into the web site.
 
 from pathlib import Path
 import json
+import csv
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -22,6 +23,7 @@ def load_africa_geojson() -> dict:
         africa_geojson_string = africa_geojson_file.read()
     return json.loads(africa_geojson_string)
 
+
 @api_view(['GET'])
 def africa_map_geojson(request):
     """
@@ -38,9 +40,29 @@ def load_democracy_data() -> dict:
     """
     filename = 'lieberman_afr_data.csv'
     path = Path(settings.BACKEND_DATA_DIR, filename)
+    democracy_data = []
     with open(path, encoding='utf-8') as democracy_score_file:
-        democracy_data_string = democracy_score_file.read()
-    return json.loads('{"hi": 2}')
+        reader = csv.reader(democracy_score_file, delimiter=',')
+        headers = []
+        current_country_data = {"democracy_scores": {}}
+        for row in reader:
+            if len(headers) == 0:
+                headers = row
+            else:
+                for i in range(2):
+                    if i == 0:
+                        # headers[0] is country name
+                        if "country_name" not in current_country_data:
+                            current_country_data["country_name"] = row[i]
+                        elif current_country_data["country_name"] != row[i]:
+                            democracy_data.append(current_country_data)
+                            current_country_data = {"democracy_scores": {}, "country_name": row[i]}
+                    # TODO: add in 3 char country code
+                    elif i == 1:
+                        if row[i] not in current_country_data["democracy_scores"]:
+                            current_country_data["democracy_scores"][row[i]] =\
+                            {headers[j]: row[j] for j in range(2, len(row))}
+    return json.dumps(democracy_data)
 
 
 @api_view(['GET'])
