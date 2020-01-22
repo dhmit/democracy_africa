@@ -3,12 +3,9 @@ body {
 }
 
 .map-wrapper {
-    position: fixed;
 }
 
 .list-wrapper {
-    position: absolute;
-    margin-left: 750px;
 }
 
 .input-wrapper {
@@ -17,7 +14,7 @@ body {
 }
 
 .u-flex {
-    display: inline-block;
+    display: flex;
 }
 
 .u-red {

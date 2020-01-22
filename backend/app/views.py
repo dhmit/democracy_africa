@@ -22,6 +22,7 @@ def load_africa_geojson() -> dict:
         africa_geojson_string = africa_geojson_file.read()
     return json.loads(africa_geojson_string)
 
+
 @api_view(['GET'])
 def africa_map_geojson(request):
     """

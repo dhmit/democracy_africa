@@ -71,8 +71,8 @@ export class MapQuizSVG extends React.Component {
             return (<div>Loading!</div>);
         }
         return (
-            <>
-                <div className="u-flex map-wrapper">
+            <div className="u-flex">
+                <div className="map-wrapper">
                     <svg
                         height="1000"
                         width="800"
@@ -97,7 +97,7 @@ export class MapQuizSVG extends React.Component {
                         )}
                     </svg>
                 </div>
-                <div className="u-flex list-wrapper">
+                <div className="list-wrapper">
                     <CountryList
                         map_data={this.state.map_data}
                         click_country={this.state.click_country}
