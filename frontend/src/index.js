@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { MapQuizD3 } from './map_quiz/map_quiz_d3.js';
 import { MapQuizSVG } from './map_quiz/map_quiz_svg.js';
-import { Simulation } from './simulation/simulation.js';
+import MainView from './simulation/simulation.js';
 
 window.app_modules = {
     React,  // Make React accessible from the base template
@@ -14,5 +14,5 @@ window.app_modules = {
     // Add all frontend views here
     MapQuizD3,
     MapQuizSVG,
-    Simulation,
+    MainView,
 };

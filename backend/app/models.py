@@ -30,6 +30,42 @@ class Population:
     def __init__(self):
         self.citizen_list = []
         self.population_size = 0
+        # Temporary data to be using for the frontend
+        self.citizens = [
+            {
+                "name": "person0",
+                "traits": {
+                    "lives_in_rural_area": True,
+                    "has_access_to_electricity": False,
+                    "has_access_to_water": True,
+                    "has_access_to_sanitation": False,
+                    "is_educated": True,
+                },
+                "will_support": False,
+            },
+            {
+                "name": "person1",
+                "traits": {
+                    "lives_in_rural_area": True,
+                    "has_access_to_electricity": False,
+                    "has_access_to_water": False,
+                    "has_access_to_sanitation": False,
+                    "is_educated": True,
+                },
+                "will_support": False,
+            },
+            {
+                "name": "person2",
+                "traits": {
+                    "lives_in_rural_area": False,
+                    "has_access_to_electricity": False,
+                    "has_access_to_water": True,
+                    "has_access_to_sanitation": True,
+                    "is_educated": True,
+                },
+                "will_support": False,
+            },
+        ];
 
     def create_citizens(self, number_to_create):
         for i in range(number_to_create):
@@ -39,7 +75,7 @@ class Population:
 
     # TODO Need some function that will return the population as a list of citizens
     def get_population(self):
-        return self.citizen_list
+        return self.citizens
 
 
 # TODO: do a simple Python class with properties. Once we have real data, convert to Django models.
