@@ -92,7 +92,7 @@ class Budget extends React.Component {
         //  "submitted"
         let result = "";
         if (this.state.reaction)
-            result = "submitted";
+            result = this.state.reaction["will_support"];
 
         const budgetOptions = Object.keys(this.state.budgetProposal).map((resource, key) => (
             <div key={key}>
