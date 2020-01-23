@@ -23,8 +23,6 @@ from app.views import africa_map_geojson
 from app.views import budget_response
 from app.views import population
 
-
-
 urlpatterns = [
     # Django admin page
     path('admin/', admin.site.urls),

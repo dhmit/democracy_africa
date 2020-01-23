@@ -26,7 +26,16 @@ What counts as meets the needs? When a percentage of the budget is allocated to 
 
 
 class Population:
-    pass
+
+    def __init__(self):
+        pass
+
+    def create_citizens(self, number_to_create):
+        pass
+
+    # TODO Need some function that will return the population as a list of citizens
+    def get_population(self):
+        pass
 
 
 # TODO: do a simple Python class with properties. Once we have real data, convert to Django models.
@@ -42,6 +51,7 @@ class Citizen:
 
     def will_support(self, budget_amounts):
         # TODO implement whether someone will support the budget or not based on our discussion
+        #      could also consider putting this method in the population class
         pass
 
     # Don't think we actually need this, but I already wrote it and didn't want to delete it yet

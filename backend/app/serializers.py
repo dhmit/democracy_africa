@@ -21,6 +21,7 @@ from .models import (
 #             'name',
 #         )
 
+
 class PopulationSerializer(serializers.Serializer):
     """ Serializes analysis class """
     total_and_median_view_time = serializers.ReadOnlyField()
