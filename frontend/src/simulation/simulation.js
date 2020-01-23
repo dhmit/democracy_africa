@@ -21,7 +21,6 @@ const resources = [
 
 class Budget extends React.Component {
     // Once MainView is set up, there will be no state, but rather each will be a prop
-    constructor(props) {
         super(props);
         this.state = {
             reaction: null,
@@ -85,7 +84,7 @@ class Budget extends React.Component {
         let result = "Submit budget";
         if (this.state.reaction)
             result = "submitted";
-        
+
         const budgetOptions = Object.keys(this.state.budgetProposal).map((resource, key) => (
             <div key={key}>
                 <strong> {resource} </strong>
@@ -120,23 +119,51 @@ class Budget extends React.Component {
 }
 Budget.propTypes = {
     population: PropTypes.array,
-}
+};
 
 
 class AggregateData extends React.Component {
     constructor(props) {
         super(props);
-    }
-
-    componentDidMount() {
-
+        // eslint-disable-next-line react/prop-types
+        this.state = {
+            // eslint-disable-next-line react/prop-types
+            categories: Object.keys(this.props.population[0]["traits"])
+        }
     }
 
     render() {
-        return (<></>)
+        const aggregate_values = {};
+        for (let i = 0; i < this.state.categories.length; i++) {
+            let total = 0;
+            // eslint-disable-next-line react/prop-types
+            for (let j = 0; j < this.props.population.length; j++) {
+                total += this.props.population[j]["traits"][this.state.categories[i]]
+                //Above: index into the population to get a person, then that person's traits and
+                //then the value (true or false) of that trait
+            }
+            aggregate_values[[this.state.categories[i]]] = total/this.props.population.length;
+        }
+
+        return (
+            <table>
+                <tbody>
+                    {this.state.categories.map((category, key) => {
+                        return (
+                            <tr key={key}>
+                                <td>{category}</td>
+                                <td>{(aggregate_values[category]*100).toFixed(2)}%</td>
+                            </tr>
+                        )
+                    })}
+                </tbody>
+            </table>
+        )
     }
 }
-
+AggregateData.propTypes = {
+    population: PropTypes.array,
+};
 
 class MainView extends React.Component {
     constructor(props) {
@@ -162,7 +189,7 @@ class MainView extends React.Component {
             return (
                 <>
                     <AggregateData
-
+                        population={this.state.population}
                     />
 
                     <Budget
