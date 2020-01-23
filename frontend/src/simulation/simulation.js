@@ -47,7 +47,8 @@ const FAKE_PEOPLE = [
 
 
 
-export class Simulation extends React.Component {
+class Budget extends React.Component {
+    //Once MainView is set up, there will be no state, but rather each will be a prop
     constructor(props) {
         super(props)
         this.state = {
@@ -94,3 +95,42 @@ export class Simulation extends React.Component {
     }
 }
 
+class AggregateData extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    componentDidMount() {
+
+    }
+
+    render() {
+        return (<></>)
+    }
+}
+
+
+class MainView extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    componentDidMount() {
+
+    }
+
+    render() {
+        return (
+            <>
+                <AggregateData
+
+                />
+
+                <Budget
+
+                />
+            </>
+        )
+    }
+}
+export default MainView;
