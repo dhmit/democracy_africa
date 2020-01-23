@@ -206,13 +206,15 @@ class MainView extends React.Component {
         try {
             const population = await fetch('/api/population/');
             const json = await population.json();
-            this.setState({population: json["get_population"]});
+            console.log(json)
+            this.setState({population: json["citizen_list"]});
         } catch (e) {
             console.log(e);
         }
     }
 
     render() {
+        console.log(this.state.population)
         if (this.state.population) {
             return (
                 <>
