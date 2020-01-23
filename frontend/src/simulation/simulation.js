@@ -21,6 +21,7 @@ const resources = [
 
 class Budget extends React.Component {
     // Once MainView is set up, there will be no state, but rather each will be a prop
+    constructor(props){
         super(props);
         this.state = {
             reaction: null,
