@@ -48,10 +48,10 @@ import React from 'react';
 
 
 class Budget extends React.Component {
-    //Once MainView is set up, there will be no state, but rather each will be a prop
+    //FAKE_PEOPLE are now all under this.props.population
     constructor(props) {
         super(props);
-        
+
         this.state = {
             budgetResponse: null,
         }
@@ -98,14 +98,40 @@ class Budget extends React.Component {
 class AggregateData extends React.Component {
     constructor(props) {
         super(props);
-    }
-
-    componentDidMount() {
-
+        // eslint-disable-next-line react/prop-types
+        this.state = {
+            // eslint-disable-next-line react/prop-types
+            categories: Object.keys(this.props.population[0]["traits"])
+        }
     }
 
     render() {
-        return (<></>)
+        const aggregate_values = {};
+        for (let i = 0; i < this.state.categories.length; i++) {
+            let total = 0;
+            // eslint-disable-next-line react/prop-types
+            for (let j = 0; j < this.props.population.length; j++) {
+                // eslint-disable-next-line react/prop-types
+                total += this.props.population[j]["traits"][this.state.categories[i]]
+            }
+            // eslint-disable-next-line react/prop-types
+            aggregate_values[[this.state.categories[i]]] = total/this.props.population.length;
+        }
+
+        return (
+            <table>
+                <tbody>
+                    {this.state.categories.map((category, key) => {
+                        return (
+                            <tr key={key}>
+                                <td>{category}</td>
+                                <td>{(aggregate_values[category]*100).toFixed(2)}%</td>
+                            </tr>
+                        )
+                    })}
+                </tbody>
+            </table>
+        )
     }
 }
 
@@ -134,7 +160,7 @@ class MainView extends React.Component {
             return (
                 <>
                     <AggregateData
-
+                        population={this.state.population}
                     />
 
                     <Budget
