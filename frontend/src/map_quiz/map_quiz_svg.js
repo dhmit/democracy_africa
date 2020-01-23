@@ -117,10 +117,14 @@ export class MapQuizSVG extends React.Component {
                         click_country={this.state.click_country}
                     />
                 </div>
+                <div>
+                    <Timer/>
+                </div>
             </div>
         )
     }
 }
+
 
 export class CountryList extends React.Component {
     render() {
@@ -159,10 +163,65 @@ export class MapPath extends React.Component {
                 fill={this.props.fill}
                 id={this.props.id}
                 onClick={this.props.handle_country_click}
-            ></path>
+            />
         );
     }
 }
+
+export class Timer extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            minutes : 5,
+            seconds : 0,
+        }
+    }
+
+    componentDidMount() {
+
+    }
+
+    startTimer = () => {
+        this.interval = setInterval(() => {
+            const {minutes, seconds} = this.state;
+            if (seconds > 0) {
+                this.setState((prevState) => ({
+                    seconds: prevState.seconds - 1
+                }))
+            }
+            if (seconds === 0) {
+                if (minutes === 0) {
+                    clearInterval(this.interval)
+                } else {
+                    this.setState((prevState) => ({
+                        minutes: prevState.minutes - 1,
+                        seconds: 59
+                    }))
+                }
+            }
+        }, 1000)
+    };
+
+    stopTimer = () => {
+        clearInterval((this.interval))
+    };
+
+    render() {
+        const { minutes, seconds } = this.state;
+        return(
+            <div>
+                <div>Time Remaining: {minutes}:{seconds < 10 ? `0${seconds}` : seconds}</div>
+                <button onClick={this.startTimer}>
+                    Start
+                </button>
+                <button onClick={this.stopTimer}>
+                    Stop
+                </button>
+            </div>
+        );
+    }
+}
+
 
 export class NameForm extends React.Component {
     constructor(props) {
@@ -187,7 +246,6 @@ export class NameForm extends React.Component {
             alert("This country's name is: " + this.props.click_country)
             event.preventDefault();
         }
-
     }
 
     render() {
