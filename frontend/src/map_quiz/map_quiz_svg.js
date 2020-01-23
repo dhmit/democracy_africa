@@ -34,8 +34,10 @@ export class MapQuizSVG extends React.Component {
             const res = await fetch('/api/africa_map_geojson/');
             const geo_json = await res.json();
             const map_data = this.project_features_and_create_svg_paths(geo_json);
+            const input_tracker = this.input_tracking(geo_json);
             this.setState({
                 map_data: map_data,
+                input_tracker: input_tracker,
             });
         } catch (e) {
             console.log(e);
@@ -47,7 +49,7 @@ export class MapQuizSVG extends React.Component {
         const projection = d3.geoMercator()
             .center([5, 15])
             .scale(scale)
-            .translate([scale/2, scale/2]);
+            .translate([scale / 2, scale / 2]);
 
         const geoGenerator = d3.geoPath().projection(projection);
 
@@ -61,10 +63,23 @@ export class MapQuizSVG extends React.Component {
         return map_data;
     }
 
+    input_tracking(geo_json) {
+        const input_tracker = {};
+        for (const feature of geo_json.features) {
+            input_tracker[feature.properties.name] = null;
+        }
+        return input_tracker;
+    }
+
     handle_country_map_click(country) {
-        this.setState({
-            click_country: country.name,
-        });
+        if (this.state.input_tracker[country] !== null) {
+            this.setState({
+                click_country: country.name,
+            })
+        }
+        else {
+            alert("You already guessed this country!");
+        }
     }
 
     handle_country_list_click = (country) => {
@@ -78,6 +93,27 @@ export class MapQuizSVG extends React.Component {
             score: prevState.score + 1,
         }));
     };
+    
+    handle_visual_feedback = (answer, country) => {
+        if (answer === 'Correct') {
+            this.setState({
+                fill: '#33cc33',
+                input_tracker:{
+                    [country]: true,
+                }
+            });
+        }
+        else if (answer === 'Incorrect') {
+            this.setState({
+                fill: '#ff0000',
+                input_tracker: {
+                    [country]: true,
+                }
+            });
+        }
+        alert("Hi");
+
+    }
 
     render() {
         if (!this.state.map_data) {
@@ -123,6 +159,9 @@ export class MapQuizSVG extends React.Component {
                     <NameForm
                         map_data={this.state.map_data}
                         click_country={this.state.click_country}
+                        result = 'None'
+                        handle_visual_feedback={
+                            () => this.handle_visual_feedback('Correct', this.state.click_country)}
                     />
                 </div>
                 <div>
@@ -236,6 +275,7 @@ export class NameForm extends React.Component {
         super(props);
         this.state = {value: ''};
 
+
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -248,11 +288,13 @@ export class NameForm extends React.Component {
         if (this.props.click_country === this.state.value) {
             alert(this.state.value + " is correct!");
             event.preventDefault();
+            this.props.result = "Correct";
         }
         else {
             alert(this.state.value + " is incorrect...");
-            alert("This country's name is: " + this.props.click_country)
+            alert("This country's name is: " + this.props.click_country);
             event.preventDefault();
+            this.props.result = "Incorrect";
         }
     }
 
@@ -268,9 +310,11 @@ export class NameForm extends React.Component {
         );
     }
 }
+
 NameForm.propTypes = {
     map_data: PropTypes.array,
     click_country: PropTypes.string,
+    result: PropTypes.bool,
 }
 
 MapPath.propTypes = {
