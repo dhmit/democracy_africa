@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import PropTypes from 'prop-types';
 
 import { getCookie } from '../common'
-import '../map_quiz/map_quiz.css';
+import './heat_map.css';
 
 /**
  * Main component for the map quiz.
@@ -66,11 +66,14 @@ export class DemocracyViz extends  React.Component {
                     )}
                 </select>
                 <br/>
-                <input onChange={(e) => this.handleYearChange(e)}
-                    type='range' id = 'year' name = 'year' min = '1981' max = '2018' step = '1'>
+                <div className = 'slidecontainer'>
+                    <input onChange={(e) => this.handleYearChange(e)}
+                        type='range' id = 'year' name = 'year' min = '1981' max = '2018' step = '1'
+                        className= 'slider'>
+                    </input>
+                    {this.state.year}
+                </div>
 
-                </input>
-                {this.state.year}
                 <br/>
                 {/*Year: &nbsp;*/}
                 {/*<select onChange={(e) => this.handleYearChange(e)}>*/}
@@ -119,7 +122,7 @@ export class DemocracyMap extends React.Component {
         this.getCountryData = this.getCountryData.bind(this);
         this.colorScale = d3.scaleLinear()
             .domain([0, 1])
-            .range(['white', 'blue'])
+            .range(['white', 'maroon'])
     }
 
     /**
