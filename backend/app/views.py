@@ -63,6 +63,7 @@ def load_democracy_data():
                         if row[i] not in current_country_data["democracy_scores"]:
                             current_country_data["democracy_scores"][row[i]] =\
                                 {headers[j]: row[j] for j in range(3, len(row))}
+        democracy_data.append(current_country_data)  # append Zimbabwe
     return json.dumps(democracy_data)
 
 
