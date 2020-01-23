@@ -115,45 +115,9 @@ class Citizen:
 
 class Population:
 
-    def __init__(self):
-        self.citizen_list = []
+    def __init__(self, citizen_list=[]):
+        self.citizen_list = citizen_list
         self.population_size = 0
-        # Temporary data to be using for the frontend
-        self.citizens = [
-            {
-                "name": "person0",
-                "traits": {
-                    "lives_in_rural_area": True,
-                    "has_access_to_electricity": False,
-                    "has_access_to_water": True,
-                    "has_access_to_sanitation": False,
-                    "is_educated": True,
-                },
-                "will_support": False,
-            },
-            {
-                "name": "person1",
-                "traits": {
-                    "lives_in_rural_area": True,
-                    "has_access_to_electricity": False,
-                    "has_access_to_water": False,
-                    "has_access_to_sanitation": False,
-                    "is_educated": True,
-                },
-                "will_support": False,
-            },
-            {
-                "name": "person2",
-                "traits": {
-                    "lives_in_rural_area": False,
-                    "has_access_to_electricity": False,
-                    "has_access_to_water": True,
-                    "has_access_to_sanitation": True,
-                    "is_educated": True,
-                },
-                "will_support": False,
-            },
-        ];
 
     def create_citizens(self, number_to_create):
         for i in range(number_to_create):
@@ -167,7 +131,7 @@ class Population:
         return self.citizen_list
 
     def assign_demographic_properties(self, citizen):
-        # TODO generalize function to take in statistical districutions instead of hardcoding them
+        # TODO generalize function to take in statistical distributions instead of hardcoding them
         rural_area = random.randint(0, 100)
         electricity_access = random.randint(0, 100)
         water_access = random.randint(0, 100)
