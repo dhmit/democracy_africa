@@ -116,7 +116,7 @@ export class MapQuizSVG extends React.Component {
         }
         alert("Hi");
 
-    }
+    };
 
     render() {
         if (!this.state.map_data) {
@@ -203,7 +203,7 @@ CountryList.propTypes = {
     map_data: PropTypes.array,
     click_country: PropTypes.string,
     handle_country_list_click: PropTypes.func,
-}
+};
 
 
 export class MapPath extends React.Component {
@@ -323,11 +323,11 @@ NameForm.propTypes = {
     click_country: PropTypes.string,
     increment_score : PropTypes.func,
     result: PropTypes.string,
-}
+};
 
 MapPath.propTypes = {
     path: PropTypes.string,
     id: PropTypes.string,
     fill: PropTypes.string,
     handle_country_click: PropTypes.func,
-}
+};
