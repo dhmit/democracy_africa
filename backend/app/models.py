@@ -104,7 +104,7 @@ class Citizen:
             return_string += "Has not had any education"
         return_string += "\n"
 
-#        returnString += "Identifies ethnically as " + self.co-ethnicity + " and as a " + self.sex
+#        return_string += "Identifies ethnically as " + self.co-ethnicity + " and as a " + self.sex
 
         return return_string
 
