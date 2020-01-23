@@ -9,50 +9,50 @@ import React from 'react';
  * Handles all logic, displays information, and makes database query/posts
  */
 
-const FAKE_PEOPLE = [
-    {
-        "name": "person0",
-        "traits": {
-            "lives_in_rural_area": true,
-            "has_access_to_electricity": false,
-            "has_access_to_water": true,
-            "has_access_to_sanitation": false,
-            "is_educated": true,
-        },
-        "will_support": false,
-    },
-    {
-        "name": "person1",
-        "traits": {
-            "lives_in_rural_area": true,
-            "has_access_to_electricity": false,
-            "has_access_to_water": false,
-            "has_access_to_sanitation": false,
-            "is_educated": true,
-        },
-        "will_support": false,
-    },
-    {
-        "name": "person2",
-        "traits": {
-            "lives_in_rural_area": false,
-            "has_access_to_electricity": false,
-            "has_access_to_water": true,
-            "has_access_to_sanitation": true,
-            "is_educated": true,
-        },
-        "will_support": false,
-    },
-];
+// const FAKE_PEOPLE = [
+//     {
+//         "name": "person0",
+//         "traits": {
+//             "lives_in_rural_area": true,
+//             "has_access_to_electricity": false,
+//             "has_access_to_water": true,
+//             "has_access_to_sanitation": false,
+//             "is_educated": true,
+//         },
+//         "will_support": false,
+//     },
+//     {
+//         "name": "person1",
+//         "traits": {
+//             "lives_in_rural_area": true,
+//             "has_access_to_electricity": false,
+//             "has_access_to_water": false,
+//             "has_access_to_sanitation": false,
+//             "is_educated": true,
+//         },
+//         "will_support": false,
+//     },
+//     {
+//         "name": "person2",
+//         "traits": {
+//             "lives_in_rural_area": false,
+//             "has_access_to_electricity": false,
+//             "has_access_to_water": true,
+//             "has_access_to_sanitation": true,
+//             "is_educated": true,
+//         },
+//         "will_support": false,
+//     },
+// ];
 
 
 
 class Budget extends React.Component {
     //Once MainView is set up, there will be no state, but rather each will be a prop
     constructor(props) {
-        super(props)
+        super(props);
+        
         this.state = {
-            population: FAKE_PEOPLE,
             budgetResponse: null,
         }
 
@@ -113,24 +113,41 @@ class AggregateData extends React.Component {
 class MainView extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            population: null,
+        }
     }
 
-    componentDidMount() {
-
+    async componentDidMount() {
+        try {
+            const population = await fetch('/api/population/');
+            const json = await population.json();
+            this.setState({population: json["get_population"]});
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     render() {
-        return (
-            <>
-                <AggregateData
+        if (this.state.population) {
+            return (
+                <>
+                    <AggregateData
 
-                />
+                    />
 
-                <Budget
+                    <Budget
+                        population={this.state.population}
+                    />
+                </>
+            )
+        } else {
+            return (
+                <div>Loading!</div>
+            )
+        }
 
-                />
-            </>
-        )
     }
 }
 export default MainView;
