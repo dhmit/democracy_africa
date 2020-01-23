@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 // import { getCookie }from "../common";
 
-// import PropTypes from 'prop-types';
 
 /**
  * Main component for the simulation.
@@ -9,59 +10,31 @@ import React from 'react';
  * Handles all logic, displays information, and makes database query/posts
  */
 
-// const FAKE_PEOPLE = [
-//     {
-//         "name": "person0",
-//         "traits": {
-//             "lives_in_rural_area": true,
-//             "has_access_to_electricity": false,
-//             "has_access_to_water": true,
-//             "has_access_to_sanitation": false,
-//             "is_educated": true,
-//         },
-//         "will_support": false,
-//     },
-//     {
-//         "name": "person1",
-//         "traits": {
-//             "lives_in_rural_area": true,
-//             "has_access_to_electricity": false,
-//             "has_access_to_water": false,
-//             "has_access_to_sanitation": false,
-//             "is_educated": true,
-//         },
-//         "will_support": false,
-//     },
-//     {
-//         "name": "person2",
-//         "traits": {
-//             "lives_in_rural_area": false,
-//             "has_access_to_electricity": false,
-//             "has_access_to_water": true,
-//             "has_access_to_sanitation": true,
-//             "is_educated": true,
-//         },
-//         "will_support": false,
-//     },
-// ];
-
-
-
 class Budget extends React.Component {
     //FAKE_PEOPLE are now all under this.props.population
     constructor(props) {
         super(props);
-
         this.state = {
-            budgetResponse: null,
+            reaction: null,
         }
 
     }
     simulateCitizenResponse = async () => {
         const url = '/api/budget_response/';
+        const data = {
+            population: this.props.population,
+            // hardcoded fake data for now
+            budget: {
+                "infrastructure": 0.1,
+                "education": 0.2,
+                "sanitation": 0.5,
+                "water": 0.1,
+                "electricity": 0.1,
+            },
+        }
         const response = await fetch(url, {
             method: 'POST',
-            body: JSON.stringify({}),
+            body: JSON.stringify(data),
             headers: {
                 'Content-type': 'application/json',
             }
@@ -69,15 +42,20 @@ class Budget extends React.Component {
         const response_json = await response.json();
         console.log(response_json);
         this.setState({
-            budgetResponse: response_json,
+            reaction: response_json,
         })
     }
 
     render() {
         let result = "Submit budget";
-        if (this.state.budgetResponse) {
-            result = `yay = ${this.state.budgetResponse.yay} 
-            and nay = ${this.state.budgetResponse.nay}`
+        if (this.state.reaction) {
+            result = Object.keys(this.state.reaction["budget"]).map((resource) => (
+                <>
+                    <strong>{resource}:</strong>
+                    {this.state.reaction["budget"][resource]}
+                    <br/>
+                </>
+            ))
         }
         return(
             <>
@@ -94,6 +72,10 @@ class Budget extends React.Component {
         )
     }
 }
+Budget.propTypes = {
+    population: PropTypes.array,
+}
+
 
 class AggregateData extends React.Component {
     constructor(props) {
