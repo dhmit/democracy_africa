@@ -74,7 +74,7 @@ class Budget extends React.Component {
 }
 Budget.propTypes = {
     population: PropTypes.array,
-}
+};
 
 
 class AggregateData extends React.Component {
@@ -93,10 +93,10 @@ class AggregateData extends React.Component {
             let total = 0;
             // eslint-disable-next-line react/prop-types
             for (let j = 0; j < this.props.population.length; j++) {
-                // eslint-disable-next-line react/prop-types
                 total += this.props.population[j]["traits"][this.state.categories[i]]
+                //Above: index into the population to get a person, then that person's traits and
+                //then the value (true or false) of that trait
             }
-            // eslint-disable-next-line react/prop-types
             aggregate_values[[this.state.categories[i]]] = total/this.props.population.length;
         }
 
@@ -116,7 +116,9 @@ class AggregateData extends React.Component {
         )
     }
 }
-
+AggregateData.propTypes = {
+    population: PropTypes.array,
+};
 
 class MainView extends React.Component {
     constructor(props) {
