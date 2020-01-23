@@ -25,6 +25,10 @@ What counts as meets the needs? When a percentage of the budget is allocated to 
 """
 
 
+class Population:
+    pass
+
+
 # TODO: do a simple Python class with properties. Once we have real data, convert to Django models.
 class Citizen:
     def __init__(self, name, lives_in_rural_area, has_access_to_electricity, has_access_to_water,
