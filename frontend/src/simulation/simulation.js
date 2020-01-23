@@ -15,8 +15,8 @@ import "./Simulation.css"
 const resources = [
     "infrastructure",
     "electricity",
-    "water",
     "sanitation",
+    "water",
     "education",
 ];
 
@@ -206,7 +206,6 @@ class MainView extends React.Component {
         try {
             const population = await fetch('/api/population/');
             const json = await population.json();
-            console.log(json)
             this.setState({population: json["citizen_list"]});
         } catch (e) {
             console.log(e);
@@ -214,7 +213,6 @@ class MainView extends React.Component {
     }
 
     render() {
-        console.log(this.state.population)
         if (this.state.population) {
             return (
                 <>

@@ -37,7 +37,6 @@ class CitizenSerializer(serializers.Serializer):
     def update(self, instance, validated_data):
         """ We will not update data using this serializer """
 
-
 class PopulationSerializer(serializers.Serializer):
     """ Serializes population class """
     citizen_list = CitizenSerializer(many=True)
