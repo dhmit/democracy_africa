@@ -28,6 +28,8 @@ What counts as meets the needs? When a percentage of the budget is allocated to 
 class Population:
 
     def __init__(self):
+        self.citizen_list = []
+        self.population_size = 0
         # Temporary data to be using for the frontend
         self.citizens = [
             {
@@ -66,7 +68,10 @@ class Population:
         ];
 
     def create_citizens(self, number_to_create):
-        pass
+        for i in range(number_to_create):
+            self.citizen_list.append(Citizen(str(self.population_size + 1),
+                                             False, False, False, False, False))
+            self.population_size += 1
 
     # TODO Need some function that will return the population as a list of citizens
     def get_population(self):
