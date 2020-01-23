@@ -33,11 +33,16 @@ class Citizen:
                  has_access_to_water=False,
                  has_access_to_sanitation=False, is_educated=False):
         self.name = name
-        self.lives_in_rural_area = lives_in_rural_area
-        self.has_access_to_electricity = has_access_to_electricity
-        self.has_access_to_water = has_access_to_water
-        self.has_access_to_sanitation = has_access_to_sanitation
-        self.is_educated = is_educated
+        self.traits = {"lives_in_rural_area": lives_in_rural_area,
+                       "has_access_to_electricity": has_access_to_electricity,
+                       "has_access_to_sanitation": has_access_to_sanitation,
+                       "has_access_to_water": has_access_to_water,
+                       "is_educated": is_educated}
+        # self.lives_in_rural_area = lives_in_rural_area
+        # self.has_access_to_electricity = has_access_to_electricity
+        # self.has_access_to_water = has_access_to_water
+        # self.has_access_to_sanitation = has_access_to_sanitation
+        # self.is_educated = is_educated
 
     # TODO: make this more efficient aka find a way to not need all these nested ifs
     # for now, hardcoded to match our traits and list of proposed resources
