@@ -44,8 +44,13 @@ def budget_response(request):
     Takes in budget allocation and citizen
     and returns the percentage of yays and nays
     """
-    return Response({"yay": 0.5,
-                     "nay": 0.5,})
+    budget = request.data.get('budget')
+    population = request.data.get('population')
+
+    return Response({
+        "budget" : budget,
+        "population": population,
+    })
 
 
 @api_view(['GET'])
