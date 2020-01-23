@@ -98,6 +98,123 @@ export class DemocracyViz extends  React.Component {
     }
 }
 
+const scoreTypeRanges = {
+    "v2x_polyarchy": {
+        "min": 0,
+        "max": 1
+    },
+    "v2x_partipdem": {
+        "min": 0,
+        "max": 1
+    },
+    "v2x_freexp_altinf": { //ordinal
+        "min": 0,
+        "max": 1
+    },
+    "v2x_cspart": {
+        "min": 0,
+        "max": 1
+    },
+    "v2xel_locelec": {
+        "min": 0,
+        "max": 1
+    },
+    "v2elboycot": {
+        // what does ordinal values mean and how to convert it to
+        // what is in the database
+        "min": 0,
+        "max": 1
+    },
+    "v2lpname": { // this is a text value???
+        "min": 0,
+        "max": 1
+    },
+    "v2slpname": { // text value
+        "min": 0,
+        "max": 1
+    },
+    "v2tlpname": { //text value
+        "min": 0,
+        "max": 1
+    },
+    "v2psnatpar": { //ordinal
+        "min": 0,
+        "max": 1
+    },
+    "v2excrptps": { //ordinal
+        "min": 0,
+        "max": 1
+    },
+    "v2juaccnt": { //ordinal
+        "min": 0,
+        "max": 1
+    },
+    "v2svstterr": { //percentage
+        "min": 0,
+        "max": 100
+    },
+    "v2meharjrn": { //ordinal
+        "min": 0,
+        "max": 1
+    },
+    "v2peprisch": { //percentage
+        "min": 0,
+        "max": 100
+    },
+    "v2pesecsch": {
+        "min": 0,
+        "max": 100
+    },
+    "v2smonex": { //ordinal
+        "min": 0,
+        "max": 1
+    },
+    "e_migdppc": { //GDP so it can be anything
+        "min": 0,
+        "max": 60000
+    },
+    "e_mipopula": { //population
+        "min": 0,
+        "max": 100000
+    },
+    "gdpcapl": { //not in guidebook
+        "min": 0,
+        "max": 60000
+    },
+    "ethfrac": { //not in guidebook
+        "min": 0,
+        "max": 1
+    },
+    "relfrac": { //not in guidebook
+        "min": 0,
+        "max": 1
+    },
+    "numlang": { //not in guidebook
+        "min": 0,
+        "max": 1
+    },
+    "colbrit": { //not in guidebook
+        "min": 0,
+        "max": 1
+    },
+    "colfra": { //not in guidebook
+        "min": 0,
+        "max": 1
+    },
+    "gdpcap_currusd": { //not in guidebook
+        "min": 0,
+        "max": 1
+    },
+    "adultliteracy": { //not in guidebook
+        "min": 0,
+        "max": 1
+    },
+    "elecaccessrur": { //not in guidebook
+        "min": 0,
+        "max": 1
+    },
+};
+
 export class DemocracyMap extends React.Component {
     constructor(props) {
         super(props);
@@ -111,9 +228,6 @@ export class DemocracyMap extends React.Component {
         this.csrftoken = getCookie('csrftoken');
         this.map_ref = React.createRef();
         this.getCountryData = this.getCountryData.bind(this);
-        this.colorScale = d3.scaleLinear()
-            .domain([0, 1])
-            .range(['red', 'blue'])
     }
 
     /**
@@ -170,7 +284,10 @@ export class DemocracyMap extends React.Component {
         if (!this.state.map_data) {
             return (<div>Loading!</div>);
         }
-
+        const colorScale = d3.scaleLinear()
+            .domain([scoreTypeRanges[this.props.scoreType]["min"],
+                scoreTypeRanges[this.props.scoreType]["max"]])
+            .range(['red', 'blue']);
         return (
             <>
                 {/*<div>{this.state.mouseover_country}</div>*/}
@@ -190,7 +307,7 @@ export class DemocracyMap extends React.Component {
                             ? countryScores[this.props.scoreType]
                             : "";
                         const color = countryScore !== ""
-                            ? this.colorScale(countryScore)
+                            ? colorScale(countryScore)
                             : "grey";
                         return (
                             <MapPath
