@@ -4,6 +4,7 @@ Models for the democracy_africa app.
 # from django.db import models
 # TODO: implement me!
 import random
+import math
 
 """
 
@@ -128,46 +129,91 @@ class Citizen:
         self.has_access_to_sanitation = has_access_to_sanitation
         self.is_educated = is_educated
 
-    def will_support(self, budget_amounts):
-        # TODO: implement whether someone will support the budget or not based on our discussion
-        # TODO: update the will_vote field, and return the actual value
-        #
-        pass
+    # for now, hardcoded to match our traits and list of proposed resources
+    def will_support(self, budget_proposal):
+        # track just the needs of this citizen
+        needs = [key for key in vars(self).keys()
+                 if type(vars(self)[key]) is bool
+                 and not vars(self)[key]]
+        num_of_needs = len(needs)
+        num_to_vote = math.ceil(num_of_needs/2.0)
+        cutoff = .8 / num_of_needs
 
-    # Don't think we actually need this, but I already wrote it and didn't want to delete it yet
-    def __str__(self):
-        returnString = self.id + "\n"
-        returnString += "Age: " + self.age + "\n"
-        returnString += "In the " + self.poverty_level + " income bracket\n"
-        returnString += "Lives in a(n) " + self.housing_type + " in a(n) " + self.house_location + \
-                        "\n"
+        # for mvp, hardcoded checks
+        # check first if it is a need, then check if amount is sufficient
+        num_of_needs_met = 0
+        for resource, proposal in budget_proposal.items():
+            if resource == 'infrastructure' and 'lives_in_rural_area' in needs:
+                if proposal >= cutoff:
+                    num_of_needs_met += 1
+            elif resource == 'education' and 'is_educated' in needs:
+                if proposal >= cutoff:
+                    num_of_needs_met += 1
+            elif resource == 'water' and 'has_access_to_water' in needs:
+                if proposal >= cutoff:
+                    num_of_needs_met += 1
+            elif resource == 'sanitation' and 'has_access_to_sanitation' in needs:
+                if proposal >= cutoff:
+                    num_of_needs_met += 1
+            elif resource == 'electricity' and 'has_access_to_electricity' in needs:
+                if proposal >= cutoff:
+                    num_of_needs_met += 1
 
-        if self.water_access:
-            returnString += "Has access to clean/fresh water"
-        else:
-            returnString += "Does not have access to clean/fresh water"
-        returnString += "\n"
+        return num_of_needs_met >= num_to_vote
 
-        if self.electricity_access:
-            returnString += "Has access to electricity"
-        else:
-            returnString += "Does not have access to electricity"
-        returnString += "\n"
+    # # Commented out for now because it doesnt align with our current hardcoded citizen traits
+    # # Don't think we actually need this, but I already wrote it and didn't want to delete it yet
+    # def __str__(self):
+    #     returnString = self.id + "\n"
+    #     returnString += "Age: " + self.age + "\n"
+    #     returnString += "In the " + self.poverty_level + " income bracket\n"
+    #     returnString += "Lives in a(n) " + self.housing_type + " in a(n) " + self.house_location
+    #
+    #     if self.water_access:
+    #         returnString += "Has access to clean/fresh water"
+    #     else:
+    #         returnString += "Does not have access to clean/fresh water"
+    #     returnString += "\n"
+    #
+    #     if self.electricity_access:
+    #         returnString += "Has access to electricity"
+    #     else:
+    #         returnString += "Does not have access to electricity"
+    #     returnString += "\n"
+    #
+    #     if self.sanitation_access:
+    #         returnString += "Has access to sanitation"
+    #     else:
+    #         returnString += "Does not have access to sanitation"
+    #     returnString += "\n"
+    #
+    #     returnString += "Identifies ethnically as " + self.coethnicity + " and as a " + self.sex
+    #
+    #     return returnString
+    #
 
-        if self.sanitation_access:
-            returnString += "Has access to sanitation"
-        else:
-            returnString += "Does not have access to sanitation"
-        returnString += "\n"
-
-        returnString += "Identifies ethnically as " + self.coethnicity + " and as a " + self.sex
-
-        return returnString
-
-
+# # for testing will_support
+# cit1 = Citizen("Jordan")
+# cit2 = Citizen("Amy", True, True)
+# budget1 = {
+#     "infrastructure": 0.2,
+#     "electricity": 0.2,
+#     "water": 0.2,
+#     "sanitation": 0.2,
+#     "education": 0.2,
+# }
 #
-# cit1 = Citizen("Jordan", "apartment", "urban", True, True, True, "Caucasion", "Male")
-# print(cit1)
+# budget2 = {
+#     "infrastructure": 0.0,
+#     "electricity": 0.0,
+#     "water": 0.4,
+#     "sanitation": 0.35,
+#     "education": 0.25,
+# }
+# print(cit1.will_support(budget1)) # should be true because needs all 5
+# print(cit2.will_support(budget1)) # should be false because too low for all three needs
+# print(cit1.will_support(budget2)) # should be true because met at least 3
+# print(cit2.will_support(budget2)) # should be true because met at least 2
 
 class StatisticalDistributions:
     def __init__(self):
