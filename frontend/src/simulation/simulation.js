@@ -11,55 +11,110 @@ import "./Simulation.css"
  * Handles all logic, displays information, and makes database query/posts
  */
 
+// hardcoded list of resources for now
+const resources = [
+    "infrastructure",
+    "electricity",
+    "water",
+    "education",
+    "sanitation",
+];
+
 class Budget extends React.Component {
-    //FAKE_PEOPLE are now all under this.props.population
-    constructor(props) {
+    // Once MainView is set up, there will be no state, but rather each will be a prop
+    constructor(props){
         super(props);
         this.state = {
             reaction: null,
+            budgetProposal: {}
         }
 
     }
-    simulateCitizenResponse = async () => {
-        const url = '/api/budget_response/';
-        const data = {
-            population: this.props.population,
-            // hardcoded fake data for now
-            budget: {
-                "infrastructure": 0.1,
-                "education": 0.2,
-                "sanitation": 0.5,
-                "water": 0.1,
-                "electricity": 0.1,
-            },
-        }
-        const response = await fetch(url, {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-type': 'application/json',
-            }
+
+    componentDidMount() {
+        // for a given list of options set each value in budget proposal to 0
+        let proposal = {};
+        resources.forEach((resource) => {
+            proposal[resource] = 0
         });
-        const response_json = await response.json();
-        console.log(response_json);
         this.setState({
-            reaction: response_json,
+            budgetProposal: proposal,
+        });
+    }
+
+    simulateCitizenResponse = async () => {
+        // check that the total doesn't exceed 100%
+        if (this.validateInput()){
+            const url = '/api/budget_response/';
+            const data = {
+                population: this.props.population,
+                // hardcoded fake data for now
+                budget: this.state.budgetProposal,
+            }
+            const response = await fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-type': 'application/json',
+                }
+            });
+            const response_json = await response.json();
+            console.log(response_json);
+            this.setState({
+                reaction: response_json,
+            });
+        } else { // otherwise throw an alert
+            window.alert("Proposal exceeded budget");
+        }
+    }
+
+    handleSliderOnChange = (e, resource) => {
+        const newVal = e.target.value;
+        const newProposal = this.state.budgetProposal;
+        newProposal[resource] = newVal;
+
+        this.setState({
+            budgetProposal: newProposal,
         })
     }
 
+    /*
+    *  Return false is the proposal exceeds the budget
+    */
+    validateInput = () => {
+        let sum = 0;
+        Object.keys(this.state.budgetProposal).forEach((resource) =>
+            sum += parseFloat(this.state.budgetProposal[resource]));
+        return sum <= 1
+    }
+
+
     render() {
+        // TODO: once will_vote is implemented, display the results but for now, just display
+        //  "submitted"
         let result = "Submit budget";
-        if (this.state.reaction) {
-            result = Object.keys(this.state.reaction["budget"]).map((resource) => (
-                <>
-                    <strong>{resource}:</strong>
-                    {this.state.reaction["budget"][resource]}
-                    <br/>
-                </>
-            ))
-        }
+        if (this.state.reaction)
+            result = "submitted";
+
+        const budgetOptions = Object.keys(this.state.budgetProposal).map((resource, key) => (
+            <div key={key}>
+                <strong> {resource} </strong>
+                <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.1"
+                    value={this.state.budgetProposal[resource]}
+                    onChange={(e) => this.handleSliderOnChange(e, resource)}
+                />
+                {this.state.budgetProposal[resource]}
+            </div>
+        ));
+
         return(
             <>
+                {budgetOptions}
+
                 <button
                     type="submit"
                     onClick={this.simulateCitizenResponse}
