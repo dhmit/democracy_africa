@@ -81,6 +81,7 @@ class Population:
         return self.citizens
 
     def assign_demographic_properties(self, citizen):
+        # TODO generalize function to take in statistical districutions instead of hardcoding them
         a = random.randint(0, 100)
         b = random.randint(0, 100)
         c = random.randint(0, 100)
