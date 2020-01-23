@@ -129,6 +129,7 @@ class Citizen:
         self.has_access_to_sanitation = has_access_to_sanitation
         self.is_educated = is_educated
 
+    # TODO: eventually make an attribute that stores whether citizen will vote
     # for now, hardcoded to match our traits and list of proposed resources
     def will_support(self, budget_proposal):
         # track just the needs of this citizen
