@@ -176,19 +176,19 @@ class Population:
         educated = random.randint(0, 100)
 
         if rural_area < 37:
-            citizen.lives_in_rural_area = True
+            citizen.traits["lives_in_rural_area"] = True
 
         if electricity_access < 84:
-            citizen.has_access_to_electricity = True
+            citizen.traits["has_access_to_electricity"] = True
 
         if water_access < 91:
-            citizen.has_access_to_water = True
+            citizen.traits["has_access_to_water"] = True
 
         if sanitation_access < 60:
-            citizen.has_access_to_sanitation = True
+            citizen.traits["has_access_to_sanitation"] = True
 
         if educated < 91:
-            citizen.is_educated = True
+            citizen.traits["is_educated"] = True
 
         return citizen
 
