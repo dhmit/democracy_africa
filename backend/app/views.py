@@ -72,7 +72,7 @@ def budget_response(request):
         num_of_needs_met = 0
         for resource, proposal in budget.items():
             proposal = float(proposal)
-            # if proposed amount is 0 automatically satisfies no needs 
+            # if proposed amount is 0 automatically satisfies no needs
             if proposal == 0:
                 continue
             elif resource == 'infrastructure' and 'lives_in_rural_area' in needs:
@@ -108,4 +108,3 @@ def population(request):
     population_obj.create_citizens(100)
     serializer = PopulationSerializer(instance=population_obj)
     return Response(serializer.data)
-
