@@ -51,8 +51,6 @@ def budget_response(request):
     """
     budget = request.data.get('budget')
     population = Population(request.data.get('population'))
-
-    yay = 0
     # TODO: for each citizen, call will_vote() and accumulate the yays and nays
     supportive_people = population.will_support(budget)
 

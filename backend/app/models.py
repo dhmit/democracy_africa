@@ -83,8 +83,11 @@ class Citizen:
 
 class Population:
 
-    def __init__(self, citizen_list=[]):
-        self.citizen_list = citizen_list
+    def __init__(self, citizen_list=None):
+        if citizen_list == None:
+            self.citizen_list = []
+        else:
+            self.citizen_list = citizen_list
         self.population_size = 0
 
     def create_citizens(self, number_to_create):
