@@ -193,30 +193,6 @@ class Population:
         return citizen
 
 
-# # for testing will_support
-# cit1 = Citizen("Jordan")
-# cit2 = Citizen("Amy", True, True)
-# budget1 = {
-#     "infrastructure": 0.2,
-#     "electricity": 0.2,
-#     "water": 0.2,
-#     "sanitation": 0.2,
-#     "education": 0.2,
-# }
-#
-# budget2 = {
-#     "infrastructure": 0.0,
-#     "electricity": 0.0,
-#     "water": 0.4,
-#     "sanitation": 0.35,
-#     "education": 0.25,
-# }
-# print(cit1.will_support(budget1)) # should be true because needs all 5
-# print(cit2.will_support(budget1)) # should be false because too low for all three needs
-# print(cit1.will_support(budget2)) # should be true because met at least 3
-# print(cit2.will_support(budget2)) # should be true because met at least 2
-
-
 class StatisticalDistributions:
     def __init__(self):
         self.stats = {
