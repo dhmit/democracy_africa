@@ -22,9 +22,18 @@ from .models import (
 #         )
 
 
+class CitizenSerializer(serializers.Serializer):
+    name = serializers.ReadOnlyField()
+    lives_in_rural_area = serializers.ReadOnlyField()
+    has_access_to_electricity = serializers.ReadOnlyField()
+    has_access_to_water = serializers.ReadOnlyField()
+    has_access_to_sanitation = serializers.ReadOnlyField()
+    is_educated = serializers.ReadOnlyField()
+
+
 class PopulationSerializer(serializers.Serializer):
     """ Serializes population class """
-    get_population = serializers.ReadOnlyField()
+    citizen_list = CitizenSerializer(many=True)
 
     def create(self, validated_data):
         """ We will not create new objects using this serializer """
