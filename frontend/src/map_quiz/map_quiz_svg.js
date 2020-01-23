@@ -20,6 +20,7 @@ export class MapQuizSVG extends React.Component {
             zoom: 4,
             map_data: null,
             click_country: 'Nothing',
+            score : 0,
         };
         this.csrftoken = getCookie('csrftoken');
         this.map_ref = React.createRef();
@@ -72,6 +73,12 @@ export class MapQuizSVG extends React.Component {
         });
     }
 
+    increment_score = () => {
+        this.setState(prevState => ({
+            score: prevState.score + 1,
+        }));
+    };
+
     render() {
         if (!this.state.map_data) {
             return (<div>Loading!</div>);
@@ -109,6 +116,7 @@ export class MapQuizSVG extends React.Component {
                         map_data={this.state.map_data}
                         click_country={this.state.click_country}
                         handle_country_list_click={this.handle_country_list_click}
+                        increment_score={this.increment_score}
                     />
                 </div>
                 <div className="u-flex input-wrapper">
