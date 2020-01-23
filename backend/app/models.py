@@ -3,6 +3,7 @@ Models for the democracy_africa app.
 """
 # from django.db import models
 # TODO: implement me!
+import random
 
 """
 
@@ -69,6 +70,8 @@ class Population:
 
     def create_citizens(self, number_to_create):
         for i in range(number_to_create):
+            current_citizen = Citizen(str(self.population_size + 1))
+            self.assign_demographic_properties(current_citizen)
             self.citizen_list.append(Citizen(str(self.population_size + 1),
                                              False, False, False, False, False))
             self.population_size += 1
@@ -77,11 +80,46 @@ class Population:
     def get_population(self):
         return self.citizens
 
+    def assign_demographic_properties(self, citizen):
+        a = random.randint(0, 100)
+        b = random.randint(0, 100)
+        c = random.randint(0, 100)
+        d = random.randint(0, 100)
+        e = random.randint(0, 100)
+
+        if a < 37:
+            citizen.lives_in_rural_area = True
+        else:
+            citizen.lives_in_rural_area = False
+
+        if b < 84:
+            citizen.has_access_to_electricity = True
+        else:
+            citizen.has_access_to_electricity = False
+
+        if c < 91:
+            citizen.has_access_to_water = True
+        else:
+            citizen.has_access_to_water = False
+
+        if d < 60:
+            citizen.has_access_to_sanitation = True
+        else:
+            citizen.has_access_to_sanitation = False
+
+        if e < 91:
+            citizen.has_had_some_education = True
+        else:
+            citizen.has_had_some_education = False
+
+        return citizen
+
 
 # TODO: do a simple Python class with properties. Once we have real data, convert to Django models.
 class Citizen:
-    def __init__(self, name, lives_in_rural_area, has_access_to_electricity, has_access_to_water,
-                 has_access_to_sanitation, has_had_some_education):
+    def __init__(self, name, lives_in_rural_area=False, has_access_to_electricity=False,
+                 has_access_to_water=False,
+                 has_access_to_sanitation=False, has_had_some_education=False):
         self.name = name
         self.lives_in_rural_area = lives_in_rural_area
         self.has_access_to_electricity = has_access_to_electricity
