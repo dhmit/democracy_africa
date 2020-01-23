@@ -81,17 +81,18 @@ class Population:
 # TODO: do a simple Python class with properties. Once we have real data, convert to Django models.
 class Citizen:
     def __init__(self, name, lives_in_rural_area, has_access_to_electricity, has_access_to_water,
-                 has_access_to_sanitation, has_had_some_education):
+                 has_access_to_sanitation, is_educated):
         self.name = name
         self.lives_in_rural_area = lives_in_rural_area
         self.has_access_to_electricity = has_access_to_electricity
         self.has_access_to_water = has_access_to_water
         self.has_access_to_sanitation = has_access_to_sanitation
-        self.is_educated = has_had_some_education
+        self.is_educated = is_educated
 
     def will_support(self, budget_amounts):
-        # TODO implement whether someone will support the budget or not based on our discussion
-        #      could also consider putting this method in the population class
+        # TODO: implement whether someone will support the budget or not based on our discussion
+        # TODO: update the will_vote field, and return the actual value
+        #
         pass
 
     # Don't think we actually need this, but I already wrote it and didn't want to delete it yet

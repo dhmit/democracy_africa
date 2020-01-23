@@ -10,15 +10,37 @@ import PropTypes from 'prop-types';
  * Handles all logic, displays information, and makes database query/posts
  */
 
+// hardcoded list of resources for now
+const resources = [
+    "infrastructure",
+    "electricity",
+    "water",
+    "education",
+    "sanitation",
+];
+
 class Budget extends React.Component {
-    //Once MainView is set up, there will be no state, but rather each will be a prop
+    // Once MainView is set up, there will be no state, but rather each will be a prop
     constructor(props) {
         super(props);
         this.state = {
             reaction: null,
+            budgetProposal: {}
         }
 
     }
+
+    componentDidMount() {
+        // for a given list of options set each value in budget proposal to 0
+        let proposal = {};
+        resources.forEach((resource) => {
+            proposal[resource] = 0
+        });
+        this.setState({
+            budgetProposal: proposal,
+        });
+    }
+
     simulateCitizenResponse = async () => {
         const url = '/api/budget_response/';
         const data = {
@@ -46,19 +68,43 @@ class Budget extends React.Component {
         })
     }
 
+    handleSliderOnChange = (e, resource) => {
+        const newVal = e.target.value;
+        const newProposal = this.state.budgetProposal;
+        newProposal[resource] = newVal;
+
+        this.setState({
+            budgetProposal: newProposal,
+        })
+    }
+
+
     render() {
+        // TODO: once will_vote is implemented, display the results but for now, just display
+        //  "submitted"
         let result = "Submit budget";
-        if (this.state.reaction) {
-            result = Object.keys(this.state.reaction["budget"]).map((resource) => (
-                <>
-                    <strong>{resource}:</strong>
-                    {this.state.reaction["budget"][resource]}
-                    <br/>
-                </>
-            ))
-        }
+        if (this.state.reaction)
+            result = "submitted";
+        
+        const budgetOptions = Object.keys(this.state.budgetProposal).map((resource, key) => (
+            <div key={key}>
+                <strong> {resource} </strong>
+                <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.1"
+                    value={this.state.budgetProposal[resource]}
+                    onChange={(e) => this.handleSliderOnChange(e, resource)}
+                />
+                {this.state.budgetProposal[resource]}
+            </div>
+        ));
+
         return(
             <>
+                {budgetOptions}
+
                 <button
                     type="submit"
                     onClick={this.simulateCitizenResponse}

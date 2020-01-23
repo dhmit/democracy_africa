@@ -7,6 +7,9 @@ import json
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from .models import (
+    Citizen,
+)
 # from .serializers import (
 #     CitizenSerializer,
 # )
@@ -46,6 +49,10 @@ def budget_response(request):
     """
     budget = request.data.get('budget')
     population = request.data.get('population')
+
+    # TODO: for each citizen, call will_vote() and accumulate the yays and nays
+    # for person in population:
+    #     citizen = Citizen(name=person.name)
 
     return Response({
         "budget" : budget,
