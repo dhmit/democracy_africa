@@ -91,7 +91,7 @@ class Budget extends React.Component {
     render() {
         // TODO: once will_vote is implemented, display the results but for now, just display
         //  "submitted"
-        let result = "Submit budget";
+        let result = "";
         if (this.state.reaction)
             result = "submitted";
 
@@ -112,16 +112,22 @@ class Budget extends React.Component {
 
         return(
             <>
-                {budgetOptions}
+                <div>
+                    {budgetOptions}
+                </div>
 
-                <button
-                    type="submit"
-                    onClick={this.simulateCitizenResponse}
-                >
-                    Submit
-                </button>
+                <div>
+                    <button
+                        type="submit"
+                        onClick={this.simulateCitizenResponse}
+                    >
+                        Submit Budget
+                    </button>
+                </div>
 
-                {result}
+                <div>
+                    {result}
+                </div>
 
             </>
         )
