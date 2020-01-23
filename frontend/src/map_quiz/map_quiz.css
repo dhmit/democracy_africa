@@ -21,7 +21,7 @@ body {
 
 .input-wrapper {
     position: fixed;
-    margin-left: 1150px;
+    margin-left: 1050px;
 }
 
 .u-flex {
@@ -30,4 +30,16 @@ body {
 
 .u-red {
     color: red;
+}
+
+.score{
+    position : fixed;
+    margin-left: 1050px;
+    margin-top : 50px;
+}
+
+.timer{
+    position : fixed;
+    margin-left: 1050px;
+    margin-top : 100px;
 }

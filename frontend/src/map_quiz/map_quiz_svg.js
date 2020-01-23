@@ -24,6 +24,8 @@ export class MapQuizSVG extends React.Component {
         };
         this.csrftoken = getCookie('csrftoken');
         this.map_ref = React.createRef();
+
+        this.increment_score = this.increment_score.bind(this);
     }
 
     /**
@@ -86,14 +88,15 @@ export class MapQuizSVG extends React.Component {
         this.setState({
             click_country: country.name,
         });
-    }
+    };
 
-    increment_score = () => {
+    increment_score(){
+        console.log(this.state.score);
         this.setState(prevState => ({
             score: prevState.score + 1,
         }));
-    };
-    
+    }
+
     handle_visual_feedback = (answer, country) => {
         if (answer === 'Correct') {
             this.setState({
@@ -152,7 +155,6 @@ export class MapQuizSVG extends React.Component {
                         map_data={this.state.map_data}
                         click_country={this.state.click_country}
                         handle_country_list_click={this.handle_country_list_click}
-                        increment_score={this.increment_score}
                     />
                 </div>
                 <div className="u-flex input-wrapper">
@@ -160,11 +162,15 @@ export class MapQuizSVG extends React.Component {
                         map_data={this.state.map_data}
                         click_country={this.state.click_country}
                         result = 'None'
+                        increment_score={this.increment_score}
                         handle_visual_feedback={
                             () => this.handle_visual_feedback('Correct', this.state.click_country)}
                     />
                 </div>
-                <div>
+                <div className="score">
+                    {`Score : ${this.state.score}`}
+                </div>
+                <div className="timer">
                     <Timer/>
                 </div>
             </div>
@@ -288,7 +294,8 @@ export class NameForm extends React.Component {
         if (this.props.click_country === this.state.value) {
             alert(this.state.value + " is correct!");
             event.preventDefault();
-            this.props.result = "Correct";
+            // this.props.result = "Correct";
+            this.props.increment_score();
         }
         else {
             alert(this.state.value + " is incorrect...");
@@ -314,7 +321,8 @@ export class NameForm extends React.Component {
 NameForm.propTypes = {
     map_data: PropTypes.array,
     click_country: PropTypes.string,
-    result: PropTypes.bool,
+    increment_score : PropTypes.func,
+    result: PropTypes.string,
 }
 
 MapPath.propTypes = {
