@@ -29,6 +29,7 @@ class CitizenSerializer(serializers.Serializer):
     has_access_to_water = serializers.ReadOnlyField()
     has_access_to_sanitation = serializers.ReadOnlyField()
     is_educated = serializers.ReadOnlyField()
+    traits = serializers.ReadOnlyField()
 
 
 class PopulationSerializer(serializers.Serializer):
