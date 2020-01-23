@@ -50,8 +50,12 @@ def budget_response(request):
     budget = request.data.get('budget')
     population = request.data.get('population')
 
-    # TODO: for each citizen, call will_vote() and accumulate the yays and nays
-
+    # yay = 0
+    # # TODO: for each citizen, call will_vote() and accumulate the yays and nays
+    # for citizen in population:
+    #     if citizen.will_support():
+    #         yay += 1
+    #
     return Response({
         "budget" : budget,
         "population": population,
