@@ -33,10 +33,10 @@ def africa_map_geojson(request):
     return Response(africa_geojson)
 
 
-def load_democracy_data() -> dict:
+def load_democracy_data():
     """
     Read the CSV file of the democracy scores in Africa from disk
-    and return a dict of the parsed json
+    and return a parsed json array
     """
     filename = 'lieberman_afr_data.csv'
     path = Path(settings.BACKEND_DATA_DIR, filename)
@@ -49,19 +49,20 @@ def load_democracy_data() -> dict:
             if len(headers) == 0:
                 headers = row
             else:
-                for i in range(2):
+                for i in range(3):
                     if i == 0:
-                        # headers[0] is country name
                         if "country_name" not in current_country_data:
                             current_country_data["country_name"] = row[i]
                         elif current_country_data["country_name"] != row[i]:
                             democracy_data.append(current_country_data)
                             current_country_data = {"democracy_scores": {}, "country_name": row[i]}
-                    # TODO: add in 3 char country code
-                    elif i == 1:
+                    if i == 1:
+                        if "country_text_id" not in current_country_data:
+                            current_country_data["country_text_id"] = row[i]
+                    elif i == 2:
                         if row[i] not in current_country_data["democracy_scores"]:
                             current_country_data["democracy_scores"][row[i]] =\
-                            {headers[j]: row[j] for j in range(2, len(row))}
+                                {headers[j]: row[j] for j in range(3, len(row))}
     return json.dumps(democracy_data)
 
 
