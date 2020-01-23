@@ -16,8 +16,8 @@ const resources = [
     "infrastructure",
     "electricity",
     "water",
-    "education",
     "sanitation",
+    "education",
 ];
 
 class Budget extends React.Component {
@@ -59,7 +59,6 @@ class Budget extends React.Component {
                 }
             });
             const response_json = await response.json();
-            console.log(response_json);
             this.setState({
                 reaction: response_json,
             });
