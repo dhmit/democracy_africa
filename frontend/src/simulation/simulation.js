@@ -42,30 +42,29 @@ class Budget extends React.Component {
     }
 
     simulateCitizenResponse = async () => {
-        const url = '/api/budget_response/';
-        const data = {
-            population: this.props.population,
-            // hardcoded fake data for now
-            budget: {
-                "infrastructure": 0.1,
-                "education": 0.2,
-                "sanitation": 0.5,
-                "water": 0.1,
-                "electricity": 0.1,
-            },
-        }
-        const response = await fetch(url, {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-type': 'application/json',
+        // check that the total doesn't exceed 100%
+        if (this.validateInput()){
+            const url = '/api/budget_response/';
+            const data = {
+                population: this.props.population,
+                // hardcoded fake data for now
+                budget: this.state.budgetProposal,
             }
-        });
-        const response_json = await response.json();
-        console.log(response_json);
-        this.setState({
-            reaction: response_json,
-        })
+            const response = await fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-type': 'application/json',
+                }
+            });
+            const response_json = await response.json();
+            console.log(response_json);
+            this.setState({
+                reaction: response_json,
+            });
+        } else { // otherwise throw an alert
+            window.alert("Proposal exceeded budget");
+        }
     }
 
     handleSliderOnChange = (e, resource) => {
@@ -76,6 +75,16 @@ class Budget extends React.Component {
         this.setState({
             budgetProposal: newProposal,
         })
+    }
+
+    /*
+    *  Return false is the proposal exceeds the budget
+    */
+    validateInput = () => {
+        let sum = 0;
+        Object.keys(this.state.budgetProposal).forEach((resource) =>
+            sum += parseFloat(this.state.budgetProposal[resource]));
+        return sum <= 1
     }
 
 
