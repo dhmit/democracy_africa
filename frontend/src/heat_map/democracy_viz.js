@@ -66,17 +66,23 @@ export class DemocracyViz extends  React.Component {
                     )}
                 </select>
                 <br/>
-                Year: &nbsp;
-                <select onChange={(e) => this.handleYearChange(e)}>
-                    {Object.keys(this.state.democracyData[0]["democracy_scores"]).map(
-                        (entry, i) => (
-                            <option key={i}>
-                                {entry}
-                            </option>
-                        )
-                    )}
-                </select>
+                <input onChange={(e) => this.handleYearChange(e)}
+                    type='range' id = 'year' name = 'year' min = '1981' max = '2018' step = '1'>
+
+                </input>
+                {this.state.year}
                 <br/>
+                {/*Year: &nbsp;*/}
+                {/*<select onChange={(e) => this.handleYearChange(e)}>*/}
+                {/*    {Object.keys(this.state.democracyData[0]["democracy_scores"]).map(*/}
+                {/*        (entry, i) => (*/}
+                {/*            <option key={i}>*/}
+                {/*                {entry}*/}
+                {/*            </option>*/}
+                {/*        )*/}
+                {/*    )}*/}
+                {/*</select>*/}
+                {/*<br/>*/}
                 Currently grey either means:
                 <ul>
                     {/*Remove this later once we fix data*/}
@@ -113,7 +119,7 @@ export class DemocracyMap extends React.Component {
         this.getCountryData = this.getCountryData.bind(this);
         this.colorScale = d3.scaleLinear()
             .domain([0, 1])
-            .range(['red', 'blue'])
+            .range(['white', 'blue'])
     }
 
     /**
