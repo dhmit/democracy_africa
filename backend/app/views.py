@@ -4,6 +4,7 @@ These classes describe one way of entering into the web site.
 
 from pathlib import Path
 import json
+import math
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -17,6 +18,7 @@ from .models import (
 from django.conf import settings
 
 from .models import Population
+from .models import Citizen
 from.serializers import PopulationSerializer
 
 
@@ -53,7 +55,43 @@ def budget_response(request):
     yay = 0
     # TODO: for each citizen, call will_vote() and accumulate the yays and nays
     for citizen in population:
-        if citizen.will_support():
+
+        # track just the needs of this citizen
+        needs = [trait for trait in citizen["traits"].keys()
+                 if not citizen["traits"][trait]]
+        num_of_needs = len(needs)
+
+        # if person has no needs they wont vote
+        if num_of_needs == 0:
+            continue
+        else:
+            num_to_vote = math.ceil(num_of_needs / 2.0)
+            cutoff = .8 / num_of_needs
+
+        # check first if it is a need, then check if amount is sufficient
+        num_of_needs_met = 0
+        for resource, proposal in budget.items():
+            proposal = float(proposal)
+            # if proposed amount is 0 automatically satisfies no needs 
+            if proposal == 0:
+                continue
+            elif resource == 'infrastructure' and 'lives_in_rural_area' in needs:
+                if proposal >= cutoff:
+                    num_of_needs_met += 1
+            elif resource == 'education' and 'is_educated' in needs:
+                if proposal >= cutoff:
+                    num_of_needs_met += 1
+            elif resource == 'water' and 'has_access_to_water' in needs:
+                if proposal >= cutoff:
+                    num_of_needs_met += 1
+            elif resource == 'sanitation' and 'has_access_to_sanitation' in needs:
+                if proposal >= cutoff:
+                    num_of_needs_met += 1
+            elif resource == 'electricity' and 'has_access_to_electricity' in needs:
+                if proposal >= cutoff:
+                    num_of_needs_met += 1
+
+        if num_of_needs_met >= num_to_vote:
             yay += 1
 
     return Response({
@@ -67,7 +105,7 @@ def population(request):
     Load Africa map GeoJSON for frontend
     """
     population_obj = Population()
-    population_obj.create_citizens(20)
+    population_obj.create_citizens(100)
     serializer = PopulationSerializer(instance=population_obj)
     return Response(serializer.data)
 

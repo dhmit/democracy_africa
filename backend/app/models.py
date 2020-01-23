@@ -48,9 +48,8 @@ class Citizen:
     # for now, hardcoded to match our traits and list of proposed resources
     def will_support(self, budget_proposal):
         # track just the needs of this citizen
-        needs = [key for key in vars(self).keys()
-                 if type(vars(self)[key]) is bool
-                 and not vars(self)[key]]
+        needs = [trait for trait in self.traits.keys()
+                 if not self.traits[trait]]
         num_of_needs = len(needs)
         num_to_vote = math.ceil(num_of_needs/2.0)
         cutoff = .8 / num_of_needs

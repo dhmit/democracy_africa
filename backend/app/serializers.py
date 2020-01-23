@@ -31,6 +31,11 @@ class CitizenSerializer(serializers.Serializer):
     is_educated = serializers.ReadOnlyField()
     traits = serializers.ReadOnlyField()
 
+    def create(self, validated_data):
+        """ We will not create new objects using this serializer """
+
+    def update(self, instance, validated_data):
+        """ We will not update data using this serializer """
 
 class PopulationSerializer(serializers.Serializer):
     """ Serializes population class """
