@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// import { getCookie }from "../common";
+import { getCookie }from "../common";
 
+import "./Simulation.css"
 
 /**
  * Main component for the simulation.
@@ -80,9 +81,7 @@ Budget.propTypes = {
 class AggregateData extends React.Component {
     constructor(props) {
         super(props);
-        // eslint-disable-next-line react/prop-types
         this.state = {
-            // eslint-disable-next-line react/prop-types
             categories: Object.keys(this.props.population[0]["traits"])
         }
     }
@@ -91,7 +90,6 @@ class AggregateData extends React.Component {
         const aggregate_values = {};
         for (let i = 0; i < this.state.categories.length; i++) {
             let total = 0;
-            // eslint-disable-next-line react/prop-types
             for (let j = 0; j < this.props.population.length; j++) {
                 total += this.props.population[j]["traits"][this.state.categories[i]]
                 //Above: index into the population to get a person, then that person's traits and
@@ -101,13 +99,28 @@ class AggregateData extends React.Component {
         }
 
         return (
-            <table>
+            <table className="aggregate_data_table">
+                <thead>
+                    <tr>
+                        <th className="aggregate_data_table_header">
+                            Trait
+                        </th>
+                        <th className="aggregate_data_table_data">
+                            Percentage of Population
+                        </th>
+                    </tr>
+                </thead>
                 <tbody>
                     {this.state.categories.map((category, key) => {
                         return (
-                            <tr key={key}>
-                                <td>{category}</td>
-                                <td>{(aggregate_values[category]*100).toFixed(2)}%</td>
+                            <tr key={key} className="aggregate_data_table_rows">
+                                <td className="aggregate_data_table_data">
+                                    {category}
+                                </td>
+
+                                <td className="aggregate_data_table_data">
+                                    {(aggregate_values[category]*100).toFixed(2)}%
+                                </td>
                             </tr>
                         )
                     })}
@@ -127,6 +140,7 @@ class MainView extends React.Component {
         this.state = {
             population: null,
         }
+        this.csrftoken = getCookie('csrftoken');
     }
 
     async componentDidMount() {
@@ -143,13 +157,21 @@ class MainView extends React.Component {
         if (this.state.population) {
             return (
                 <>
-                    <AggregateData
-                        population={this.state.population}
-                    />
+                    <div className="row">
+                        <div className="col-12">
+                            <AggregateData
+                                population={this.state.population}
+                            />
+                        </div>
+                    </div>
 
-                    <Budget
-                        population={this.state.population}
-                    />
+                    <div className="row">
+                        <div className="col-12">
+                            <Budget
+                                population={this.state.population}
+                            />
+                        </div>
+                    </div>
                 </>
             )
         } else {
