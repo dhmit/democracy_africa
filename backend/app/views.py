@@ -67,7 +67,7 @@ def population(request):
     Load Africa map GeoJSON for frontend
     """
     population_obj = Population()
-    population_obj.create_citizens(20)
+    population_obj.create_citizens(1000)
     serializer = PopulationSerializer(instance=population_obj)
     return Response(serializer.data)
 
