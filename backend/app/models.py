@@ -24,6 +24,61 @@ What counts as meets the needs? When a percentage of the budget is allocated to 
 }
 
 """
+# TODO: do a simple Python class with properties. Once we have real data, convert to Django models.
+
+
+class Citizen:
+    def __init__(self, name, lives_in_rural_area=False, has_access_to_electricity=False,
+                 has_access_to_water=False,
+                 has_access_to_sanitation=False, is_educated=False):
+        self.name = name
+        self.lives_in_rural_area = lives_in_rural_area
+        self.has_access_to_electricity = has_access_to_electricity
+        self.has_access_to_water = has_access_to_water
+        self.has_access_to_sanitation = has_access_to_sanitation
+        self.is_educated = is_educated
+
+    def will_support(self, budget_amounts):
+        # TODO: implement whether someone will support the budget or not based on our discussion
+        # TODO: update the will_vote field, and return the actual value
+        #
+        pass
+
+    # Don't think we actually need this, but I already wrote it and didn't want to delete it yet
+    def __str__(self):
+        return_string = self.name + "\n"
+#        return_string += "Age: " + self.age + "\n"
+#        return_string += "In the " + self.poverty_level + " income bracket\n"
+#        return_string += "Lives in a(n) " + self.housing_type + " in a(n) " +
+        #        self.house_location +
+#        \"\n"
+        if self.has_access_to_water:
+            return_string += "Has access to clean/fresh water"
+        else:
+            return_string += "Does not have access to clean/fresh water"
+        return_string += "\n"
+
+        if self.has_access_to_electricity:
+            return_string += "Has access to electricity"
+        else:
+            return_string += "Does not have access to electricity"
+        return_string += "\n"
+
+        if self.has_access_to_sanitation:
+            return_string += "Has access to sanitation"
+        else:
+            return_string += "Does not have access to sanitation"
+        return_string += "\n"
+
+        if self.is_educated:
+            return_string += "Has had some education"
+        else:
+            return_string += "Has not had any education"
+        return_string += "\n"
+
+#        returnString += "Identifies ethnically as " + self.co-ethnicity + " and as a " + self.sex
+
+        return return_string
 
 
 class Population:
@@ -72,102 +127,48 @@ class Population:
         for i in range(number_to_create):
             current_citizen = Citizen(str(self.population_size + 1))
             self.assign_demographic_properties(current_citizen)
-            self.citizen_list.append(Citizen(str(self.population_size + 1),
-                                             False, False, False, False, False))
+            self.citizen_list.append(current_citizen)
             self.population_size += 1
 
     # TODO Need some function that will return the population as a list of citizens
     def get_population(self):
-        return self.citizens
+        return self.citizen_list
 
     def assign_demographic_properties(self, citizen):
         # TODO generalize function to take in statistical districutions instead of hardcoding them
-        a = random.randint(0, 100)
-        b = random.randint(0, 100)
-        c = random.randint(0, 100)
-        d = random.randint(0, 100)
-        e = random.randint(0, 100)
+        rural_area = random.randint(0, 100)
+        electricity_access = random.randint(0, 100)
+        water_access = random.randint(0, 100)
+        sanitation_access = random.randint(0, 100)
+        educated = random.randint(0, 100)
 
-        if a < 37:
+        if rural_area < 37:
             citizen.lives_in_rural_area = True
-        else:
-            citizen.lives_in_rural_area = False
 
-        if b < 84:
+        if electricity_access < 84:
             citizen.has_access_to_electricity = True
-        else:
-            citizen.has_access_to_electricity = False
 
-        if c < 91:
+        if water_access < 91:
             citizen.has_access_to_water = True
-        else:
-            citizen.has_access_to_water = False
 
-        if d < 60:
+        if sanitation_access < 60:
             citizen.has_access_to_sanitation = True
-        else:
-            citizen.has_access_to_sanitation = False
 
-        if e < 91:
+        if educated < 91:
             citizen.is_educated = True
-        else:
-            citizen.is_educated = False
 
         return citizen
 
 
-# TODO: do a simple Python class with properties. Once we have real data, convert to Django models.
-class Citizen:
-    def __init__(self, name, lives_in_rural_area=False, has_access_to_electricity=False,
-                 has_access_to_water=False,
-                 has_access_to_sanitation=False, is_educated=False):
-        self.name = name
-        self.lives_in_rural_area = lives_in_rural_area
-        self.has_access_to_electricity = has_access_to_electricity
-        self.has_access_to_water = has_access_to_water
-        self.has_access_to_sanitation = has_access_to_sanitation
-        self.is_educated = is_educated
-
-    def will_support(self, budget_amounts):
-        # TODO: implement whether someone will support the budget or not based on our discussion
-        # TODO: update the will_vote field, and return the actual value
-        #
-        pass
-
-    # Don't think we actually need this, but I already wrote it and didn't want to delete it yet
-    def __str__(self):
-        returnString = self.id + "\n"
-        returnString += "Age: " + self.age + "\n"
-        returnString += "In the " + self.poverty_level + " income bracket\n"
-        returnString += "Lives in a(n) " + self.housing_type + " in a(n) " + self.house_location + \
-                        "\n"
-
-        if self.water_access:
-            returnString += "Has access to clean/fresh water"
-        else:
-            returnString += "Does not have access to clean/fresh water"
-        returnString += "\n"
-
-        if self.electricity_access:
-            returnString += "Has access to electricity"
-        else:
-            returnString += "Does not have access to electricity"
-        returnString += "\n"
-
-        if self.sanitation_access:
-            returnString += "Has access to sanitation"
-        else:
-            returnString += "Does not have access to sanitation"
-        returnString += "\n"
-
-        returnString += "Identifies ethnically as " + self.coethnicity + " and as a " + self.sex
-
-        return returnString
-
+new_pop = Population()
+new_pop.create_citizens(20)
+for c in new_pop.get_population():
+    print(str(c))
 
 #
 # cit1 = Citizen("Jordan", "apartment", "urban", True, True, True, "Caucasion", "Male")
 # print(cit1)
+
 
 class StatisticalDistributions:
     def __init__(self):
