@@ -50,52 +50,14 @@ def budget_response(request):
     and returns the percentage of yays and nays
     """
     budget = request.data.get('budget')
-    population = request.data.get('population')
+    population = Population(request.data.get('population'))
 
     yay = 0
     # TODO: for each citizen, call will_vote() and accumulate the yays and nays
-    for citizen in population:
-
-        # track just the needs of this citizen
-        needs = [trait for trait in citizen["traits"].keys()
-                 if not citizen["traits"][trait]]
-        num_of_needs = len(needs)
-
-        # if person has no needs they wont vote
-        if num_of_needs == 0:
-            continue
-        else:
-            num_to_vote = math.ceil(num_of_needs / 2.0)
-            cutoff = .8 / num_of_needs
-
-        # check first if it is a need, then check if amount is sufficient
-        num_of_needs_met = 0
-        for resource, proposal in budget.items():
-            proposal = float(proposal)
-            # if proposed amount is 0 automatically satisfies no needs
-            if proposal == 0:
-                continue
-            elif resource == 'infrastructure' and 'lives_in_rural_area' in needs:
-                if proposal >= cutoff:
-                    num_of_needs_met += 1
-            elif resource == 'education' and 'is_educated' in needs:
-                if proposal >= cutoff:
-                    num_of_needs_met += 1
-            elif resource == 'water' and 'has_access_to_water' in needs:
-                if proposal >= cutoff:
-                    num_of_needs_met += 1
-            elif resource == 'sanitation' and 'has_access_to_sanitation' in needs:
-                if proposal >= cutoff:
-                    num_of_needs_met += 1
-            elif resource == 'electricity' and 'has_access_to_electricity' in needs:
-                if proposal >= cutoff:
-                    num_of_needs_met += 1
-
-        if num_of_needs_met >= num_to_vote:
-            yay += 1
+    supportive_people = population.will_support(budget)
 
     return Response({
-        "will_support": yay,
+        "will_support": supportive_people,
     })
 
 
@@ -105,6 +67,6 @@ def population(request):
     Load Africa map GeoJSON for frontend
     """
     population_obj = Population()
-    population_obj.create_citizens(100)
+    population_obj.create_citizens(1000)
     serializer = PopulationSerializer(instance=population_obj)
     return Response(serializer.data)

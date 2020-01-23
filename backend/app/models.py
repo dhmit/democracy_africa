@@ -44,38 +44,6 @@ class Citizen:
         # self.has_access_to_sanitation = has_access_to_sanitation
         # self.is_educated = is_educated
 
-    # TODO: make this more efficient aka find a way to not need all these nested ifs
-    # for now, hardcoded to match our traits and list of proposed resources
-    def will_support(self, budget_proposal):
-        # track just the needs of this citizen
-        needs = [trait for trait in self.traits.keys()
-                 if not self.traits[trait]]
-        num_of_needs = len(needs)
-        num_to_vote = math.ceil(num_of_needs/2.0)
-        cutoff = .8 / num_of_needs
-
-        # for mvp, hardcoded checks
-        # check first if it is a need, then check if amount is sufficient
-        num_of_needs_met = 0
-        for resource, proposal in budget_proposal.items():
-            if resource == 'infrastructure' and 'lives_in_rural_area' in needs:
-                if proposal >= cutoff:
-                    num_of_needs_met += 1
-            elif resource == 'education' and 'is_educated' in needs:
-                if proposal >= cutoff:
-                    num_of_needs_met += 1
-            elif resource == 'water' and 'has_access_to_water' in needs:
-                if proposal >= cutoff:
-                    num_of_needs_met += 1
-            elif resource == 'sanitation' and 'has_access_to_sanitation' in needs:
-                if proposal >= cutoff:
-                    num_of_needs_met += 1
-            elif resource == 'electricity' and 'has_access_to_electricity' in needs:
-                if proposal >= cutoff:
-                    num_of_needs_met += 1
-
-        return num_of_needs_met >= num_to_vote
-
     # Don't think we actually need this, but I already wrote it and didn't want to delete it yet
     def __str__(self):
         return_string = self.name + "\n"
@@ -154,6 +122,49 @@ class Population:
             citizen.traits["is_educated"] = True
 
         return citizen
+
+        # TODO: make this more efficient aka find a way to not need all these nested ifs
+        # for now, hardcoded to match our traits and list of proposed resources
+    def will_support(self, budget_proposal):
+        count = 0
+        for citizen in self.citizen_list:
+
+            # track just the needs of this citizen
+            needs = [trait for trait in citizen["traits"].keys()
+                     if not citizen["traits"][trait]]
+            num_of_needs = len(needs)
+
+            if num_of_needs == 0:
+                continue
+            else:
+                num_to_vote = math.ceil(num_of_needs / 2.0)
+                cutoff = .8 / num_of_needs
+
+            # for mvp, hardcoded checks
+            # check first if it is a need, then check if amount is sufficient
+            num_of_needs_met = 0
+            for resource, proposal in budget_proposal.items():
+                proposal = float(proposal)
+                if resource == 'infrastructure' and 'lives_in_rural_area' in needs:
+                    if proposal >= cutoff:
+                        num_of_needs_met += 1
+                elif resource == 'education' and 'is_educated' in needs:
+                    if proposal >= cutoff:
+                        num_of_needs_met += 1
+                elif resource == 'water' and 'has_access_to_water' in needs:
+                    if proposal >= cutoff:
+                        num_of_needs_met += 1
+                elif resource == 'sanitation' and 'has_access_to_sanitation' in needs:
+                    if proposal >= cutoff:
+                        num_of_needs_met += 1
+                elif resource == 'electricity' and 'has_access_to_electricity' in needs:
+                    if proposal >= cutoff:
+                        num_of_needs_met += 1
+
+            if num_of_needs_met >= num_to_vote:
+                count+=1
+
+        return count
 
 
 class StatisticalDistributions:
