@@ -28,7 +28,6 @@ class Budget extends React.Component {
             reaction: null,
             budgetProposal: {}
         }
-
     }
 
     componentDidMount() {
