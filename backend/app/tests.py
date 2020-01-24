@@ -10,7 +10,7 @@ from .models import Citizen
 class MainTests(TestCase):
     def test_is_this_on(self):
         """ Trivial test to make sure the testing system is working """
-        self.assertTrue(2+2 == 4)
+        self.assertTrue(2 + 2 == 4)
 
     def setUp(self):
         # Creates three populations:
@@ -144,14 +144,10 @@ class MainTests(TestCase):
                        sample_budget_5]:
             empty_pop_result = empty_population.will_support(budget)
             self.assertEqual(empty_pop_result, 0)
-            if budget==sample_budget_1:
+            if budget == sample_budget_1:
                 cit_pop_results.append(cits_population.will_support(budget))
             fake_cit_pop_results.append(fake_cits_population.will_support(budget))
 
         for i in range(5):
             self.assertEqual(citizen_populations_expected_results[0], cit_pop_results[0])
             self.assertEqual(citizen_populations_expected_results[i], fake_cit_pop_results[i])
-
-
-
-
