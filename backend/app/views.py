@@ -46,7 +46,7 @@ def load_democracy_data():
     and return a parsed json array along with a dictionary that has
     all the max values for each score so that we can normalize
     it later
-    """ 
+    """
     filename = 'lieberman_afr_data.csv'
     path = Path(settings.BACKEND_DATA_DIR, filename)
     democracy_data = []
