@@ -1,7 +1,6 @@
 .aggregate_data_table {
     border: 2px solid black;
     border-collapse: collapse;
-    margin: 5px;
 }
 
 .aggregate_data_table_data {
@@ -10,5 +9,31 @@
 }
 
 .aggregate_data_table_header {
+    text-align: center;
+}
+
+.data_container {
+    margin: 10px 0px;
+    padding: 0px 20px;
+}
+
+.budget_container {
+    padding: 0px 20px;
+}
+
+.slider_descriptor {
+    text-align: center;
+    margin: 0px;
+}
+
+.slider {
+    width: 100%;
+}
+
+.individual_slider_containers {
+    margin: 20px 0px;
+}
+
+.submit_button_container {
     text-align: center;
 }

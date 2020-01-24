@@ -84,7 +84,7 @@ class Citizen:
 class Population:
 
     def __init__(self, citizen_list=None):
-        if citizen_list == None:
+        if citizen_list is None:
             self.citizen_list = []
         else:
             self.citizen_list = citizen_list

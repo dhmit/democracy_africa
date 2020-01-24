@@ -90,14 +90,18 @@ class Budget extends React.Component {
     render() {
         // TODO: once will_vote is implemented, display the results but for now, just display
         //  "submitted"
-        let result = "";
+        let result = 0;
         if (this.state.reaction)
             result = this.state.reaction["will_support"];
 
         const budgetOptions = Object.keys(this.state.budgetProposal).map((resource, key) => (
-            <div key={key}>
-                <strong> {resource} </strong>
+            <div key={key} className="individual_slider_containers">
+                <p className="slider_descriptor">
+                    {(this.state.budgetProposal[resource]*100).toFixed(0)}%
+                    of the budget is being allocated towards <strong> {resource} </strong>
+                </p>
                 <input
+                    className="slider"
                     type="range"
                     min="0"
                     max="1"
@@ -105,7 +109,7 @@ class Budget extends React.Component {
                     value={this.state.budgetProposal[resource]}
                     onChange={(e) => this.handleSliderOnChange(e, resource)}
                 />
-                {this.state.budgetProposal[resource]}
+
             </div>
         ));
 
@@ -115,8 +119,9 @@ class Budget extends React.Component {
                     {budgetOptions}
                 </div>
 
-                <div>
+                <div className="submit_button_container">
                     <button
+
                         type="submit"
                         onClick={this.simulateCitizenResponse}
                     >
@@ -125,7 +130,7 @@ class Budget extends React.Component {
                 </div>
 
                 <div>
-                    {result}
+                    {result} out of {this.props.population.length} people support your budget
                 </div>
 
             </>
@@ -178,7 +183,7 @@ class AggregateData extends React.Component {
                                 </td>
 
                                 <td className="aggregate_data_table_data">
-                                    {(aggregate_values[category]*100).toFixed(2)}%
+                                    {(aggregate_values[category]*100).toFixed(1)}%
                                 </td>
                             </tr>
                         )
@@ -217,7 +222,7 @@ class MainView extends React.Component {
             return (
                 <>
                     <div className="row">
-                        <div className="col-12">
+                        <div className="col-md-8 col-lg-4 col-sm-12 data_container">
                             <AggregateData
                                 population={this.state.population}
                             />
@@ -225,7 +230,7 @@ class MainView extends React.Component {
                     </div>
 
                     <div className="row">
-                        <div className="col-12">
+                        <div className="col-md-8 col-lg-5 col-sm-12 budget_container">
                             <Budget
                                 population={this.state.population}
                             />
