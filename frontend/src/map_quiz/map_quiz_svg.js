@@ -149,14 +149,6 @@ export class MapQuizSVG extends React.Component {
                         )}
                     </svg>
                 </div>
-                <div>
-                    <CountryList
-                        className="list-wrapper"
-                        map_data={this.state.map_data}
-                        click_country={this.state.click_country}
-                        handle_country_list_click={this.handle_country_list_click}
-                    />
-                </div>
                 <div className="u-flex input-wrapper">
                     <NameForm
                         map_data={this.state.map_data}
