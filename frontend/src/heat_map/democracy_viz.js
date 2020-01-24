@@ -2,7 +2,9 @@ import React from 'react';
 import * as d3 from 'd3';
 import PropTypes from 'prop-types';
 
-import { getCookie } from '../common'
+import { MapPath } from "../MapPath";
+
+import { getCookie, project_features_and_create_svg_paths } from '../common'
 import '../map_quiz/map_quiz.css';
 
 /**
@@ -10,6 +12,7 @@ import '../map_quiz/map_quiz.css';
  *
  * Handles all logic, displays information, and makes database query/posts
  */
+
 
 export class DemocracyViz extends  React.Component {
     constructor(props) {
@@ -36,13 +39,13 @@ export class DemocracyViz extends  React.Component {
         }
     }
 
-    handleScoreTypeChange (e) {
+    handleScoreTypeChange(e) {
         this.setState({
             scoreType: e.target.value,
         })
     }
 
-    handleYearChange (e) {
+    handleYearChange(e) {
         this.setState({
             year: e.target.value,
         })
@@ -98,135 +101,15 @@ export class DemocracyViz extends  React.Component {
     }
 }
 
-const scoreTypeRanges = {
-    "v2x_polyarchy": {
-        "min": 0,
-        "max": 1
-    },
-    "v2x_partipdem": {
-        "min": 0,
-        "max": 1
-    },
-    "v2x_freexp_altinf": { //ordinal
-        "min": 0,
-        "max": 1
-    },
-    "v2x_cspart": {
-        "min": 0,
-        "max": 1
-    },
-    "v2xel_locelec": {
-        "min": 0,
-        "max": 1
-    },
-    "v2elboycot": {
-        // what does ordinal values mean and how to convert it to
-        // what is in the database
-        "min": 0,
-        "max": 1
-    },
-    "v2lpname": { // this is a text value???
-        "min": 0,
-        "max": 1
-    },
-    "v2slpname": { // text value
-        "min": 0,
-        "max": 1
-    },
-    "v2tlpname": { //text value
-        "min": 0,
-        "max": 1
-    },
-    "v2psnatpar": { //ordinal
-        "min": 0,
-        "max": 1
-    },
-    "v2excrptps": { //ordinal
-        "min": 0,
-        "max": 1
-    },
-    "v2juaccnt": { //ordinal
-        "min": 0,
-        "max": 1
-    },
-    "v2svstterr": { //percentage
-        "min": 0,
-        "max": 100
-    },
-    "v2meharjrn": { //ordinal
-        "min": 0,
-        "max": 1
-    },
-    "v2peprisch": { //percentage
-        "min": 0,
-        "max": 100
-    },
-    "v2pesecsch": {
-        "min": 0,
-        "max": 100
-    },
-    "v2smonex": { //ordinal
-        "min": 0,
-        "max": 1
-    },
-    "e_migdppc": { //GDP so it can be anything
-        "min": 0,
-        "max": 60000
-    },
-    "e_mipopula": { //population
-        "min": 0,
-        "max": 100000
-    },
-    "gdpcapl": { //not in guidebook
-        "min": 0,
-        "max": 60000
-    },
-    "ethfrac": { //not in guidebook
-        "min": 0,
-        "max": 1
-    },
-    "relfrac": { //not in guidebook
-        "min": 0,
-        "max": 1
-    },
-    "numlang": { //not in guidebook
-        "min": 0,
-        "max": 1
-    },
-    "colbrit": { //not in guidebook
-        "min": 0,
-        "max": 1
-    },
-    "colfra": { //not in guidebook
-        "min": 0,
-        "max": 1
-    },
-    "gdpcap_currusd": { //not in guidebook
-        "min": 0,
-        "max": 1
-    },
-    "adultliteracy": { //not in guidebook
-        "min": 0,
-        "max": 1
-    },
-    "elecaccessrur": { //not in guidebook
-        "min": 0,
-        "max": 1
-    },
-};
-
 export class DemocracyMap extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            lng: 29,
-            lat: -22,
-            zoom: 4,
             map_data: null,
-            mouseover_country: 'Nothing',
+            // mouseover_country: 'Nothing',
         };
         this.csrftoken = getCookie('csrftoken');
-        this.map_ref = React.createRef();
+        // this.map_ref = React.createRef();
         this.getCountryData = this.getCountryData.bind(this);
     }
 
@@ -237,7 +120,7 @@ export class DemocracyMap extends React.Component {
         try {
             const res = await fetch('/api/africa_map_geojson/');
             const geo_json = await res.json();
-            const map_data = this.project_features_and_create_svg_paths(geo_json);
+            const map_data = project_features_and_create_svg_paths(geo_json);
             this.setState({
                 map_data: map_data,
             });
@@ -245,32 +128,6 @@ export class DemocracyMap extends React.Component {
             console.log(e);
         }
     }
-
-    project_features_and_create_svg_paths(geo_json) {
-        const scale = 500;
-        const projection = d3.geoMercator()
-            .center([5, 15])
-            .scale(scale)
-            .translate([scale/2, scale/2]);
-
-        const geoGenerator = d3.geoPath().projection(projection);
-
-        const map_data = [];
-        for (const feature of geo_json.features) {
-            const svg_path = geoGenerator(feature.geometry);
-            const name = feature.properties.name;
-            const postal = feature.properties.postal;
-            const iso = feature.properties.iso_a3; // Not sure if this is the correct ISO code
-            map_data.push({svg_path, name, postal, iso});
-        }
-        return map_data;
-    }
-
-    // handle_country_mouseover(country) {
-    //     this.setState({
-    //         mouseover_country: country.name,
-    //     })
-    // }
 
     getCountryData(countryCode) {
         for (const countryData of this.props.democracyData) {
@@ -285,9 +142,8 @@ export class DemocracyMap extends React.Component {
             return (<div>Loading!</div>);
         }
         const colorScale = d3.scaleLinear()
-            .domain([scoreTypeRanges[this.props.scoreType]["min"],
-                scoreTypeRanges[this.props.scoreType]["max"]])
-            .range(['red', 'blue']);
+            .domain([0, 1])
+            .range(['white', 'blue']);
         return (
             <>
                 {/*<div>{this.state.mouseover_country}</div>*/}
@@ -315,6 +171,8 @@ export class DemocracyMap extends React.Component {
                                 path={country.svg_path}
                                 id={country.postal}
                                 fill={color}
+                                stroke={"black"}
+                                strokeWidth={"1"}
                             />
                         )
                     })}
@@ -329,23 +187,3 @@ DemocracyMap.propTypes = {
     year: PropTypes.string,
 };
 
-export class MapPath extends React.Component {
-    render() {
-        return (
-            <path
-                d={this.props.path}
-                stroke="black"
-                strokeWidth="1"
-                fill={this.props.fill}
-                id={this.props.id}
-                // onMouseOver={this.props.handle_country_mouseover}
-            />
-        );
-    }
-}
-MapPath.propTypes = {
-    path: PropTypes.string,
-    id: PropTypes.string,
-    fill: PropTypes.string,
-    // handle_country_mouseover: PropTypes.func,
-};
