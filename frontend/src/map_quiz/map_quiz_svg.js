@@ -246,6 +246,8 @@ export class Timer extends React.Component {
         this.state = {
             minutes : props.minutes,
             seconds : props.seconds,
+            //started represents whether or not the timer is currently counting down
+            started : false,
         }
     }
 
@@ -254,28 +256,32 @@ export class Timer extends React.Component {
     }
 
     startTimer = () => {
-        this.interval = setInterval(() => {
-            const {minutes, seconds} = this.state;
-            if (seconds > 0) {
-                this.setState((prevState) => ({
-                    seconds: prevState.seconds - 1
-                }))
-            }
-            if (seconds === 0) {
-                if (minutes === 0) {
-                    clearInterval(this.interval)
-                } else {
+        if(this.state.started === false){
+            this.interval = setInterval(() => {
+                const {minutes, seconds} = this.state;
+                if (seconds > 0) {
                     this.setState((prevState) => ({
-                        minutes: prevState.minutes - 1,
-                        seconds: 59
+                        seconds: prevState.seconds - 1
                     }))
                 }
-            }
-        }, 1000)
+                if (seconds === 0) {
+                    if (minutes === 0) {
+                        clearInterval(this.interval)
+                    } else {
+                        this.setState((prevState) => ({
+                            minutes: prevState.minutes - 1,
+                            seconds: 59
+                        }))
+                    }
+                }
+            }, 1000)
+            this.setState({started : true});
+        }
     };
 
     stopTimer = () => {
         clearInterval((this.interval))
+        this.setState({started : false});
     };
 
     render() {
