@@ -15,11 +15,11 @@ What counts as meets the needs? When a percentage of the budget is allocated to 
     id: String,
     name: String,
     traits: {
-        lives_in_rural_area: boolean,                   // affects desire for infrastructure
-        has_access_to_electricity: boolean,             // affects desire for furthering electricity
-        has_access_to_water: boolean,                   // affects desire for furthering water
-        has_access_to_sanitation: boolean,              // affects desire for furthering sanitation
-        is_educated                                     // affects desire for more money to education
+        lives_in_rural_area: boolean,                  // affects desire for infrastructure
+        has_access_to_electricity: boolean,            // affects desire for furthering electricity
+        has_access_to_water: boolean,                  // affects desire for furthering water
+        has_access_to_sanitation: boolean,             // affects desire for furthering sanitation
+        is_educated                                    // affects desire for more money to education
     }
     will_support: boolean,
 }
@@ -213,8 +213,3 @@ class StatisticalDistributions:
                                    "no": .158},
             "house_location": {"rural": .357,
                                "urban": .643}}
-
-new_pop = Population()
-new_pop.create_citizens(20)
-for c in new_pop.citizen_list:
-    print(str(c))
