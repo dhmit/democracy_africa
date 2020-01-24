@@ -19,7 +19,7 @@ from django.urls import path
 from django.conf.urls import url
 
 from app.common import render_react_view
-from app.views import africa_map_geojson
+from app.views import africa_map_geojson, democracy_score_json
 
 urlpatterns = [
     # Django admin page
@@ -27,9 +27,11 @@ urlpatterns = [
 
     # API endpoints
     path('api/africa_map_geojson/', africa_map_geojson),
+    path('api/democracy_scores/', democracy_score_json),
 
     # React views
     url('d3/', render_react_view, {'component_name': 'MapQuizD3'}),
     url('leaflet/', render_react_view, {'component_name': 'MapQuizLeaflet'}),
     url('svg/', render_react_view, {'component_name': 'MapQuizSVG'}),
+    url('heat_map/', render_react_view, {'component_name': 'DemocracyViz'}),
 ]
