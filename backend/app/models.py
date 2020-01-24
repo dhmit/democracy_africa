@@ -13,6 +13,8 @@ class Citizen:
     data from the distribution at the bottom (hard coded the values rather than accessing them
     for now).
     """
+
+    # pylint: disable=too-many-arguments
     def __init__(self, name,
                  lives_in_rural_area=False,
                  has_access_to_electricity=False,
@@ -137,7 +139,7 @@ class Population:
         #  allow for auto updating the user rather than them pressing a button
         count = 0
         for citizen in self.citizen_list:
-            if isinstance(citizen) == Citizen:
+            if isinstance(citizen, Citizen):
                 needs = [trait for trait in citizen.traits.keys()
                          if not citizen.traits[trait]]
             else:
