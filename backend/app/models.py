@@ -137,7 +137,7 @@ class Population:
         #  allow for auto updating the user rather than them pressing a button
         count = 0
         for citizen in self.citizen_list:
-            if type(citizen) == Citizen:
+            if isinstance(citizen) == Citizen:
                 needs = [trait for trait in citizen.traits.keys()
                          if not citizen.traits[trait]]
             else:
@@ -148,9 +148,9 @@ class Population:
 
             if num_of_needs == 0:
                 continue
-            else:
-                num_to_vote = math.ceil(num_of_needs / 2.0)
-                cutoff = .75 / num_of_needs
+
+            num_to_vote = math.ceil(num_of_needs / 2.0)
+            cutoff = .75 / num_of_needs
 
             # for mvp, hardcoded checks
             # check first if it is a need, then check if amount is sufficient

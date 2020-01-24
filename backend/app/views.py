@@ -4,7 +4,6 @@ These classes describe one way of entering into the web site.
 
 from pathlib import Path
 import json
-import math
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response

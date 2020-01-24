@@ -8,6 +8,9 @@ from .models import Citizen
 
 
 class MainTests(TestCase):
+    """
+    Tests for the models of Citizen and Population
+    """
     def test_is_this_on(self):
         """ Trivial test to make sure the testing system is working """
         self.assertTrue(2 + 2 == 4)
@@ -66,6 +69,10 @@ class MainTests(TestCase):
         self.population_with_fake_citizens = Population(fake_citizen_list)
 
     def test_create_citizens(self):
+        """
+        Test the create_citizens function
+        :return: Nothing
+        """
         empty_population = self.empty_population
         empty_population.create_citizens(0)
 
@@ -91,6 +98,10 @@ class MainTests(TestCase):
             self.assertIsInstance(citizen, Citizen)
 
     def test_will_support(self):
+        """
+        Tests the will_support function
+        :return:
+        """
         # Note: not going to test the randomly generated one, yet, due to the randomness factor
         empty_population = self.empty_population
         cits_population = self.population_with_citizens
@@ -139,15 +150,15 @@ class MainTests(TestCase):
         cit_pop_results = []
         fake_cit_pop_results = []
 
-        citizen_populations_expected_results = [1, 0, 2, 2, 2]
+        cit_pop_expected_results = [1, 0, 2, 2, 2]
         for budget in [sample_budget_1, sample_budget_2, sample_budget_3, sample_budget_4,
                        sample_budget_5]:
             empty_pop_result = empty_population.will_support(budget)
             self.assertEqual(empty_pop_result, 0)
-            if budget == sample_budget_1:
-                cit_pop_results.append(cits_population.will_support(budget))
+
+            cit_pop_results.append(cits_population.will_support(budget))
             fake_cit_pop_results.append(fake_cits_population.will_support(budget))
 
         for i in range(5):
-            self.assertEqual(citizen_populations_expected_results[0], cit_pop_results[0])
-            self.assertEqual(citizen_populations_expected_results[i], fake_cit_pop_results[i])
+            self.assertEqual(cit_pop_expected_results[i], cit_pop_results[i])
+            self.assertEqual(cit_pop_expected_results[i], fake_cit_pop_results[i])
