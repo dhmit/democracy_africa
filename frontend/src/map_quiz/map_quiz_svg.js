@@ -21,6 +21,8 @@ export class MapQuizSVG extends React.Component {
             map_data: null,
             click_country: 'Nothing',
             score : 0,
+            minutes : 0,
+            seconds : 30,
         };
         this.csrftoken = getCookie('csrftoken');
         this.map_ref = React.createRef();
@@ -90,13 +92,21 @@ export class MapQuizSVG extends React.Component {
         });
     };
 
+    /**
+     * TODO : Only increment for previously unanswered countries
+     * Increments the user's score when they have a correct response
+     */
     increment_score(){
-        console.log(this.state.score);
         this.setState(prevState => ({
             score: prevState.score + 1,
         }));
     }
 
+    /**
+     * Changes the color of the country depending on the validity of the user response
+     * @param answer String that stores if the user's response was correct
+     * @param country Current country that the user is guessing
+     */
     handle_visual_feedback = (answer, country) => {
         if (answer === 'Correct') {
             this.setState({
@@ -163,14 +173,18 @@ export class MapQuizSVG extends React.Component {
                     {`Score : ${this.state.score}`}
                 </div>
                 <div className="timer">
-                    <Timer/>
+                    <Timer minutes={this.state.minutes} seconds={this.state.seconds}/>
                 </div>
             </div>
         )
     }
 }
 
-
+/**
+ * TODO : Improve the button layout and UI for the list of country names
+ * Renders the names of the countries as clickable buttons and highlights the corresponding
+ * country when clicked
+ */
 export class CountryList extends React.Component {
     render() {
         return (
@@ -213,12 +227,19 @@ export class MapPath extends React.Component {
     }
 }
 
+/**
+ * TODO : Potentially add auto start/stop when user starts answering or finishes the quiz
+ * Timer class that instantiates a timer with user start and stop functionality
+ * Starts at 5 minutes and decrements by 1 second
+ */
 export class Timer extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            minutes : 5,
-            seconds : 0,
+            minutes : props.minutes,
+            seconds : props.seconds,
+            //started represents whether or not the timer is currently counting down
+            started : false,
         }
     }
 
@@ -227,28 +248,32 @@ export class Timer extends React.Component {
     }
 
     startTimer = () => {
-        this.interval = setInterval(() => {
-            const {minutes, seconds} = this.state;
-            if (seconds > 0) {
-                this.setState((prevState) => ({
-                    seconds: prevState.seconds - 1
-                }))
-            }
-            if (seconds === 0) {
-                if (minutes === 0) {
-                    clearInterval(this.interval)
-                } else {
+        if(this.state.started === false){
+            this.interval = setInterval(() => {
+                const {minutes, seconds} = this.state;
+                if (seconds > 0) {
                     this.setState((prevState) => ({
-                        minutes: prevState.minutes - 1,
-                        seconds: 59
+                        seconds: prevState.seconds - 1
                     }))
                 }
-            }
-        }, 1000)
+                if (seconds === 0) {
+                    if (minutes === 0) {
+                        clearInterval(this.interval)
+                    } else {
+                        this.setState((prevState) => ({
+                            minutes: prevState.minutes - 1,
+                            seconds: 59
+                        }))
+                    }
+                }
+            }, 1000)
+            this.setState({started : true});
+        }
     };
 
     stopTimer = () => {
         clearInterval((this.interval))
+        this.setState({started : false});
     };
 
     render() {
@@ -267,7 +292,10 @@ export class Timer extends React.Component {
     }
 }
 
-
+/**
+ * TODO : Prevent the user from re-submitting for previously missed or answered countries
+ * Handles the user's submission of answers and alerts them to the accuracy of their response
+ */
 export class NameForm extends React.Component {
     constructor(props) {
         super(props);
@@ -308,6 +336,11 @@ export class NameForm extends React.Component {
             </form>
         );
     }
+}
+
+Timer.propTypes = {
+    minutes : PropTypes.number,
+    seconds : PropTypes.number,
 }
 
 NameForm.propTypes = {
