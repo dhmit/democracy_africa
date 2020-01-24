@@ -32,6 +32,13 @@ def africa_map_geojson(request):
     africa_geojson = load_africa_geojson()
     return Response(africa_geojson)
 
+# moved it out because tests says that there were too many local variables
+
+
+country_name_index = 0
+country_text_id_index = 1
+year_index = 2
+
 
 def load_democracy_data():
     """
@@ -39,14 +46,10 @@ def load_democracy_data():
     and return a parsed json array along with a dictionary that has
     all the max values for each score so that we can normalize
     it later
-    """
-
+    """ 
     filename = 'lieberman_afr_data.csv'
     path = Path(settings.BACKEND_DATA_DIR, filename)
     democracy_data = []
-    country_name_index = 0
-    country_text_id_index = 1
-    year_index = 2
     with open(path, encoding='utf-8') as democracy_score_file:
         reader = csv.reader(democracy_score_file, delimiter=',')
         headers = next(reader)
