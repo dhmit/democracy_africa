@@ -76,7 +76,7 @@ export class MapQuizSVG extends React.Component {
     }
 
     handle_country_map_click(country) {
-        if (this.state.input_tracker[country] === "None") {
+        if (this.state.input_tracker[country.name] !== "None") {
             alert("You already guessed this country!");
         }
         else {
@@ -164,6 +164,7 @@ export class MapQuizSVG extends React.Component {
                     <NameForm
                         map_data={this.state.map_data}
                         click_country={this.state.click_country}
+                        input_tracker={this.state.input_tracker}
                         handle_visual_feedback={this.handle_visual_feedback}
                     />
                 </div>
@@ -175,36 +176,36 @@ export class MapQuizSVG extends React.Component {
     }
 }
 
-/**
- * TODO : Improve the button layout and UI for the list of country names
- * Renders the names of the countries as clickable buttons and highlights the corresponding
- * country when clicked
- */
-export class CountryList extends React.Component {
-    render() {
-        return (
-            <span>
-                <h3>Countries</h3>
-                {this.props.map_data.map((country, i) => (
-                    this.props.click_country === country.name ?
-                        <button key={i} className={"u-red country-btn"}
-                            onClick={() => this.props.handle_country_list_click(country)}>
-                            {country.name}
-                        </button> :
-                        <button key={i} className={"country-btn"}
-                            onClick={() => this.props.handle_country_list_click(country)}>
-                            {country.name}
-                        </button>
-                ))}
-            </span>
-        );
-    }
-}
-CountryList.propTypes = {
-    map_data: PropTypes.array,
-    click_country: PropTypes.string,
-    handle_country_list_click: PropTypes.func,
-};
+// /**
+//  * TODO : Improve the button layout and UI for the list of country names
+//  * Renders the names of the countries as clickable buttons and highlights the corresponding
+//  * country when clicked
+//  */
+// export class CountryList extends React.Component {
+//     render() {
+//         return (
+//             <span>
+//                 <h3>Countries</h3>
+//                 {this.props.map_data.map((country, i) => (
+//                     this.props.click_country === country.name ?
+//                         <button key={i} className={"u-red country-btn"}
+//                             onClick={() => this.props.handle_country_list_click(country)}>
+//                             {country.name}
+//                         </button> :
+//                         <button key={i} className={"country-btn"}
+//                             onClick={() => this.props.handle_country_list_click(country)}>
+//                             {country.name}
+//                         </button>
+//                 ))}
+//             </span>
+//         );
+//     }
+// }
+// CountryList.propTypes = {
+//     map_data: PropTypes.array,
+//     click_country: PropTypes.string,
+//     handle_country_list_click: PropTypes.func,
+// };
 
 
 export class MapPath extends React.Component {
@@ -301,7 +302,7 @@ Timer.propTypes = {
 
 
 /**
- * TODO : Prevent the user from re-submitting for previously missed or answered countries
+ * TODO : Prevent the user from re-submitting for a country right after they answer 
  * Handles the user's submission of answers and alerts them to the accuracy of their response
  */
 export class NameForm extends React.Component {
@@ -318,18 +319,18 @@ export class NameForm extends React.Component {
     }
 
     handleSubmit(event) {
-        if (this.props.click_country.toLowerCase() === this.state.value.toLowerCase()) {
+        const selected_country = this.props.click_country;
+        if (selected_country.toLowerCase() === this.state.value.toLowerCase()) {
             alert(this.state.value + " is correct!");
             event.preventDefault();
-            this.props.handle_visual_feedback("Correct", this.props.click_country);
-        }
-        else {
+            this.props.handle_visual_feedback("Correct", selected_country);
+        } else {
             alert(this.state.value + " is incorrect...");
-            alert("This country's name is: " + this.props.click_country);
+            alert("This country's name is: " + selected_country);
             event.preventDefault();
-            this.props.handle_visual_feedback("Incorrect", this.props.click_country);
+            this.props.handle_visual_feedback("Incorrect", selected_country);
         }
-        this.setState({value  : ''});
+        this.setState({value: ''});
     }
 
     render() {
@@ -348,5 +349,6 @@ export class NameForm extends React.Component {
 NameForm.propTypes = {
     map_data: PropTypes.array,
     click_country: PropTypes.string,
+    input_tracker: PropTypes.object,
     handle_visual_feedback: PropTypes.func,
 };
