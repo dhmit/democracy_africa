@@ -133,7 +133,7 @@ export class MapQuizSVG extends React.Component {
             return (<div>Loading!</div>);
         }
         return (
-            <div className="u-flex">
+            <div className="u-flex-column">
                 <div className="map-wrapper">
                     <svg
                         height="1000"
@@ -159,6 +159,9 @@ export class MapQuizSVG extends React.Component {
                         )}
                     </svg>
                 </div>
+                <div className="score">
+                    {`Score : ${this.state.score}`}
+                </div>
                 <div className="u-flex input-wrapper">
                     <NameForm
                         map_data={this.state.map_data}
@@ -169,9 +172,7 @@ export class MapQuizSVG extends React.Component {
                             () => this.handle_visual_feedback('Correct', this.state.click_country)}
                     />
                 </div>
-                <div className="score">
-                    {`Score : ${this.state.score}`}
-                </div>
+
                 <div className="timer">
                     <Timer minutes={this.state.minutes} seconds={this.state.seconds}/>
                 </div>
@@ -311,7 +312,7 @@ export class NameForm extends React.Component {
     }
 
     handleSubmit(event) {
-        if (this.props.click_country === this.state.value) {
+        if (this.props.click_country.toLowerCase() === this.state.value.toLowerCase()) {
             alert(this.state.value + " is correct!");
             event.preventDefault();
             // this.props.result = "Correct";
@@ -323,6 +324,7 @@ export class NameForm extends React.Component {
             event.preventDefault();
             this.props.result = "Incorrect";
         }
+        this.setState({value  : ''});
     }
 
     render() {

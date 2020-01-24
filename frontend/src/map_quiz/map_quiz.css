@@ -21,11 +21,18 @@ body {
 
 .input-wrapper {
     position: fixed;
-    margin-left: 1050px;
+    margin-left: 800px;
+    margin-top: 50px;
 }
 
 .u-flex {
     display: flex;
+}
+
+.u-flex-column{
+    display : flex;
+    flex-direction: column;
+    flex-wrap : wrap;
 }
 
 .u-red {
@@ -34,12 +41,12 @@ body {
 
 .score{
     position : fixed;
-    margin-left: 1050px;
-    margin-top : 50px;
+    margin-left: 800px;
+    font-size: 24px;
 }
 
 .timer{
     position : fixed;
-    margin-left: 1050px;
+    margin-left: 800px;
     margin-top : 100px;
 }
