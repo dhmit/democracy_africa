@@ -27,7 +27,7 @@ export class MapQuizSVG extends React.Component {
         this.csrftoken = getCookie('csrftoken');
         this.map_ref = React.createRef();
 
-        this.increment_score = this.increment_score.bind(this);
+        this.handle_visual_feedback = this.handle_visual_feedback.bind(this);
     }
 
     /**
@@ -70,65 +70,60 @@ export class MapQuizSVG extends React.Component {
     input_tracking(geo_json) {
         const input_tracker = {};
         for (const feature of geo_json.features) {
-            input_tracker[feature.properties.name] = null;
+            input_tracker[feature.properties.name] = "None";
         }
         return input_tracker;
     }
 
     handle_country_map_click(country) {
-        if (this.state.input_tracker[country] !== null) {
+        if (this.state.input_tracker[country] === "None") {
+            alert("You already guessed this country!");
+        }
+        else {
             this.setState({
                 click_country: country.name,
             })
         }
-        else {
-            alert("You already guessed this country!");
-        }
     }
 
-    handle_country_list_click = (country) => {
-        this.setState({
-            click_country: country.name,
-        });
-    };
-
-    /**
-     * TODO : Only increment for previously unanswered countries
-     * Increments the user's score when they have a correct response
-     */
-    increment_score(){
-        this.setState(prevState => ({
-            score: prevState.score + 1,
-        }));
-    }
+    // handle_country_list_click = (country) => {
+    //     this.setState({
+    //         click_country: country.name,
+    //     });
+    // };
 
     /**
      * Changes the color of the country depending on the validity of the user response
      * @param answer String that stores if the user's response was correct
      * @param country Current country that the user is guessing
      */
-    handle_visual_feedback = (answer, country) => {
-        if (answer === 'Correct') {
-            this.setState({
-                fill: '#33cc33',
-                input_tracker:{
-                    [country]: true,
-                }
-            });
-        }
-        else if (answer === 'Incorrect') {
-            this.setState({
-                fill: '#ff0000',
+    handle_visual_feedback(answer, country) {
+        if (answer === "Correct") {
+            this.setState(prevState => ({
                 input_tracker: {
-                    [country]: true,
+                    ...prevState.input_tracker,
+                    [country]: "Correct",
                 }
-            });
+            }));
         }
-        alert("Hi");
-
-    };
+        else if (answer === "Incorrect") {
+            this.setState(prevState => ({
+                input_tracker: {
+                    ...prevState.input_tracker,
+                    [country]: "Incorrect",
+                }
+            }));
+        }
+    }
 
     render() {
+        let score = 0;
+        if (this.state.input_tracker) {
+            const correct_responses = Object.values(this.state.input_tracker).filter(
+                (input) => input === "Correct");
+            score = correct_responses.length;
+        }
+
         if (!this.state.map_data) {
             return (<div>Loading!</div>);
         }
@@ -140,37 +135,37 @@ export class MapQuizSVG extends React.Component {
                         width="800"
                         id="content"
                     >
-                        {this.state.map_data.map((country, i) =>
-                            (
-                                <MapPath
-                                    key={i}
-                                    path={country.svg_path}
-                                    id={country.postal}
-                                    fill={
-                                        this.state.click_country === country.name
-                                            ? '#C17767'
-                                            : '#E7D7C1'
-                                    }
-                                    handle_country_click={
-                                        () => this.handle_country_map_click(country)
-                                    }
-                                />
-                            )
-                        )}
+                        {this.state.map_data.map((country, i) => {
+                            let countryFill = "#F6F4D2";
+                            if (this.state.input_tracker[country.name] === "Correct") {
+                                countryFill = "#CBDFBD";
+                            } else if (this.state.input_tracker[country.name] === "Incorrect") {
+                                countryFill = "#F19C79";
+                            } else if (this.state.click_country === country.name) {
+                                countryFill = "#C0CCD3";
+                            }
+
+                            return <MapPath
+                                key={i}
+                                path={country.svg_path}
+                                id={country.postal}
+                                fill={countryFill}
+                                handle_country_click={
+                                    () => this.handle_country_map_click(country)
+                                }
+                            />
+                        })}
                     </svg>
                 </div>
                 <div className="u-flex input-wrapper">
                     <NameForm
                         map_data={this.state.map_data}
                         click_country={this.state.click_country}
-                        result = 'None'
-                        increment_score={this.increment_score}
-                        handle_visual_feedback={
-                            () => this.handle_visual_feedback('Correct', this.state.click_country)}
+                        handle_visual_feedback={this.handle_visual_feedback}
                     />
                 </div>
                 <div className="score">
-                    {`Score : ${this.state.score}`}
+                    {`Score : ${score}`}
                 </div>
                 <div className="timer">
                     <Timer minutes={this.state.minutes} seconds={this.state.seconds}/>
@@ -226,6 +221,13 @@ export class MapPath extends React.Component {
         );
     }
 }
+
+MapPath.propTypes = {
+    path: PropTypes.string,
+    id: PropTypes.string,
+    fill: PropTypes.string,
+    handle_country_click: PropTypes.func,
+};
 
 /**
  * TODO : Potentially add auto start/stop when user starts answering or finishes the quiz
@@ -292,6 +294,12 @@ export class Timer extends React.Component {
     }
 }
 
+Timer.propTypes = {
+    minutes : PropTypes.number,
+    seconds : PropTypes.number,
+}
+
+
 /**
  * TODO : Prevent the user from re-submitting for previously missed or answered countries
  * Handles the user's submission of answers and alerts them to the accuracy of their response
@@ -300,7 +308,6 @@ export class NameForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {value: ''};
-
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -314,14 +321,13 @@ export class NameForm extends React.Component {
         if (this.props.click_country === this.state.value) {
             alert(this.state.value + " is correct!");
             event.preventDefault();
-            // this.props.result = "Correct";
-            this.props.increment_score();
+            this.props.handle_visual_feedback("Correct", this.props.click_country);
         }
         else {
             alert(this.state.value + " is incorrect...");
             alert("This country's name is: " + this.props.click_country);
             event.preventDefault();
-            this.props.result = "Incorrect";
+            this.props.handle_visual_feedback("Incorrect", this.props.click_country);
         }
     }
 
@@ -338,21 +344,8 @@ export class NameForm extends React.Component {
     }
 }
 
-Timer.propTypes = {
-    minutes : PropTypes.number,
-    seconds : PropTypes.number,
-}
-
 NameForm.propTypes = {
     map_data: PropTypes.array,
     click_country: PropTypes.string,
-    increment_score : PropTypes.func,
-    result: PropTypes.string,
-};
-
-MapPath.propTypes = {
-    path: PropTypes.string,
-    id: PropTypes.string,
-    fill: PropTypes.string,
-    handle_country_click: PropTypes.func,
+    handle_visual_feedback: PropTypes.func,
 };
