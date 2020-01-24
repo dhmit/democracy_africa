@@ -25,58 +25,62 @@ What counts as meets the needs? When a percentage of the budget is allocated to 
 }
 
 """
-# TODO: do a simple Python class with properties. Once we have real data, convert to Django models.
 
 
 class Citizen:
-    def __init__(self, name, lives_in_rural_area=False, has_access_to_electricity=False,
+    def __init__(self, name, sex="Unknown", ethnicity="Unknown", age="Unknown",
+                 lives_in_rural_area=False,
+                 has_access_to_electricity=False,
                  has_access_to_water=False,
-                 has_access_to_sanitation=False, is_educated=False):
+                 has_access_to_sanitation=False,
+                 is_educated=False,
+                 poverty_level="Unknown",
+                 housing_type="Unknown",
+                 ):
         self.name = name
+        self.sex = sex
+        self.ethnicity = ethnicity
+        self.age = age
+        self.poverty_level = poverty_level
+        self.housing_type = housing_type
         self.traits = {"lives_in_rural_area": lives_in_rural_area,
                        "has_access_to_electricity": has_access_to_electricity,
                        "has_access_to_sanitation": has_access_to_sanitation,
                        "has_access_to_water": has_access_to_water,
-                       "is_educated": is_educated}
-        # self.lives_in_rural_area = lives_in_rural_area
-        # self.has_access_to_electricity = has_access_to_electricity
-        # self.has_access_to_water = has_access_to_water
-        # self.has_access_to_sanitation = has_access_to_sanitation
-        # self.is_educated = is_educated
+                       "is_educated": is_educated,
+                       }
 
-    # Don't think we actually need this, but I already wrote it and didn't want to delete it yet
     def __str__(self):
         return_string = self.name + "\n"
-#        return_string += "Age: " + self.age + "\n"
-#        return_string += "In the " + self.poverty_level + " income bracket\n"
-#        return_string += "Lives in a(n) " + self.housing_type + " in a(n) " +
-        #        self.house_location +
-#        \"\n"
-        if self.has_access_to_water:
+        return_string += "Age: " + self.age + "\n"
+        return_string += "In the " + self.poverty_level + " income bracket\n"
+        return_string += "Lives in a(n) " + self.housing_type + "\n"
+
+        if self.traits["has_access_to_water"]:
             return_string += "Has access to clean/fresh water"
         else:
             return_string += "Does not have access to clean/fresh water"
         return_string += "\n"
 
-        if self.has_access_to_electricity:
+        if self.traits["has_access_to_electricity"]:
             return_string += "Has access to electricity"
         else:
             return_string += "Does not have access to electricity"
         return_string += "\n"
 
-        if self.has_access_to_sanitation:
+        if self.traits["has_access_to_sanitation"]:
             return_string += "Has access to sanitation"
         else:
             return_string += "Does not have access to sanitation"
         return_string += "\n"
 
-        if self.is_educated:
+        if self.traits["is_educated"]:
             return_string += "Has had some education"
         else:
             return_string += "Has not had any education"
         return_string += "\n"
 
-#        return_string += "Identifies ethnically as " + self.co-ethnicity + " and as a " + self.sex
+        return_string += "Identifies ethnically as " + self.ethnicity + " and as a " + self.sex
 
         return return_string
 
@@ -91,18 +95,19 @@ class Population:
         self.population_size = 0
 
     def create_citizens(self, number_to_create):
+        # citizens are randomly generated and added to citizen list
         for i in range(number_to_create):
             current_citizen = Citizen(str(self.population_size + 1))
             self.assign_demographic_properties(current_citizen)
             self.citizen_list.append(current_citizen)
             self.population_size += 1
 
-    # TODO Need some function that will return the population as a list of citizens
     def get_population(self):
         return self.citizen_list
 
     def assign_demographic_properties(self, citizen):
         # TODO generalize function to take in statistical distributions instead of hardcoding them
+        # citizen is randomly assigned demographic properties based on hardcoded distributions
         rural_area = random.randint(0, 100)
         electricity_access = random.randint(0, 100)
         water_access = random.randint(0, 100)
@@ -126,9 +131,9 @@ class Population:
 
         return citizen
 
+    def will_support(self, budget_proposal):
         # TODO: make this more efficient aka find a way to not need all these nested ifs
         # for now, hardcoded to match our traits and list of proposed resources
-    def will_support(self, budget_proposal):
         count = 0
         for citizen in self.citizen_list:
 
@@ -208,3 +213,8 @@ class StatisticalDistributions:
                                    "no": .158},
             "house_location": {"rural": .357,
                                "urban": .643}}
+
+new_pop = Population()
+new_pop.create_citizens(20)
+for c in new_pop.citizen_list:
+    print(str(c))
