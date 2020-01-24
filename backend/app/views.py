@@ -8,17 +8,21 @@ import math
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import (
-    Citizen,
-)
+
+# We'll use these once we move towards using Django models
+
+# from .models import (
+#     Citizen,
+# )
 # from .serializers import (
 #     CitizenSerializer,
 # )
+# from .models import Citizen
 
 from django.conf import settings
 
 from .models import Population
-from .models import Citizen
+
 from.serializers import PopulationSerializer
 
 
@@ -46,13 +50,13 @@ def africa_map_geojson(request):
 @api_view(['POST'])
 def budget_response(request):
     """
-    Takes in budget allocation and citizen
-    and returns the percentage of yays and nays
+    Takes in budget allocation and population
+    and returns the number of people who will support the budget
     """
     budget = request.data.get('budget')
-    population = Population(request.data.get('population'))
-    # TODO: for each citizen, call will_vote() and accumulate the yays and nays
-    supportive_people = population.will_support(budget)
+    sample_population = Population(request.data.get('population'))
+
+    supportive_people = sample_population.will_support(budget)
 
     return Response({
         "will_support": supportive_people,
@@ -62,7 +66,7 @@ def budget_response(request):
 @api_view(['GET'])
 def population(request):
     """
-    Load Africa map GeoJSON for frontend
+    Generates a population of Citizen objects that then get passed into the frontend
     """
     population_obj = Population()
     population_obj.create_citizens(1000)

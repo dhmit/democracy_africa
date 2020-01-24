@@ -8,7 +8,7 @@ from .models import (
     Citizen,
 )
 
-#  TODO: implement me!
+#  TODO: implement once we want to move to Django models, but not yet!
 # class CitizenSerializer(serializers.modelSerializer):
 #     """
 #     Serializes a Citizen
@@ -23,6 +23,7 @@ from .models import (
 
 
 class CitizenSerializer(serializers.Serializer):
+    """Serializes citizens class and its related attributes"""
     name = serializers.ReadOnlyField()
     lives_in_rural_area = serializers.ReadOnlyField()
     has_access_to_electricity = serializers.ReadOnlyField()
@@ -36,6 +37,7 @@ class CitizenSerializer(serializers.Serializer):
 
     def update(self, instance, validated_data):
         """ We will not update data using this serializer """
+
 
 class PopulationSerializer(serializers.Serializer):
     """ Serializes population class """

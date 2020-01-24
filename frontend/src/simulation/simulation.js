@@ -88,8 +88,6 @@ class Budget extends React.Component {
 
 
     render() {
-        // TODO: once will_vote is implemented, display the results but for now, just display
-        //  "submitted"
         let result = 0;
         if (this.state.reaction)
             result = this.state.reaction["will_support"];
