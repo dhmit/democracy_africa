@@ -170,7 +170,7 @@ class Population:
                         num_of_needs_met += 1
 
             if num_of_needs_met >= num_to_vote:
-                count+=1
+                count += 1
 
         return count
 
