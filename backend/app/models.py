@@ -6,43 +6,21 @@ Models for the democracy_africa app.
 import random
 import math
 
-"""
-
-For the budget allocation, if three needs are met, then the citizen is in favor.
-What counts as meets the needs? When a percentage of the budget is allocated to it.
-
-{
-    id: String,
-    name: String,
-    traits: {
-        lives_in_rural_area: boolean,                  // affects desire for infrastructure
-        has_access_to_electricity: boolean,            // affects desire for furthering electricity
-        has_access_to_water: boolean,                  // affects desire for furthering water
-        has_access_to_sanitation: boolean,             // affects desire for furthering sanitation
-        is_educated                                    // affects desire for more money to education
-    }
-    will_support: boolean,
-}
-
-"""
-
 
 class Citizen:
-    def __init__(self, name, sex="Unknown", ethnicity="Unknown", age="Unknown",
+    """
+    Class that models a Person in the population. Attributes are randomly generated using
+    data from the distribution at the bottom (hard coded the values rather than accessing them
+    for now).
+    """
+    def __init__(self, name,
                  lives_in_rural_area=False,
                  has_access_to_electricity=False,
-                 has_access_to_water=False,
                  has_access_to_sanitation=False,
+                 has_access_to_water=False,
                  is_educated=False,
-                 poverty_level="Unknown",
-                 housing_type="Unknown",
                  ):
         self.name = name
-        self.sex = sex
-        self.ethnicity = ethnicity
-        self.age = age
-        self.poverty_level = poverty_level
-        self.housing_type = housing_type
         self.traits = {"lives_in_rural_area": lives_in_rural_area,
                        "has_access_to_electricity": has_access_to_electricity,
                        "has_access_to_sanitation": has_access_to_sanitation,
@@ -51,10 +29,16 @@ class Citizen:
                        }
 
     def __str__(self):
+        """
+        Just to print out information on the Citizen for debugging, no actual use
+        :return: String representation of the Citizen
+        """
         return_string = self.name + "\n"
-        return_string += "Age: " + self.age + "\n"
-        return_string += "In the " + self.poverty_level + " income bracket\n"
-        return_string += "Lives in a(n) " + self.housing_type + "\n"
+
+        if self.traits["lives_in_rural_area"]:
+            return_string += "Lives in a(n) rural area\n"
+        else:
+            return_string += "Lives in a(n) urban area\n"
 
         if self.traits["has_access_to_water"]:
             return_string += "Has access to clean/fresh water"
@@ -80,12 +64,13 @@ class Citizen:
             return_string += "Has not had any education"
         return_string += "\n"
 
-        return_string += "Identifies ethnically as " + self.ethnicity + " and as a " + self.sex
-
         return return_string
 
 
 class Population:
+    """
+    Model for an entire population. Creates the citizens and stores them in a list.
+    """
 
     def __init__(self, citizen_list=None):
         if citizen_list is None:
@@ -95,19 +80,24 @@ class Population:
         self.population_size = 0
 
     def create_citizens(self, number_to_create):
-        # citizens are randomly generated and added to citizen list
+        """
+        citizens are randomly generated (from the distribution) and added to citizen list
+        :param number_to_create: Number of citizens to make
+        :return: Nothing, just saves it to a class attribute
+        """
         for i in range(number_to_create):
             current_citizen = Citizen(str(self.population_size + 1))
             self.assign_demographic_properties(current_citizen)
             self.citizen_list.append(current_citizen)
             self.population_size += 1
 
-    def get_population(self):
-        return self.citizen_list
-
     def assign_demographic_properties(self, citizen):
+        """
+        citizen is randomly assigned demographic properties based on hardcoded distributions
+        :param citizen: Takes in a default citizen object (has name, but all properties are false)
+        :return: The citizen with its new values, if it was assigned any
+        """
         # TODO generalize function to take in statistical distributions instead of hardcoding them
-        # citizen is randomly assigned demographic properties based on hardcoded distributions
         rural_area = random.randint(0, 100)
         electricity_access = random.randint(0, 100)
         water_access = random.randint(0, 100)
@@ -132,21 +122,35 @@ class Population:
         return citizen
 
     def will_support(self, budget_proposal):
+        """
+        Determines whether a citizen will support the proposed budget. Right now it is hardcoded
+        with the following logic: a person's needs are all of the attributes that are currently
+        false. A need is met by the budget if the proportion for that need is greater than
+        .75/# of needs. The person will support the budget if their # of needs/2, rounded up,
+        are met
+        :param budget_proposal: Budget determined by the user in the frontend, uses proportions
+        that are <= 1
+        :return: The number of citizens that support the budget
+        """
         # TODO: make this more efficient aka find a way to not need all these nested ifs
-        # for now, hardcoded to match our traits and list of proposed resources
+        # TODO: Considerin gadding this to the frontend (minimize the # of requests) and will
+        #  allow for auto updating the user rather than them pressing a button
         count = 0
         for citizen in self.citizen_list:
+            if type(citizen) == Citizen:
+                needs = [trait for trait in citizen.traits.keys()
+                         if not citizen.traits[trait]]
+            else:
+                needs = [trait for trait in citizen["traits"].keys()
+                         if not citizen["traits"][trait]]
 
-            # track just the needs of this citizen
-            needs = [trait for trait in citizen["traits"].keys()
-                     if not citizen["traits"][trait]]
             num_of_needs = len(needs)
 
             if num_of_needs == 0:
                 continue
             else:
                 num_to_vote = math.ceil(num_of_needs / 2.0)
-                cutoff = .8 / num_of_needs
+                cutoff = .75 / num_of_needs
 
             # for mvp, hardcoded checks
             # check first if it is a need, then check if amount is sufficient
@@ -168,7 +172,6 @@ class Population:
                 elif resource == 'electricity' and 'has_access_to_electricity' in needs:
                     if proposal >= cutoff:
                         num_of_needs_met += 1
-
             if num_of_needs_met >= num_to_vote:
                 count += 1
 
@@ -176,6 +179,14 @@ class Population:
 
 
 class StatisticalDistributions:
+    """
+    Considering using a class or function that will allow for easily adding and working with real
+    life distributions of certain traits. Currently these are all hardcoded and unused (the values
+    are used, but by just hardcoding magic numbers into the assign_demographic_properties function
+    """
+    # TODO: Once we determine how we will use the simulation, make this class into a usable way
+    #  to gather real life distributions of usable data that can then be accessed by the
+    #  Population class
     def __init__(self):
         self.stats = {
             "housing": {"formal dwelling": .776,

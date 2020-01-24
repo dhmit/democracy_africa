@@ -55,7 +55,6 @@ def budget_response(request):
     """
     budget = request.data.get('budget')
     sample_population = Population(request.data.get('population'))
-
     supportive_people = sample_population.will_support(budget)
 
     return Response({
