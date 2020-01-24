@@ -158,7 +158,7 @@ export class MapQuizSVG extends React.Component {
                     </svg>
                 </div>
                 <div className="score">
-                    {`Score : ${this.state.score}`}
+                    {`Score : ${score}`}
                 </div>
                 <div className="u-flex input-wrapper">
                     <NameForm
@@ -166,9 +166,6 @@ export class MapQuizSVG extends React.Component {
                         click_country={this.state.click_country}
                         handle_visual_feedback={this.handle_visual_feedback}
                     />
-                </div>
-                <div className="score">
-                    {`Score : ${score}`}
                 </div>
                 <div className="timer">
                     <Timer minutes={this.state.minutes} seconds={this.state.seconds}/>
