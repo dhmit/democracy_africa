@@ -21,7 +21,7 @@ body {
 
 .input-wrapper {
     position: fixed;
-    margin-left: 800px;
+    margin-left: 50%;
     margin-top: 50px;
 }
 
@@ -41,12 +41,12 @@ body {
 
 .score{
     position : fixed;
-    margin-left: 800px;
+    margin-left: 50%;
     font-size: 24px;
 }
 
 .timer{
     position : fixed;
-    margin-left: 800px;
+    margin-left: 50%;
     margin-top : 100px;
 }
