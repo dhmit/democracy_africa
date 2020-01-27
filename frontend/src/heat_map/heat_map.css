@@ -1,13 +1,21 @@
 body {
     background: #c0a16b;
 }
+
+.map{
+    text-align: center;
+}
 .slidecontainer {
 
-    width: 80%; /* Width of the outside container */
-    margin: 50px;
-    position: relative;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
+    /*width: 90%; !* Width of the outside container *!*/
+    margin-left: 5%;
+    margin-right: 5%;
+
+    /*margin: 50px;*/
+    /*text-align: center;*/
+    /*position: relative;*/
+    /*-ms-transform: translateY(-50%);*/
+    /*transform: translateY(-50%);*/
 
 }
 
@@ -24,7 +32,7 @@ body {
     opacity: 1; /* Set transparency (for mouse-over effects on hover) */
     -webkit-transition: .2s; /* 0.2 seconds transition on hover */
     transition: opacity .2s;
-    horiz-align: center;
+
 
 
 }
@@ -45,14 +53,14 @@ body {
 }
 
 .slider::-moz-range-thumb {
-  width: 25px; /* Set a specific slider handle width */
+  /*width: 25px; !* Set a specific slider handle width *!*/
   height: 25px; /* Slider handle height */
   background: #4CAF50; /* Green background */
   cursor: pointer; /* Cursor on hover */
 }
 
-input {
-    margin: 10px;
-    vertical-align: center;
+/*input {*/
+/*    margin: 10px;*/
+/*    vertical-align: center;*/
 
-}
+/*}*/
