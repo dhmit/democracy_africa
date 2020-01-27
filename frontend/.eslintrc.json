@@ -26,7 +26,8 @@
         "no-console": ["off"],
         "no-unused-vars": ["error", {
             "argsIgnorePattern": "^_"
-        }]
+        }],
+        "semi": ["error", "always"]
     },
     "settings": {
         "react": {
