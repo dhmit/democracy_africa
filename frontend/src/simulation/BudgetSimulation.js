@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { getCookie }from "../common";
 
-import "./Simulation.css"
+import "./BudgetSimulation.css"
 
 /**
  * Main component for the simulation.
@@ -49,7 +49,7 @@ class Budget extends React.Component {
                 population: this.props.population,
                 // hardcoded fake data for now
                 budget: this.state.budgetProposal,
-            }
+            };
             const response = await fetch(url, {
                 method: 'POST',
                 body: JSON.stringify(data),
@@ -64,7 +64,7 @@ class Budget extends React.Component {
         } else { // otherwise throw an alert
             window.alert("Proposal exceeded budget");
         }
-    }
+    };
 
     handleSliderOnChange = (e, resource) => {
         const newVal = e.target.value;
@@ -74,7 +74,7 @@ class Budget extends React.Component {
         this.setState({
             budgetProposal: newProposal,
         })
-    }
+    };
 
     /*
     *  Return false is the proposal exceeds the budget
@@ -84,13 +84,14 @@ class Budget extends React.Component {
         Object.keys(this.state.budgetProposal).forEach((resource) =>
             sum += parseFloat(this.state.budgetProposal[resource]));
         return sum <= 1
-    }
+    };
 
 
     render() {
         let result = 0;
-        if (this.state.reaction)
+        if (this.state.reaction) {
             result = this.state.reaction["will_support"];
+        }
 
         const budgetOptions = Object.keys(this.state.budgetProposal).map((resource, key) => (
             <div key={key} className="individual_slider_containers">
@@ -152,10 +153,12 @@ class AggregateData extends React.Component {
         const aggregate_values = {};
         for (let i = 0; i < this.state.categories.length; i++) {
             let total = 0;
+            let category = this.state.categories[i];
             for (let j = 0; j < this.props.population.length; j++) {
-                total += this.props.population[j]["traits"][this.state.categories[i]]
-                //Above: index into the population to get a person, then that person's traits and
-                //then the value (true or false) of that trait
+                let citizen = this.props.population[j];
+                total += citizen["traits"][category]
+                //Above: index into the population to get the citizen, then that citizen's
+                // traits and then the value (true or false) of that trait for each category
             }
             aggregate_values[[this.state.categories[i]]] = total/this.props.population.length;
         }
@@ -195,13 +198,13 @@ AggregateData.propTypes = {
     population: PropTypes.array,
 };
 
-class MainView extends React.Component {
+export class BudgetVotingSimViz extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
             population: null,
-        }
+        };
         this.csrftoken = getCookie('csrftoken');
     }
 
@@ -216,32 +219,31 @@ class MainView extends React.Component {
     }
 
     render() {
-        if (this.state.population) {
-            return (
-                <>
-                    <div className="row">
-                        <div className="col-md-8 col-lg-4 col-sm-12 data_container">
-                            <AggregateData
-                                population={this.state.population}
-                            />
-                        </div>
-                    </div>
-
-                    <div className="row">
-                        <div className="col-md-8 col-lg-5 col-sm-12 budget_container">
-                            <Budget
-                                population={this.state.population}
-                            />
-                        </div>
-                    </div>
-                </>
-            )
-        } else {
+        if (!this.state.population) {
             return (
                 <div>Loading!</div>
             )
         }
 
+        return (
+            <>
+                <div className="row">
+                    <div className="col-md-8 col-lg-4 col-sm-12 data_container">
+                        <AggregateData
+                            population={this.state.population}
+                        />
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col-md-8 col-lg-5 col-sm-12 budget_container">
+                        <Budget
+                            population={this.state.population}
+                        />
+                    </div>
+                </div>
+            </>
+        )
+
     }
 }
-export default MainView;

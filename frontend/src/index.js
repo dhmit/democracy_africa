@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { MapQuizD3 } from './map_quiz/map_quiz_d3.js';
 import { MapQuizSVG } from './map_quiz/map_quiz_svg.js';
-import MainView from './simulation/simulation.js';
+import { BudgetVotingSimViz } from './simulation/BudgetSimulation.js';
 import { DemocracyViz } from './heat_map/democracy_viz.js';
 
 window.app_modules = {
@@ -15,6 +15,6 @@ window.app_modules = {
     // Add all frontend views here
     MapQuizD3,
     MapQuizSVG,
-    MainView,
+    BudgetVotingSimViz,
     DemocracyViz,
 };

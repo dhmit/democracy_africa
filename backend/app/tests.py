@@ -11,9 +11,6 @@ class MainTests(TestCase):
     """
     Tests for the models of Citizen and Population
     """
-    def test_is_this_on(self):
-        """ Trivial test to make sure the testing system is working """
-        self.assertTrue(2 + 2 == 4)
 
     def setUp(self):
         # Creates three populations:
@@ -87,10 +84,10 @@ class MainTests(TestCase):
         fake_cits_population.create_citizens(5)
 
         # Test that the correct number of citizens were created
-        self.assertTrue(len(empty_population.citizen_list) == 0)
-        self.assertTrue(len(other_population.citizen_list) == 1)
-        self.assertTrue(len(cits_population.citizen_list) == 10)
-        self.assertTrue(len(fake_cits_population.citizen_list) == 10)
+        self.assertEqual(len(empty_population.citizen_list), 0)
+        self.assertEqual(len(other_population.citizen_list), 1)
+        self.assertEqual(len(cits_population.citizen_list), 10)
+        self.assertEqual(len(fake_cits_population.citizen_list), 10)
 
         # Test that the population is in fact a list of citizens (or empty list rather than none)
         self.assertEqual(empty_population.citizen_list, [])
