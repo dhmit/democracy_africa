@@ -21,7 +21,7 @@ export class MapQuizSVG extends React.Component {
             map_data: null,
             click_country: 'Nothing',
             score : 0,
-            minutes : 8,
+            minutes : 5,
             seconds : 0,
         };
         this.csrftoken = getCookie('csrftoken');
@@ -60,7 +60,7 @@ export class MapQuizSVG extends React.Component {
         const map_data = [];
         for (const feature of geo_json.features) {
             const svg_path = geoGenerator(feature.geometry);
-            const name = feature.properties.name;
+            const name = feature.properties.name_long;
             const postal = feature.properties.postal;
             map_data.push({svg_path, name, postal});
         }
@@ -70,7 +70,7 @@ export class MapQuizSVG extends React.Component {
     input_tracking(geo_json) {
         const input_tracker = {};
         for (const feature of geo_json.features) {
-            input_tracker[feature.properties.name] = "None";
+            input_tracker[feature.properties.name_long] = "None";
         }
         return input_tracker;
     }
@@ -116,6 +116,21 @@ export class MapQuizSVG extends React.Component {
             }));
         }
     }
+
+    // async reset_map() {
+    //     if(this.timer_ref.current.minutes === 0 && this.timer_ref.current.seconds === 0){
+    //         const res = await fetch('/api/africa_map_geojson/');
+    //         const geo_json = await res.json();
+    //         const map_data = this.project_features_and_create_svg_paths(geo_json);
+    //         const input_tracker = this.input_tracking(geo_json);
+    //         this.setState({
+    //             map_data: map_data,
+    //             input_tracker: input_tracker,
+    //         });
+    //         this.timer_ref.current.resetTimer();
+    //     }
+    //
+    // }
 
     render() {
         let score = 0;
@@ -277,14 +292,21 @@ export class Timer extends React.Component {
                         }))
                     }
                 }
-            }, 1000)
+            }, 1000);
             this.setState({started : true});
         }
     };
 
     stopTimer = () => {
-        clearInterval((this.interval))
+        clearInterval((this.interval));
         this.setState({started : false});
+    };
+
+    resetTimer = () => {
+        this.setState({
+            minutes : this.props.minutes,
+            seconds : this.props.seconds,
+        });
     };
 
     render() {
@@ -338,6 +360,7 @@ export class NameForm extends React.Component {
             event.preventDefault();
             this.props.handle_visual_feedback("Incorrect", selected_country);
         }
+        this.props.click_country
         this.setState({value: ''});
     }
 
