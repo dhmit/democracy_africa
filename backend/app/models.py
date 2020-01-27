@@ -6,6 +6,7 @@ Models for the democracy_africa app.
 import random
 import math
 
+# Demographics from Afrobarometer 2016/2018 results 
 africa_demographics_by_country = {"Kenya": {"electricity_access": 74.8,
                                             "rural_households": 64.0,
                                             "piped_water_access": 40.8,
