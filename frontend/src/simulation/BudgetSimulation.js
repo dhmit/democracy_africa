@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { getCookie }from "../common";
 
-import "./BudgetSimulation.css"
+import "./BudgetSimulation.css";
 
 /**
  * Main component for the simulation.
@@ -27,14 +27,14 @@ class Budget extends React.Component {
         this.state = {
             reaction: null,
             budgetProposal: {}
-        }
+        };
     }
 
     componentDidMount() {
         // for a given list of options set each value in budget proposal to 0
         let proposal = {};
         resources.forEach((resource) => {
-            proposal[resource] = 0
+            proposal[resource] = 0;
         });
         this.setState({
             budgetProposal: proposal,
@@ -73,7 +73,7 @@ class Budget extends React.Component {
 
         this.setState({
             budgetProposal: newProposal,
-        })
+        });
     };
 
     /*
@@ -83,7 +83,7 @@ class Budget extends React.Component {
         let sum = 0;
         Object.keys(this.state.budgetProposal).forEach((resource) =>
             sum += parseFloat(this.state.budgetProposal[resource]));
-        return sum <= 1
+        return sum <= 1;
     };
 
 
@@ -133,7 +133,7 @@ class Budget extends React.Component {
                 </div>
 
             </>
-        )
+        );
     }
 }
 Budget.propTypes = {
@@ -146,7 +146,7 @@ class AggregateData extends React.Component {
         super(props);
         this.state = {
             categories: Object.keys(this.props.population[0]["traits"])
-        }
+        };
     }
 
     render() {
@@ -156,7 +156,7 @@ class AggregateData extends React.Component {
             let category = this.state.categories[i];
             for (let j = 0; j < this.props.population.length; j++) {
                 let citizen = this.props.population[j];
-                total += citizen["traits"][category]
+                total += citizen["traits"][category];
                 //Above: index into the population to get the citizen, then that citizen's
                 // traits and then the value (true or false) of that trait for each category
             }
@@ -187,11 +187,11 @@ class AggregateData extends React.Component {
                                     {(aggregate_values[category]*100).toFixed(1)}%
                                 </td>
                             </tr>
-                        )
+                        );
                     })}
                 </tbody>
             </table>
-        )
+        );
     }
 }
 AggregateData.propTypes = {
@@ -222,7 +222,7 @@ export class BudgetVotingSimViz extends React.Component {
         if (!this.state.population) {
             return (
                 <div>Loading!</div>
-            )
+            );
         }
 
         return (
@@ -243,7 +243,7 @@ export class BudgetVotingSimViz extends React.Component {
                     </div>
                 </div>
             </>
-        )
+        );
 
     }
 }

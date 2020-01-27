@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { MapPath } from "../MapPath";
 
-import { getCookie, project_features_and_create_svg_paths } from '../common'
+import { getCookie, project_features_and_create_svg_paths } from '../common';
 import '../map_quiz/map_quiz.css';
 
 /**
@@ -42,13 +42,13 @@ export class DemocracyViz extends  React.Component {
     handleScoreTypeChange(e) {
         this.setState({
             scoreType: e.target.value,
-        })
+        });
     }
 
     handleYearChange(e) {
         this.setState({
             year: e.target.value,
-        })
+        });
     }
 
     render() {
@@ -97,7 +97,7 @@ export class DemocracyViz extends  React.Component {
                     year={this.state.year}
                 />
             </>
-        )
+        );
     }
 }
 
@@ -174,11 +174,11 @@ export class DemocracyMap extends React.Component {
                                 stroke={"black"}
                                 strokeWidth={"1"}
                             />
-                        )
+                        );
                     })}
                 </svg>
             </>
-        )
+        );
     }
 }
 DemocracyMap.propTypes = {
