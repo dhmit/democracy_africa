@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { MapQuizD3 } from './map_quiz/map_quiz_d3.js';
 import { MapQuizSVG } from './map_quiz/map_quiz_svg.js';
-import { BudgetVotingSimViz } from './simulation/BudgetSimulation.js';
+import { BudgetVotingSimViz } from './budget_simulation/BudgetSimulation.js';
 import { DemocracyViz } from './heat_map/democracy_viz.js';
 
 window.app_modules = {
