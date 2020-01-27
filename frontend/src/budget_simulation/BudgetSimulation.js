@@ -26,7 +26,8 @@ class Budget extends React.Component {
         super(props);
         this.state = {
             reaction: null,
-            budgetProposal: {}
+            budgetProposal: {},
+            result: 0,
         };
     }
 
@@ -41,31 +42,6 @@ class Budget extends React.Component {
         });
     }
 
-    simulateCitizenResponse = async () => {
-        // check that the total doesn't exceed 100%
-        if (this.validateInput()){
-            const url = '/api/budget_response/';
-            const data = {
-                population: this.props.population,
-                // hardcoded fake data for now
-                budget: this.state.budgetProposal,
-            };
-            const response = await fetch(url, {
-                method: 'POST',
-                body: JSON.stringify(data),
-                headers: {
-                    'Content-type': 'application/json',
-                }
-            });
-            const response_json = await response.json();
-            this.setState({
-                reaction: response_json,
-            });
-        } else { // otherwise throw an alert
-            window.alert("Proposal exceeded budget");
-        }
-    };
-
     handleSliderOnChange = (e, resource) => {
         const newVal = e.target.value;
         const newProposal = this.state.budgetProposal;
@@ -73,26 +49,56 @@ class Budget extends React.Component {
 
         this.setState({
             budgetProposal: newProposal,
+            result: this.countSupporters(),
         });
     };
 
-    /*
-    *  Return false is the proposal exceeds the budget
-    */
-    validateInput = () => {
-        let sum = 0;
-        Object.keys(this.state.budgetProposal).forEach((resource) =>
-            sum += parseFloat(this.state.budgetProposal[resource]));
-        return sum <= 1;
+    // TODO: add a validation/prevent user from exceeding budget
+    countSupporters = () => {
+        let count = 0;
+        this.props.population.forEach((citizen) => {
+            let needs = Object.keys(citizen["traits"]).filter((trait) => {
+                return !citizen["traits"][trait];
+            });
+            let numOfNeeds = needs.length;
+            if (numOfNeeds === 0) { return; }
+            let numToVote = Math.ceil(numOfNeeds / 2);
+            let cutoff = 0.75 / numOfNeeds;
+
+            let numOfNeedsMet = 0;
+            Object.keys(this.state.budgetProposal).forEach((resource) => {
+                let proposal = this.state.budgetProposal[resource];
+                if (needs.includes('lives_in_rural_area')
+                    && resource === 'infrastructure') {
+                    if (proposal >= cutoff) { numOfNeedsMet++; }
+                }
+                else if (needs.includes('is_educated')
+                        && resource === 'education') {
+                    if (proposal >= cutoff) { numOfNeedsMet++; }
+                }
+                else if (needs.includes('has_access_to_water')
+                        && resource === 'water'){
+                    if (proposal >= cutoff) { numOfNeedsMet++;  }
+                }
+                else if (needs.includes('has_access_to_sanitation')
+                        && resource === 'sanitation') {
+                    if (proposal >= cutoff) { numOfNeedsMet++;  }
+                }
+                else if (needs.includes('has_access_to_electricity')
+                        && resource === 'electricity' ){
+                    if (proposal >= cutoff) { numOfNeedsMet++;  }
+                }
+            });
+
+            if (numOfNeedsMet >= numToVote) {
+                count++;
+            }
+
+        });
+        return count;
     };
 
-
     render() {
-        let result = 0;
-        if (this.state.reaction) {
-            result = this.state.reaction["will_support"];
-        }
-
         const budgetOptions = Object.keys(this.state.budgetProposal).map((resource, key) => (
             <div key={key} className="individual_slider_containers">
                 <p className="slider_descriptor">
@@ -118,18 +124,10 @@ class Budget extends React.Component {
                     {budgetOptions}
                 </div>
 
-                <div className="submit_button_container">
-                    <button
-
-                        type="submit"
-                        onClick={this.simulateCitizenResponse}
-                    >
-                        Submit Budget
-                    </button>
-                </div>
-
                 <div>
-                    {result} out of {this.props.population.length} people support your budget
+                    {this.state.result}
+                    out of
+                    {this.props.population.length} people support your budget
                 </div>
 
             </>
