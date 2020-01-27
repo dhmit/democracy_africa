@@ -6,6 +6,37 @@ Models for the democracy_africa app.
 import random
 import math
 
+africa_demographics_by_country = {"Kenya": {"electricity_access": 74.8,
+                                            "rural_households": 64.0,
+                                            "piped_water_access": 40.8,
+                                            "sewage_system_access": 21.6,
+                                            },
+                                  "Nigeria": {"electricity_access": 83.3,
+                                              "rural_households": 56.5,
+                                              "piped_water_access": 38.5,
+                                              "sewage_system_access": 35.1,
+                                              },
+                                  "South Africa": {"electricity_access": 94.2,
+                                                   "rural_households": 31.2,
+                                                   "piped_water_access": 78.3,
+                                                   "sewage_system_access": 62.7
+                                                   },
+                                  "Sudan": {"electricity_access": 76.3,
+                                            "rural_households": 62.2,
+                                            "piped_water_access": 58.4,
+                                            "sewage_system_access": 20.3,
+                                            },
+                                  "Tanzania": {"electricity_access": 55.5,
+                                               "rural_households": 66.8,
+                                               "piped_water_access": 38.8,
+                                               "sewage_system_access": 5.4,
+                                               },
+                                  "Uganda": {"electricity_access": 35.3,
+                                             "rural_households": 75.1,
+                                             "piped_water_access": 25.0,
+                                             "sewage_system_access": 15.5,
+                                             }
+                                  }
 
 class Citizen:
     """
@@ -74,12 +105,12 @@ class Population:
     Model for an entire population. Creates the citizens and stores them in a list.
     """
 
-    def __init__(self, citizen_list=None):
+    def __init__(self, citizen_list=None, statistical_distribution):
         if citizen_list is None:
             self.citizen_list = []
         else:
             self.citizen_list = citizen_list
-        self.population_size = 0
+        self.statistical_distribution = statistical_distribution
 
     def create_citizens(self, number_to_create):
         """
