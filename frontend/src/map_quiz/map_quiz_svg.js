@@ -21,12 +21,12 @@ export class MapQuizSVG extends React.Component {
             map_data: null,
             click_country: 'Nothing',
             score : 0,
-            minutes : 0,
-            seconds : 30,
+            minutes : 8,
+            seconds : 0,
         };
         this.csrftoken = getCookie('csrftoken');
         this.map_ref = React.createRef();
-
+        this.timer_ref = React.createRef();
         this.handle_visual_feedback = this.handle_visual_feedback.bind(this);
     }
 
@@ -76,6 +76,7 @@ export class MapQuizSVG extends React.Component {
     }
 
     handle_country_map_click(country) {
+        this.timer_ref.current.startTimer();
         if (this.state.input_tracker[country.name] !== "None") {
             alert("You already guessed this country!");
         }
@@ -122,6 +123,9 @@ export class MapQuizSVG extends React.Component {
             const correct_responses = Object.values(this.state.input_tracker).filter(
                 (input) => input === "Correct");
             score = correct_responses.length;
+            if(score === 54){
+                this.timer_ref.current.stopTimer();
+            }
         }
 
         if (!this.state.map_data) {
@@ -169,7 +173,11 @@ export class MapQuizSVG extends React.Component {
                     />
                 </div>
                 <div className="timer">
-                    <Timer minutes={this.state.minutes} seconds={this.state.seconds}/>
+                    <Timer
+                        ref={this.timer_ref}
+                        minutes={this.state.minutes}
+                        seconds={this.state.seconds}
+                    />
                 </div>
             </div>
         )
@@ -284,12 +292,12 @@ export class Timer extends React.Component {
         return(
             <div>
                 <div>Time Remaining: {minutes}:{seconds < 10 ? `0${seconds}` : seconds}</div>
-                <button onClick={this.startTimer}>
-                    Start
-                </button>
-                <button onClick={this.stopTimer}>
-                    Stop
-                </button>
+                {/*<button onClick={this.startTimer}>*/}
+                {/*    Start*/}
+                {/*</button>*/}
+                {/*<button onClick={this.stopTimer}>*/}
+                {/*    Stop*/}
+                {/*</button>*/}
             </div>
         );
     }
@@ -302,7 +310,7 @@ Timer.propTypes = {
 
 
 /**
- * TODO : Prevent the user from re-submitting for a country right after they answer 
+ * TODO : Prevent the user from re-submitting for a country right after they answer
  * Handles the user's submission of answers and alerts them to the accuracy of their response
  */
 export class NameForm extends React.Component {
