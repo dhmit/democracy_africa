@@ -105,12 +105,15 @@ class Population:
     Model for an entire population. Creates the citizens and stores them in a list.
     """
 
-    def __init__(self, citizen_list=None, statistical_distribution):
+    def __init__(self, citizen_list=None, country="South Africa"):
         if citizen_list is None:
             self.citizen_list = []
+            self.population_size = 0
         else:
             self.citizen_list = citizen_list
-        self.statistical_distribution = statistical_distribution
+            self.population_size = len(citizen_list)
+        self.country = country
+        self.population_size = 0
 
     def create_citizens(self, number_to_create):
         """
@@ -137,16 +140,16 @@ class Population:
         sanitation_access = random.randint(0, 100)
         educated = random.randint(0, 100)
 
-        if rural_area < 37:
+        if rural_area < africa_demographics_by_country[self.country]["rural_households"]:
             citizen.traits["lives_in_rural_area"] = True
 
-        if electricity_access < 84:
+        if electricity_access < africa_demographics_by_country[self.country]["electricity_access"]:
             citizen.traits["has_access_to_electricity"] = True
 
-        if water_access < 91:
+        if water_access < africa_demographics_by_country[self.country]["piped_water_access"]:
             citizen.traits["has_access_to_water"] = True
 
-        if sanitation_access < 60:
+        if sanitation_access < africa_demographics_by_country[self.country]["sewage_system_access"]:
             citizen.traits["has_access_to_sanitation"] = True
 
         if educated < 91:
