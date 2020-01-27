@@ -9,7 +9,20 @@ import csv
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+# We'll use these once we move towards using Django models
+# from .models import (
+#     Citizen,
+# )
+# from .serializers import (
+#     CitizenSerializer,
+# )
+# from .models import Citizen
+
 from django.conf import settings
+
+from .models import Population
+
+from.serializers import PopulationSerializer
 
 
 def load_africa_geojson() -> dict:
@@ -32,9 +45,34 @@ def africa_map_geojson(request):
     africa_geojson = load_africa_geojson()
     return Response(africa_geojson)
 
+
+@api_view(['POST'])
+def budget_response(request):
+    """
+    Takes in budget allocation and population
+    and returns the number of people who will support the budget
+    """
+    budget = request.data.get('budget')
+    sample_population = Population(request.data.get('population'))
+    supportive_people = sample_population.will_support(budget)
+
+    return Response({
+        "will_support": supportive_people,
+    })
+
+
+@api_view(['GET'])
+def population(request):
+    """
+    Generates a population of Citizen objects that then get passed into the frontend
+    """
+    population_obj = Population()
+    population_obj.create_citizens(1000)
+    serializer = PopulationSerializer(instance=population_obj)
+    return Response(serializer.data)
+
+
 # moved it out because tests says that there were too many local variables
-
-
 country_name_index = 0
 country_text_id_index = 1
 year_index = 2

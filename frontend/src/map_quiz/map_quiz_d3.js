@@ -2,7 +2,7 @@ import React from 'react';
 import * as d3 from 'd3';
 // import PropTypes from 'prop-types';  // uncomment once something has props!
 
-import { getCookie } from '../common'
+import { getCookie } from '../common';
 import './map_quiz.css';
 
 /**
@@ -92,7 +92,7 @@ export class MapQuizD3 extends React.Component {
                     ref={this.map_ref}>
                 </svg>
             </>
-        )
+        );
     }
 }
 

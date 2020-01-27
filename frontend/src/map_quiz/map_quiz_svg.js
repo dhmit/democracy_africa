@@ -2,7 +2,7 @@ import React from 'react';
 import * as d3 from 'd3';
 import PropTypes from 'prop-types';
 
-import { getCookie } from '../common'
+import { getCookie } from '../common';
 import './map_quiz.css';
 
 /**
@@ -63,7 +63,7 @@ export class MapQuizSVG extends React.Component {
     handle_country_mouseover(country) {
         this.setState({
             mouseover_country: country.name,
-        })
+        });
     }
 
     render() {
@@ -97,7 +97,7 @@ export class MapQuizSVG extends React.Component {
                     )}
                 </svg>
             </>
-        )
+        );
     }
 }
 
@@ -120,4 +120,4 @@ MapPath.propTypes = {
     id: PropTypes.string,
     fill: PropTypes.string,
     handle_country_mouseover: PropTypes.func,
-}
+};
