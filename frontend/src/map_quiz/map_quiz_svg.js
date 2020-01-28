@@ -376,7 +376,6 @@ export class NameForm extends React.Component {
         );
     }
 }
-
 NameForm.propTypes = {
     map_data: PropTypes.array,
     click_country: PropTypes.string,
