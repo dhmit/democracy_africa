@@ -257,7 +257,8 @@ export class BudgetVotingSimViz extends React.Component {
             });
             const population = await response.json();
             console.log(population);
-            this.setState({population: population["citizen_list"]});
+            this.setState({population: population["citizen_list"],
+                country_name: selected_country});
         } catch (e) {
             console.log(e);
         }
