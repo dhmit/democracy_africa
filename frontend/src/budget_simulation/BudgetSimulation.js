@@ -234,15 +234,30 @@ export class BudgetVotingSimViz extends React.Component {
 
         this.state = {
             population: null,
+            country_name: "South Africa",
         };
         this.csrftoken = getCookie('csrftoken');
     }
 
-    async componentDidMount() {
+    componentDidMount() {
+        this.update_population(this.state.country_name);
+    }
+
+    async update_population(selected_country) {
         try {
-            const population = await fetch('/api/population/');
-            const json = await population.json();
-            this.setState({population: json["citizen_list"]});
+            const data = {
+                country_name: selected_country,
+            };
+            const response = await fetch('/api/population/', {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-type': 'application/json',
+                }
+            });
+            const population = await response.json();
+            console.log(population);
+            this.setState({population: population["citizen_list"]});
         } catch (e) {
             console.log(e);
         }
@@ -257,6 +272,22 @@ export class BudgetVotingSimViz extends React.Component {
 
         return (
             <>
+                <div className="row">
+                    <div className="form-group">
+                        <select className="form-control float-left"
+                            value={this.state.country_name}
+                            onChange={(e) => this.update_population(e.target.value)}
+                        >
+                            <option value="Kenya">Kenya</option>
+                            <option value="Nigeria">Nigeria</option>
+                            <option value="South Africa">South Africa</option>
+                            <option value="Tanzania">Tanzania</option>
+                            <option value="Sudan">Sudan</option>
+                            <option value="Uganda">Uganda</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div className="row">
                     <div className="col-md-8 col-lg-4 col-sm-12 data_container">
                         <AggregateData

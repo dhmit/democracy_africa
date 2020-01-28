@@ -46,12 +46,13 @@ def africa_map_geojson(request):
     return Response(africa_geojson)
 
 
-@api_view(['GET'])
+@api_view(['POST'])
 def population(request):
     """
     Generates a population of Citizen objects that then get passed into the frontend
     """
-    population_obj = Population()
+    country_name = request.data.get("country_name")
+    population_obj = Population(country=country_name)
     population_obj.create_citizens(1000)
     serializer = PopulationSerializer(instance=population_obj)
     return Response(serializer.data)
