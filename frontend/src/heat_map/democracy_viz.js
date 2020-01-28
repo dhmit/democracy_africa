@@ -59,7 +59,9 @@ export class DemocracyViz extends  React.Component {
             <>
                 <h1>Democracy in Africa Over Time</h1><hr/>
                 Democracy Score Type: &nbsp;
-                <select onChange={(e) => this.handleScoreTypeChange(e)}>
+                <select
+                    onChange={(e) => this.handleScoreTypeChange(e)}
+                >
                     {Object.keys(this.state.democracyData[0]["democracy_scores"]["1981"]).map(
                         (entry, i) => (
                             <option key={i}>
@@ -70,10 +72,13 @@ export class DemocracyViz extends  React.Component {
                 </select>
                 <br/>
                 Year: &nbsp;
-                <select onChange={(e) => this.handleYearChange(e)}>
+                <select
+                    id="year-select"
+                    onChange={(e) => this.handleYearChange(e)}
+                >
                     {Object.keys(this.state.democracyData[0]["democracy_scores"]).map(
                         (entry, i) => (
-                            <option key={i}>
+                            <option id={`year-option-${entry}`} key={i}>
                                 {entry}
                             </option>
                         )

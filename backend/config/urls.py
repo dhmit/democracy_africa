@@ -37,6 +37,7 @@ urlpatterns = [
     path('api/democracy_scores/', democracy_score_json),
 
     # React views
+    url('/', render_react_view, {'component_name': 'DemocracyViz'}),
     url('d3/', render_react_view, {'component_name': 'MapQuizD3'}),
     url('leaflet/', render_react_view, {'component_name': 'MapQuizLeaflet'}),
     url('svg/', render_react_view, {'component_name': 'MapQuizSVG'}),

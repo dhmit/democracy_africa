@@ -1,14 +1,17 @@
 """
-Tests for the main app.
+Django tests
 """
 
 from django.test import TestCase
+
+from config.selenium import SeleniumTestCase
+
 from .models import Population
 from .models import Citizen
 from .views import load_democracy_data, normalize
 
 
-class MainTests(TestCase):
+class DjangoTests(TestCase):
     """
     Tests for the models of Citizen and Population
     """
@@ -149,8 +152,9 @@ class MainTests(TestCase):
         fake_cit_pop_results = []
 
         cit_pop_expected_results = [1, 0, 2, 2, 2]
-        for budget in [sample_budget_1, sample_budget_2, sample_budget_3, sample_budget_4,
-                       sample_budget_5]:
+        for budget in [
+            sample_budget_1, sample_budget_2, sample_budget_3, sample_budget_4, sample_budget_5
+        ]:
             empty_pop_result = empty_population.will_support(budget)
             self.assertEqual(empty_pop_result, 0)
 
@@ -167,12 +171,14 @@ class MainTests(TestCase):
         :return:
         """
         democracy_data, max_values = load_democracy_data()
-        max_value_headers = ['v2x_polyarchy', 'v2x_partipdem', 'v2x_freexp_altinf', 'v2x_cspart',
-                             'v2xel_locelec', 'v2elboycot', 'v2lpname', 'v2slpname', 'v2tlpname',
-                             'v2psnatpar', 'v2excrptps', 'v2juaccnt', 'v2svstterr', 'v2meharjrn',
-                             'v2peprisch', 'v2pesecsch', 'v2smonex', 'e_migdppc', 'e_mipopula',
-                             'gdpcapl', 'ethfrac', 'relfrac', 'numlang', 'colbrit', 'colfra',
-                             'gdpcap_currusd', 'adultliteracy', 'elecaccessrur']
+        max_value_headers = [
+            'v2x_polyarchy', 'v2x_partipdem', 'v2x_freexp_altinf', 'v2x_cspart',
+            'v2xel_locelec', 'v2elboycot', 'v2lpname', 'v2slpname', 'v2tlpname',
+            'v2psnatpar', 'v2excrptps', 'v2juaccnt', 'v2svstterr', 'v2meharjrn',
+            'v2peprisch', 'v2pesecsch', 'v2smonex', 'e_migdppc', 'e_mipopula',
+            'gdpcapl', 'ethfrac', 'relfrac', 'numlang', 'colbrit', 'colfra',
+            'gdpcap_currusd', 'adultliteracy', 'elecaccessrur'
+        ]
         # Assures that max_value has all of the score types
         self.assertEqual(max_value_headers, list(max_values.keys()))
 
@@ -187,16 +193,20 @@ class MainTests(TestCase):
         # Once all years get added in, this test will pass
         # Assures that each country data has the correct keys and has years from 1981 - 2018
         for country_data in democracy_data:
-            self.assertEqual(list(country_data.keys()), ["democracy_scores", "country_name",
-                                                         "country_text_id"])
-            # In the words of Evan:
-            # "Eritrea only became independent from Ethiopia in 1993"
-            # Also, South Sudan became a country in 2011
+            self.assertEqual(
+                list(country_data.keys()),
+                ["democracy_scores", "country_name", "country_text_id"]
+            )
+            # Eritrea became an independent nation in 1993
             if country_data["country_name"] == "Eritrea":
-                self.assertEqual(list(country_data["democracy_scores"].keys()),
-                                 [str(i) for i in range(1993, 2019)])
+                self.assertEqual(
+                    list(country_data["democracy_scores"].keys()),
+                    [str(i) for i in range(1993, 2019)]
+                )
+            # South Sudan became an independent nation in 2011
             elif country_data["country_name"] == "South Sudan":
-                self.assertEqual(list(country_data["democracy_scores"].keys()),
+                self.assertEqual(
+                    list(country_data["democracy_scores"].keys()),
                                  [str(i) for i in range(2011, 2019)])
             else:
                 self.assertEqual(list(country_data["democracy_scores"].keys()),
@@ -214,3 +224,27 @@ class MainTests(TestCase):
         actual_normalized_data = normalize(test_data, test_max_values)
         for k in test_data:
             self.assertAlmostEqual(actual_normalized_data[k], expected_normalized_data[k])
+
+
+class SeleniumTests(SeleniumTestCase):
+    def test_democracy_viz_year_select(self):
+        self.get('/democracy_viz/')
+
+        # just check that the svg is there
+        self.el('svg')
+
+        # get the year select element
+        year_select = self.el('#year-select')
+        year_select.click()
+        self.headed_sleep(2)
+
+        # get the option and click it
+        option_el = year_select.find_element_by_id('year-option-1999')
+        option_el.click()
+        year_select.click()
+        self.headed_sleep(5)
+
+        # TODO: check that something reasonable happened...
+
+        self.check_log_for_errors()
+

@@ -4,4 +4,5 @@ django-webpack-loader>=0.6.0
 djangorestframework>=3.10.1
 IPython
 pytz>=2019.1
+selenium
 sqlparse>=0.3.0
