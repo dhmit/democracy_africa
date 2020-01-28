@@ -128,7 +128,7 @@ def democracy_score_json(request):
     """
     Load Africa map GeoJSON for frontend
     """
-    democracy_data, max_values = load_democracy_data()
+    democracy_data = load_democracy_data()[0]
     # for data in democracy_data:
     #     for year in data["democracy_scores"]:
     #         data["democracy_scores"][year] = normalize(data["democracy_scores"][year], max_values)
