@@ -31,6 +31,7 @@ export class DemocracyViz extends  React.Component {
         try {
             const res = await fetch('/api/democracy_scores/');
             const democracy_data = await res.json();
+            console.log(JSON.parse(democracy_data));
             this.setState({
                 democracyData: JSON.parse(democracy_data),
             });
