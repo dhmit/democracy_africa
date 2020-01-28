@@ -39,12 +39,18 @@ export class DemocracyViz extends  React.Component {
         }
     }
 
+    /**
+     *  Handles the change in democracy score type
+     */
     handleScoreTypeChange(e) {
         this.setState({
             scoreType: e.target.value,
         });
     }
 
+    /**
+     *  Handles the change in year
+     */
     handleYearChange(e) {
         this.setState({
             year: e.target.value,
@@ -129,6 +135,11 @@ export class DemocracyMap extends React.Component {
         }
     }
 
+    /**
+     * Gets the country data from the democracy data based on the countryCode
+     * @param countryCode the ISO code of the country
+     * @returns the country data associated with the country ISO code
+     */
     getCountryData(countryCode) {
         for (const countryData of this.props.democracyData) {
             if (countryCode === countryData["country_text_id"]) {

@@ -126,7 +126,7 @@ def load_democracy_data():
 @api_view(['GET'])
 def democracy_score_json(request):
     """
-    Load Africa map GeoJSON for frontend
+    Load democracy score data for frontend
     """
     democracy_data = load_democracy_data()[0]
     return Response(json.dumps(democracy_data))
