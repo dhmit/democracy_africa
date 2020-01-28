@@ -21,13 +21,14 @@ export class MapQuizSVG extends React.Component {
             map_data: null,
             click_country: 'Nothing',
             score : 0,
-            minutes : 5,
-            seconds : 0,
+            minutes : 0,
+            seconds : 10,
         };
         this.csrftoken = getCookie('csrftoken');
         this.map_ref = React.createRef();
         this.timer_ref = React.createRef();
         this.handle_visual_feedback = this.handle_visual_feedback.bind(this);
+        this.reset_map = this.reset_map.bind(this);
     }
 
     /**
@@ -38,7 +39,7 @@ export class MapQuizSVG extends React.Component {
             const res = await fetch('/api/africa_map_geojson/');
             const geo_json = await res.json();
             const map_data = this.project_features_and_create_svg_paths(geo_json);
-            const input_tracker = this.input_tracking(geo_json);
+            const input_tracker = this.initialize_input_tracker(map_data);
             this.setState({
                 map_data: map_data,
                 input_tracker: input_tracker,
@@ -67,10 +68,10 @@ export class MapQuizSVG extends React.Component {
         return map_data;
     }
 
-    input_tracking(geo_json) {
+    initialize_input_tracker(map_data) {
         const input_tracker = {};
-        for (const feature of geo_json.features) {
-            input_tracker[feature.properties.name_long] = "None";
+        for (const feature of map_data) {
+            input_tracker[feature.name] = "None";
         }
         return input_tracker;
     }
@@ -117,20 +118,13 @@ export class MapQuizSVG extends React.Component {
         }
     }
 
-    // async reset_map() {
-    //     if(this.timer_ref.current.minutes === 0 && this.timer_ref.current.seconds === 0){
-    //         const res = await fetch('/api/africa_map_geojson/');
-    //         const geo_json = await res.json();
-    //         const map_data = this.project_features_and_create_svg_paths(geo_json);
-    //         const input_tracker = this.input_tracking(geo_json);
-    //         this.setState({
-    //             map_data: map_data,
-    //             input_tracker: input_tracker,
-    //         });
-    //         this.timer_ref.current.resetTimer();
-    //     }
-    //
-    // }
+    reset_map() {
+        const input_tracker = this.initialize_input_tracker(this.state.map_data);
+        this.setState({
+            input_tracker: input_tracker,
+        });
+        this.timer_ref.current.resetTimer();
+    }
 
     render() {
         let score = 0;
@@ -142,7 +136,6 @@ export class MapQuizSVG extends React.Component {
                 this.timer_ref.current.stopTimer();
             }
         }
-
         if (!this.state.map_data) {
             return (<div>Loading!</div>);
         }
@@ -194,6 +187,7 @@ export class MapQuizSVG extends React.Component {
                         seconds={this.state.seconds}
                     />
                 </div>
+                <button className= "reset" onClick={this.reset_map}>Reset</button>
             </div>
         )
     }
@@ -307,6 +301,7 @@ export class Timer extends React.Component {
             minutes : this.props.minutes,
             seconds : this.props.seconds,
         });
+        this.stopTimer();
     };
 
     render() {
