@@ -2,7 +2,7 @@ import React from 'react';
 import * as d3 from 'd3';
 import PropTypes from 'prop-types';
 
-import { getCookie } from '../common'
+import { getCookie } from '../common';
 import './map_quiz.css';
 
 /**
@@ -83,7 +83,7 @@ export class MapQuizSVG extends React.Component {
         else {
             this.setState({
                 click_country: country.name,
-            })
+            });
         }
     }
 
@@ -172,7 +172,7 @@ export class MapQuizSVG extends React.Component {
                                 handle_country_click={
                                     () => this.handle_country_map_click(country)
                                 }
-                            />
+                            />;
                         })}
                     </svg>
                 </div>
@@ -195,7 +195,7 @@ export class MapQuizSVG extends React.Component {
                     />
                 </div>
             </div>
-        )
+        );
     }
 }
 
@@ -236,7 +236,7 @@ export class MapPath extends React.Component {
         return (
             <path
                 d={this.props.path}
-                stroke="white"
+                stroke="black"
                 strokeWidth="1"
                 fill={this.props.fill}
                 id={this.props.id}
@@ -266,7 +266,7 @@ export class Timer extends React.Component {
             seconds : props.seconds,
             //started represents whether or not the timer is currently counting down
             started : false,
-        }
+        };
     }
 
     componentDidMount() {
@@ -280,16 +280,16 @@ export class Timer extends React.Component {
                 if (seconds > 0) {
                     this.setState((prevState) => ({
                         seconds: prevState.seconds - 1
-                    }))
+                    }));
                 }
                 if (seconds === 0) {
                     if (minutes === 0) {
-                        clearInterval(this.interval)
+                        clearInterval(this.interval);
                     } else {
                         this.setState((prevState) => ({
                             minutes: prevState.minutes - 1,
                             seconds: 59
-                        }))
+                        }));
                     }
                 }
             }, 1000);
@@ -328,7 +328,7 @@ export class Timer extends React.Component {
 Timer.propTypes = {
     minutes : PropTypes.number,
     seconds : PropTypes.number,
-}
+};
 
 
 /**
@@ -360,7 +360,7 @@ export class NameForm extends React.Component {
             event.preventDefault();
             this.props.handle_visual_feedback("Incorrect", selected_country);
         }
-        this.props.click_country
+        this.props.click_country;
         this.setState({value: ''});
     }
 
