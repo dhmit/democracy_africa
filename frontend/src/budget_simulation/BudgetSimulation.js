@@ -33,6 +33,10 @@ class Budget extends React.Component {
         };
     }
 
+    /**
+     * Resets the budget such that every resource is allocated 0%.
+     * Used when component mounts and upon onClick of a button
+     */
     resetBudget = () => {
         let proposal = {};
         resources.forEach((resource) => {
