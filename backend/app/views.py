@@ -50,6 +50,7 @@ def africa_map_geojson(request):
 @api_view(['GET'])
 def africa_demographics_by_country(request):
     """
+    Retrieves list of countries for which demographics were available
     """
     countries = list(demographics_dict.keys())
     return Response(json.dumps(countries))
