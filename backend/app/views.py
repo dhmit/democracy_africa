@@ -21,6 +21,7 @@ from rest_framework.response import Response
 from django.conf import settings
 
 from .models import Population
+from .models import africa_demographics_by_country as demographics_dict
 
 from.serializers import PopulationSerializer
 
@@ -44,6 +45,14 @@ def africa_map_geojson(request):
     """
     africa_geojson = load_africa_geojson()
     return Response(africa_geojson)
+
+
+@api_view(['GET'])
+def africa_demographics_by_country(request):
+    """
+    """
+    countries = list(demographics_dict.keys())
+    return Response(json.dumps(countries))
 
 
 @api_view(['POST'])
