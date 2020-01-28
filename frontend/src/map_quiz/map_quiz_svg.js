@@ -382,4 +382,5 @@ NameForm.propTypes = {
     click_country: PropTypes.string,
     input_tracker: PropTypes.object,
     handle_visual_feedback: PropTypes.func,
+    handle_country_mouseover: PropTypes.func,
 };
