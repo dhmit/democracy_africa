@@ -151,7 +151,7 @@ export class DemocracyMap extends React.Component {
         }
         const colorScale = d3.scaleLinear()
             .domain([0, 1])
-            .range(['white', 'red']);
+            .range(['yellow', 'red']);
         return (
             <>
                 {/*<div>{this.state.mouseover_country}</div>*/}
