@@ -28,7 +28,6 @@ class Budget extends React.Component {
             acc[elem] = 1; // or what ever object you want inside
             return acc;
         }, {});
-        console.log(maximums);
 
         this.state = {
             reaction: null,
@@ -73,7 +72,6 @@ class Budget extends React.Component {
 
         }, {});
 
-        console.log(maximums);
         this.setState({
             budgetProposal: newProposal,
             result: this.countSupporters(),
@@ -134,7 +132,6 @@ class Budget extends React.Component {
     };
 
     render() {
-        console.log(this.state.maximums);
         const budgetOptions = Object.keys(this.state.budgetProposal).map((resource, key) => (
             <div key={key} className="individual_slider_containers">
                 <p className="slider_descriptor">
