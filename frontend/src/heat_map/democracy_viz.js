@@ -72,7 +72,7 @@ export class DemocracyViz extends  React.Component {
                         v2x_polyarchy
                     </option>
                 </select>
-                <br/>
+                <br/><br/>
                 <div className = 'slidecontainer'>
                     <div className={'map'}>
                         <input onChange={(e) => this.handleYearChange(e)}
@@ -151,7 +151,7 @@ export class DemocracyMap extends React.Component {
         }
         const colorScale = d3.scaleLinear()
             .domain([0, 1])
-            .range(['red', 'gold']);
+            .range(['white', 'red']);
         return (
             <>
                 {/*<div>{this.state.mouseover_country}</div>*/}
