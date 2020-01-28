@@ -189,8 +189,18 @@ class MainTests(TestCase):
         for country_data in democracy_data:
             self.assertEqual(list(country_data.keys()), ["democracy_scores", "country_name",
                                                          "country_text_id"])
-            self.assertEqual(list(country_data["democracy_scores"].keys()),
-                             [str(i) for i in range(1981, 2019)])
+            # In the words of Evan:
+            # "Eritrea only became independent from Ethiopia in 1993"
+            # Also, South Sudan became a country in 2011
+            if country_data["country_name"] == "Eritrea":
+                self.assertEqual(list(country_data["democracy_scores"].keys()),
+                                 [str(i) for i in range(1993, 2019)])
+            elif country_data["country_name"] == "South Sudan":
+                self.assertEqual(list(country_data["democracy_scores"].keys()),
+                                 [str(i) for i in range(2011, 2019)])
+            else:
+                self.assertEqual(list(country_data["democracy_scores"].keys()),
+                                 [str(i) for i in range(1981, 2019)])
 
     def test_normalize(self):
         test_data = {"a": 93, "b": 64, "c": 21, "d": 5}
