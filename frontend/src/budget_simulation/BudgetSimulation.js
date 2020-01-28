@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { getCookie }from "../common";
 
 import "./BudgetSimulation.css";
+// import {parse} from "@typescript-eslint/parser/dist/parser";
 
 /**
  * Main component for the simulation.
@@ -25,7 +26,7 @@ class Budget extends React.Component {
     constructor(props){
         super(props);
         let maximums = resources.reduce((acc, elem) => {
-            acc[elem] = 1; // or what ever object you want inside
+            acc[elem] = 100; // or what ever object you want inside
             return acc;
         }, {});
 
@@ -34,6 +35,7 @@ class Budget extends React.Component {
             budgetProposal: {},
             result: 0,
             maximums: maximums,
+            total: 0,
         };
     }
 
@@ -57,26 +59,17 @@ class Budget extends React.Component {
      * correctly
      */
     handleSliderOnChange = (e, resource) => {
-        const newVal = e.target.value;
+        const newVal = parseFloat(e.target.value);
         const newProposal = this.state.budgetProposal;
         let oldVal = newProposal[resource];
-        newProposal[resource] = newVal;
-
-        let maximums = resources.reduce((acc, elem) => {
-            if (elem !== resource) {
-                acc[elem] = Number((this.state.maximums[elem] - (newVal - oldVal)).toFixed(2));
-            } else {
-                acc[elem] = Number(this.state.maximums[elem].toFixed(2));
-            }
-            return acc;
-
-        }, {});
-
-        this.setState({
-            budgetProposal: newProposal,
-            result: this.countSupporters(),
-            maximums: maximums,
-        });
+        if (this.state.total + newVal - oldVal <= 100 ){
+            newProposal[resource] = newVal;
+            this.setState({
+                budgetProposal: newProposal,
+                result: this.countSupporters(),
+                total: this.state.total + newVal - oldVal,
+            });
+        }
     };
 
     /**
@@ -96,7 +89,7 @@ class Budget extends React.Component {
             let numOfNeeds = needs.length;
             if (numOfNeeds === 0) { return; }
             let numToVote = Math.ceil(numOfNeeds / 2);
-            let cutoff = 0.75 / numOfNeeds;
+            let cutoff = 75 / numOfNeeds;
 
             let numOfNeedsMet = 0;
             Object.keys(this.state.budgetProposal).forEach((resource) => {
@@ -135,16 +128,16 @@ class Budget extends React.Component {
         const budgetOptions = Object.keys(this.state.budgetProposal).map((resource, key) => (
             <div key={key} className="individual_slider_containers">
                 <p className="slider_descriptor">
-                    {(this.state.budgetProposal[resource]*100).toFixed(0)}%
+                    {(this.state.budgetProposal[resource]).toFixed(0)}%
                     of the budget is being allocated towards <strong> {resource} </strong>
                 </p>
                 <input
                     className="slider"
                     type="range"
                     min="0"
-                    max={this.state.maximums[resource]}
-                    step="0.05"
-                    value={this.state.budgetProposal[resource]}
+                    max="100"
+                    step="5"
+                    value={this.state.budgetProposal[resource] + ""}
                     onChange={(e) => this.handleSliderOnChange(e, resource)}
                 />
 
