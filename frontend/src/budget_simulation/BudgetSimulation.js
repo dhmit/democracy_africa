@@ -50,6 +50,14 @@ class Budget extends React.Component {
         });
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.country_name !== this.props.country_name) {
+            this.setState({
+                result: this.countSupporters(),
+            });
+        }
+    }
+
     /**
      * Handles when the slider changes by changing the state of what the maximum values should
      * be for each category and updates the number of supporters and the budget proposal as a
@@ -161,6 +169,7 @@ class Budget extends React.Component {
 }
 Budget.propTypes = {
     population: PropTypes.array,
+    country_name: PropTypes.string,
 };
 
 
@@ -281,8 +290,6 @@ export class BudgetVotingSimViz extends React.Component {
             });
         }
 
-        console.log(countrySelection);
-
         return (
             <>
                 <div className="row">
@@ -307,6 +314,7 @@ export class BudgetVotingSimViz extends React.Component {
                 <div className="row">
                     <div className="col-md-8 col-lg-5 col-sm-12 budget_container">
                         <Budget
+                            country_name={this.state.country_name}
                             population={this.state.population}
                         />
                     </div>
