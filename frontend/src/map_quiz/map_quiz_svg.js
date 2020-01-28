@@ -21,8 +21,8 @@ export class MapQuizSVG extends React.Component {
             map_data: null,
             click_country: 'Nothing',
             score : 0,
-            minutes : 0,
-            seconds : 10,
+            minutes : 5,
+            seconds : 0,
         };
         this.csrftoken = getCookie('csrftoken');
         this.map_ref = React.createRef();
@@ -309,12 +309,6 @@ export class Timer extends React.Component {
         return(
             <div>
                 <div>Time Remaining: {minutes}:{seconds < 10 ? `0${seconds}` : seconds}</div>
-                {/*<button onClick={this.startTimer}>*/}
-                {/*    Start*/}
-                {/*</button>*/}
-                {/*<button onClick={this.stopTimer}>*/}
-                {/*    Stop*/}
-                {/*</button>*/}
             </div>
         );
     }
