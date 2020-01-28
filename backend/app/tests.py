@@ -5,6 +5,7 @@ Tests for the main app.
 from django.test import TestCase
 from .models import Population
 from .models import Citizen
+from .views import load_democracy_data, normalize
 
 
 class MainTests(TestCase):
@@ -159,3 +160,57 @@ class MainTests(TestCase):
         for i in range(5):
             self.assertEqual(cit_pop_expected_results[i], cit_pop_results[i])
             self.assertEqual(cit_pop_expected_results[i], fake_cit_pop_results[i])
+
+    def test_loading_democracy_data(self):
+        """
+        Tests for democracy heat map backend
+        :return:
+        """
+        democracy_data, max_values = load_democracy_data()
+        max_value_headers = ['v2x_polyarchy', 'v2x_partipdem', 'v2x_freexp_altinf', 'v2x_cspart',
+                             'v2xel_locelec', 'v2elboycot', 'v2lpname', 'v2slpname', 'v2tlpname',
+                             'v2psnatpar', 'v2excrptps', 'v2juaccnt', 'v2svstterr', 'v2meharjrn',
+                             'v2peprisch', 'v2pesecsch', 'v2smonex', 'e_migdppc', 'e_mipopula',
+                             'gdpcapl', 'ethfrac', 'relfrac', 'numlang', 'colbrit', 'colfra',
+                             'gdpcap_currusd', 'adultliteracy', 'elecaccessrur']
+        # Assures that max_value has all of the score types
+        self.assertEqual(max_value_headers, list(max_values.keys()))
+
+        # Assures that max_value does not have any empty strings as the max value
+        for score_type in max_values:
+            self.assertNotEqual(max_values[score_type], "")
+
+        # Change it to include other missing countries
+        # Assures that all 54 countries are in the data
+        # self.assertEqual(54, len(democracy_data))
+
+        # Once all years get added in, this test will pass
+        # Assures that each country data has the correct keys and has years from 1981 - 2018
+        for country_data in democracy_data:
+            self.assertEqual(list(country_data.keys()), ["democracy_scores", "country_name",
+                                                         "country_text_id"])
+            # In the words of Evan:
+            # "Eritrea only became independent from Ethiopia in 1993"
+            # Also, South Sudan became a country in 2011
+            if country_data["country_name"] == "Eritrea":
+                self.assertEqual(list(country_data["democracy_scores"].keys()),
+                                 [str(i) for i in range(1993, 2019)])
+            elif country_data["country_name"] == "South Sudan":
+                self.assertEqual(list(country_data["democracy_scores"].keys()),
+                                 [str(i) for i in range(2011, 2019)])
+            else:
+                self.assertEqual(list(country_data["democracy_scores"].keys()),
+                                 [str(i) for i in range(1981, 2019)])
+
+    def test_normalize(self):
+        """
+        Tests the normalize function for normalizing democracy scores
+        :return:
+        """
+        test_data = {"a": 93, "b": 64, "c": 21, "d": 5}
+        test_max_values = {"a": 100, "b": 80, "c": 30, "d": 6}
+
+        expected_normalized_data = {"a": 0.93, "b": 0.8, "c": 0.7, "d": 0.83333333333333}
+        actual_normalized_data = normalize(test_data, test_max_values)
+        for k in test_data:
+            self.assertAlmostEqual(actual_normalized_data[k], expected_normalized_data[k])

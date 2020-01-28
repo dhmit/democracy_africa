@@ -103,6 +103,9 @@ def load_democracy_data():
                 current_country_data["democracy_scores"][year] = year_scores
 
         democracy_data.append(current_country_data)  # append Zimbabwe
+    for k in max_values:
+        if max_values[k] == "":
+            max_values[k] = 0
     return democracy_data, max_values
 
 
@@ -124,7 +127,7 @@ def normalize(data, max_values):
     If there is no score for that score type, it just leaves it as is
     """
     for score_type in data:
-        if data[score_type] == "" or max_values == "":
+        if data[score_type] == "":
             continue
         if float(max_values[score_type]) != 0:
             data[score_type] = float(data[score_type]) / float(max_values[score_type])
