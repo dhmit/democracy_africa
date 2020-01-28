@@ -29,6 +29,7 @@ export class MapQuizSVG extends React.Component {
         this.timer_ref = React.createRef();
         this.handle_visual_feedback = this.handle_visual_feedback.bind(this);
         this.reset_map = this.reset_map.bind(this);
+        this.handle_submit_answer = this.handle_submit_answer.bind(this);
     }
 
     /**
@@ -86,6 +87,19 @@ export class MapQuizSVG extends React.Component {
                 click_country: country.name,
             });
         }
+    }
+
+    handle_submit_answer(answer) {
+        const selected_country = this.state.click_country;
+        if (selected_country.toLowerCase() === answer.toLowerCase()) {
+            alert(answer + " is correct!");
+            this.handle_visual_feedback("Correct", selected_country);
+        } else {
+            alert(answer + " is incorrect...");
+            alert("This country's name is: " + selected_country);
+            this.handle_visual_feedback("Incorrect", selected_country);
+        }
+        this.setState({ click_country: "Nothing"});
     }
 
     // handle_country_list_click = (country) => {
@@ -178,6 +192,7 @@ export class MapQuizSVG extends React.Component {
                         click_country={this.state.click_country}
                         input_tracker={this.state.input_tracker}
                         handle_visual_feedback={this.handle_visual_feedback}
+                        handle_submit_answer={this.handle_submit_answer}
                     />
                 </div>
                 <div className="timer">
@@ -188,6 +203,10 @@ export class MapQuizSVG extends React.Component {
                     />
                 </div>
                 <button className= "reset" onClick={this.reset_map}>Reset</button>
+                <CountryList
+                    map_data={this.state.map_data}
+                    click_country={this.state.click_country}
+                />
             </div>
         );
     }
@@ -198,31 +217,25 @@ export class MapQuizSVG extends React.Component {
 //  * Renders the names of the countries as clickable buttons and highlights the corresponding
 //  * country when clicked
 //  */
-// export class CountryList extends React.Component {
-//     render() {
-//         return (
-//             <span>
-//                 <h3>Countries</h3>
-//                 {this.props.map_data.map((country, i) => (
-//                     this.props.click_country === country.name ?
-//                         <button key={i} className={"u-red country-btn"}
-//                             onClick={() => this.props.handle_country_list_click(country)}>
-//                             {country.name}
-//                         </button> :
-//                         <button key={i} className={"country-btn"}
-//                             onClick={() => this.props.handle_country_list_click(country)}>
-//                             {country.name}
-//                         </button>
-//                 ))}
-//             </span>
-//         );
-//     }
-// }
-// CountryList.propTypes = {
-//     map_data: PropTypes.array,
-//     click_country: PropTypes.string,
-//     handle_country_list_click: PropTypes.func,
-// };
+export class CountryList extends React.Component {
+    render() {
+        return (
+            <span>
+                <h3>Countries</h3>
+                {this.props.map_data.map((country, i) => (
+                    <button key={i} className={"country-btn"}>
+                        {country.name}
+                    </button>
+                ))}
+            </span>
+        );
+    }
+}
+CountryList.propTypes = {
+    map_data: PropTypes.array,
+    click_country: PropTypes.string,
+    input_tracker: PropTypes.object,
+};
 
 
 export class MapPath extends React.Component {
@@ -337,38 +350,25 @@ export class NameForm extends React.Component {
         this.setState({value: event.target.value});
     }
 
-    handleSubmit(event) {
-        const selected_country = this.props.click_country;
-        if (selected_country.toLowerCase() === this.state.value.toLowerCase()) {
-            alert(this.state.value + " is correct!");
-            event.preventDefault();
-            this.props.handle_visual_feedback("Correct", selected_country);
-        } else {
-            alert(this.state.value + " is incorrect...");
-            alert("This country's name is: " + selected_country);
-            event.preventDefault();
-            this.props.handle_visual_feedback("Incorrect", selected_country);
-        }
-        this.props.click_country;
+    handleSubmit() {
+        this.props.handle_submit_answer(this.state.value);
         this.setState({value: ''});
     }
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
+            <div>
                 <label>
                     Country Name:
                     <input type="text" value={this.state.value} onChange={this.handleChange} />
                 </label>
-                <input type="submit" value="Submit" />
-            </form>
+                <button onClick={this.handleSubmit}>Submit</button>
+            </div>
         );
     }
 }
 NameForm.propTypes = {
     map_data: PropTypes.array,
     click_country: PropTypes.string,
-    input_tracker: PropTypes.object,
-    handle_visual_feedback: PropTypes.func,
-    handle_country_mouseover: PropTypes.func,
+    handle_submit_answer: PropTypes.func,
 };
