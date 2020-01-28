@@ -49,6 +49,14 @@ class Budget extends React.Component {
         });
     }
 
+    /**
+     * Handles when the slider changes by changing the state of what the maximum values should
+     * be for each category and updates the number of supporters and the budget proposal as a
+     * whole
+     * @param e The event that is triggered, use e.target.value to get the value of the slider
+     * @param resource Tells which resource the slider belongs to so that it updates the budget
+     * correctly
+     */
     handleSliderOnChange = (e, resource) => {
         const newVal = e.target.value;
         const newProposal = this.state.budgetProposal;
@@ -73,7 +81,14 @@ class Budget extends React.Component {
         });
     };
 
-    // TODO: add a validation/prevent user from exceeding budget
+    /**
+     * Determines whether a citizen will support the proposed budget. Right now it is hardcoded
+     * with the following logic: a person's needs are all of the attributes that are currently
+     * false. A need is met by the budget if the proportion for that need is greater than
+     * .75/# of needs. The person will support the budget if their # of needs/2, rounded up,
+     * are met
+     * @returns {number} Number of people that will support a given budget
+     */
     countSupporters = () => {
         let count = 0;
         this.props.population.forEach((citizen) => {

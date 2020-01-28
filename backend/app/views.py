@@ -46,21 +46,6 @@ def africa_map_geojson(request):
     return Response(africa_geojson)
 
 
-@api_view(['POST'])
-def budget_response(request):
-    """
-    Takes in budget allocation and population
-    and returns the number of people who will support the budget
-    """
-    budget = request.data.get('budget')
-    sample_population = Population(request.data.get('population'))
-    supportive_people = sample_population.will_support(budget)
-
-    return Response({
-        "will_support": supportive_people,
-    })
-
-
 @api_view(['GET'])
 def population(request):
     """
