@@ -169,7 +169,7 @@ export class DemocracyMap extends React.Component {
                             <MapPath
                                 key={i}
                                 path={country.svg_path}
-                                id={country.postal}
+                                id={country.iso}
                                 fill={color}
                                 stroke={"black"}
                                 strokeWidth={"1"}
