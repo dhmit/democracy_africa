@@ -279,6 +279,10 @@ export class BudgetVotingSimViz extends React.Component {
                             value={this.state.country_name}
                             onChange={(e) => this.update_population(e.target.value)}
                         >
+                            <option value="Botswana">Botswana</option>
+                            <option value="Cameroon">Cameroon</option>
+                            <option value="Ghana">Ghana</option>
+                            <option value="Guinea">Guinea</option>
                             <option value="Kenya">Kenya</option>
                             <option value="Nigeria">Nigeria</option>
                             <option value="South Africa">South Africa</option>
