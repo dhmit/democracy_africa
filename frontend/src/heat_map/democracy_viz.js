@@ -60,14 +60,6 @@ export class DemocracyViz extends  React.Component {
                 <h1>Democracy in Africa Over Time</h1><hr/>
                 Democracy Score Type: &nbsp;
                 <select onChange={(e) => this.handleScoreTypeChange(e)}>
-                    {/* Removing other score types for now*/}
-                    {/*{Object.keys(this.state.democracyData[0]["democracy_scores"]["1981"]).map(*/}
-                    {/*    (entry, i) => (*/}
-                    {/*        <option key={i}>*/}
-                    {/*            {entry}*/}
-                    {/*        </option>*/}
-                    {/*    )*/}
-                    {/*)}*/}
                     <option>
                         v2x_polyarchy
                     </option>
@@ -154,8 +146,6 @@ export class DemocracyMap extends React.Component {
             .range(['yellow', 'red']);
         return (
             <>
-                {/*<div>{this.state.mouseover_country}</div>*/}
-
                 <svg
                     height="1000"
                     width="1000"
