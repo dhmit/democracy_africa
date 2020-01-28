@@ -25,22 +25,15 @@ class Budget extends React.Component {
     // Once MainView is set up, there will be no state, but rather each will be a prop
     constructor(props){
         super(props);
-        let maximums = resources.reduce((acc, elem) => {
-            acc[elem] = 100; // or what ever object you want inside
-            return acc;
-        }, {});
-
         this.state = {
             reaction: null,
             budgetProposal: {},
             result: 0,
-            maximums: maximums,
             total: 0,
         };
     }
 
-    async componentDidMount() {
-        // for a given list of options set each value in budget proposal to 0
+    resetBudget = () => {
         let proposal = {};
         resources.forEach((resource) => {
             proposal[resource] = 0;
@@ -48,6 +41,11 @@ class Budget extends React.Component {
         this.setState({
             budgetProposal: proposal,
         });
+    }
+
+    async componentDidMount() {
+        // for a given list of options set each value in budget proposal to 0
+        this.resetBudget();
     }
 
     componentDidUpdate(prevProps) {
@@ -162,7 +160,10 @@ class Budget extends React.Component {
                 <div>
                     {supportString}
                 </div>
-
+                <button
+                    type={"submit"}
+                    onClick={this.resetBudget}
+                > Reset </button>
             </>
         );
     }
