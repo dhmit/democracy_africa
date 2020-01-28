@@ -24,10 +24,17 @@ class Budget extends React.Component {
     // Once MainView is set up, there will be no state, but rather each will be a prop
     constructor(props){
         super(props);
+        let maximums = resources.reduce((acc, elem) => {
+            acc[elem] = 1; // or what ever object you want inside
+            return acc;
+        }, {});
+        console.log(maximums);
+
         this.state = {
             reaction: null,
             budgetProposal: {},
             result: 0,
+            maximums: maximums,
         };
     }
 
@@ -45,11 +52,24 @@ class Budget extends React.Component {
     handleSliderOnChange = (e, resource) => {
         const newVal = e.target.value;
         const newProposal = this.state.budgetProposal;
+        let oldVal = newProposal[resource];
         newProposal[resource] = newVal;
 
+        let maximums = resources.reduce((acc, elem) => {
+            if (elem !== resource) {
+                acc[elem] = Number((this.state.maximums[elem] - (newVal - oldVal)).toFixed(2));
+            } else {
+                acc[elem] = Number(this.state.maximums[elem].toFixed(2));
+            }
+            return acc;
+
+        }, {});
+
+        console.log(maximums);
         this.setState({
             budgetProposal: newProposal,
             result: this.countSupporters(),
+            maximums: maximums,
         });
     };
 
@@ -99,6 +119,7 @@ class Budget extends React.Component {
     };
 
     render() {
+        console.log(this.state.maximums);
         const budgetOptions = Object.keys(this.state.budgetProposal).map((resource, key) => (
             <div key={key} className="individual_slider_containers">
                 <p className="slider_descriptor">
@@ -109,7 +130,7 @@ class Budget extends React.Component {
                     className="slider"
                     type="range"
                     min="0"
-                    max="1"
+                    max={this.state.maximums[resource]}
                     step="0.05"
                     value={this.state.budgetProposal[resource]}
                     onChange={(e) => this.handleSliderOnChange(e, resource)}
@@ -117,7 +138,8 @@ class Budget extends React.Component {
 
             </div>
         ));
-
+        const supportString = this.state.result + " out of " + this.props.population.length +
+        " people support your budget";
         return(
             <>
                 <div>
@@ -125,9 +147,7 @@ class Budget extends React.Component {
                 </div>
 
                 <div>
-                    {this.state.result}
-                    out of
-                    {this.props.population.length} people support your budget
+                    {supportString}
                 </div>
 
             </>
