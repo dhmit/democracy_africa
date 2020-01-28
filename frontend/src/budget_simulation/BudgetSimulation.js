@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import { getCookie }from "../common";
 
 import "./BudgetSimulation.css";
+
 // import {parse} from "@typescript-eslint/parser/dist/parser";
 
 /**
@@ -39,7 +39,7 @@ class Budget extends React.Component {
         };
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         // for a given list of options set each value in budget proposal to 0
         let proposal = {};
         resources.forEach((resource) => {
@@ -172,6 +172,7 @@ class AggregateData extends React.Component {
         };
     }
 
+
     render() {
         const aggregate_values = {};
         for (let i = 0; i < this.state.categories.length; i++) {
@@ -227,13 +228,23 @@ export class BudgetVotingSimViz extends React.Component {
 
         this.state = {
             population: null,
+            countries: null,
             country_name: "South Africa",
         };
         this.csrftoken = getCookie('csrftoken');
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         this.update_population(this.state.country_name);
+        try {
+            const response = await fetch('/api/country_demographics/');
+            const listOfCountries = await response.json();
+            this.setState({
+                countries: JSON.parse(listOfCountries),
+            });
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     async update_population(selected_country) {
@@ -249,7 +260,6 @@ export class BudgetVotingSimViz extends React.Component {
                 }
             });
             const population = await response.json();
-            console.log(population);
             this.setState({population: population["citizen_list"],
                 country_name: selected_country});
         } catch (e) {
@@ -264,6 +274,15 @@ export class BudgetVotingSimViz extends React.Component {
             );
         }
 
+        let countrySelection = "";
+        if (this.state.countries) {
+            countrySelection = this.state.countries.map((country, key) => {
+                return (<option key={key} value={country}>{country}</option>);
+            });
+        }
+
+        console.log(countrySelection);
+
         return (
             <>
                 <div className="row">
@@ -272,16 +291,7 @@ export class BudgetVotingSimViz extends React.Component {
                             value={this.state.country_name}
                             onChange={(e) => this.update_population(e.target.value)}
                         >
-                            <option value="Botswana">Botswana</option>
-                            <option value="Cameroon">Cameroon</option>
-                            <option value="Ghana">Ghana</option>
-                            <option value="Guinea">Guinea</option>
-                            <option value="Kenya">Kenya</option>
-                            <option value="Nigeria">Nigeria</option>
-                            <option value="South Africa">South Africa</option>
-                            <option value="Tanzania">Tanzania</option>
-                            <option value="Sudan">Sudan</option>
-                            <option value="Uganda">Uganda</option>
+                            {countrySelection}
                         </select>
                     </div>
                 </div>
