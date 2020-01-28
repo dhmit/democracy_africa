@@ -39,6 +39,7 @@ export class MapPath extends React.Component {
                 this.setState({fill: this.props.fill});
             }
         }
+        console.log(this.props.handle_country_mouseover);
     }
 
     render() {
@@ -49,7 +50,9 @@ export class MapPath extends React.Component {
                 strokeWidth={this.props.strokeWidth}
                 fill={this.state.fill}
                 id={this.props.id}
-                onMouseOver={this.props.handle_country_mouseover}
+                onMouseOver={(e) => this.props.handle_country_mouseover(e, this.props.id)}
+                onMouseOut={() => this.props.handle_country_mouseout()}
+                onMouseMove={(e) => this.props.handle_country_mouseover(e, this.props.id)}
                 ref={this.path_ref}
             />
         );
@@ -60,6 +63,7 @@ MapPath.propTypes = {
     id: PropTypes.string,
     fill: PropTypes.string,
     handle_country_mouseover: PropTypes.func,
+    handle_country_mouseout: PropTypes.func,
     stroke: PropTypes.string,
     strokeWidth: PropTypes.string,
     useColorTransition: PropTypes.bool,

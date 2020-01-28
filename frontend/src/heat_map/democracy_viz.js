@@ -113,8 +113,10 @@ export class DemocracyMap extends React.Component {
             // mouseover_country: 'Nothing',
         };
         this.csrftoken = getCookie('csrftoken');
-        // this.map_ref = React.createRef();
+        this.map_ref = React.createRef();
         this.getCountryData = this.getCountryData.bind(this);
+        this.hoverInfo = this.hoverInfo.bind(this);
+        this.removeInfo = this.removeInfo.bind(this);
     }
 
     /**
@@ -141,6 +143,24 @@ export class DemocracyMap extends React.Component {
         }
     }
 
+    hoverInfo(e, countryId) {
+        this.removeInfo();
+        const svgInfo =this.map_ref.current.getBoundingClientRect();
+        const offset = 20;
+        d3.select(this.map_ref.current)
+            .append('text')
+            .text(countryId)
+            .attr("font-size", "25px")
+            .attr("x", e.pageX - (svgInfo.x + window.scrollX) - offset)
+            .attr("y", e.pageY - (svgInfo.y + window.scrollY) - offset)
+            .attr("id", "info");
+    }
+
+    removeInfo() {
+        d3.select("#info")
+            .remove();
+    }
+
     render() {
         if (!this.state.map_data) {
             return (<div>Loading!</div>);
@@ -156,6 +176,8 @@ export class DemocracyMap extends React.Component {
                     height="1000"
                     width="1000"
                     id="content"
+                    ref={this.map_ref}
+                    style={{margin:"auto"}}
                 >
                     {this.state.map_data.map((country, i) => {
                         const countryData = this.getCountryData(country.iso);
@@ -178,6 +200,8 @@ export class DemocracyMap extends React.Component {
                                 stroke={"black"}
                                 strokeWidth={"1"}
                                 useColorTransition={true}
+                                handle_country_mouseover={this.hoverInfo}
+                                handle_country_mouseout={this.removeInfo}
                             />
                         );
                     })}
