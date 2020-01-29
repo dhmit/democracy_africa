@@ -21,8 +21,8 @@ from django.conf.urls import url
 from app.common import render_react_view
 from app.views import (
     africa_map_geojson,
-    budget_response,
     population,
+    africa_demographics_by_country,
     democracy_score_json,
 )
 
@@ -32,8 +32,8 @@ urlpatterns = [
 
     # API endpoints
     path('api/africa_map_geojson/', africa_map_geojson),
-    path('api/budget_response/', budget_response),
     path('api/population/', population),
+    path('api/country_demographics/', africa_demographics_by_country),
     path('api/democracy_scores/', democracy_score_json),
 
     # React views

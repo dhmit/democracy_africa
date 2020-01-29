@@ -11,19 +11,6 @@ from rest_framework import serializers
 
 #  TODO: implement once we want to move to Django models, but not yet!
 
-# class CitizenSerializer(serializers.modelSerializer):
-#     """
-#     Serializes a Citizen
-#     """
-#
-#     class Meta:
-#         model = Citizen
-#         fields = (
-#             'id',
-#             'name',
-#         )
-
-
 class CitizenSerializer(serializers.Serializer):
     """Serializes citizens class and its related attributes"""
     name = serializers.ReadOnlyField()
