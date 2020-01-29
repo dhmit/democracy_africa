@@ -203,10 +203,12 @@ export class MapQuizSVG extends React.Component {
                     />
                 </div>
                 <button className= "reset" onClick={this.reset_map}>Reset</button>
-                <CountryList
-                    map_data={this.state.map_data}
-                    click_country={this.state.click_country}
-                />
+                <div className='list-wrapper'>
+                    <CountryList
+                        map_data={this.state.map_data}
+                        click_country={this.state.click_country}
+                    />
+                </div>
             </div>
         );
     }
