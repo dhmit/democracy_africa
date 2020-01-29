@@ -21,6 +21,7 @@ from rest_framework.response import Response
 from django.conf import settings
 
 from .models import Population
+from .models import africa_demographics_by_country as demographics_dict
 
 from.serializers import PopulationSerializer
 
@@ -46,27 +47,22 @@ def africa_map_geojson(request):
     return Response(africa_geojson)
 
 
-@api_view(['POST'])
-def budget_response(request):
-    """
-    Takes in budget allocation and population
-    and returns the number of people who will support the budget
-    """
-    budget = request.data.get('budget')
-    sample_population = Population(request.data.get('population'))
-    supportive_people = sample_population.will_support(budget)
-
-    return Response({
-        "will_support": supportive_people,
-    })
-
-
 @api_view(['GET'])
+def africa_demographics_by_country(request):
+    """
+    Retrieves list of countries for which demographics were available
+    """
+    countries = list(demographics_dict.keys())
+    return Response(json.dumps(countries))
+
+
+@api_view(['POST'])
 def population(request):
     """
     Generates a population of Citizen objects that then get passed into the frontend
     """
-    population_obj = Population()
+    country_name = request.data.get("country_name")
+    population_obj = Population(country=country_name)
     population_obj.create_citizens(1000)
     serializer = PopulationSerializer(instance=population_obj)
     return Response(serializer.data)
