@@ -153,7 +153,6 @@ export class DemocracyMap extends React.Component {
         // Clears previous info boxes
         this.removeInfo();
         const countryData = this.getCountryData(countryId);
-        console.log(countryData);
         const svgInfo = this.map_ref.current.getBoundingClientRect();
         const infoX = e.pageX - (svgInfo.x + window.scrollX);
         const infoY = e.pageY - (svgInfo.y + window.scrollY);
@@ -162,7 +161,7 @@ export class DemocracyMap extends React.Component {
         d3.select(this.map_ref.current)
             .append('rect')
             .attr("id", "info")
-            .attr("width", infoWidth)
+            .attr("width", infoWidth + (countryData["country_name"].length) * 5)
             .attr("height", infoHeight)
             .attr("x", infoX - (infoWidth / 2))
             .attr("y", infoY - infoHeight - 20)
@@ -171,16 +170,16 @@ export class DemocracyMap extends React.Component {
         d3.select(this.map_ref.current)
             .append("text")
             .text(countryData["country_name"])
-            .attr("x", infoX - (infoWidth / 2))
-            .attr("y", infoY - infoHeight)
+            .attr("x", infoX - (infoWidth / 2) + 10)
+            .attr("y", infoY - infoHeight + 10)
             .attr("font-size", "20px")
             .attr("fill", "black")
             .attr("id", "infoText");
         d3.select(this.map_ref.current)
             .append("text")
             .text(countryData["democracy_scores"][this.props.year][this.props.scoreType])
-            .attr("x", infoX - (infoWidth / 2))
-            .attr("y", infoY - infoHeight + 20)
+            .attr("x", infoX - (infoWidth / 2) + 10)
+            .attr("y", infoY - infoHeight + 30)
             .attr("font-size", "20px")
             .attr("fill", "black")
             .attr("id", "infoScore");
