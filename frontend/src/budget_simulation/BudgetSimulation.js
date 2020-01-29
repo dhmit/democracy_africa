@@ -3,6 +3,11 @@ import PropTypes from 'prop-types';
 import { getCookie }from "../common";
 
 import "./BudgetSimulation.css";
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Popover from 'react-bootstrap/Popover';
+import PopoverContent from 'react-bootstrap/PopoverContent';
+// eslint-disable-next-line no-unused-vars
+import PopoverTitle from 'react-bootstrap/PopoverTitle';
 
 // import {parse} from "@typescript-eslint/parser/dist/parser";
 
@@ -49,7 +54,7 @@ class Budget extends React.Component {
         });
     };
 
-    async componentDidMount() {
+    componentDidMount() {
         // for a given list of options set each value in budget proposal to 0
         this.resetBudget();
     }
@@ -192,6 +197,7 @@ class AggregateData extends React.Component {
 
 
     render() {
+
         const aggregate_values = {};
         for (let i = 0; i < this.state.categories.length; i++) {
             let total = 0;
@@ -223,15 +229,30 @@ class AggregateData extends React.Component {
                         const first_letter = category_name[0];
                         category_name = category_name.replace(first_letter,
                             first_letter.toUpperCase());
+                        const popover = (
+                            <Popover id="popover-basic">
+                                {/*<PopoverTitle as="h3">Testing</PopoverTitle>*/}
+                                <PopoverContent>
+                                    And heres some <strong>amazing</strong> content.
+                                    Its very engaging. right?
+                                </PopoverContent>
+                            </Popover>
+                        );
+
+                        const Example = () => (
+                            <OverlayTrigger trigger="hover" placement="right" overlay={popover}>
+                                <td className="aggregate_data_table_data">
+                                    {(aggregate_values[category]*100).toFixed(1)}%
+                                </td>
+                            </OverlayTrigger>
+                        );
                         return (
                             <tr key={key} className="aggregate_data_table_rows">
                                 <td className="aggregate_data_table_data">
                                     {category_name}
                                 </td>
+                                <Example/>
 
-                                <td className="aggregate_data_table_data">
-                                    {(aggregate_values[category]*100).toFixed(1)}%
-                                </td>
                             </tr>
                         );
                     })}
