@@ -348,6 +348,7 @@ export class NameForm extends React.Component {
 
     handleChange(event) {
         this.setState({value: event.target.value});
+        event.preventDefault();
     }
 
     handleSubmit() {
@@ -357,13 +358,13 @@ export class NameForm extends React.Component {
 
     render() {
         return (
-            <div>
+            <form onSubmit={this.handleChange}>
                 <label>
                     Country Name:
                     <input type="text" value={this.state.value} onChange={this.handleChange} />
                 </label>
                 <button onClick={this.handleSubmit}>Submit</button>
-            </div>
+            </form>
         );
     }
 }
