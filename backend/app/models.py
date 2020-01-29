@@ -4,41 +4,71 @@ Models for the democracy_africa app.
 # from django.db import models
 # TODO: implement me!
 import random
-import math
 
 # Demographics from Afrobarometer 2016/2018 results
 # https://www.afrobarometer.org/online-data-analysis/analyse-online?fbclid=IwAR1iKKoydnKdD0UTDPIqH_PEn6bJuJjYPuVvOA657hrNaN6HHsfpp6vxBpg
-africa_demographics_by_country = {"Kenya": {"electricity_access": 74.8,
+africa_demographics_by_country = {"Botswana": {"electricity_access": 93.2,
+                                               "rural_households": 31.0,
+                                               "piped_water_access": 90.1,
+                                               "sewage_system_access": 41.7,
+                                               "some_formal_education": 88.8,
+                                               },
+                                  "Cameroon": {"electricity_access": 78.0,
+                                               "rural_households": 47.6,
+                                               "piped_water_access": 75.7,
+                                               "sewage_system_access": 49.1,
+                                               "some_formal_education": 88.3,
+                                               },
+                                  "Ghana": {"electricity_access": 91.3,
+                                            "rural_households": 45.6,
+                                            "piped_water_access": 85.6,
+                                            "sewage_system_access": 43.5,
+                                            "some_formal_education": 84.1,
+                                            },
+                                  "Guinea": {"electricity_access": 32.2,
+                                             "rural_households": 67.5,
+                                             "piped_water_access": 24.0,
+                                             "sewage_system_access": 10.4,
+                                             "some_formal_education": 58.0,
+                                             },
+                                  "Kenya": {"electricity_access": 74.8,
                                             "rural_households": 64.0,
                                             "piped_water_access": 40.8,
                                             "sewage_system_access": 21.6,
+                                            "some_formal_education": 93.0,
                                             },
                                   "Nigeria": {"electricity_access": 83.3,
                                               "rural_households": 56.5,
                                               "piped_water_access": 38.5,
                                               "sewage_system_access": 35.1,
+                                              "some_formal_education": 92.6,
                                               },
                                   "South Africa": {"electricity_access": 94.2,
                                                    "rural_households": 31.2,
                                                    "piped_water_access": 78.3,
-                                                   "sewage_system_access": 62.7
+                                                   "sewage_system_access": 62.7,
+                                                   "some_formal_education": 92.6,
                                                    },
                                   "Sudan": {"electricity_access": 76.3,
                                             "rural_households": 62.2,
                                             "piped_water_access": 58.4,
                                             "sewage_system_access": 20.3,
+                                            "some_formal_education": 91.2,
                                             },
                                   "Tanzania": {"electricity_access": 55.5,
                                                "rural_households": 66.8,
                                                "piped_water_access": 38.8,
                                                "sewage_system_access": 5.4,
+                                               "some_formal_education": 88.2,
                                                },
                                   "Uganda": {"electricity_access": 35.3,
                                              "rural_households": 75.1,
                                              "piped_water_access": 25.0,
                                              "sewage_system_access": 15.5,
+                                             "some_formal_education": 88.7,
                                              }
                                   }
+
 
 class Citizen:
     """
@@ -154,66 +184,10 @@ class Population:
         if sanitation_access < africa_demographics_by_country[self.country]["sewage_system_access"]:
             citizen.traits["has_access_to_sanitation"] = True
 
-        if educated < 91:
+        if educated < africa_demographics_by_country[self.country]["some_formal_education"]:
             citizen.traits["is_educated"] = True
 
         return citizen
-
-    def will_support(self, budget_proposal):
-        """
-        Determines whether a citizen will support the proposed budget. Right now it is hardcoded
-        with the following logic: a person's needs are all of the attributes that are currently
-        false. A need is met by the budget if the proportion for that need is greater than
-        .75/# of needs. The person will support the budget if their # of needs/2, rounded up,
-        are met
-        :param budget_proposal: Budget determined by the user in the frontend, uses proportions
-        that are <= 1
-        :return: The number of citizens that support the budget
-        """
-        # TODO: make this more efficient aka find a way to not need all these nested ifs
-        # TODO: Considerin gadding this to the frontend (minimize the # of requests) and will
-        #  allow for auto updating the user rather than them pressing a button
-        count = 0
-        for citizen in self.citizen_list:
-            if isinstance(citizen, Citizen):
-                needs = [trait for trait in citizen.traits.keys()
-                         if not citizen.traits[trait]]
-            else:
-                needs = [trait for trait in citizen["traits"].keys()
-                         if not citizen["traits"][trait]]
-
-            num_of_needs = len(needs)
-
-            if num_of_needs == 0:
-                continue
-
-            num_to_vote = math.ceil(num_of_needs / 2.0)
-            cutoff = .75 / num_of_needs
-
-            # for mvp, hardcoded checks
-            # check first if it is a need, then check if amount is sufficient
-            num_of_needs_met = 0
-            for resource, proposal in budget_proposal.items():
-                proposal = float(proposal)
-                if resource == 'infrastructure' and 'lives_in_rural_area' in needs:
-                    if proposal >= cutoff:
-                        num_of_needs_met += 1
-                elif resource == 'education' and 'is_educated' in needs:
-                    if proposal >= cutoff:
-                        num_of_needs_met += 1
-                elif resource == 'water' and 'has_access_to_water' in needs:
-                    if proposal >= cutoff:
-                        num_of_needs_met += 1
-                elif resource == 'sanitation' and 'has_access_to_sanitation' in needs:
-                    if proposal >= cutoff:
-                        num_of_needs_met += 1
-                elif resource == 'electricity' and 'has_access_to_electricity' in needs:
-                    if proposal >= cutoff:
-                        num_of_needs_met += 1
-            if num_of_needs_met >= num_to_vote:
-                count += 1
-
-        return count
 
 
 class StatisticalDistributions:

@@ -27,7 +27,7 @@ export class MapPath extends React.Component {
             if (this.state.useColorTransition) {
                 d3.select(this.path_ref.current)
                     .transition()
-                    .duration(1000)
+                    .duration(500)
                     .attr("fill", () => {
                         return this.props.fill;
                     })
