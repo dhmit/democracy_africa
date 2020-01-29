@@ -39,7 +39,6 @@ export class MapPath extends React.Component {
                 this.setState({fill: this.props.fill});
             }
         }
-        console.log(this.props.handle_country_mouseover);
     }
 
     render() {
