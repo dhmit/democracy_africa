@@ -203,7 +203,7 @@ class AggregateData extends React.Component {
                 //Above: index into the population to get the citizen, then that citizen's
                 // traits and then the value (true or false) of that trait for each category
             }
-            aggregate_values[[this.state.categories[i]]] = total/this.props.population.length;
+            aggregate_values[category] = total/this.props.population.length;
         }
 
         return (
@@ -220,10 +220,14 @@ class AggregateData extends React.Component {
                 </thead>
                 <tbody>
                     {this.state.categories.map((category, key) => {
+                        let category_name = category.replace(/_/g, " ");
+                        const first_letter = category_name[0];
+                        category_name = category_name.replace(first_letter,
+                            first_letter.toUpperCase());
                         return (
                             <tr key={key} className="aggregate_data_table_rows">
                                 <td className="aggregate_data_table_data">
-                                    {category}
+                                    {category_name}
                                 </td>
 
                                 <td className="aggregate_data_table_data">
