@@ -26,10 +26,12 @@ class Budget extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            reaction: null,
             budgetProposal: {},
             result: 0,
             total: 0,
+            reactionSample: [],
+            sampleSize: 0,
+            showReactionSample: false,
         };
     }
 
@@ -44,6 +46,8 @@ class Budget extends React.Component {
         });
         this.setState({
             budgetProposal: proposal,
+            showReactionSample: false,
+            sampleSize: 0,
         });
     }
 
@@ -128,12 +132,31 @@ class Budget extends React.Component {
 
             if (numOfNeedsMet >= numToVote) {
                 count++;
+                citizen.will_support = true;
             }
-
         });
         return count;
     };
 
+    /**
+     * Return a randomly selected sample of the population
+     * so the user can grasp why the results are the way they are
+     *
+     * @returns {Array} of citizens
+     */
+
+    generateSamplePopulation = (arr, sampleSize=100) => {
+        arr.sort(() => Math.random() - 0.5);
+        this.setState({ reactionSample: arr.slice(0, sampleSize)});
+    };
+
+
+    getSamplePopulation = (e) => {
+        this.setState({
+            sampleSize: e.target.value,
+        });
+        this.generateSamplePopulation(this.props.population, e.target.value);
+    }
     render() {
         const budgetOptions = Object.keys(this.state.budgetProposal).map((resource, key) => (
             <div key={key} className="individual_slider_containers">
@@ -153,8 +176,23 @@ class Budget extends React.Component {
 
             </div>
         ));
+
         const supportString = this.state.result + " out of " + this.props.population.length +
         " people support your budget";
+
+        const reactions = this.state.reactionSample.map((citizen,key) =>
+            (
+                <svg key={key} height="20" width="20">
+                    <circle
+                        cx="10"
+                        cy="10"
+                        r="10"
+                        fill={citizen["will_support"] ? "green" : "red"}
+                    />
+                </svg>
+            )
+        );
+
         return(
             <>
                 <div>
@@ -168,6 +206,27 @@ class Budget extends React.Component {
                     type={"submit"}
                     onClick={this.resetBudget}
                 > Reset </button>
+
+                <div>
+                    Sample size:
+                    <input
+                        type={"number"}
+                        name={"sampleSize"}
+                        step={"1"}
+                        min={"0"}
+                        max={this.props.population.length}
+                        value={this.state.sampleSize}
+                        onChange={this.getSamplePopulation}
+                    />
+                    <button
+                        type={"submit"}
+                        onClick={()=> this.setState({
+                            showReactionSample: !this.state.showReactionSample,
+                        })}
+                    > View results
+                    </button>
+                    {this.state.showReactionSample && reactions}
+                </div>
             </>
         );
     }
