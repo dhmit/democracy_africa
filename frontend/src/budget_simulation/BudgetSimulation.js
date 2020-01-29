@@ -166,13 +166,15 @@ class Budget extends React.Component {
                     {budgetOptions}
                 </div>
 
-                <div>
+                <div className="support_string">
                     {supportString}
                 </div>
-                <button
-                    type={"submit"}
-                    onClick={this.resetBudget}
-                > Reset </button>
+                <div className="reset_button">
+                    <button
+                        type={"submit"}
+                        onClick={this.resetBudget}
+                    > Reset </button>
+                </div>
             </>
         );
     }
@@ -306,6 +308,9 @@ export class BudgetVotingSimViz extends React.Component {
 
         return (
             <>
+                <div className="row instructions" >
+                    <p>Use this dropdown menu to select different countries</p>
+                </div>
                 <div className="row">
                     <div className="col-md-8 col-lg-4 col-sm-12 form-group country_list">
                         <select className="form-control "
@@ -326,7 +331,7 @@ export class BudgetVotingSimViz extends React.Component {
                 </div>
 
                 <div className="row">
-                    <div className="col-md-8 col-lg-5 col-sm-12 budget_container">
+                    <div className="col-md-8 col-lg-6 col-sm-12 budget_container">
                         <Budget
                             country_name={this.state.country_name}
                             population={this.state.population}
