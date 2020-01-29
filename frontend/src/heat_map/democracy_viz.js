@@ -1,9 +1,7 @@
 import React from 'react';
 import * as d3 from 'd3';
 import PropTypes from 'prop-types';
-
 import { MapPath } from "../MapPath";
-
 import { getCookie, project_features_and_create_svg_paths } from '../common';
 import './heat_map.css';
 
@@ -72,7 +70,7 @@ export class DemocracyViz extends  React.Component {
                 </select>
                 <br/><br/>
                 <div className = 'slidecontainer'>
-                    <div className={'map'}>
+                    <div>
                         <input onChange={(e) => this.handleYearChange(e)}
                             type='range' id = 'year' name = 'year' min = '1981' max = '2018'
                             step = '1' className= 'slider'>
@@ -82,16 +80,14 @@ export class DemocracyViz extends  React.Component {
                 </div>
 
                 <br/>
-                Currently grey either means:
-                <ul>
-                    {/*Remove this later once we fix data*/}
-                    <li>Country doesn&apos;t exist in CSV</li>
-                    {/*Maybe keep this bottom one*/}
-                    <li>
-                        The country does exist but there is no data for that particular
-                        score type in that particular year
-                    </li>
-                </ul>
+
+                <svg className={'svgrect'}>
+                    {/*<rect className={'gradient'} />*/}
+
+                </svg>
+                <div className={"low-label"}>
+                    lowest score
+                </div>
                 <br/>
                 <div className={'map'}>
                     <DemocracyMap
@@ -100,11 +96,16 @@ export class DemocracyViz extends  React.Component {
                         year={this.state.year}
 
                     />
+
                 </div>
+
+
+
             </>
         );
     }
 }
+
 
 export class DemocracyMap extends React.Component {
     constructor(props) {

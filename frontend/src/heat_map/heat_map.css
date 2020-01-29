@@ -4,6 +4,28 @@ body {
 
 .map{
     text-align: center;
+    margin-right: 20%;
+    margin-left: 20%;
+}
+
+.gradient{
+    width: 66%;
+    height: 33px;
+    background-image: linear-gradient(to left, red, yellow);
+    fill: none;
+}
+
+.low-label{
+    text-indent: 15%;
+}
+.svgrect{
+    width: 70%;
+    height: 33px;
+    margin-left: 15%;
+    margin-right: 15%;
+    background-image: linear-gradient(to left, red, yellow);
+
+
 }
 
 .slidecontainer {
