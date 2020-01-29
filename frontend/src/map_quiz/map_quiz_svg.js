@@ -156,6 +156,7 @@ export class MapQuizSVG extends React.Component {
         return (
             <div className="u-flex-column">
                 <div className="map-wrapper">
+                    <h1>Africa Map Quiz</h1>
                     <svg
                         height="1000"
                         width="800"
@@ -204,10 +205,12 @@ export class MapQuizSVG extends React.Component {
                 </div>
                 <button className= "reset" onClick={this.reset_map}>Reset</button>
                 <div className='list-wrapper'>
+                    {/*<div className='col-md-8'>*/}
                     <CountryList
                         map_data={this.state.map_data}
                         click_country={this.state.click_country}
                     />
+                    {/*</div>*/}
                 </div>
             </div>
         );
@@ -221,14 +224,36 @@ export class MapQuizSVG extends React.Component {
 //  */
 export class CountryList extends React.Component {
     render() {
+        const secondColumnStart = Math.floor(this.props.map_data.length/ 3);
+        const thirdColumnStart = Math.floor(2*(this.props.map_data.length/3));
         return (
             <span>
                 <h3>Countries</h3>
-                {this.props.map_data.map((country, i) => (
-                    <button key={i} className={"country-btn"}>
-                        {country.name}
-                    </button>
-                ))}
+                <div className='row'>
+                    <div className='col'>
+                        {this.props.map_data.slice(0, secondColumnStart).map((country, i) => (
+                            <button key={i} className={"country-btn"}>
+                                {country.name}
+                            </button>
+                        ))}
+                    </div>
+                    <div className='col'>
+                        {this.props.map_data.slice(secondColumnStart, thirdColumnStart).map(
+                            (country, i) => (
+                                <button key={i} className={"country-btn"}>
+                                    {country.name}
+                                </button>
+                            ))}
+                    </div>
+                    <div className='col'>
+                        {this.props.map_data.slice(thirdColumnStart).map(
+                            (country, i) => (
+                                <button key={i} className={"country-btn"}>
+                                    {country.name}
+                                </button>
+                            ))}
+                    </div>
+                </div>
             </span>
         );
     }
