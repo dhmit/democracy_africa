@@ -147,6 +147,7 @@ export class DemocracyMap extends React.Component {
                 return countryData;
             }
         }
+        return null;
     }
 
     hoverInfo(e, countryId) {
@@ -158,10 +159,18 @@ export class DemocracyMap extends React.Component {
         const infoY = e.pageY - (svgInfo.y + window.scrollY);
         const infoWidth = 200;
         const infoHeight = 100;
+        const name = countryData !== null
+            ? countryData["country_name"]
+            : "Name not found";
+        const score = countryData !== null &&
+            Object.keys(countryData["democracy_scores"]).includes(this.props.year) &&
+            countryData["democracy_scores"][this.props.year][this.props.scoreType] !== ""
+            ? countryData["democracy_scores"][this.props.year][this.props.scoreType]
+            : "No score available";
         d3.select(this.map_ref.current)
             .append('rect')
             .attr("id", "info")
-            .attr("width", infoWidth + (countryData["country_name"].length) * 5)
+            .attr("width", infoWidth + (name.length) * 5)
             .attr("height", infoHeight)
             .attr("x", infoX - (infoWidth / 2))
             .attr("y", infoY - infoHeight - 20)
@@ -169,7 +178,7 @@ export class DemocracyMap extends React.Component {
             .attr("stroke", "black");
         d3.select(this.map_ref.current)
             .append("text")
-            .text(countryData["country_name"])
+            .text(name)
             .attr("x", infoX - (infoWidth / 2) + 10)
             .attr("y", infoY - infoHeight + 10)
             .attr("font-size", "20px")
@@ -177,7 +186,7 @@ export class DemocracyMap extends React.Component {
             .attr("id", "infoText");
         d3.select(this.map_ref.current)
             .append("text")
-            .text(countryData["democracy_scores"][this.props.year][this.props.scoreType])
+            .text(score)
             .attr("x", infoX - (infoWidth / 2) + 10)
             .attr("y", infoY - infoHeight + 30)
             .attr("font-size", "20px")
