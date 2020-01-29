@@ -45,11 +45,7 @@ class Budget extends React.Component {
         this.setState({
             budgetProposal: proposal,
             total: 0,
-        }, () => {
-            // Can only reset results once budget is updated, thus we need the callback function
-            this.setState({
-                result: this.countSupporters(),
-            });
+            result: 0,
         });
     };
 
