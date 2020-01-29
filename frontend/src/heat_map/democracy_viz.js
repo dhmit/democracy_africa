@@ -144,20 +144,48 @@ export class DemocracyMap extends React.Component {
     }
 
     hoverInfo(e, countryId) {
+        // Clears previous info boxes
         this.removeInfo();
-        const svgInfo =this.map_ref.current.getBoundingClientRect();
-        const offset = 20;
+        const countryData = this.getCountryData(countryId);
+        console.log(countryData);
+        const svgInfo = this.map_ref.current.getBoundingClientRect();
+        const infoX = e.pageX - (svgInfo.x + window.scrollX);
+        const infoY = e.pageY - (svgInfo.y + window.scrollY);
+        const infoWidth = 200;
+        const infoHeight = 100;
         d3.select(this.map_ref.current)
-            .append('text')
-            .text(countryId)
-            .attr("font-size", "25px")
-            .attr("x", e.pageX - (svgInfo.x + window.scrollX) - offset)
-            .attr("y", e.pageY - (svgInfo.y + window.scrollY) - offset)
-            .attr("id", "info");
+            .append('rect')
+            .attr("id", "info")
+            .attr("width", infoWidth)
+            .attr("height", infoHeight)
+            .attr("x", infoX - (infoWidth / 2))
+            .attr("y", infoY - infoHeight - 20)
+            .attr("fill", "white")
+            .attr("stroke", "black");
+        d3.select(this.map_ref.current)
+            .append("text")
+            .text(countryData["country_name"])
+            .attr("x", infoX - (infoWidth / 2))
+            .attr("y", infoY - infoHeight)
+            .attr("font-size", "20px")
+            .attr("fill", "black")
+            .attr("id", "infoText");
+        d3.select(this.map_ref.current)
+            .append("text")
+            .text(countryData["democracy_scores"][this.props.year][this.props.scoreType])
+            .attr("x", infoX - (infoWidth / 2))
+            .attr("y", infoY - infoHeight + 20)
+            .attr("font-size", "20px")
+            .attr("fill", "black")
+            .attr("id", "infoScore");
     }
 
     removeInfo() {
         d3.select("#info")
+            .remove();
+        d3.select("#infoText")
+            .remove();
+        d3.select("#infoScore")
             .remove();
     }
 
