@@ -72,7 +72,7 @@ export class DemocracyViz extends  React.Component {
                 </select>
                 <br/><br/>
                 <div className = 'slidecontainer'>
-                    <div className={'map'}>
+                    <div className={'slider'}>
                         <input onChange={(e) => this.handleYearChange(e)}
                             type='range' id = 'year' name = 'year' min = '1981' max = '2018'
                             step = '1' className= 'slider'>
@@ -100,6 +100,7 @@ export class DemocracyViz extends  React.Component {
                         year={this.state.year}
 
                     />
+                    <br/>
                 </div>
             </>
         );
@@ -111,12 +112,11 @@ export class DemocracyMap extends React.Component {
         super(props);
         this.state = {
             map_data: null,
-            // mouseover_country: 'Nothing',
         };
         this.csrftoken = getCookie('csrftoken');
-        // this.map_ref = React.createRef();
+        this.map_ref = React.createRef();
         this.getCountryData = this.getCountryData.bind(this);
-
+        this.handleCountryClick = this.handleCountryClick.bind(this);
     }
 
     /**
@@ -146,6 +146,19 @@ export class DemocracyMap extends React.Component {
                 return countryData;
             }
         }
+        return null;
+    }
+
+    handleCountryClick(countryCode) {
+        const data = this.getCountryData(countryCode);
+        if (data) {
+            const countryScores = data["democracy_scores"];
+            const allScoresOfType = Object.keys(countryScores).reduce((acc, el) => {
+                acc[el] = countryScores[el][this.props.scoreType];
+                return acc;
+            }, {});
+            console.log(allScoresOfType);
+        }
     }
 
     render() {
@@ -161,6 +174,7 @@ export class DemocracyMap extends React.Component {
                     height="1000"
                     width="1000"
                     id="content"
+                    ref={this.map_ref}
                 >
                     {this.state.map_data.map((country, i) => {
                         const countryData = this.getCountryData(country.iso);
@@ -183,6 +197,7 @@ export class DemocracyMap extends React.Component {
                                 stroke={"black"}
                                 strokeWidth={"1"}
                                 useColorTransition={true}
+                                handleCountryClick={this.handleCountryClick}
                             />
                         );
                     })}
