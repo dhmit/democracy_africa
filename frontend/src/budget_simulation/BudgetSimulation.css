@@ -37,3 +37,11 @@
 .submit_button_container {
     text-align: center;
 }
+
+.country_list {
+    margin: 5px 0px;
+    padding-left: 20px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}

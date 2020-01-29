@@ -44,8 +44,13 @@ class Budget extends React.Component {
         });
         this.setState({
             budgetProposal: proposal,
+        }, () => {
+            // Can only reset results once budget is updated, thus we need the callback function
+            this.setState({
+                result: this.countSupporters(),
+            });
         });
-    }
+    };
 
     async componentDidMount() {
         // for a given list of options set each value in budget proposal to 0
@@ -298,8 +303,8 @@ export class BudgetVotingSimViz extends React.Component {
         return (
             <>
                 <div className="row">
-                    <div className="form-group">
-                        <select className="form-control float-left"
+                    <div className="col-md-8 col-lg-4 col-sm-12 form-group country_list">
+                        <select className="form-control "
                             value={this.state.country_name}
                             onChange={(e) => this.update_population(e.target.value)}
                         >
