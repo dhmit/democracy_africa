@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { MapPath } from "../MapPath";
 
 import { getCookie, project_features_and_create_svg_paths } from '../common';
-import '../map_quiz/map_quiz.css';
+import './heat_map.css';
 
 /**
  * Main component for the map quiz.
@@ -39,12 +39,18 @@ export class DemocracyViz extends  React.Component {
         }
     }
 
+    /**
+     *  Handles the change in democracy score type
+     */
     handleScoreTypeChange(e) {
         this.setState({
             scoreType: e.target.value,
         });
     }
 
+    /**
+     *  Handles the change in year
+     */
     handleYearChange(e) {
         this.setState({
             year: e.target.value,
@@ -60,25 +66,21 @@ export class DemocracyViz extends  React.Component {
                 <h1>Democracy in Africa Over Time</h1><hr/>
                 Democracy Score Type: &nbsp;
                 <select onChange={(e) => this.handleScoreTypeChange(e)}>
-                    {Object.keys(this.state.democracyData[0]["democracy_scores"]["1981"]).map(
-                        (entry, i) => (
-                            <option key={i}>
-                                {entry}
-                            </option>
-                        )
-                    )}
+                    <option>
+                        v2x_polyarchy
+                    </option>
                 </select>
-                <br/>
-                Year: &nbsp;
-                <select onChange={(e) => this.handleYearChange(e)}>
-                    {Object.keys(this.state.democracyData[0]["democracy_scores"]).map(
-                        (entry, i) => (
-                            <option key={i}>
-                                {entry}
-                            </option>
-                        )
-                    )}
-                </select>
+                <br/><br/>
+                <div className = 'slidecontainer'>
+                    <div className={'map'}>
+                        <input onChange={(e) => this.handleYearChange(e)}
+                            type='range' id = 'year' name = 'year' min = '1981' max = '2018'
+                            step = '1' className= 'slider'>
+                        </input>
+                    </div>
+                    {this.state.year}
+                </div>
+
                 <br/>
                 Currently grey either means:
                 <ul>
@@ -91,11 +93,14 @@ export class DemocracyViz extends  React.Component {
                     </li>
                 </ul>
                 <br/>
-                <DemocracyMap
-                    democracyData={this.state.democracyData}
-                    scoreType={this.state.scoreType}
-                    year={this.state.year}
-                />
+                <div className={'map'}>
+                    <DemocracyMap
+                        democracyData={this.state.democracyData}
+                        scoreType={this.state.scoreType}
+                        year={this.state.year}
+
+                    />
+                </div>
             </>
         );
     }
@@ -111,6 +116,7 @@ export class DemocracyMap extends React.Component {
         this.csrftoken = getCookie('csrftoken');
         // this.map_ref = React.createRef();
         this.getCountryData = this.getCountryData.bind(this);
+
     }
 
     /**
@@ -129,6 +135,11 @@ export class DemocracyMap extends React.Component {
         }
     }
 
+    /**
+     * Gets the country data from the democracy data based on the countryCode
+     * @param countryCode the ISO code of the country
+     * @returns the country data associated with the country ISO code
+     */
     getCountryData(countryCode) {
         for (const countryData of this.props.democracyData) {
             if (countryCode === countryData["country_text_id"]) {
@@ -143,11 +154,9 @@ export class DemocracyMap extends React.Component {
         }
         const colorScale = d3.scaleLinear()
             .domain([0, 1])
-            .range(['white', 'blue']);
+            .range(['yellow', 'red']);
         return (
             <>
-                {/*<div>{this.state.mouseover_country}</div>*/}
-
                 <svg
                     height="1000"
                     width="1000"
@@ -169,10 +178,11 @@ export class DemocracyMap extends React.Component {
                             <MapPath
                                 key={i}
                                 path={country.svg_path}
-                                id={country.postal}
+                                id={country.iso}
                                 fill={color}
                                 stroke={"black"}
                                 strokeWidth={"1"}
+                                useColorTransition={true}
                             />
                         );
                     })}
