@@ -21,6 +21,8 @@ const resources = [
     "education",
 ];
 
+class Citizen
+
 class Budget extends React.Component {
     // Once MainView is set up, there will be no state, but rather each will be a prop
     constructor(props){
@@ -182,7 +184,7 @@ class Budget extends React.Component {
 
         const reactions = this.state.reactionSample.map((citizen,key) =>
             (
-                <svg key={key} height="20" width="20">
+                <svg className={"budget-reaction-citizen"} key={key} height="20" width="20">
                     <circle
                         cx="10"
                         cy="10"
@@ -225,7 +227,9 @@ class Budget extends React.Component {
                         })}
                     > View results
                     </button>
-                    {this.state.showReactionSample && reactions}
+                    <div className={"budget-reaction"}>
+                        {this.state.showReactionSample && reactions}
+                    </div>
                 </div>
             </>
         );
