@@ -7,24 +7,48 @@ body {
 
 .list-wrapper {
     position: absolute;
-    margin-top: 200px;
+    margin-top: 220px;
     margin-left: 50%;
     flex-direction: column;
     justify-content: center;
 }
 
-.country-btn {
-    display: flex;
+.grid-container {
+    display: inline-grid;
+    grid-template-columns: auto auto auto auto auto;
+    grid-gap: 16px;
 }
 
-.country-btn + .country-btn {
-    margin-top: 16px;
+.country-btn {
+    background: white;
+    border-radius: 5px;
+}
+
+.country-btn-correct {
+    background: #B8E39B !important;
 }
 
 .input-wrapper {
     position: absolute;
     margin-left: 50%;
     margin-top: 50px;
+}
+
+.input-wrapper input {
+    border: 1px solid #6e6e6e;
+    border-radius: 5px;
+    padding: 4px;
+}
+
+.input-wrapper input, .submit-btn {
+    margin-left: 8px;
+}
+
+.submit-btn, .country-btn, .reset {
+    background: white;
+    border: 1px solid #6e6e6e;
+    border-radius: 5px;
+    padding: 4px 8px;
 }
 
 .u-flex {
@@ -37,23 +61,19 @@ body {
     flex-wrap : wrap;
 }
 
-.u-red {
-    color: red;
-}
-
-.score{
+.score {
     position : absolute;
     margin-left: 50%;
     font-size: 24px;
 }
 
-.timer{
+.timer {
     position : absolute;
     margin-left: 50%;
     margin-top : 100px;
 }
 
-.reset{
+.reset {
     position : absolute;
     margin-left: 50%;
     margin-top : 150px;
