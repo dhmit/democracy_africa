@@ -8,11 +8,6 @@ import "./BudgetSimulation.css";
 
 // import {parse} from "@typescript-eslint/parser/dist/parser";
 
-/**
- * Main component for the simulation.
- *
- * Handles all logic, displays information, and makes database query/posts
- */
 
 // hardcoded list of resources for now
 const resources = [
@@ -22,6 +17,13 @@ const resources = [
     "water",
     "education",
 ];
+
+/**
+ * Component for displaying citizen information
+ *
+ * The fill indicates the citizen's stance on the budget,
+ * and hovering over the component displays the citizen's traits
+ */
 
 class Citizen extends React.Component {
     constructor(props){
@@ -36,14 +38,14 @@ class Citizen extends React.Component {
             <Popover id={"popover-basic"}>
                 <Popover.Title as={"h3"}> {this.props.data.name} </Popover.Title>
                 <Popover.Content>
-                    {Object.keys(this.props.data.traits).map((trait) =>
-                        (<>
+                    {Object.keys(this.props.data.traits).map((trait, key) =>
+                        (<div key={key}>
                             <strong>
                                 {trait.split("_").join(" ")}: &nbsp;
                             </strong>
                             {this.props.data.traits[trait] ? "True" : "False"}
                             <br/>
-                        </>)
+                        </div>)
                     )}
                 </Popover.Content>
             </Popover>
@@ -69,7 +71,11 @@ Citizen.propTypes = {
     data: PropTypes.object,
 };
 
-
+/**
+ * Main component for the simulation.
+ *
+ * Handles all logic, displays information, and makes database query/posts
+ */
 
 class Budget extends React.Component {
     // Once MainView is set up, there will be no state, but rather each will be a prop
@@ -79,7 +85,7 @@ class Budget extends React.Component {
             budgetProposal: {},
             result: 0,
             total: 0,
-            sampleSize: 0,
+            sampleSize: 100,
             showReactionSample: false,
         };
     }
@@ -95,11 +101,9 @@ class Budget extends React.Component {
         });
         this.setState({
             budgetProposal: proposal,
-            showReactionSample: false,
-            sampleSize: 0,
+            sampleSize: 100,
+            total: 0,
         });
-        this.props.population.sort(() => Math.random() - 0.5);
-
     }
 
     async componentDidMount() {
@@ -107,8 +111,9 @@ class Budget extends React.Component {
         this.resetBudget();
     }
 
-    componentDidUpdate(prevProps) {
-        if (prevProps.country_name !== this.props.country_name) {
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.country_name !== this.props.country_name
+            || prevState.budgetProposal !== this.state.budgetProposal) {
             this.setState({
                 result: this.countSupporters(),
             });
@@ -131,8 +136,8 @@ class Budget extends React.Component {
             newProposal[resource] = newVal;
             this.setState({
                 budgetProposal: newProposal,
-                result: this.countSupporters(),
                 total: this.state.total + newVal - oldVal,
+                result: this.countSupporters(),
             });
         }
     };
@@ -181,6 +186,7 @@ class Budget extends React.Component {
                 }
             });
 
+            // update the citizen's attribute with the result
             if (numOfNeedsMet >= numToVote) {
                 count++;
                 citizen.will_support = true;
@@ -192,17 +198,22 @@ class Budget extends React.Component {
     };
 
     /**
-     * Return a randomly selected sample of the population
-     * so the user can grasp why the results are the way they are
-     *
-     * @returns {Array} of citizens
+     * Handles when the input for sample size changes.
+     * Any attempts at inputting a number greater than the max
+     * (in our case, the total population) will default to the max.
      */
-
-
-    getSamplePopulation = (e) => {
-        this.setState({
-            sampleSize: e.target.value,
-        });
+    handleInputChange = (e) => {
+        const newVal = e.target.value;
+        if (newVal === ""
+            || parseInt(newVal) < this.props.population.length) {
+            this.setState({
+                sampleSize: e.target.value,
+            });
+        } else {
+            this.setState({
+                sampleSize: this.props.population.length,
+            });
+        }
     }
     render() {
 
@@ -255,17 +266,10 @@ class Budget extends React.Component {
                         min={"0"}
                         max={this.props.population.length}
                         value={this.state.sampleSize}
-                        onChange={this.getSamplePopulation}
+                        onChange={this.handleInputChange}
                     />
-                    <button
-                        type={"submit"}
-                        onClick={()=> this.setState({
-                            showReactionSample: !this.state.showReactionSample,
-                        })}
-                    > View results
-                    </button>
                     <div className={"budget-reaction"}>
-                        {this.state.showReactionSample && reactions}
+                        {reactions}
                     </div>
                 </div>
             </>
