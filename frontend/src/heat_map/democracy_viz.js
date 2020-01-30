@@ -196,12 +196,17 @@ export class DemocracyMap extends React.Component {
                     .attr("strokeWidth", "2")
                     .attr("d", linePath)
                     .attr("class", "line");
+                chart.append("text")
+                    .attr("x", width/2)
+                    .attr("y", margin.top/2)
+                    .attr("text-anchor", "middle")
+                    .text(data.country_name)
+                    .attr("class", "title");
             }
             // Re-sizes the width of the line graph
             else if (d3.select(".lineGraph")._groups[0][0].width.baseVal.value !== width) {
                 d3.select(".lineGraph")
                     .attr("width", width);
-                console.log(d3.select(".xAxis"));
                 d3.select(".xAxis")
                     .remove();
                 d3.select(".innerLineGraph")
@@ -215,6 +220,12 @@ export class DemocracyMap extends React.Component {
                 .transition()
                 .duration(2000)
                 .attr("d", linePath);
+            d3.select(".title")
+                .transition()
+                .duration(2000)
+                .attr("x", width/2)
+                .attr("y", margin.top/2)
+                .text(data.country_name);
         }
     }
 
