@@ -1,8 +1,9 @@
 import React from 'react';
-import * as d3 from 'd3';
 import PropTypes from 'prop-types';
 
-import { getCookie } from '../common';
+import {MapPath} from "../MapPath";
+
+import { getCookie, project_features_and_create_svg_paths } from '../common';
 import './map_quiz.css';
 
 /**
@@ -39,7 +40,7 @@ export class MapQuizSVG extends React.Component {
         try {
             const res = await fetch('/api/africa_map_geojson/');
             const geo_json = await res.json();
-            const map_data = this.project_features_and_create_svg_paths(geo_json);
+            const map_data = project_features_and_create_svg_paths(geo_json, [5, 15]);
             const input_tracker = this.initialize_input_tracker(map_data);
             this.setState({
                 map_data: map_data,
@@ -48,25 +49,6 @@ export class MapQuizSVG extends React.Component {
         } catch (e) {
             console.log(e);
         }
-    }
-
-    project_features_and_create_svg_paths(geo_json) {
-        const scale = 500;
-        const projection = d3.geoMercator()
-            .center([5, 15])
-            .scale(scale)
-            .translate([scale / 2, scale / 2]);
-
-        const geoGenerator = d3.geoPath().projection(projection);
-
-        const map_data = [];
-        for (const feature of geo_json.features) {
-            const svg_path = geoGenerator(feature.geometry);
-            const name = feature.properties.name_long;
-            const postal = feature.properties.postal;
-            map_data.push({svg_path, name, postal});
-        }
-        return map_data;
     }
 
     initialize_input_tracker(map_data) {
@@ -177,6 +159,8 @@ export class MapQuizSVG extends React.Component {
                                 path={country.svg_path}
                                 id={country.postal}
                                 fill={countryFill}
+                                stroke="black"
+                                strokeWidth="1"
                                 handle_country_click={
                                     () => this.handle_country_map_click(country)
                                 }
@@ -262,29 +246,6 @@ CountryList.propTypes = {
     map_data: PropTypes.array,
     click_country: PropTypes.string,
     input_tracker: PropTypes.object,
-};
-
-
-export class MapPath extends React.Component {
-    render() {
-        return (
-            <path
-                d={this.props.path}
-                stroke="black"
-                strokeWidth="1"
-                fill={this.props.fill}
-                id={this.props.id}
-                onClick={this.props.handle_country_click}
-            />
-        );
-    }
-}
-
-MapPath.propTypes = {
-    path: PropTypes.string,
-    id: PropTypes.string,
-    fill: PropTypes.string,
-    handle_country_click: PropTypes.func,
 };
 
 /**
