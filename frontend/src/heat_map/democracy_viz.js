@@ -162,7 +162,7 @@ export class DemocracyMap extends React.Component {
             // Used code example from https://bl.ocks.org/gordlea/27370d1eea8464b04538e6d8ced39e89
             const margin = {top: 40, right: 40, bottom: 40, left: 40};
             const xScale = d3.scaleLinear()
-                .domain([1981, 2018])
+                .domain([1980, 2020])
                 .range([0, width - margin.top - margin.bottom]);  // Add some margins to graph
             const yScale = d3.scaleLinear()
                 .domain([0, 1])
@@ -202,6 +202,7 @@ export class DemocracyMap extends React.Component {
                     .attr("text-anchor", "middle")
                     .text(data.country_name)
                     .attr("class", "title");
+
             }
             // Re-sizes the width of the line graph
             else if (d3.select(".lineGraph")._groups[0][0].width.baseVal.value !== width) {
@@ -226,6 +227,18 @@ export class DemocracyMap extends React.Component {
                 .attr("x", width/2)
                 .attr("y", margin.top/2)
                 .text(data.country_name);
+            d3.selectAll(".dot")
+                .remove();
+            d3.select(".innerLineGraph")
+                .selectAll(".dot")
+                .data(allScoresOfType)
+                .enter()
+                .append("circle")
+                .attr("cx", d => xScale(d[0]))
+                .attr("cy", d => yScale(d[1]))
+                .attr("r", "5")
+                .attr("fill", "blue")
+                .attr("class", "dot");
         }
     }
 
