@@ -20,6 +20,7 @@ export class DemocracyViz extends  React.Component {
             scoreType: "v2x_polyarchy",
             year: "1981",
         };
+        this.interval = null;
     }
 
     /**
@@ -50,9 +51,29 @@ export class DemocracyViz extends  React.Component {
      *  Handles the change in year
      */
     handleYearChange(e) {
+        clearInterval(this.interval);
+        this.interval = null;
         this.setState({
             year: e.target.value,
         });
+    }
+
+    /**
+     * Sets the year to 1981 and goes through every year until 2018
+     */
+    cycleThroughYears() {
+        this.setState({year: "1981"});
+        if (this.interval === null) {
+            this.interval = setInterval(() => {
+                const nextYear = (parseInt(this.state.year) + 1) + "";
+                if (nextYear === "2018") {
+                    clearInterval(this.interval);
+                    this.interval = null;
+                }
+                this.setState({year: nextYear});
+            }, 300);
+        }
+
     }
 
     render() {
@@ -73,14 +94,17 @@ export class DemocracyViz extends  React.Component {
                     <div>
                         <input onChange={(e) => this.handleYearChange(e)}
                             type='range' id = 'year' name = 'year' min = '1981' max = '2018'
-                            step = '1' className= 'slider'>
+                            step = '1' className= 'slider' value={this.state.year}>
                         </input>
                     </div>
                     {this.state.year}
                 </div>
 
                 <br/>
-
+                <button onClick={() => this.cycleThroughYears()}>
+                    Play
+                </button>
+                <br/>
                 <svg className={'svgrect'}>
                     {/*<rect className={'gradient'} />*/}
 
