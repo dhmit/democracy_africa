@@ -243,7 +243,7 @@ export class DemocracyMap extends React.Component {
                                 stroke={"black"}
                                 strokeWidth={"1"}
                                 useColorTransition={true}
-                                handleCountryClick={this.handleCountryClick}
+                                handleCountryClick={() => this.handleCountryClick(country.iso)}
                             />
                         );
                     })}
