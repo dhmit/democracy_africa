@@ -240,8 +240,8 @@ export class DemocracyMap extends React.Component {
                                 stroke={"black"}
                                 strokeWidth={"1"}
                                 useColorTransition={true}
-                                handle_country_mouseover={this.hoverInfo}
-                                handle_country_mouseout={this.removeInfo}
+                                handle_country_mouseover={(e) => this.hoverInfo(e, country.iso)}
+                                handle_country_mouseout={() => this.removeInfo}
                             />
                         );
                     })}
