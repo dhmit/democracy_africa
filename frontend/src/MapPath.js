@@ -52,6 +52,7 @@ export class MapPath extends React.Component {
                 onMouseOver={this.props.handle_country_mouseover}
                 onMouseDown={this.props.handle_country_click}
                 onMouseMove={this.props.handle_country_mouseover}
+                onMouseOut={this.props.handle_country_mouseout}
                 ref={this.path_ref}
             />
         );
