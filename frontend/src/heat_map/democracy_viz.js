@@ -153,11 +153,57 @@ export class DemocracyMap extends React.Component {
         const data = this.getCountryData(countryCode);
         if (data) {
             const countryScores = data["democracy_scores"];
+            // Creates a list of lists where each inner list is formatted like so: [year, score]
             const allScoresOfType = Object.keys(countryScores).reduce((acc, el) => {
-                acc[el] = countryScores[el][this.props.scoreType];
+                acc.push([el, countryScores[el][this.props.scoreType]]);
                 return acc;
-            }, {});
+            }, []);
+
+            const height = 500;
+            const width = 1000;
+            // Used code example from https://bl.ocks.org/gordlea/27370d1eea8464b04538e6d8ced39e89
+            const margin = {top: 40, right: 40, bottom: 40, left: 40};
             console.log(allScoresOfType);
+            const xScale = d3.scaleLinear()
+                .domain([1981, 2018])
+                .range([0, width - margin.top - margin.bottom]);  // Add some margins to graph
+            const yScale = d3.scaleLinear()
+                .domain([0, 1])
+                .range([height - margin.left - margin.right, 0]);
+
+            const lineGen = d3.line()
+                .x(d => xScale(d[0]))  // Index 0 is the x coordinate
+                .y(d => yScale(d[1])); // Index 1 is the y coordinate
+
+            const linePath = lineGen(allScoresOfType);
+            if (d3.select(".lineGraph").empty()) {
+                const chart = d3.select(".map")
+                    .append("svg")
+                    .attr("width", width)
+                    .attr("height", height)
+                    .attr("class", "lineGraph")
+                    .append("g")
+                    .attr("transform", "translate(" + margin.left + "," +  margin.top + ")");
+                chart.append("g")
+                    .attr("transform",
+                        "translate(0, " + (height - margin.bottom - margin.top) + ")")
+                    .call(d3.axisBottom(xScale));
+                chart.append("g")
+                    .call(d3.axisLeft(yScale));
+                chart.append("path")
+                    .attr("fill", "none")
+                    .attr("stroke", "black")
+                    .attr("strokeWidth", "2")
+                    .attr("d", linePath)
+                    .attr("class", "line");
+            }
+            else {
+                d3.select(".line")
+                    .transition()
+                    .duration(2000)
+                    .attr("d", linePath);
+            }
+
         }
     }
 
@@ -171,8 +217,8 @@ export class DemocracyMap extends React.Component {
         return (
             <>
                 <svg
-                    height="1000"
-                    width="1000"
+                    height="800"
+                    width="700"
                     id="content"
                     ref={this.map_ref}
                 >
