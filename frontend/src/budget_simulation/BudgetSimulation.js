@@ -190,15 +190,65 @@ Budget.propTypes = {
 class AggregateData extends React.Component {
     constructor(props) {
         super(props);
+        let selections = {};
+        for (const trait in this.props.population[0]["traits"]) {
+            selections[trait] = false;
+        }
         this.state = {
-            categories: Object.keys(this.props.population[0]["traits"])
+            categories: Object.keys(this.props.population[0]["traits"]),
+            selected: selections,
+            overall_selection: false,
         };
     }
 
+    select_table_row (row_trait) {
+        const selections = this.state.selected;
+        let any_selected = this.state.overall_selection;
+
+        selections[row_trait] = !selections[row_trait];
+        for (const trait in selections) {
+            if (selections[trait]) {
+                any_selected = true;
+                break;
+            }
+            any_selected = false;
+        }
+
+        this.setState({selected: selections, overall_selection: any_selected});
+    }
+
+    generate_data () {
+        const selections = this.state.selected;
+        let total = 0;
+        const population = this.props.population;
+        for (let i = 0; i < population.length; i++) {
+            let should_count_person = true;
+            const person = population[i];
+            for (const attribute in person["traits"]) {
+                if (selections[attribute] === undefined) {
+                    if (person["traits"][attribute]) {
+                        should_count_person = false;
+                        break;
+                    }
+                } else {
+                    if (selections[attribute] && person["traits"][attribute]) {
+                        should_count_person = false;
+                        break;
+                    }
+                }
+            }
+            if (should_count_person) {
+                total += 1;
+            }
+        }
+
+        return String(total) + " people lack this combination of traits";
+    }
 
     render() {
 
         const aggregate_values = {};
+        const total_values = {};
         for (let i = 0; i < this.state.categories.length; i++) {
             let total = 0;
             let category = this.state.categories[i];
@@ -209,55 +259,62 @@ class AggregateData extends React.Component {
                 // traits and then the value (true or false) of that trait for each category
             }
             aggregate_values[category] = total/this.props.population.length;
+            total_values[category] = total;
         }
+        const popover = (
+            <Popover id="popover-basic">
+                {/*<PopoverTitle as="h3">Testing</PopoverTitle>*/}
+                <PopoverContent>
+                    {this.state.overall_selection ? this.generate_data() :
+                        "Click on different rows to see the amount of the population who have" +
+                        " exactly those characteristics"}
+                </PopoverContent>
+            </Popover>
+        );
+        const Example = () => (
+            <OverlayTrigger trigger="hover" placement="right" overlay={popover}>
+                <table className="aggregate_data_table">
+                    <thead>
+                        <tr>
+                            <th className="aggregate_data_table_header">
+                                Trait
+                            </th>
+                            <th className="aggregate_data_table_data">
+                                Percentage of Population
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.categories.map((category, key) => {
+                            let category_name = category.replace(/_/g, " ");
+                            const first_letter = category_name[0];
+                            category_name = category_name.replace(first_letter,
+                                first_letter.toUpperCase());
 
+                            let table_row_classnames = "aggregate_data_table_rows";
+                            if (this.state.selected !== null &&
+                                this.state.selected[category]) {
+                                table_row_classnames += " selected_row";
+                            }
+                            return (
+                                <tr key={key} className={table_row_classnames}
+                                    onClick={() => this.select_table_row(category)}>
+                                    <td className="aggregate_data_table_data">
+                                        {category_name}
+                                    </td>
+                                    <td className="aggregate_data_table_data">
+                                        {(aggregate_values[category]*100).toFixed(1)}%
+                                        ({total_values[category]})
+                                    </td>
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                </table>
+            </OverlayTrigger>
+        );
         return (
-            <table className="aggregate_data_table">
-                <thead>
-                    <tr>
-                        <th className="aggregate_data_table_header">
-                            Trait
-                        </th>
-                        <th className="aggregate_data_table_data">
-                            Percentage of Population
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {this.state.categories.map((category, key) => {
-                        let category_name = category.replace(/_/g, " ");
-                        const first_letter = category_name[0];
-                        category_name = category_name.replace(first_letter,
-                            first_letter.toUpperCase());
-                        const popover = (
-                            <Popover id="popover-basic">
-                                {/*<PopoverTitle as="h3">Testing</PopoverTitle>*/}
-                                <PopoverContent>
-                                    And heres some <strong>amazing</strong> content.
-                                    Its very engaging. right?
-                                </PopoverContent>
-                            </Popover>
-                        );
-
-                        const Example = () => (
-                            <OverlayTrigger trigger="hover" placement="right" overlay={popover}>
-                                <td className="aggregate_data_table_data">
-                                    {(aggregate_values[category]*100).toFixed(1)}%
-                                </td>
-                            </OverlayTrigger>
-                        );
-                        return (
-                            <tr key={key} className="aggregate_data_table_rows">
-                                <td className="aggregate_data_table_data">
-                                    {category_name}
-                                </td>
-                                <Example/>
-
-                            </tr>
-                        );
-                    })}
-                </tbody>
-            </table>
+            <Example/>
         );
     }
 }

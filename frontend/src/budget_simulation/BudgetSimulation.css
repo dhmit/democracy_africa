@@ -60,3 +60,7 @@
     display: flex;
     justify-content: center;
 }
+
+.aggregate_data_table_rows.selected_row {
+    background-color: #88693b;
+}
