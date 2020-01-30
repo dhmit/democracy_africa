@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { getCookie }from "../common";
+import Popover from 'react-bootstrap/Popover';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 
 import "./BudgetSimulation.css";
 
@@ -21,7 +23,53 @@ const resources = [
     "education",
 ];
 
-class Citizen
+class Citizen extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            show: false,
+        };
+    }
+
+    render() {
+        const statistic = (
+            <Popover id={"popover-basic"}>
+                <Popover.Title as={"h3"}> {this.props.data.name} </Popover.Title>
+                <Popover.Content>
+                    {Object.keys(this.props.data.traits).map((trait) =>
+                        (<>
+                            <strong>
+                                {trait.split("_").join(" ")}: &nbsp;
+                            </strong>
+                            {this.props.data.traits[trait] ? "True" : "False"}
+                            <br/>
+                        </>)
+                    )}
+                </Popover.Content>
+            </Popover>
+        );
+        return (
+            <OverlayTrigger
+                overlay={statistic}
+                placement={"right"}
+            >
+                <svg className={"budget-reaction-citizen"} height="20" width="20">
+                    <circle
+                        cx="10"
+                        cy="10"
+                        r="10"
+                        fill={this.props.data["will_support"] ? "green" : "#c0c0c0"}
+                    />
+                </svg>
+            </OverlayTrigger>
+        );
+    }
+}
+Citizen.propTypes = {
+    data: PropTypes.object,
+};
+
+
 
 class Budget extends React.Component {
     // Once MainView is set up, there will be no state, but rather each will be a prop
@@ -31,7 +79,6 @@ class Budget extends React.Component {
             budgetProposal: {},
             result: 0,
             total: 0,
-            reactionSample: [],
             sampleSize: 0,
             showReactionSample: false,
         };
@@ -51,6 +98,8 @@ class Budget extends React.Component {
             showReactionSample: false,
             sampleSize: 0,
         });
+        this.props.population.sort(() => Math.random() - 0.5);
+
     }
 
     async componentDidMount() {
@@ -135,6 +184,8 @@ class Budget extends React.Component {
             if (numOfNeedsMet >= numToVote) {
                 count++;
                 citizen.will_support = true;
+            } else {
+                citizen.will_support = false;
             }
         });
         return count;
@@ -147,19 +198,14 @@ class Budget extends React.Component {
      * @returns {Array} of citizens
      */
 
-    generateSamplePopulation = (arr, sampleSize=100) => {
-        arr.sort(() => Math.random() - 0.5);
-        this.setState({ reactionSample: arr.slice(0, sampleSize)});
-    };
-
 
     getSamplePopulation = (e) => {
         this.setState({
             sampleSize: e.target.value,
         });
-        this.generateSamplePopulation(this.props.population, e.target.value);
     }
     render() {
+
         const budgetOptions = Object.keys(this.state.budgetProposal).map((resource, key) => (
             <div key={key} className="individual_slider_containers">
                 <p className="slider_descriptor">
@@ -182,17 +228,8 @@ class Budget extends React.Component {
         const supportString = this.state.result + " out of " + this.props.population.length +
         " people support your budget";
 
-        const reactions = this.state.reactionSample.map((citizen,key) =>
-            (
-                <svg className={"budget-reaction-citizen"} key={key} height="20" width="20">
-                    <circle
-                        cx="10"
-                        cy="10"
-                        r="10"
-                        fill={citizen["will_support"] ? "green" : "red"}
-                    />
-                </svg>
-            )
+        const reactions = this.props.population.slice(0,this.state.sampleSize).map((citizen,key) =>
+            <Citizen key={key} data={citizen}/>
         );
 
         return(
