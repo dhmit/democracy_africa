@@ -26,10 +26,10 @@ export function getCookie(name) {
     return cookieValue;
 }
 
-export function project_features_and_create_svg_paths(geo_json) {
+export function project_features_and_create_svg_paths(geo_json, center) {
     const scale = 500;
     const projection = d3.geoMercator()
-        .center([0, 25])
+        .center(center)
         .scale(scale)
         .translate([scale/2, scale/2]);
 
