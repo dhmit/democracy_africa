@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { getCookie }from "../common";
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-
+import PopoverContent from 'react-bootstrap/PopoverContent';
 import "./BudgetSimulation.css";
 // import {parse} from "@typescript-eslint/parser/dist/parser";
 
@@ -414,9 +414,13 @@ class AggregateData extends React.Component {
                     </table>
                 </div>
                 <div className="col-3">
-                    {this.state.overall_selection ? this.generate_data() :
-                        "Click on different rows to see the amount of the population lacking" +
-                        " those characteristics"}
+                    <Popover id="popover-basic">
+                        <PopoverContent>
+                            {this.state.overall_selection ? this.generate_data() :
+                                "Click on different rows to see the amount of the population " +
+                        "lacking those characteristics"}
+                        </PopoverContent>
+                    </Popover>
                 </div>
             </div>
 
