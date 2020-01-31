@@ -273,8 +273,8 @@ class AggregateData extends React.Component {
             <Popover id="popover-basic">
                 <PopoverContent>
                     {this.state.overall_selection ? this.generate_data() :
-                        "Click on different rows to see the amount of the population who have" +
-                        " exactly those characteristics"}
+                        "Click on different rows to see the amount of the population lacking" +
+                        " those characteristics"}
                 </PopoverContent>
             </Popover>
         );
