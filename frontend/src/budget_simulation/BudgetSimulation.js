@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { getCookie }from "../common";
 import Popover from 'react-bootstrap/Popover';
-import PopoverContent from 'react-bootstrap/PopoverContent';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 
 import "./BudgetSimulation.css";
@@ -369,62 +368,58 @@ class AggregateData extends React.Component {
             aggregate_values[category] = total/this.props.population.length;
             total_values[category] = total;
         }
-        const popover = (
-            <Popover id="popover-basic">
-                <PopoverContent>
+        //Usses the React-bootstrap Overlay and Popover classes. See
+        //https://react-bootstrap.github.io/components/overlays/#overlay-props for more details
+        return (
+            <div className="row">
+                <div className="col-9">
+                    <table className="aggregate_data_table">
+                        <thead>
+                            <tr>
+                                <th className="aggregate_data_table_header">
+                                    Trait
+                                </th>
+                                <th className="aggregate_data_table_data">
+                                    Percentage of Population
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.state.categories.map((category, key) => {
+                                let category_name = category.replace(/_/g, " ");
+                                const first_letter = category_name[0];
+                                category_name = category_name.replace(first_letter,
+                                    first_letter.toUpperCase());
+
+                                let table_row_classnames = "aggregate_data_table_rows";
+                                if (this.state.selected !== null &&
+                                    this.state.selected[category]) {
+                                    table_row_classnames += " selected_row";
+                                }
+                                return (
+                                    <tr key={key} className={table_row_classnames}
+                                        onClick={() => this.select_table_row(category)}>
+                                        <td className="aggregate_data_table_data">
+                                            {category_name}
+                                        </td>
+                                        <td className="aggregate_data_table_data">
+                                            {(aggregate_values[category]*100).toFixed(1)}%
+                                            ({total_values[category]})
+                                        </td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+
+                    </table>
+                </div>
+                <div className="col-3">
                     {this.state.overall_selection ? this.generate_data() :
                         "Click on different rows to see the amount of the population lacking" +
                         " those characteristics"}
-                </PopoverContent>
-            </Popover>
-        );
+                </div>
+            </div>
 
-        //Usses the React-bootstrap Overlay and Popover classes. See
-        //https://react-bootstrap.github.io/components/overlays/#overlay-props for more details
-        const AggregateTable = () => (
-            <OverlayTrigger trigger="hover" placement="right" overlay={popover}>
-                <table className="aggregate_data_table">
-                    <thead>
-                        <tr>
-                            <th className="aggregate_data_table_header">
-                                Trait
-                            </th>
-                            <th className="aggregate_data_table_data">
-                                Percentage of Population
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.categories.map((category, key) => {
-                            let category_name = category.replace(/_/g, " ");
-                            const first_letter = category_name[0];
-                            category_name = category_name.replace(first_letter,
-                                first_letter.toUpperCase());
-
-                            let table_row_classnames = "aggregate_data_table_rows";
-                            if (this.state.selected !== null &&
-                                this.state.selected[category]) {
-                                table_row_classnames += " selected_row";
-                            }
-                            return (
-                                <tr key={key} className={table_row_classnames}
-                                    onClick={() => this.select_table_row(category)}>
-                                    <td className="aggregate_data_table_data">
-                                        {category_name}
-                                    </td>
-                                    <td className="aggregate_data_table_data">
-                                        {(aggregate_values[category]*100).toFixed(1)}%
-                                        ({total_values[category]})
-                                    </td>
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </table>
-            </OverlayTrigger>
-        );
-        return (
-            <AggregateTable/>
         );
     }
 }
