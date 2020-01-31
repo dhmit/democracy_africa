@@ -2,12 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { getCookie }from "../common";
 import Popover from 'react-bootstrap/Popover';
+import PopoverContent from 'react-bootstrap/PopoverContent';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 
 import "./BudgetSimulation.css";
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Popover from 'react-bootstrap/Popover';
-import PopoverContent from 'react-bootstrap/PopoverContent';
 // import {parse} from "@typescript-eslint/parser/dist/parser";
 
 
