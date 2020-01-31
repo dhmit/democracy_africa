@@ -64,3 +64,19 @@
 .aggregate_data_table_rows.selected_row {
     background-color: #88693b;
 }
+
+.budget-reaction {
+    height: 200px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-basis: 0;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+
+}
+
+.budget-reaction-citizen {
+    margin: 2px;
+}

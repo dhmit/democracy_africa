@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { getCookie }from "../common";
+import Popover from 'react-bootstrap/Popover';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 
 import "./BudgetSimulation.css";
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
@@ -8,11 +10,6 @@ import Popover from 'react-bootstrap/Popover';
 import PopoverContent from 'react-bootstrap/PopoverContent';
 // import {parse} from "@typescript-eslint/parser/dist/parser";
 
-/**
- * Main component for the simulation.
- *
- * Handles all logic, displays information, and makes database query/posts
- */
 
 // hardcoded list of resources for now
 const resources = [
@@ -23,15 +20,75 @@ const resources = [
     "education",
 ];
 
+/**
+ * Component for displaying citizen information
+ *
+ * The fill indicates the citizen's stance on the budget,
+ * and hovering over the component displays the citizen's traits
+ */
+
+class Citizen extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            show: false,
+        };
+    }
+
+    render() {
+        const statistic = (
+            <Popover id={"popover-basic"}>
+                <Popover.Title as={"h3"}> {this.props.data.name} </Popover.Title>
+                <Popover.Content>
+                    {Object.keys(this.props.data.traits).map((trait, key) =>
+                        (<div key={key}>
+                            <strong>
+                                {trait.split("_").join(" ")}: &nbsp;
+                            </strong>
+                            {this.props.data.traits[trait] ? "True" : "False"}
+                            <br/>
+                        </div>)
+                    )}
+                </Popover.Content>
+            </Popover>
+        );
+        return (
+            <OverlayTrigger
+                overlay={statistic}
+                placement={"right"}
+            >
+                <svg className={"budget-reaction-citizen"} height="20" width="20">
+                    <circle
+                        cx="10"
+                        cy="10"
+                        r="10"
+                        fill={this.props.data["will_support"] ? "green" : "#c0c0c0"}
+                    />
+                </svg>
+            </OverlayTrigger>
+        );
+    }
+}
+Citizen.propTypes = {
+    data: PropTypes.object,
+};
+
+/**
+ * Main component for the simulation.
+ *
+ * Handles all logic, displays information, and makes database query/posts
+ */
+
 class Budget extends React.Component {
     // Once MainView is set up, there will be no state, but rather each will be a prop
     constructor(props){
         super(props);
         this.state = {
-            reaction: null,
             budgetProposal: {},
             result: 0,
             total: 0,
+            sampleSize: 100,
+            showReactionSample: false,
         };
     }
 
@@ -48,6 +105,7 @@ class Budget extends React.Component {
             budgetProposal: proposal,
             total: 0,
             result: 0,
+            sampleSize: 100,
         });
     };
 
@@ -56,8 +114,9 @@ class Budget extends React.Component {
         this.resetBudget();
     }
 
-    componentDidUpdate(prevProps) {
-        if (prevProps.country_name !== this.props.country_name) {
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.country_name !== this.props.country_name
+            || prevState.budgetProposal !== this.state.budgetProposal) {
             this.setState({
                 result: this.countSupporters(),
             });
@@ -80,8 +139,8 @@ class Budget extends React.Component {
             newProposal[resource] = newVal;
             this.setState({
                 budgetProposal: newProposal,
-                result: this.countSupporters(),
                 total: this.state.total + newVal - oldVal,
+                result: this.countSupporters(),
             });
         }
     };
@@ -130,15 +189,37 @@ class Budget extends React.Component {
                 }
             });
 
+            // update the citizen's attribute with the result
             if (numOfNeedsMet >= numToVote) {
                 count++;
+                citizen.will_support = true;
+            } else {
+                citizen.will_support = false;
             }
-
         });
         return count;
     };
 
+    /**
+     * Handles when the input for sample size changes.
+     * Any attempts at inputting a number greater than the max
+     * (in our case, the total population) will default to the max.
+     */
+    handleInputChange = (e) => {
+        const newVal = e.target.value;
+        if (newVal === ""
+            || parseInt(newVal) < this.props.population.length) {
+            this.setState({
+                sampleSize: e.target.value,
+            });
+        } else {
+            this.setState({
+                sampleSize: this.props.population.length,
+            });
+        }
+    }
     render() {
+
         const budgetOptions = Object.keys(this.state.budgetProposal).map((resource, key) => (
             <div key={key} className="individual_slider_containers">
                 <p className="slider_descriptor">
@@ -157,8 +238,14 @@ class Budget extends React.Component {
 
             </div>
         ));
+
         const supportString = this.state.result + " out of " + this.props.population.length +
         " people support your budget";
+
+        const reactions = this.props.population.slice(0,this.state.sampleSize).map((citizen,key) =>
+            <Citizen key={key} data={citizen}/>
+        );
+
         return(
             <>
                 <div>
@@ -173,6 +260,21 @@ class Budget extends React.Component {
                         type={"submit"}
                         onClick={this.resetBudget}
                     > Reset </button>
+                </div>
+                <div>
+                    Sample size:
+                    <input
+                        type={"number"}
+                        name={"sampleSize"}
+                        step={"1"}
+                        min={"0"}
+                        max={this.props.population.length}
+                        value={this.state.sampleSize}
+                        onChange={this.handleInputChange}
+                    />
+                    <div className={"budget-reaction"}>
+                        {reactions}
+                    </div>
                 </div>
             </>
         );
