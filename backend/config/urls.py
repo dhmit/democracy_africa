@@ -38,8 +38,7 @@ urlpatterns = [
 
     # React views
     url('d3/', render_react_view, {'component_name': 'MapQuizD3'}),
-    url('leaflet/', render_react_view, {'component_name': 'MapQuizLeaflet'}),
-    url('svg/', render_react_view, {'component_name': 'MapQuizSVG'}),
+    url('map_quiz/', render_react_view, {'component_name': 'MapQuizSVG'}),
     url('budget_voting_simulation/', render_react_view, {'component_name': 'BudgetVotingSimViz'}),
     url('heat_map/', render_react_view, {'component_name': 'DemocracyViz'}),
 ]
