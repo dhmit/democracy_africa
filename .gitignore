@@ -164,6 +164,10 @@ webpack-stats-dev.json
 webpack-stats.json
 package-lock.json
 *.swp
-static/ 
+static/
 assets/  # static and assets are all built by webpack and collectstatic for this project
 frontend/package-lock.json  # to avoid conflict mayhem
+
+# data sources for the africa geojson
+backend/data/ne_50m_admin_0_countries.geojson
+backend/data/ne_50m_admin_0_breakaway_disputed_areas.geojson
