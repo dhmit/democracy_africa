@@ -6,9 +6,6 @@ import "./BudgetSimulation.css";
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 import PopoverContent from 'react-bootstrap/PopoverContent';
-// eslint-disable-next-line no-unused-vars
-import PopoverTitle from 'react-bootstrap/PopoverTitle';
-
 // import {parse} from "@typescript-eslint/parser/dist/parser";
 
 /**
@@ -201,6 +198,11 @@ class AggregateData extends React.Component {
         };
     }
 
+    /**
+     * When a user clicks on a table row, this method updates the state so that it knows that
+     * row is selected
+     * @param row_trait The trait of the row that has been selected (used for indexing)
+     */
     select_table_row (row_trait) {
         const selections = this.state.selected;
         let any_selected = this.state.overall_selection;
@@ -217,6 +219,12 @@ class AggregateData extends React.Component {
         this.setState({selected: selections, overall_selection: any_selected});
     }
 
+    /**
+     * Generates the data to put into the overlay. The data in this case being the number of
+     * people who lack the selected characteristics
+     *
+     * return: String which states the number of people that lack the given characteristics
+     */
     generate_data () {
         const selections = this.state.selected;
         let total = 0;
@@ -263,7 +271,6 @@ class AggregateData extends React.Component {
         }
         const popover = (
             <Popover id="popover-basic">
-                {/*<PopoverTitle as="h3">Testing</PopoverTitle>*/}
                 <PopoverContent>
                     {this.state.overall_selection ? this.generate_data() :
                         "Click on different rows to see the amount of the population who have" +
@@ -271,7 +278,10 @@ class AggregateData extends React.Component {
                 </PopoverContent>
             </Popover>
         );
-        const Example = () => (
+
+        //Usses the React-bootstrap Overlay and Popover classes. See
+        //https://react-bootstrap.github.io/components/overlays/#overlay-props for more details
+        const AggregateTable = () => (
             <OverlayTrigger trigger="hover" placement="right" overlay={popover}>
                 <table className="aggregate_data_table">
                     <thead>
@@ -314,7 +324,7 @@ class AggregateData extends React.Component {
             </OverlayTrigger>
         );
         return (
-            <Example/>
+            <AggregateTable/>
         );
     }
 }
