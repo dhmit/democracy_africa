@@ -20,6 +20,7 @@ class CitizenSerializer(serializers.Serializer):
     has_access_to_sanitation = serializers.ReadOnlyField()
     is_educated = serializers.ReadOnlyField()
     traits = serializers.ReadOnlyField()
+    will_support = serializers.ReadOnlyField()
 
     def create(self, validated_data):
         """ We will not create new objects using this serializer """

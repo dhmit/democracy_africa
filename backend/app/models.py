@@ -92,6 +92,7 @@ class Citizen:
                        "has_access_to_water": has_access_to_water,
                        "is_educated": is_educated,
                        }
+        self.will_support = False
 
     def __str__(self):
         """
