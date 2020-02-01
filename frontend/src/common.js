@@ -38,10 +38,9 @@ export function project_features_and_create_svg_paths(geo_json, center) {
     const map_data = [];
     for (const feature of geo_json.features) {
         const svg_path = geoGenerator(feature.geometry);
+        const iso = feature.properties.ISO_A3;
         const name = feature.properties.name;
-        const postal = feature.properties.postal;
-        const iso = feature.properties.iso_a3; // Not sure if this is the correct ISO code
-        map_data.push({svg_path, name, postal, iso});
+        map_data.push({svg_path, name, iso});
     }
     return map_data;
 }
