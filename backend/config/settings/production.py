@@ -16,6 +16,3 @@ ADMINS = ['rahmed@mit.edu']  # Django will email Ryaan on internal server errors
 ALLOWED_HOSTS = [
     'democracy-africa.dhmit.xyz',
 ]
-
-
-
