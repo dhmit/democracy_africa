@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import * as d3 from "d3";
 
 
-/*
+/**
  * This method takes GeoJSON parsed into an object,
  * projects all of the geometries from lon-lat into x-y coords in SVG-space,
  * and returns a list of objects containing these paths, and some metadata (iso, name)
@@ -31,14 +31,14 @@ export function project_features_and_create_svg_paths(geo_json, center) {
     return map_data;
 }
 
-
-
+/**
+ * Component used to render paths into SVGs
+ */
 export class MapPath extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             fill: this.props.fill,
-            useColorTransition: this.props.useColorTransition,
         };
         this.path_ref = React.createRef();
     }
@@ -55,7 +55,7 @@ export class MapPath extends React.Component {
          */
 
         if (prevProps.fill !== this.props.fill) {
-            if (this.state.useColorTransition) {
+            if (this.props.useColorTransition) {
                 d3.select(this.path_ref.current)
                     .transition()
                     .duration(500)
