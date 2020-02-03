@@ -2,72 +2,82 @@
 Models for the democracy_africa app.
 """
 # from django.db import models
-# TODO: implement me!
 import random
 
 # Demographics from Afrobarometer 2016/2018 results
 # https://www.afrobarometer.org/online-data-analysis/analyse-online?fbclid=IwAR1iKKoydnKdD0UTDPIqH_PEn6bJuJjYPuVvOA657hrNaN6HHsfpp6vxBpg
-africa_demographics_by_country = {"Botswana": {"electricity_access": 93.2,
-                                               "rural_households": 31.0,
-                                               "piped_water_access": 90.1,
-                                               "sewage_system_access": 41.7,
-                                               "some_formal_education": 88.8,
-                                               },
-                                  "Cameroon": {"electricity_access": 78.0,
-                                               "rural_households": 47.6,
-                                               "piped_water_access": 75.7,
-                                               "sewage_system_access": 49.1,
-                                               "some_formal_education": 88.3,
-                                               },
-                                  "Ghana": {"electricity_access": 91.3,
-                                            "rural_households": 45.6,
-                                            "piped_water_access": 85.6,
-                                            "sewage_system_access": 43.5,
-                                            "some_formal_education": 84.1,
-                                            },
-                                  "Guinea": {"electricity_access": 32.2,
-                                             "rural_households": 67.5,
-                                             "piped_water_access": 24.0,
-                                             "sewage_system_access": 10.4,
-                                             "some_formal_education": 58.0,
-                                             },
-                                  "Kenya": {"electricity_access": 74.8,
-                                            "rural_households": 64.0,
-                                            "piped_water_access": 40.8,
-                                            "sewage_system_access": 21.6,
-                                            "some_formal_education": 93.0,
-                                            },
-                                  "Nigeria": {"electricity_access": 83.3,
-                                              "rural_households": 56.5,
-                                              "piped_water_access": 38.5,
-                                              "sewage_system_access": 35.1,
-                                              "some_formal_education": 92.6,
-                                              },
-                                  "South Africa": {"electricity_access": 94.2,
-                                                   "rural_households": 31.2,
-                                                   "piped_water_access": 78.3,
-                                                   "sewage_system_access": 62.7,
-                                                   "some_formal_education": 92.6,
-                                                   },
-                                  "Sudan": {"electricity_access": 76.3,
-                                            "rural_households": 62.2,
-                                            "piped_water_access": 58.4,
-                                            "sewage_system_access": 20.3,
-                                            "some_formal_education": 91.2,
-                                            },
-                                  "Tanzania": {"electricity_access": 55.5,
-                                               "rural_households": 66.8,
-                                               "piped_water_access": 38.8,
-                                               "sewage_system_access": 5.4,
-                                               "some_formal_education": 88.2,
-                                               },
-                                  "Uganda": {"electricity_access": 35.3,
-                                             "rural_households": 75.1,
-                                             "piped_water_access": 25.0,
-                                             "sewage_system_access": 15.5,
-                                             "some_formal_education": 88.7,
-                                             }
-                                  }
+africa_demographics_by_country = {
+   'Botswana': {
+      'electricity_access': 93.2,
+      'rural_households': 31.0,
+      'piped_water_access': 90.1,
+      'sewage_system_access': 41.7,
+      'some_formal_education': 88.8,
+   },
+   'Cameroon': {
+      'electricity_access': 78.0,
+      'rural_households': 47.6,
+      'piped_water_access': 75.7,
+      'sewage_system_access': 49.1,
+      'some_formal_education': 88.3,
+   },
+   'Ghana': {
+      'electricity_access': 91.3,
+      'rural_households': 45.6,
+      'piped_water_access': 85.6,
+      'sewage_system_access': 43.5,
+      'some_formal_education': 84.1,
+   },
+   'Guinea': {
+      'electricity_access': 32.2,
+      'rural_households': 67.5,
+      'piped_water_access': 24.0,
+      'sewage_system_access': 10.4,
+      'some_formal_education': 58.0,
+   },
+   'Kenya': {
+      'electricity_access': 74.8,
+      'rural_households': 64.0,
+      'piped_water_access': 40.8,
+      'sewage_system_access': 21.6,
+      'some_formal_education': 93.0,
+   },
+   'Nigeria': {
+      'electricity_access': 83.3,
+      'rural_households': 56.5,
+      'piped_water_access': 38.5,
+      'sewage_system_access': 35.1,
+      'some_formal_education': 92.6,
+   },
+   'South Africa': {
+      'electricity_access': 94.2,
+      'rural_households': 31.2,
+      'piped_water_access': 78.3,
+      'sewage_system_access': 62.7,
+      'some_formal_education': 92.6,
+   },
+   'Sudan': {
+      'electricity_access': 76.3,
+      'rural_households': 62.2,
+      'piped_water_access': 58.4,
+      'sewage_system_access': 20.3,
+      'some_formal_education': 91.2,
+   },
+   'Tanzania': {
+      'electricity_access': 55.5,
+      'rural_households': 66.8,
+      'piped_water_access': 38.8,
+      'sewage_system_access': 5.4,
+      'some_formal_education': 88.2,
+   },
+   'Uganda': {
+      'electricity_access': 35.3,
+      'rural_households': 75.1,
+      'piped_water_access': 25.0,
+      'sewage_system_access': 15.5,
+      'some_formal_education': 88.7,
+   }
+}
 
 
 class Citizen:
@@ -86,12 +96,13 @@ class Citizen:
                  is_educated=False,
                  ):
         self.name = name
-        self.traits = {"lives_in_rural_area": lives_in_rural_area,
-                       "has_access_to_electricity": has_access_to_electricity,
-                       "has_access_to_sanitation": has_access_to_sanitation,
-                       "has_access_to_water": has_access_to_water,
-                       "is_educated": is_educated,
-                       }
+        self.traits = {
+            'lives_in_rural_area': lives_in_rural_area,
+            'has_access_to_electricity': has_access_to_electricity,
+            'has_access_to_sanitation': has_access_to_sanitation,
+            'has_access_to_water': has_access_to_water,
+            'is_educated': is_educated,
+        }
         self.will_support = False
 
     def __str__(self):
@@ -202,38 +213,57 @@ class StatisticalDistributions:
     #  Population class
     def __init__(self):
         self.stats = {
-            "housing": {"formal dwelling": .776,
-                        "informal dwelling": 13.6,
-                        "traditional dwelling": 7.9,
-                        "Other": .9},
-            "sex": {"male": .482,
-                    "female": .518},
-            "education": {"none": .086,
-                          "some primary": .123,
-                          "completed primary": .046,
-                          "some secondary": .339,
-                          "grade 12": .285,
-                          "higher": .121},
-            "water_access": {"none": .088,
-                             "outside the yard": .179,
-                             "inside dwelling/yard": .734},
-            "housing_tenure": {"own/paid off": .413,
-                               "own/not paid off": .118,
-                               "rent": .25,
-                               "rent-free": .186},
-            "refuse_disposal": {"weekly by local authority": .621,
-                                "local authority": .015,
-                                "communal dump": .019,
-                                "own dump": .282,
-                                "no disposal": .054},
-            "toilet_access": {"flush w/ sewage system": .57,
-                              "flush w/ septic tank": .031,
-                              "pit w/ ventilation": .088,
-                              "pit w/o ventilation": .193,
-                              "chemical toilet": .025,
-                              "bucket toilet": .021,
-                              "none": .052},
-            "electricity_access": {"yes": .842,
-                                   "no": .158},
-            "house_location": {"rural": .357,
-                               "urban": .643}}
+           'housing': {
+              'formal dwelling': .776,
+              'informal dwelling': 13.6,
+              'traditional dwelling': 7.9,
+              'Other': .9
+           },
+           'sex': {
+              'male': .482,
+              'female': .518
+           },
+           'education': {
+              'none': .086,
+              'some primary': .123,
+              'completed primary': .046,
+              'some secondary': .339,
+              'grade 12': .285,
+              'higher': .121
+           },
+           'water_access': {
+              'none': .088,
+              'outside the yard': .179,
+              'inside dwelling/yard': .734
+           },
+           'housing_tenure': {
+              'own/paid off': .413,
+              'own/not paid off': .118,
+              'rent': .25,
+              'rent-free': .186
+           },
+           'refuse_disposal': {
+              'weekly by local authority': .621,
+              'local authority': .015,
+              'communal dump': .019,
+              'own dump': .282,
+              'no disposal': .054
+           },
+           'toilet_access': {
+              'flush w/ sewage system': .57,
+              'flush w/ septic tank': .031,
+              'pit w/ ventilation': .088,
+              'pit w/o ventilation': .193,
+              'chemical toilet': .025,
+              'bucket toilet': .021,
+              'none': .052
+           },
+           'electricity_access': {
+              'yes': .842,
+              'no': .158
+           },
+           'house_location': {
+              'rural': .357,
+              'urban': .643
+           }
+        }
