@@ -5,11 +5,6 @@ allow the frontend to suggest changes to the backend/database.
 """
 from rest_framework import serializers
 
-# from .models import (
-#     Citizen,
-# )
-
-#  TODO: implement once we want to move to Django models, but not yet!
 
 class CitizenSerializer(serializers.Serializer):
     """Serializes citizens class and its related attributes"""
