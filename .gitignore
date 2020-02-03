@@ -1,3 +1,5 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -63,7 +65,6 @@ db.sqlite3-journal
 # keep static directory but do not allow files copied into it to be kept
 backend/static/*
 
-
 # Flask stuff:
 instance/
 .webassets-cache
@@ -87,13 +88,6 @@ ipython_config.py
 # pyenv
 .python-version
 
-# pipenv
-#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
-#   However, in case of collaboration, if having platform-specific dependencies or dependencies
-#   having no cross-platform support, pipenv may install dependencies that don't work, or not
-#   install all needed dependencies.
-#Pipfile.lock
-
 # celery beat schedule file
 celerybeat-schedule
 
@@ -108,8 +102,6 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-
-
 
 # Spyder project settings
 .spyderproject
@@ -129,7 +121,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# PyCharm
+# PyCharm (but not everything!)
 .idea/workspace.xml
 .idea/pylint.xml
 .idea/dataSources.xml
@@ -137,7 +129,6 @@ dmypy.json
 .idea/usage.statistics.xml
 .idea/tasks.xml
 
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
 frontend/node_modules
@@ -148,7 +139,9 @@ frontend/node_modules
 /coverage
 
 # production
-/build
+build/
+static/
+assets/
 
 # misc
 .DS_Store
@@ -156,7 +149,6 @@ frontend/node_modules
 .env.development.local
 .env.test.local
 .env.production.local
-
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -164,9 +156,6 @@ webpack-stats-dev.json
 webpack-stats.json
 package-lock.json
 *.swp
-static/
-assets/  # static and assets are all built by webpack and collectstatic for this project
-frontend/package-lock.json  # to avoid conflict mayhem
 
 # data sources for the africa geojson
 backend/data/ne_50m_admin_0_countries.geojson

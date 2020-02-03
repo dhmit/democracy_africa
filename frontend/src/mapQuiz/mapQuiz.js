@@ -1,10 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import * as PropTypes from 'prop-types';
 
-import {MapPath} from "../MapPath";
+import {
+    MapPath,
+    project_features_and_create_svg_paths,
+} from "../mapping";
 
-import { getCookie, project_features_and_create_svg_paths } from '../common';
-import './map_quiz.css';
+import { getCookie } from '../common';
+import './mapQuiz.css';
 
 /**
  * Main component for the map quiz.
