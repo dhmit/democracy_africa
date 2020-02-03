@@ -3,8 +3,6 @@
  */
 
 
-import * as d3 from "d3";
-
 /**
  * Get the value of a cookie, given its name
  * Adapted from https://docs.djangoproject.com/en/2.2/ref/csrf/#ajax
@@ -26,21 +24,4 @@ export function getCookie(name) {
     return cookieValue;
 }
 
-export function project_features_and_create_svg_paths(geo_json, center) {
-    const scale = 500;
-    const projection = d3.geoMercator()
-        .center(center)
-        .scale(scale)
-        .translate([scale/2, scale/2]);
 
-    const geoGenerator = d3.geoPath().projection(projection);
-
-    const map_data = [];
-    for (const feature of geo_json.features) {
-        const svg_path = geoGenerator(feature.geometry);
-        const iso = feature.properties.ISO_A3;
-        const name = feature.properties.name;
-        map_data.push({svg_path, name, iso});
-    }
-    return map_data;
-}

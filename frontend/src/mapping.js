@@ -1,6 +1,37 @@
+/**
+ * Mapping utilities
+ */
+
 import React from "react";
 import PropTypes from "prop-types";
 import * as d3 from "d3";
+
+
+/*
+ * This method takes GeoJSON parsed into an object,
+ * projects all of the geometries from lon-lat into x-y coords in SVG-space,
+ * and returns a list of objects containing these paths, and some metadata (iso, name)
+ */
+export function project_features_and_create_svg_paths(geo_json, center) {
+    const scale = 500;
+    const projection = d3.geoMercator()
+        .center(center)
+        .scale(scale)
+        .translate([scale/2, scale/2]);
+
+    const geoGenerator = d3.geoPath().projection(projection);
+
+    const map_data = [];
+    for (const feature of geo_json.features) {
+        const svg_path = geoGenerator(feature.geometry);
+        const iso = feature.properties.ISO_A3;
+        const name = feature.properties.name;
+        map_data.push({svg_path, name, iso});
+    }
+    return map_data;
+}
+
+
 
 export class MapPath extends React.Component {
     constructor(props) {
