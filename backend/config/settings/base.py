@@ -132,7 +132,7 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 
 # where collectstatic looks for static files
 STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT, 'assets'),
+    os.path.join(PROJECT_ROOT, 'build'),
 )
 
 REST_FRAMEWORK = {

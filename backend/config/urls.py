@@ -16,7 +16,6 @@ Including another URL configuration
 """
 from django.contrib import admin
 from django.urls import path
-from django.conf.urls import url
 
 from app.common import render_react_view
 from app.views import (
@@ -37,8 +36,9 @@ urlpatterns = [
     path('api/democracy_scores/', democracy_score_json),
 
     # React views
-    url('d3/', render_react_view, {'component_name': 'MapQuizD3'}),
-    url('map_quiz/', render_react_view, {'component_name': 'MapQuizSVG'}),
-    url('budget_voting_simulation/', render_react_view, {'component_name': 'BudgetVotingSimViz'}),
-    url('heat_map/', render_react_view, {'component_name': 'DemocracyViz'}),
+    path('', render_react_view, {'component_name': 'IndexView'}),
+    path('d3/', render_react_view, {'component_name': 'MapQuizD3'}),
+    path('map_quiz/', render_react_view, {'component_name': 'MapQuizSVG'}),
+    path('budget_voting_simulation/', render_react_view, {'component_name': 'BudgetVotingSimViz'}),
+    path('heat_map/', render_react_view, {'component_name': 'DemocracyViz'}),
 ]

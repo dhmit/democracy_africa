@@ -1,11 +1,14 @@
 import React from 'react';
+import * as PropTypes from 'prop-types';
 import * as d3 from 'd3';
-import PropTypes from 'prop-types';
 
-import { MapPath } from "../MapPath";
+import {
+    MapPath,
+    project_features_and_create_svg_paths,
+} from "../mapping";
 
-import { getCookie, project_features_and_create_svg_paths } from '../common';
-import './heat_map.css';
+import { getCookie } from '../common';
+import './democracyViz.css';
 
 /**
  * Main component for the map quiz.

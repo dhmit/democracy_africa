@@ -1,11 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import * as PropTypes from 'prop-types';
 import { getCookie }from "../common";
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import PopoverContent from 'react-bootstrap/PopoverContent';
-import "./BudgetSimulation.css";
-// import {parse} from "@typescript-eslint/parser/dist/parser";
+import "./budgetSimulation.css";
 
 
 // hardcoded list of resources for now
@@ -492,6 +491,7 @@ export class BudgetVotingSimViz extends React.Component {
 
         return (
             <>
+                <h1>Budget Voting Simulation</h1>
                 <div className="row instructions" >
                     <p>Use this dropdown menu to select different countries</p>
                 </div>
