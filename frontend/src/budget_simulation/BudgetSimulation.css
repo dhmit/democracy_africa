@@ -37,3 +37,46 @@
 .submit_button_container {
     text-align: center;
 }
+
+.country_list {
+    margin: 0px 0px 5px 0px;
+    padding-left: 20px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.instructions {
+    padding: 0px 20px;
+    margin-bottom: 0px;
+}
+
+.reset_button {
+    display: flex;
+    justify-content: center;
+}
+
+.support_string {
+    display: flex;
+    justify-content: center;
+}
+
+.aggregate_data_table_rows.selected_row {
+    background-color: #88693b;
+}
+
+.budget-reaction {
+    height: 200px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-basis: 0;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+
+}
+
+.budget-reaction-citizen {
+    margin: 2px;
+}

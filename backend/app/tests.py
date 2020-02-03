@@ -114,9 +114,8 @@ class MainTests(TestCase):
         for score_type in max_values:
             self.assertNotEqual(max_values[score_type], "")
 
-        # Change it to include other missing countries
         # Assures that all 54 countries are in the data
-        # self.assertEqual(54, len(democracy_data))
+        self.assertEqual(54, len(democracy_data))
 
         # Once all years get added in, this test will pass
         # Assures that each country data has the correct keys and has years from 1981 - 2018
