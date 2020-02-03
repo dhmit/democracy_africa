@@ -213,57 +213,57 @@ class StatisticalDistributions:
     #  Population class
     def __init__(self):
         self.stats = {
-           'housing': {
-               'formal dwelling': .776,
-               'informal dwelling': 13.6,
-               'traditional dwelling': 7.9,
-               'Other': .9
-           },
-           'sex': {
-               'male': .482,
-               'female': .518
-           },
-           'education': {
-               'none': .086,
-               'some primary': .123,
-               'completed primary': .046,
-               'some secondary': .339,
-               'grade 12': .285,
-               'higher': .121
-           },
-           'water_access': {
-               'none': .088,
-               'outside the yard': .179,
-               'inside dwelling/yard': .734
-           },
-           'housing_tenure': {
-               'own/paid off': .413,
-               'own/not paid off': .118,
-               'rent': .25,
-               'rent-free': .186
-           },
-           'refuse_disposal': {
-              'weekly by local authority': .621,
-              'local authority': .015,
-              'communal dump': .019,
-              'own dump': .282,
-              'no disposal': .054
-           },
-           'toilet_access': {
-              'flush w/ sewage system': .57,
-              'flush w/ septic tank': .031,
-              'pit w/ ventilation': .088,
-              'pit w/o ventilation': .193,
-              'chemical toilet': .025,
-              'bucket toilet': .021,
-              'none': .052
-           },
-           'electricity_access': {
-              'yes': .842,
-              'no': .158
-           },
-           'house_location': {
-              'rural': .357,
-              'urban': .643
-           }
+            'housing': {
+                'formal dwelling': .776,
+                'informal dwelling': 13.6,
+                'traditional dwelling': 7.9,
+                'Other': .9
+            },
+            'sex': {
+                'male': .482,
+                'female': .518
+            },
+            'education': {
+                'none': .086,
+                'some primary': .123,
+                'completed primary': .046,
+                'some secondary': .339,
+                'grade 12': .285,
+                'higher': .121
+            },
+            'water_access': {
+                'none': .088,
+                'outside the yard': .179,
+                'inside dwelling/yard': .734
+            },
+            'housing_tenure': {
+                'own/paid off': .413,
+                'own/not paid off': .118,
+                'rent': .25,
+                'rent-free': .186
+            },
+            'refuse_disposal': {
+               'weekly by local authority': .621,
+               'local authority': .015,
+               'communal dump': .019,
+               'own dump': .282,
+               'no disposal': .054
+            },
+            'toilet_access': {
+               'flush w/ sewage system': .57,
+               'flush w/ septic tank': .031,
+               'pit w/ ventilation': .088,
+               'pit w/o ventilation': .193,
+               'chemical toilet': .025,
+               'bucket toilet': .021,
+               'none': .052
+            },
+            'electricity_access': {
+               'yes': .842,
+               'no': .158
+            },
+            'house_location': {
+               'rural': .357,
+               'urban': .643
+            }
         }
