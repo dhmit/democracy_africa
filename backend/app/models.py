@@ -243,27 +243,27 @@ class StatisticalDistributions:
                 'rent-free': .186
             },
             'refuse_disposal': {
-               'weekly by local authority': .621,
-               'local authority': .015,
-               'communal dump': .019,
-               'own dump': .282,
-               'no disposal': .054
+                'weekly by local authority': .621,
+                'local authority': .015,
+                'communal dump': .019,
+                'own dump': .282,
+                'no disposal': .054
             },
             'toilet_access': {
-               'flush w/ sewage system': .57,
-               'flush w/ septic tank': .031,
-               'pit w/ ventilation': .088,
-               'pit w/o ventilation': .193,
-               'chemical toilet': .025,
-               'bucket toilet': .021,
-               'none': .052
+                'flush w/ sewage system': .57,
+                'flush w/ septic tank': .031,
+                'pit w/ ventilation': .088,
+                'pit w/o ventilation': .193,
+                'chemical toilet': .025,
+                'bucket toilet': .021,
+                'none': .052
             },
             'electricity_access': {
-               'yes': .842,
-               'no': .158
+                'yes': .842,
+                'no': .158
             },
             'house_location': {
-               'rural': .357,
-               'urban': .643
+                'rural': .357,
+                'urban': .643
             }
         }
