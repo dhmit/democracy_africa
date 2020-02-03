@@ -126,7 +126,7 @@ export class DemocracyMap extends React.Component {
         try {
             const res = await fetch('/api/africa_map_geojson/');
             const geo_json = await res.json();
-            const map_data = project_features_and_create_svg_paths(geo_json, [5, 15]);
+            const map_data = project_features_and_create_svg_paths(geo_json);
             this.setState({
                 map_data: map_data,
             });

@@ -23,7 +23,7 @@ These are not committed to the repo because they're too big!
 import csv
 import json
 
-from shapely.geometry import Polygon, mapping
+from shapely.geometry import MultiPolygon, Polygon, mapping
 from shapely.ops import cascaded_union
 
 
@@ -66,8 +66,49 @@ def merge_geometries(geo_a: dict, geo_b: dict) -> dict:
         Polygon(geo_a['coordinates'][0]),
         Polygon(geo_b['coordinates'][0]),
     ]
-    new_geometry = mapping(cascaded_union(polygons))
+    union_polygon = cascaded_union(polygons)
+    new_geometry = mapping(union_polygon)
 
+    merged_geometry = {
+        'type': new_geometry['type'],
+        'coordinates': new_geometry['coordinates']
+    }
+    return merged_geometry
+
+
+def add_bounding_circle(geo: dict, radius: float) -> dict:
+    """
+    Given a GeoJSON geometry, add a circle-ish polygon around it
+    this is so that we can click on small island countries...
+
+    TODO(ra):
+        - stop hardcoding the radius
+        - for the archipelagos, the centroid of the composite poly doesn't feel
+          like the nicest center point for the bounding circle... maybe find something better
+    """
+    # The archipelagos are MultiPolygons, which we have to handle separately
+    if geo['type'] == 'MultiPolygon':
+        polygons = [
+            Polygon(coord[0]) for coord in geo['coordinates']
+        ]
+        original_poly: MultiPolygon = MultiPolygon(polygons)
+        bounding_circle = original_poly.centroid.buffer(radius)
+
+        # subtract each island polygon from the bounding circle
+        new_multi = []
+        for poly in original_poly:
+            intersection = bounding_circle.intersection(poly)
+            remainder = bounding_circle.symmetric_difference(intersection)
+            new_multi.append(remainder)
+        remainder = MultiPolygon(new_multi)
+
+    else:
+        original_poly: Polygon = Polygon(geo['coordinates'][0])
+        bounding_circle = original_poly.centroid.buffer(radius)
+        intersection = bounding_circle.intersection(original_poly)
+        remainder = bounding_circle.symmetric_difference(intersection)
+
+    new_geometry = mapping(remainder)
     merged_geometry = {
         'type': new_geometry['type'],
         'coordinates': new_geometry['coordinates']
@@ -116,21 +157,34 @@ if __name__ == '__main__':
         properties = country['properties']
         iso_a3 = properties['ISO_A3']
         if iso_a3 in africa_iso_codes:
-
             # We do a little bit of geometry cleaning by hand
-            if iso_a3 == 'ZAF':  # South Africa
+
+            # South Africa
+            if iso_a3 == 'ZAF':
                 # South Africa's geometry is a multipolygon, and the last entry in the list
                 # of coordinates is the geometry for Marion Island...
                 coords = country['geometry']['coordinates']
                 coords.pop()  # ... which we remove here
 
-            elif iso_a3 == 'SOM':  # combine Somalia and Somaliland geometries
+            # combine Somalia and Somaliland geometries
+            elif iso_a3 == 'SOM':
                 geo = country['geometry']
                 country['geometry'] = merge_geometries(geo, somaliland_geometry)
 
-            elif iso_a3 == 'MAR':  # combine Morocco and Western Sahara geometries
+            # combine Morocco and Western Sahara geometries
+            elif iso_a3 == 'MAR':
                 geo = country['geometry']
                 country['geometry'] = merge_geometries(geo, western_sahara_geometry)
+
+            # Cape Verde, Seychelles, Mauritius, Sao Tome and Principe, Comoros
+            elif iso_a3 in ['CPV', 'SYC', 'MUS', 'STP', 'COM']:
+                geo = country['geometry']
+                radius = 1.5
+                if iso_a3 == 'CPV':
+                    radius = 2.2
+                elif iso_a3 == 'STP':
+                    radius = 2.0
+                country['geometry'] = add_bounding_circle(geo, radius)
 
             new_props = {
                 'ISO_A3': iso_a3,
