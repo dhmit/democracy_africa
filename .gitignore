@@ -156,4 +156,7 @@ webpack-stats-dev.json
 webpack-stats.json
 package-lock.json
 *.swp
-frontend/package-lock.json
+
+# data sources for the africa geojson
+backend/data/ne_50m_admin_0_countries.geojson
+backend/data/ne_50m_admin_0_breakaway_disputed_areas.geojson

@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import { getCookie }from "../common";
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-
+import PopoverContent from 'react-bootstrap/PopoverContent';
 import "./BudgetSimulation.css";
-
 // import {parse} from "@typescript-eslint/parser/dist/parser";
 
 
@@ -101,12 +100,13 @@ class Budget extends React.Component {
         });
         this.setState({
             budgetProposal: proposal,
-            sampleSize: 100,
             total: 0,
+            result: 0,
+            sampleSize: 100,
         });
-    }
+    };
 
-    async componentDidMount() {
+    componentDidMount() {
         // for a given list of options set each value in budget proposal to 0
         this.resetBudget();
     }
@@ -249,14 +249,15 @@ class Budget extends React.Component {
                     {budgetOptions}
                 </div>
 
-                <div>
+                <div className="support_string">
                     {supportString}
                 </div>
-                <button
-                    type={"submit"}
-                    onClick={this.resetBudget}
-                > Reset </button>
-
+                <div className="reset_button">
+                    <button
+                        type={"submit"}
+                        onClick={this.resetBudget}
+                    > Reset </button>
+                </div>
                 <div>
                     Sample size:
                     <input
@@ -285,14 +286,76 @@ Budget.propTypes = {
 class AggregateData extends React.Component {
     constructor(props) {
         super(props);
+        let selections = {};
+        for (const trait in this.props.population[0]["traits"]) {
+            selections[trait] = false;
+        }
         this.state = {
-            categories: Object.keys(this.props.population[0]["traits"])
+            categories: Object.keys(this.props.population[0]["traits"]),
+            selected: selections,
+            overall_selection: false,
         };
     }
 
+    /**
+     * When a user clicks on a table row, this method updates the state so that it knows that
+     * row is selected
+     * @param row_trait The trait of the row that has been selected (used for indexing)
+     */
+    select_table_row (row_trait) {
+        const selections = this.state.selected;
+        let any_selected = this.state.overall_selection;
+
+        selections[row_trait] = !selections[row_trait];
+        for (const trait in selections) {
+            if (selections[trait]) {
+                any_selected = true;
+                break;
+            }
+            any_selected = false;
+        }
+
+        this.setState({selected: selections, overall_selection: any_selected});
+    }
+
+    /**
+     * Generates the data to put into the overlay. The data in this case being the number of
+     * people who lack the selected characteristics
+     *
+     * return: String which states the number of people that lack the given characteristics
+     */
+    generate_data () {
+        const selections = this.state.selected;
+        let total = 0;
+        const population = this.props.population;
+        for (let i = 0; i < population.length; i++) {
+            let should_count_person = true;
+            const person = population[i];
+            for (const attribute in person["traits"]) {
+                if (selections[attribute] === undefined) {
+                    if (person["traits"][attribute]) {
+                        should_count_person = false;
+                        break;
+                    }
+                } else {
+                    if (selections[attribute] && person["traits"][attribute]) {
+                        should_count_person = false;
+                        break;
+                    }
+                }
+            }
+            if (should_count_person) {
+                total += 1;
+            }
+        }
+
+        return String(total) + " people lack this combination of traits";
+    }
 
     render() {
+
         const aggregate_values = {};
+        const total_values = {};
         for (let i = 0; i < this.state.categories.length; i++) {
             let total = 0;
             let category = this.state.categories[i];
@@ -302,37 +365,65 @@ class AggregateData extends React.Component {
                 //Above: index into the population to get the citizen, then that citizen's
                 // traits and then the value (true or false) of that trait for each category
             }
-            aggregate_values[[this.state.categories[i]]] = total/this.props.population.length;
+            aggregate_values[category] = total/this.props.population.length;
+            total_values[category] = total;
         }
-
+        //Usses the React-bootstrap Overlay and Popover classes. See
+        //https://react-bootstrap.github.io/components/overlays/#overlay-props for more details
         return (
-            <table className="aggregate_data_table">
-                <thead>
-                    <tr>
-                        <th className="aggregate_data_table_header">
-                            Trait
-                        </th>
-                        <th className="aggregate_data_table_data">
-                            Percentage of Population
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {this.state.categories.map((category, key) => {
-                        return (
-                            <tr key={key} className="aggregate_data_table_rows">
-                                <td className="aggregate_data_table_data">
-                                    {category}
-                                </td>
-
-                                <td className="aggregate_data_table_data">
-                                    {(aggregate_values[category]*100).toFixed(1)}%
-                                </td>
+            <div className="row">
+                <div className="col-9">
+                    <table className="aggregate_data_table">
+                        <thead>
+                            <tr>
+                                <th className="aggregate_data_table_header">
+                                    Trait
+                                </th>
+                                <th className="aggregate_data_table_data">
+                                    Percentage of Population
+                                </th>
                             </tr>
-                        );
-                    })}
-                </tbody>
-            </table>
+                        </thead>
+                        <tbody>
+                            {this.state.categories.map((category, key) => {
+                                let category_name = category.replace(/_/g, " ");
+                                const first_letter = category_name[0];
+                                category_name = category_name.replace(first_letter,
+                                    first_letter.toUpperCase());
+
+                                let table_row_classnames = "aggregate_data_table_rows";
+                                if (this.state.selected !== null &&
+                                    this.state.selected[category]) {
+                                    table_row_classnames += " selected_row";
+                                }
+                                return (
+                                    <tr key={key} className={table_row_classnames}
+                                        onClick={() => this.select_table_row(category)}>
+                                        <td className="aggregate_data_table_data">
+                                            {category_name}
+                                        </td>
+                                        <td className="aggregate_data_table_data">
+                                            {(aggregate_values[category]*100).toFixed(1)}%
+                                            ({total_values[category]})
+                                        </td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+
+                    </table>
+                </div>
+                <div className="col-3">
+                    <Popover id="popover-basic">
+                        <PopoverContent>
+                            {this.state.overall_selection ? this.generate_data() :
+                                "Click on different rows to see the amount of the population " +
+                        "lacking those characteristics"}
+                        </PopoverContent>
+                    </Popover>
+                </div>
+            </div>
+
         );
     }
 }
@@ -401,9 +492,12 @@ export class BudgetVotingSimViz extends React.Component {
 
         return (
             <>
+                <div className="row instructions" >
+                    <p>Use this dropdown menu to select different countries</p>
+                </div>
                 <div className="row">
-                    <div className="form-group">
-                        <select className="form-control float-left"
+                    <div className="col-md-8 col-lg-4 col-sm-12 form-group country_list">
+                        <select className="form-control "
                             value={this.state.country_name}
                             onChange={(e) => this.update_population(e.target.value)}
                         >
@@ -421,7 +515,7 @@ export class BudgetVotingSimViz extends React.Component {
                 </div>
 
                 <div className="row">
-                    <div className="col-md-8 col-lg-5 col-sm-12 budget_container">
+                    <div className="col-md-8 col-lg-6 col-sm-12 budget_container">
                         <Budget
                             country_name={this.state.country_name}
                             population={this.state.population}

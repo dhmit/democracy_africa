@@ -20,15 +20,14 @@ export class MapQuizSVG extends React.Component {
             lat: -22,
             zoom: 4,
             map_data: null,
-            click_country: 'Nothing',
-            score : 0,
+            clicked_country: 'Nothing',
+            score: 0,
             minutes : 5,
             seconds : 0,
         };
         this.csrftoken = getCookie('csrftoken');
         this.map_ref = React.createRef();
         this.timer_ref = React.createRef();
-        this.handle_visual_feedback = this.handle_visual_feedback.bind(this);
         this.reset_map = this.reset_map.bind(this);
         this.handle_submit_answer = this.handle_submit_answer.bind(this);
     }
@@ -61,57 +60,42 @@ export class MapQuizSVG extends React.Component {
 
     handle_country_map_click(country) {
         this.timer_ref.current.startTimer();
-        if (this.state.input_tracker[country.name] !== "None") {
-            alert("You already guessed this country!");
-        }
-        else {
+        if (this.state.input_tracker[country.name] === "None") {
             this.setState({
-                click_country: country.name,
+                clicked_country: country.name,
             });
         }
     }
 
-    handle_submit_answer(answer) {
-        const selected_country = this.state.click_country;
-        if (selected_country.toLowerCase() === answer.toLowerCase()) {
-            alert(answer + " is correct!");
-            this.handle_visual_feedback("Correct", selected_country);
-        } else {
-            alert(answer + " is incorrect...");
-            alert("This country's name is: " + selected_country);
-            this.handle_visual_feedback("Incorrect", selected_country);
-        }
-        this.setState({ click_country: "Nothing"});
-    }
-
-    // handle_country_list_click = (country) => {
-    //     this.setState({
-    //         click_country: country.name,
-    //     });
-    // };
-
     /**
-     * Changes the color of the country depending on the validity of the user response
-     * @param answer String that stores if the user's response was correct
-     * @param country Current country that the user is guessing
+     * TODO: randomize the order of the next country (it's currently alphabetical)
+     * Verifies whether or not the guess is correct and stores it in input tracker
+     * then sets the clicked country to be one not yet guessed
+     * @param answer String that stores the user's guess
      */
-    handle_visual_feedback(answer, country) {
-        if (answer === "Correct") {
+    handle_submit_answer(answer) {
+        const selected_country = this.state.clicked_country;
+        if (selected_country.toLowerCase() === answer.toLowerCase()) {
             this.setState(prevState => ({
                 input_tracker: {
                     ...prevState.input_tracker,
-                    [country]: "Correct",
+                    [selected_country]: "Correct",
                 }
             }));
-        }
-        else if (answer === "Incorrect") {
+        } else {
             this.setState(prevState => ({
                 input_tracker: {
                     ...prevState.input_tracker,
-                    [country]: "Incorrect",
+                    [selected_country]: "Incorrect",
                 }
             }));
         }
+        // const country_list = Object.keys(this.state.input_tracker);
+        //         // const unanswered_countries = country_list.filter((country) =>
+        //         //     this.state.input_tracker[country] === "None" &&
+        //         //     country !== this.state.clicked_country);
+        //         // this.setState({ clicked_country: unanswered_countries[0] });
+        this.setState({ clicked_country: "Nothing"});
     }
 
     reset_map() {
@@ -147,10 +131,10 @@ export class MapQuizSVG extends React.Component {
                         {this.state.map_data.map((country, i) => {
                             let countryFill = "#F6F4D2";
                             if (this.state.input_tracker[country.name] === "Correct") {
-                                countryFill = "#CBDFBD";
+                                countryFill = "#B8E39B";
                             } else if (this.state.input_tracker[country.name] === "Incorrect") {
                                 countryFill = "#F19C79";
-                            } else if (this.state.click_country === country.name) {
+                            } else if (this.state.clicked_country === country.name) {
                                 countryFill = "#C0CCD3";
                             }
 
@@ -164,19 +148,19 @@ export class MapQuizSVG extends React.Component {
                                 handle_country_click={
                                     () => this.handle_country_map_click(country)
                                 }
+                                useColorTransition={false}
                             />;
                         })}
                     </svg>
                 </div>
                 <div className="score">
-                    {`Score : ${score}`}
+                    {`Score: ${score}`}
                 </div>
                 <div className="u-flex input-wrapper">
                     <NameForm
                         map_data={this.state.map_data}
-                        click_country={this.state.click_country}
+                        clicked_country={this.state.clicked_country}
                         input_tracker={this.state.input_tracker}
-                        handle_visual_feedback={this.handle_visual_feedback}
                         handle_submit_answer={this.handle_submit_answer}
                     />
                 </div>
@@ -189,63 +173,57 @@ export class MapQuizSVG extends React.Component {
                 </div>
                 <button className= "reset" onClick={this.reset_map}>Reset</button>
                 <div className='list-wrapper'>
-                    {/*<div className='col-md-8'>*/}
-                    <CountryList
+                    <CountryButtons
                         map_data={this.state.map_data}
-                        click_country={this.state.click_country}
+                        clicked_country={this.state.clicked_country}
+                        input_tracker={this.state.input_tracker}
+                        handle_submit_answer={this.handle_submit_answer}
                     />
-                    {/*</div>*/}
                 </div>
             </div>
         );
     }
 }
 
-// /**
-//  * TODO : Improve the button layout and UI for the list of country names
-//  * Renders the names of the countries as clickable buttons and highlights the corresponding
-//  * country when clicked
-//  */
-export class CountryList extends React.Component {
+/**
+ * Renders the names of the countries as clickable buttons and guesses that name for the
+ * currently selected country
+ */
+export class CountryButtons extends React.Component {
     render() {
-        const secondColumnStart = Math.floor(this.props.map_data.length/ 3);
-        const thirdColumnStart = Math.floor(2*(this.props.map_data.length/3));
         return (
             <span>
                 <h3>Countries</h3>
-                <div className='row'>
-                    <div className='col'>
-                        {this.props.map_data.slice(0, secondColumnStart).map((country, i) => (
-                            <button key={i} className={"country-btn"}>
-                                {country.name}
-                            </button>
-                        ))}
-                    </div>
-                    <div className='col'>
-                        {this.props.map_data.slice(secondColumnStart, thirdColumnStart).map(
-                            (country, i) => (
-                                <button key={i} className={"country-btn"}>
+                <div className={"grid-container"}>
+                    {this.props.map_data.map((country, i) => {
+                        if (this.props.input_tracker[country.name] === "Correct") {
+                            return (
+                                <button key={i}
+                                    className={"country-btn country-btn-correct"}
+                                    disabled>
                                     {country.name}
                                 </button>
-                            ))}
-                    </div>
-                    <div className='col'>
-                        {this.props.map_data.slice(thirdColumnStart).map(
-                            (country, i) => (
-                                <button key={i} className={"country-btn"}>
+                            );
+                        } else {
+                            return (
+                                <button key={i}
+                                    className={"country-btn"}
+                                    onClick={() => this.props.handle_submit_answer(country.name)}>
                                     {country.name}
                                 </button>
-                            ))}
-                    </div>
+                            );
+                        }
+                    })}
                 </div>
             </span>
         );
     }
 }
-CountryList.propTypes = {
+CountryButtons.propTypes = {
     map_data: PropTypes.array,
-    click_country: PropTypes.string,
+    clicked_country: PropTypes.string,
     input_tracker: PropTypes.object,
+    handle_submit_answer: PropTypes.func,
 };
 
 /**
@@ -323,12 +301,12 @@ Timer.propTypes = {
 
 /**
  * TODO : Prevent the user from re-submitting for a country right after they answer
- * Handles the user's submission of answers and alerts them to the accuracy of their response
+ * Handles the user's submission of answers, passes value of input to handle_submit_answer
  */
 export class NameForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {value: ''};
+        this.state = { value: '' };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -340,8 +318,10 @@ export class NameForm extends React.Component {
     }
 
     handleSubmit() {
-        this.props.handle_submit_answer(this.state.value);
-        this.setState({value: ''});
+        if (this.props.clicked_country !== "Nothing") {
+            this.props.handle_submit_answer(this.state.value);
+            this.setState({ value: '' });
+        }
     }
 
     render() {
@@ -351,13 +331,13 @@ export class NameForm extends React.Component {
                     Country Name:
                     <input type="text" value={this.state.value} onChange={this.handleChange} />
                 </label>
-                <button onClick={this.handleSubmit}>Submit</button>
+                <button className={"submit-btn"} onClick={this.handleSubmit}>Submit</button>
             </form>
         );
     }
 }
 NameForm.propTypes = {
     map_data: PropTypes.array,
-    click_country: PropTypes.string,
+    clicked_country: PropTypes.string,
     handle_submit_answer: PropTypes.func,
 };
