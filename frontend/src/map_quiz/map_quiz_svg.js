@@ -90,11 +90,12 @@ export class MapQuizSVG extends React.Component {
                 }
             }));
         }
-        const country_list = Object.keys(this.state.input_tracker);
-        const unanswered_countries = country_list.filter((country) =>
-            this.state.input_tracker[country] === "None" &&
-            country !== this.state.clicked_country);
-        this.setState({ clicked_country: unanswered_countries[0] });
+        // const country_list = Object.keys(this.state.input_tracker);
+        //         // const unanswered_countries = country_list.filter((country) =>
+        //         //     this.state.input_tracker[country] === "None" &&
+        //         //     country !== this.state.clicked_country);
+        //         // this.setState({ clicked_country: unanswered_countries[0] });
+        this.setState({ clicked_country: "Nothing"});
     }
 
     reset_map() {
