@@ -1,0 +1,63 @@
+body {
+    padding: 30px;
+}
+
+.map-wrapper {
+    display : flex;
+    flex-direction: column;
+    flex-wrap : wrap;
+    width: 700px;
+}
+
+.right-panel {
+    max-width: 400px;
+}
+
+.grid-container {
+    height: 500px;
+    overflow-y: scroll;
+}
+
+.country-btn {
+    @extend .w-100;
+    background: white;
+    border-radius: 5px;
+}
+
+.country-btn-correct {
+    background: #B8E39B !important;
+}
+
+.name-form input {
+    border: 1px solid #6e6e6e;
+    border-radius: 5px;
+    padding: 4px;
+}
+
+.name-form input, .submit-btn {
+    margin-left: 8px;
+}
+
+.submit-btn, .country-btn, .reset {
+    background: white;
+    border: 1px solid #6e6e6e;
+    border-radius: 5px;
+    padding: 4px 8px;
+}
+
+.score {
+    text-align: right;
+    font-size: 2em;
+}
+
+.timer {
+    @extend .mb-2;
+    @extend .mr-2;
+    text-align: right;
+}
+
+.reset {
+}
+
+.submit-btn {
+}
