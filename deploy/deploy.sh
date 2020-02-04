@@ -6,7 +6,7 @@ echo 'Run as sudo'
 set -e
 
 GIT_SSH_COMMAND="ssh -i /home/ubuntu/.ssh/id_rsa" git pull
-chown -hR /home/ubuntu/democracy_africa/.git ubuntu
+chown -hR ubuntu /home/ubuntu/democracy_africa/.git
 
 source /home/ubuntu/democracy_africa/venv/bin/activate
 
