@@ -37,8 +37,7 @@ urlpatterns = [
 
     # React views
     path('', render_react_view, {'component_name': 'IndexView'}),
-    path('d3/', render_react_view, {'component_name': 'MapQuizD3'}),
-    path('map_quiz/', render_react_view, {'component_name': 'MapQuizSVG'}),
+    path('map_quiz/', render_react_view, {'component_name': 'MapQuiz'}),
     path('budget_voting_simulation/', render_react_view, {'component_name': 'BudgetVotingSimViz'}),
     path('heat_map/', render_react_view, {'component_name': 'DemocracyViz'}),
 ]

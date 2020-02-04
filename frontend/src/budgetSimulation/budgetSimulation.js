@@ -4,7 +4,6 @@ import { getCookie }from "../common";
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import PopoverContent from 'react-bootstrap/PopoverContent';
-import "./budgetSimulation.css";
 
 
 // hardcoded list of resources for now

@@ -8,7 +8,7 @@ import {
 } from "../mapping";
 
 import { getCookie } from '../common';
-import './democracyViz.css';
+import './democracyViz.scss';
 
 /**
  * Main component for the map quiz.

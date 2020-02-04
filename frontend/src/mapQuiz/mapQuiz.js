@@ -7,7 +7,6 @@ import {
 } from "../mapping";
 
 import { getCookie } from '../common';
-import './mapQuiz.css';
 
 /**
  * Main component for the map quiz.
@@ -15,15 +14,12 @@ import './mapQuiz.css';
  * Handles all logic, displays information, and makes database query/posts
  */
 
-export class MapQuizSVG extends React.Component {
+export class MapQuiz extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            lng: 29,
-            lat: -22,
-            zoom: 4,
             map_data: null,
-            clicked_country: 'Nothing',
+            clicked_country: null,
             score: 0,
             minutes : 5,
             seconds : 0,
@@ -98,7 +94,7 @@ export class MapQuizSVG extends React.Component {
         //         //     this.state.input_tracker[country] === "None" &&
         //         //     country !== this.state.clicked_country);
         //         // this.setState({ clicked_country: unanswered_countries[0] });
-        this.setState({ clicked_country: "Nothing"});
+        this.setState({ clicked_country: null});
     }
 
     reset_map() {
@@ -123,65 +119,63 @@ export class MapQuizSVG extends React.Component {
             return (<div>Loading!</div>);
         }
         return (
-            <div className="u-flex-column">
-                <div className="map-wrapper">
-                    <h1>Africa Map Quiz</h1>
-                    <svg
-                        height="1000"
-                        width="800"
-                        id="content"
-                    >
-                        {this.state.map_data.map((country, i) => {
-                            let countryFill = "#F6F4D2";
-                            if (this.state.input_tracker[country.name] === "Correct") {
-                                countryFill = "#B8E39B";
-                            } else if (this.state.input_tracker[country.name] === "Incorrect") {
-                                countryFill = "#F19C79";
-                            } else if (this.state.clicked_country === country.name) {
-                                countryFill = "#C0CCD3";
-                            }
-
-                            return <MapPath
-                                key={i}
-                                path={country.svg_path}
-                                id={country.postal}
-                                fill={countryFill}
-                                stroke="black"
-                                strokeWidth="1"
-                                handle_country_click={
-                                    () => this.handle_country_map_click(country)
+            <div className="container-fluid">
+                <div className="row">
+                    <div className="col">
+                        <h1>Africa Map Quiz</h1>
+                        <svg
+                            height="800"
+                            width="800"
+                            id="content"
+                        >
+                            {this.state.map_data.map((country, i) => {
+                                let countryFill = "#F6F4D2";
+                                if (this.state.input_tracker[country.name] === "Correct") {
+                                    countryFill = "#B8E39B";
+                                } else if (this.state.input_tracker[country.name] === "Incorrect") {
+                                    countryFill = "#F19C79";
+                                } else if (this.state.clicked_country === country.name) {
+                                    countryFill = "#C0CCD3";
                                 }
-                                useColorTransition={false}
-                            />;
-                        })}
-                    </svg>
-                </div>
-                <div className="score">
-                    {`Score: ${score}`}
-                </div>
-                <div className="u-flex input-wrapper">
-                    <NameForm
-                        map_data={this.state.map_data}
-                        clicked_country={this.state.clicked_country}
-                        input_tracker={this.state.input_tracker}
-                        handle_submit_answer={this.handle_submit_answer}
-                    />
-                </div>
-                <div className="timer">
-                    <Timer
-                        ref={this.timer_ref}
-                        minutes={this.state.minutes}
-                        seconds={this.state.seconds}
-                    />
-                </div>
-                <button className= "reset" onClick={this.reset_map}>Reset</button>
-                <div className='list-wrapper'>
-                    <CountryButtons
-                        map_data={this.state.map_data}
-                        clicked_country={this.state.clicked_country}
-                        input_tracker={this.state.input_tracker}
-                        handle_submit_answer={this.handle_submit_answer}
-                    />
+
+                                return <MapPath
+                                    key={i}
+                                    path={country.svg_path}
+                                    id={country.postal}
+                                    fill={countryFill}
+                                    stroke="black"
+                                    strokeWidth="1"
+                                    handle_country_click={
+                                        () => this.handle_country_map_click(country)
+                                    }
+                                    useColorTransition={false}
+                                />;
+                            })}
+                        </svg>
+                    </div>
+                    <div className="col right-panel text-right">
+                        <h2>{`Score: ${score}`}</h2>
+                        <Timer
+                            ref={this.timer_ref}
+                            minutes={this.state.minutes}
+                            seconds={this.state.seconds}
+                        />
+                        <button className="reset" onClick={this.reset_map}>Reset</button>
+                        <NameForm
+                            map_data={this.state.map_data}
+                            clicked_country={this.state.clicked_country}
+                            input_tracker={this.state.input_tracker}
+                            handle_submit_answer={this.handle_submit_answer}
+                        />
+                        <div className='list-wrapper'>
+                            <CountryButtons
+                                map_data={this.state.map_data}
+                                clicked_country={this.state.clicked_country}
+                                input_tracker={this.state.input_tracker}
+                                handle_submit_answer={this.handle_submit_answer}
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
         );
@@ -195,16 +189,17 @@ export class MapQuizSVG extends React.Component {
 export class CountryButtons extends React.Component {
     render() {
         return (
-            <span>
+            <div className="mt-4">
                 <h3>Countries</h3>
                 <div className={"grid-container"}>
                     {this.props.map_data.map((country, i) => {
                         if (this.props.input_tracker[country.name] === "Correct") {
                             return (
-                                <button key={i}
-                                    className={"country-btn country-btn-correct"}
-                                    disabled>
-                                    {country.name}
+                                <button
+                                    key={i}
+                                    className="country-btn country-btn-correct"
+                                    disabled
+                                >{country.name}
                                 </button>
                             );
                         } else {
@@ -218,7 +213,7 @@ export class CountryButtons extends React.Component {
                         }
                     })}
                 </div>
-            </span>
+            </div>
         );
     }
 }
@@ -289,9 +284,9 @@ export class Timer extends React.Component {
     render() {
         const { minutes, seconds } = this.state;
         return(
-            <div>
-                <div>Time Remaining: {minutes}:{seconds < 10 ? `0${seconds}` : seconds}</div>
-            </div>
+            <span className="timer">
+                Time remaining: {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
+            </span>
         );
     }
 }
@@ -321,7 +316,7 @@ export class NameForm extends React.Component {
     }
 
     handleSubmit() {
-        if (this.props.clicked_country !== "Nothing") {
+        if (this.props.clicked_country !== null) {
             this.props.handle_submit_answer(this.state.value);
             this.setState({ value: '' });
         }
@@ -329,13 +324,18 @@ export class NameForm extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.handleChange}>
-                <label>
-                    Country Name:
-                    <input type="text" value={this.state.value} onChange={this.handleChange} />
-                </label>
-                <button className={"submit-btn"} onClick={this.handleSubmit}>Submit</button>
-            </form>
+            <div className="name-form text-right">
+                <form onSubmit={this.handleChange}>
+                    <label htmlFor="country_name">Country name</label>
+                    <input
+                        name="country_name"
+                        type="text"
+                        value={this.state.value}
+                        onChange={this.handleChange}
+                    />
+                    <button className={"submit-btn"} onClick={this.handleSubmit}>Submit</button>
+                </form>
+            </div>
         );
     }
 }
