@@ -25,6 +25,19 @@ from app.views import (
     democracy_score_json,
 )
 
+
+def edx_path(route, component_name):
+    """ Convenience function for paths that are edx_views """
+    return path(
+        route,
+        render_react_view,
+        {
+            'component_name': component_name,
+            'edx_view': True
+        },
+    )
+
+
 urlpatterns = [
     # Django admin page
     path('admin/', admin.site.urls),
@@ -37,7 +50,8 @@ urlpatterns = [
 
     # React views
     path('', render_react_view, {'component_name': 'IndexView'}),
-    path('map_quiz/', render_react_view, {'component_name': 'MapQuiz'}),
-    path('budget_voting_simulation/', render_react_view, {'component_name': 'BudgetVotingSimViz'}),
-    path('heat_map/', render_react_view, {'component_name': 'DemocracyViz'}),
+    path('all_view/', render_react_view, {'component_name': 'AllView'}),
+    edx_path('map_quiz/', 'MapQuiz'),
+    edx_path('budget_voting_simulation/', 'BudgetVotingSimViz'),
+    edx_path('heat_map/', 'DemocracyViz'),
 ]

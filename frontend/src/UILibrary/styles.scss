@@ -1,0 +1,31 @@
+/*
+ * Import all styles. This file is imported in app.js.
+ */
+@import "../../node_modules/bootstrap/scss/bootstrap";
+@import '../mapQuiz/mapQuiz';
+@import '../democracyViz/democracyViz';
+@import '../budgetSimulation/budgetSimulation';
+
+
+$edx-border-color: #c8c8c8; // from edX
+
+.edx-course-content {
+    @extend .mb-4;
+    @extend .container;
+    max-width: 1200px;  // TBD -- we can set the width of our modal in edX
+    border: 1px solid $edx-border-color; // from edX
+    padding: 0;
+}
+
+.edx-page-header {
+    padding: 20px;  // from edX
+    border-bottom: 1px solid $edx-border-color; // from edX
+}
+
+.edx-sequence-nav {
+    @extend .w-100;
+}
+
+.edx-app-main {
+    padding: 20px;
+}

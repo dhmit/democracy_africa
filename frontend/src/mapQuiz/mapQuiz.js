@@ -3,10 +3,12 @@ import * as PropTypes from 'prop-types';
 
 import {
     MapPath,
-    project_features_and_create_svg_paths,
-} from "../mapping";
+} from "../UILibrary/components";
 
-import { getCookie } from '../common';
+import {
+    getCookie,
+    project_features_and_create_svg_paths,
+} from '../common';
 
 /**
  * Main component for the map quiz.
