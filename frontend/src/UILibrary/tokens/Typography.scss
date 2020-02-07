@@ -1,0 +1,47 @@
+.typography-font_heading1 {
+	@include font_heading1;
+}
+
+.typography-font_heading2 {
+	@include font_heading2;
+}
+
+.typography-font_heading3 {
+	@include font_heading3;
+}
+
+.typography-font_heading4 {
+	@include font_heading4;
+}
+
+.typography-font_heading5 {
+	@include font_heading5;
+}
+
+.typography-font_heading6 {
+	@include font_heading6;
+}
+
+.typography-font_body1 {
+	@include font_body1;
+}
+
+.typography-font_body2 {
+	@include font_body2;
+}
+
+.typography-font_subtitle {
+	@include font_subtitle;
+}
+
+.typography-font_caption {
+	@include font_caption;
+}
+
+.typography-font_overline {
+	@include font_overline;
+}
+
+.typography-font_button {
+	@include font_button;
+}

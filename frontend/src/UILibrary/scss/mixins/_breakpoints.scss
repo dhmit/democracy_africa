@@ -1,0 +1,71 @@
+@mixin breakpoint1 {
+  @media (min-width: 400px) {
+    @content;
+  }
+}
+
+@mixin elementBreakpoint1 {
+  &[min-width~="400px"] {
+    @content;
+  }
+}
+
+@mixin breakpoint2 {
+  @media (min-width: 600px) {
+    @content;
+  }
+}
+
+@mixin elementBreakpoint2 {
+  &[min-width~="600px"] {
+    @content;
+  }
+}
+
+@mixin breakpoint3 {
+  @media (min-width: 800px) {
+    @content;
+  }
+}
+
+@mixin elementBreakpoint3 {
+  &[min-width~="800px"] {
+    @content;
+  }
+}
+
+@mixin breakpoint4 {
+  @media (min-width: 1000px) {
+    @content;
+  }
+}
+
+@mixin elementBreakpoint4 {
+  &[min-width~="1000px"] {
+    @content;
+  }
+}
+
+@mixin breakpoint5 {
+  @media (min-width: 1200px) {
+    @content;
+  }
+}
+
+@mixin elementBreakpoint5 {
+  &[min-width~="1200px"] {
+    @content;
+  }
+}
+
+@mixin breakpoint6 {
+  @media (min-width: 1400px) {
+    @content;
+  }
+}
+
+@mixin elementBreakpoint6 {
+  &[min-width~="1400px"] {
+    @content;
+  }
+}
