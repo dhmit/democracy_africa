@@ -22,10 +22,29 @@
             const ReactDOM = window.app_modules.ReactDOM;
             const React = window.app_modules.React;
             const {{ component_name }} = window.app_modules.{{ component_name }};
-            ReactDOM.render(
-                React.createElement({{ component_name }}),
-                document.getElementById('root')
-            );
+            const react_el = React.createElement({{ component_name }});
+            {% if edx_view %}
+                const EdXView = window.app_modules.EdXView;
+                const edx_view = React.createElement(
+                    EdXView,
+                    {
+                        app: react_el,
+                        title: '{{ component_name }}',
+                    },
+                );
+                ReactDOM.render(
+                    edx_view,
+                    document.getElementById('root')
+                );
+            {% else %}
+                ReactDOM.render(
+                    react_el,
+                    document.getElementById('root')
+                );
+            {% endif %}
+
+
         </script>
     </body>
 </html>
+

@@ -1,5 +1,9 @@
 /*
- * The landing page for the site.
+ * The landing page for the prototyping environment.
+ *
+ * PLEASE NOTE: this is not going to go into the EdX course.
+ * It's just for our convenience while developing,
+ * so DO NOT spend too much time making this nice!
  */
 
 import React from 'react';
@@ -9,7 +13,7 @@ export class IndexView extends React.Component {
     render() {
         return (
             <>
-                <h1>Democracy and Development: Perspectives from Africa</h1>
+                <h1>Gamifying Democracy and Development: Perspectives from Africa</h1>
                 <IndexCard
                     url='/map_quiz/'
                     title='Africa Map Quiz'
@@ -34,6 +38,17 @@ export class IndexView extends React.Component {
                         Learn how indices measuring electoral democracy in Africa change over time.
                     '
                 />
+
+                <IndexCard
+                    url='/all_view/'
+                    title='All View'
+                    description='
+                        A view that renders all of our apps -- for use in establishing
+                        design consistency across the project.
+                    '
+                />
+
+
             </>
         );
     }

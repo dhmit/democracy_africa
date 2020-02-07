@@ -1,0 +1,10 @@
+/*
+ * Import all styles. This file is imported in app.js.
+ */
+@import "../../node_modules/bootstrap/scss/bootstrap";
+@import '../mapQuiz/mapQuiz';
+@import '../democracyViz/democracyViz';
+@import '../budgetSimulation/budgetSimulation';
+@import './edx.scss';
+
+

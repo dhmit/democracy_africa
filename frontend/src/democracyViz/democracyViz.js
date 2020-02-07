@@ -2,13 +2,12 @@ import React from 'react';
 import * as PropTypes from 'prop-types';
 import * as d3 from 'd3';
 
-import {
-    MapPath,
-    project_features_and_create_svg_paths,
-} from "../mapping";
+import { MapPath } from "../UILibrary/components";
 
-import { getCookie } from '../common';
-import './democracyViz.scss';
+import {
+    getCookie,
+    project_features_and_create_svg_paths,
+} from '../common';
 
 /**
  * Main component for the map quiz.
