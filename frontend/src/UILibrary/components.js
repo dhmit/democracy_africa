@@ -6,6 +6,13 @@ import React from "react";
 import * as PropTypes from "prop-types";
 import * as d3 from "d3";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+    faBook,
+    faChevronRight,
+    faChevronLeft,
+    faFilm,
+} from "@fortawesome/free-solid-svg-icons";
 
 /**
  * Component used to render paths into SVGs
@@ -85,19 +92,28 @@ export class EdXView extends React.Component {
         return (
             <section className="edx-course-content">
                 <header className="edx-page-header">
-                    Course
-                    &gt; Module 2: Module Description
-                    &gt; Section of the Module
+                    <a>Course</a>
+                    &gt; <a>Module 2: Module Description</a>
+                    &gt; <a>Section of the Module</a>
                     &gt; {this.props.title}
                 </header>
-                <nav className="edx-sequence-nav">
-                    <button>&lt;</button>
-                    <button>Video</button>
-                    <button>Reading</button>
-                    <button>Game</button>
-                    <button>&gt;</button>
-                </nav>
                 <main className="edx-app-main">
+                    <div className='text-center'>
+                        <nav className="edx-sequence-nav">
+                            <button>
+                                <FontAwesomeIcon icon={faChevronLeft} /> Previous
+                            </button>
+                            <button>
+                                <FontAwesomeIcon icon={faFilm} />
+                            </button>
+                            <button className="edx-sequence-nav-active-button">
+                                <FontAwesomeIcon icon={faBook} />
+                            </button>
+                            <button>
+                                Next <FontAwesomeIcon icon={faChevronRight} />
+                            </button>
+                        </nav>
+                    </div>
                     {this.props.app}
                 </main>
             </section>

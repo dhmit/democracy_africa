@@ -17,10 +17,32 @@ $edx-border-color: #c8c8c8; // from edX
     border-bottom: 1px solid $edx-border-color; // from edX
 }
 
-.edx-sequence-nav {
-    @extend .w-100;
+.edx-page-header a {
+    color: #0075b4;
 }
 
 .edx-app-main {
     padding: 20px;
 }
+
+.edx-sequence-nav {
+    width: 90%;
+    @extend .btn-group;
+    margin-bottom: 20px;
+}
+
+.edx-sequence-nav button {
+    @extend .btn;
+    height: 50px;
+    border-color: #e7e7e7;
+}
+
+.edx-sequence-nav :last-child,
+.edx-sequence-nav :first-child {
+    max-width: 120px;
+}
+
+.edx-sequence-nav-active-button {
+    border-bottom: 3px solid #0075b4 !important;
+}
+
