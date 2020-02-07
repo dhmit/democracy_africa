@@ -86,8 +86,8 @@ export class EdXView extends React.Component {
             <section className="edx-course-content">
                 <header className="edx-page-header">
                     Course
-                    &gt; Module X: Module Description
-                    &gt; Specific Thing
+                    &gt; Module 2: Module Description
+                    &gt; Section of the Module
                     &gt; {this.props.title}
                 </header>
                 <nav className="edx-sequence-nav">

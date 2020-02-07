@@ -27,7 +27,10 @@
                 const EdXView = window.app_modules.EdXView;
                 const edx_view = React.createElement(
                     EdXView,
-                    {app: react_el},
+                    {
+                        app: react_el,
+                        title: '{{ component_name }}',
+                    },
                 );
                 ReactDOM.render(
                     edx_view,
