@@ -115,6 +115,16 @@ export class EdXView extends React.Component {
                         </nav>
                     </div>
                     {this.props.app}
+                    <div className='text-center'>
+                        <nav className="edx-sequence-nav">
+                            <button className='ml-auto'>
+                                <FontAwesomeIcon icon={faChevronLeft} /> Previous
+                            </button>
+                            <button className='mr-auto'>
+                                Next <FontAwesomeIcon icon={faChevronRight} />
+                            </button>
+                        </nav>
+                    </div>
                 </main>
             </section>
         );
