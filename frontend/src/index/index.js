@@ -38,7 +38,14 @@ export class IndexView extends React.Component {
                         Learn how indices measuring electoral democracy in Africa change over time.
                     '
                 />
-
+                <IndexCard
+                    url='/trust_simulation/'
+                    title='Trust Simulation'
+                    description='
+                        A view that renders all of our apps -- for use in establishing
+                        design consistency across the project.
+                    '
+                />
                 <IndexCard
                     url='/all_view/'
                     title='All View'
