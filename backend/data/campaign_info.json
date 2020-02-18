@@ -1,0 +1,19 @@
+{
+    "South Africa": {
+        "iso": "ZAF",
+        "provinces": [
+            {
+                "name": "Northern Cape",
+                "population": 500,
+                "topic_preferences": [
+                    {
+                        "name": "water",
+                        "preferences": [
+                            0.25, 0.2, 0.2, 0.25, 0.1
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

@@ -26,16 +26,14 @@ from .models import africa_demographics_by_country as demographics_dict
 from.serializers import PopulationSerializer
 
 
-def load_africa_geojson() -> dict:
+def load_json(filename) -> dict:
     """
-    Read the GeoJSON file of the countries in Africa from disk
-    and return a dict of the parsed json
+    Reads the JSON file and returns it as a dictionary
     """
-    filename = 'africa.geo.json'
     path = Path(settings.BACKEND_DATA_DIR, filename)
-    with open(path, encoding='utf-8') as africa_geojson_file:
-        africa_geojson_string = africa_geojson_file.read()
-    return json.loads(africa_geojson_string)
+    with open(path, encoding='utf-8') as json_file:
+        file_string = json_file.read()
+    return json.loads(file_string)
 
 
 @api_view(['GET'])
@@ -43,7 +41,7 @@ def africa_map_geojson(request):
     """
     Load Africa map GeoJSON for frontend
     """
-    africa_geojson = load_africa_geojson()
+    africa_geojson = load_json('africa.geo.json')
     return Response(africa_geojson)
 
 
@@ -139,3 +137,11 @@ def normalize(data, max_values):
         if float(max_values[score_type]) != 0:
             data[score_type] = float(data[score_type]) / float(max_values[score_type])
     return data
+
+@api_view(['GET'])
+def get_campaign_info(request):
+    """
+    Gets the campaign info from reading the json in the backend
+    """
+    campaign_json = load_json('campaign_info.json')
+    return Response(json.dumps(campaign_json))
