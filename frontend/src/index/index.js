@@ -39,11 +39,10 @@ export class IndexView extends React.Component {
                     '
                 />
                 <IndexCard
-                    url='/trust_simulation/'
-                    title='Trust Simulation'
+                    url='/trust_visualization/'
+                    title='Trust Visualization'
                     description='
-                        A view that renders all of our apps -- for use in establishing
-                        design consistency across the project.
+
                     '
                 />
                 <IndexCard
