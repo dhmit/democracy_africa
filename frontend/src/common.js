@@ -31,8 +31,8 @@ export function getCookie(name) {
  * projects all of the geometries from lon-lat into x-y coords in SVG-space,
  * and returns a list of objects containing these paths, and some metadata (iso, name)
  */
-export function project_features_and_create_svg_paths(geo_json) {
-    const scale = 500;
+export function project_features_and_create_svg_paths(geo_json, desired_scale=500) {
+    const scale = desired_scale;
     const center = [2, 15];
     const projection = d3.geoMercator()
         .center(center)
