@@ -10,13 +10,19 @@ our requirements.txt because it's required here and only here. If you want to pl
 with this, install it manually to your venv:
     pip install shapely
 
-This script requires the following two data sources in the same directory as it.
+This script requires the following data sources in the same directory as it.
 These are not committed to the repo because they're too big!
+    Basic country geometries:
     https://github.com/nvkelso/natural-earth-vector/blob/master/
         geojson/ne_50m_admin_0_countries.geojson
 
+    Disputed areas geometries:
     https://github.com/nvkelso/natural-earth-vector/blob/master/
         geojson/ne_50m_admin_0_breakaway_disputed_areas.geojson
+
+    States and provinces:
+    https://github.com/nvkelso/natural-earth-vector/blob/master/
+        geojson/ne_10m_admin_1_states_provinces.geojson
 
 """
 
@@ -116,7 +122,11 @@ def add_bounding_circle(geo: dict, radius: float) -> dict:
     return merged_geometry
 
 
-if __name__ == '__main__':
+def create_africa_geojson():
+    """
+    Creates country-level Africa geojson file from Natural Earth
+    source files and writes it to disk
+    """
     # Load everything
     iso_name_dict = load_iso_name_dict()
     africa_iso_codes = iso_name_dict.keys()
@@ -199,5 +209,63 @@ if __name__ == '__main__':
 
     # serialize and write out to disk
     africa_geojson_json = json.dumps(africa_geojson)
-    with open('africa.geo.json', 'w', encoding='utf-8') as out_file:
+    with open('africa.geojson', 'w', encoding='utf-8') as out_file:
         out_file.write(africa_geojson_json)
+
+
+def create_state_geojsons(country_iso_code):
+    """
+    Create state-level GeoJSON of a single African country given its ISO-3166 A3 code
+    and write it to disk
+    """
+    # load everything
+    states_provinces_filename = 'ne_10m_admin_1_states_provinces.geojson'
+    geojson = load_geojson(states_provinces_filename)
+    all_states_features = geojson['features']
+
+    # Initialize our data structures
+    country_features = []
+    country_geojson = {
+        'type': 'FeatureCollection',
+        'features': country_features,
+    }
+
+    # Find states that belong to the given country
+    for state in all_states_features:
+        properties = state['properties']
+        iso_a3 = properties['adm0_a3']
+
+        # iso_3166_2 is the ISO code for states/provinces/districts
+        # https://en.wikipedia.org/wiki/ISO_3166-2
+        if iso_a3 == country_iso_code:
+            iso_3166_2 = properties['iso_3166_2']
+            new_props = {
+                'ISO_3166_2': iso_3166_2,
+                'ISO_A3': iso_a3,
+                'name': properties['gns_name'],  # TODO(ra) is this the correct name field?
+            }
+            state['properties'] = new_props
+            country_features.append(state)
+
+    # serialize and write out to disk
+    country_states_geojson_json = json.dumps(country_geojson)
+    with open(f'state_level_maps/{country_iso_code}.geojson', 'w', encoding='utf-8') as \
+    out_file:
+        out_file.write(country_states_geojson_json)
+
+
+def create_all_state_geojsons():
+    """
+    Creates state-level geojson files for all countries in Africa
+    """
+    iso_name_dict = load_iso_name_dict()
+    africa_iso_codes = iso_name_dict.keys()
+    for iso in africa_iso_codes:
+        create_state_geojsons(iso)
+
+
+if __name__ == '__main__':
+    create_africa_geojson()
+    create_all_state_geojsons()
+
+

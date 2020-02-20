@@ -160,3 +160,4 @@ package-lock.json
 # data sources for the africa geojson
 backend/data/ne_50m_admin_0_countries.geojson
 backend/data/ne_50m_admin_0_breakaway_disputed_areas.geojson
+backend/data/ne_10m_admin_1_states_provinces.geojson
