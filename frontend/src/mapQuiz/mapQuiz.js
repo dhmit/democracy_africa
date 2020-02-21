@@ -26,6 +26,8 @@ export class MapQuiz extends React.Component {
             minutes : 5,
             seconds : 0,
         };
+        this.map_height = 800;
+        this.map_width = 800;
         this.csrftoken = getCookie('csrftoken');
         this.map_ref = React.createRef();
         this.timer_ref = React.createRef();
@@ -41,7 +43,8 @@ export class MapQuiz extends React.Component {
         try {
             const res = await fetch('/api/africa_map_geojson/');
             const geo_json = await res.json();
-            const map_data = project_features_and_create_svg_paths(geo_json);
+            const map_data = project_features_and_create_svg_paths(geo_json, this.map_width,
+                this.map_height);
             const input_tracker = this.initialize_input_tracker(map_data);
             this.setState({
                 map_data: map_data,
