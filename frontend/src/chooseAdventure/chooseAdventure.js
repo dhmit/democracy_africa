@@ -19,7 +19,7 @@ export class ChooseAdventureView extends React.Component {
 
         return (
             <div>
-                {this.state.view === 'intro' && <IntroView />}
+                {this.state.view === 'intro' && <IntroView desc={"helloaklsdjfhlasdkjhfkashdlf"}/>}
                 {this.state.view === 'stage' && <StageView />}
                 <button onClick={() => this.setState({ view: 'stage'})}> Get started </button>
             </div>

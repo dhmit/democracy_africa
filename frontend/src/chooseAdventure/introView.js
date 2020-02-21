@@ -1,4 +1,5 @@
 import React from 'react';
+import * as PropTypes from "prop-types";
 // import * as PropTypes from 'prop-types';
 
 
@@ -12,9 +13,13 @@ class IntroView extends React.Component {
     }
 
     render() {
-        return ( <div>heeeeello</div> );
+        return ( <div>{this.props.desc}</div> );
 
     }
 }
+
+IntroView.propTypes = {
+    desc: PropTypes.string,
+};
 
 export default IntroView;
