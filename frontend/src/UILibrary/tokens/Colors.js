@@ -77,36 +77,46 @@ const Colors = () => (
         title="Colors"
         description=""
     >
+        <p>
+          Review variables in <a href="https://github.com/edx/edx-bootstrap/blob/master/scss/edx/_variables.scss#L6">color system</a>.
+        </p>
         <ColorList
             title="Base Colors"
         >
-            <Color name="black" />
             <Color name="white" />
-            <Color name="red" />
-            <Color name="color_grey_50" />
-            <Color name="color_grey_100" />
-            <Color name="color_grey_200" />
-            <Color name="color_grey_300" />
-            <Color name="color_grey_400" />
-            <Color name="color_grey_500" />
-            <Color name="color_grey_600" />
-            <Color name="color_grey_700" />
-            <Color name="color_grey_800" />
-            <Color name="color_grey_900" />
+            <Color name="gray-100" />
+            <Color name="gray-200" />
+            <Color name="gray-300" />
+            <Color name="gray-400" />
+            <Color name="gray-500" />
+            <Color name="gray-600" />
+            <Color name="gray-700" />
+            <Color name="gray-800" />
+            <Color name="gray-900" />
+            <Color name="black" />
         </ColorList>
         <ColorList
             title="Brand Colors"
         >
-            <Color name="color_primary_50" />
-            <Color name="color_primary_100" />
-            <Color name="color_primary_200" />
-            <Color name="color_primary_300" />
-            <Color name="color_primary_400" />
-            <Color name="color_primary_500" />
-            <Color name="color_primary_600" />
-            <Color name="color_primary_700" />
-            <Color name="color_primary_800" />
-            <Color name="color_primary_900" />
+            <Color name="blue" />
+            <Color name="dark-blue" />
+            <Color name="indigo" />
+            <Color name="red" />
+            <Color name="yellow" />
+            <Color name="green" />
+            <Color name="slate" />
+            <Color name="magenta" />
+        </ColorList>
+        <ColorList
+            title="Background only Colors"
+        >
+            <Color name="pale-gray" />
+            <Color name="pale-blue" />
+            <Color name="pale-yellow" />
+            <Color name="light-green" />
+            <Color name="light-blue" />
+            <Color name="light-red" />
+            <Color name="light-yellow" />
         </ColorList>
     </Token>
 );
