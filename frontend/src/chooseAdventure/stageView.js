@@ -1,7 +1,7 @@
 import React from 'react';
 // import * as PropTypes from 'prop-types';
 
-// TODO: hardcode data structure here
+// TODO: hardcode data structure here, add a reference with dictionary 
 
 const MEDIA_STAGE = {
     'text': 'You chose to start a media campaign.',
