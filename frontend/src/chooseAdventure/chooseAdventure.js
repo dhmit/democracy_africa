@@ -50,7 +50,6 @@ function getStageFromOption(option) {
     return NAME_TO_STAGE[option.stageName];
 }
 
-
 /**
  * Component for displaying choose your own adventure skeleton
  */
