@@ -1,7 +1,7 @@
 import React from 'react';
 // import * as PropTypes from 'prop-types';
-// import { IntroView } from './introView.js';
-
+import IntroView from './introView.js';
+import StageView from './stageView.js';
 
 /**
  * Component for displaying choose your own adventure skeleton
@@ -11,7 +11,7 @@ export class ChooseAdventureView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            view: 'intro',
+            view: 'stage',
         };
     }
 
@@ -19,7 +19,8 @@ export class ChooseAdventureView extends React.Component {
 
         return (
             <div>
-                {this.state.view === 'intro' && "hello"}
+                {this.state.view === 'intro' && <IntroView />}
+                {this.state.view === 'stage' && <StageView />}
             </div>
         );
 

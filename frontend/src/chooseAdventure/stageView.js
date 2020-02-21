@@ -43,7 +43,7 @@ const START_STAGE = {
  * Component for displaying choose your own adventure skeleton
  */
 
-class IntroView extends React.Component {
+class StageView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -52,9 +52,9 @@ class IntroView extends React.Component {
     }
 
     render() {
-        return ( <div>heeeeello</div> );
+        return ( <div>hello IVY</div> );
 
     }
 }
 
-export default IntroView;
+export default StageView;
