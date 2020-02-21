@@ -43,7 +43,7 @@ const START_STAGE = {
  * Component for displaying choose your own adventure skeleton
  */
 
-export class chooseAdventure extends React.Component {
+export class chooseAdventureView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
