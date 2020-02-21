@@ -11,7 +11,7 @@ export class ChooseAdventureView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            view: 'stage',
+            view: 'intro',
         };
     }
 
@@ -21,6 +21,7 @@ export class ChooseAdventureView extends React.Component {
             <div>
                 {this.state.view === 'intro' && <IntroView />}
                 {this.state.view === 'stage' && <StageView />}
+                <button onClick={() => this.setState({ view: 'stage'})}> Get started </button>
             </div>
         );
 
