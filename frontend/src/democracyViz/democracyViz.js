@@ -115,6 +115,8 @@ export class DemocracyMap extends React.Component {
             map_data: null,
             // mouseover_country: 'Nothing',
         };
+        this.map_height = 1000;
+        this.map_width = 1000;
         this.csrftoken = getCookie('csrftoken');
         // this.map_ref = React.createRef();
         this.getCountryData = this.getCountryData.bind(this);
@@ -128,7 +130,8 @@ export class DemocracyMap extends React.Component {
         try {
             const res = await fetch('/api/africa_map_geojson/');
             const geo_json = await res.json();
-            const map_data = project_features_and_create_svg_paths(geo_json);
+            const map_data = project_features_and_create_svg_paths(geo_json, this.map_width,
+                this.map_height);
             this.setState({
                 map_data: map_data,
             });
