@@ -23,7 +23,7 @@ from django.conf import settings
 from .models import Population
 from .models import africa_demographics_by_country as demographics_dict
 
-from.serializers import PopulationSerializer
+from .serializers import PopulationSerializer
 
 
 def load_africa_geojson() -> dict:
@@ -126,6 +126,26 @@ def democracy_score_json(request):
     """
     democracy_data = load_democracy_data()[0]
     return Response(json.dumps(democracy_data))
+
+
+def load_trust_data():
+    """
+    Returns a json file of interpersonal trust data
+    """
+    filename = "Nunn_Wantchekon_AER_2011.csv"
+    path = Path(settings.BACKEND_DATA_DIR, filename)
+    with open(path, encoding='utf-8') as trust_data_csv_file:
+        reader = csv.DictReader(trust_data_csv_file, delimiter=',')
+    return reader
+
+
+@api_view(['GET'])
+def trust_data(request):
+    """
+    :return: trust_data for frontend
+    """
+    trust_data_json = load_trust_data()
+    return Response(json.dumps(trust_data_json))
 
 
 def normalize(data, max_values):
