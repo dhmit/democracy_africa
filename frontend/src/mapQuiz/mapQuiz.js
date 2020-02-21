@@ -35,6 +35,7 @@ export class MapQuiz extends React.Component {
 
     /**
      * When this component is mounted to the DOM, get GeoJSON data from the server
+     * When this component is mounted to the DOM, get GeoJSON data from the server
      */
     async componentDidMount() {
         try {

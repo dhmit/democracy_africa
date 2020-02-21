@@ -19,6 +19,7 @@ from django.urls import path
 
 from app.common import render_react_view
 from app.views import (
+    state_map_geojson,
     africa_map_geojson,
     population,
     africa_demographics_by_country,
@@ -45,6 +46,7 @@ urlpatterns = [
 
     # API endpoints
     path('api/africa_map_geojson/', africa_map_geojson),
+    path('api/state_map_geojson/<str:map_name>', state_map_geojson),
     path('api/population/', population),
     path('api/country_demographics/', africa_demographics_by_country),
     path('api/democracy_scores/', democracy_score_json),
