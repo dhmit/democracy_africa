@@ -1,4 +1,6 @@
 import React from 'react';
+import IntroView from './introView.js';
+import StageView from './stageView.js';
 // import * as PropTypes from 'prop-types';
 
 // TODO: hardcode data structure here
@@ -48,19 +50,27 @@ function getStageFromOption(option) {
     return NAME_TO_STAGE[option.stageName];
 }
 
+
 /**
  * Component for displaying choose your own adventure skeleton
  */
 
-export class chooseAdventureView extends React.Component {
+export class ChooseAdventureView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            stage: START_STAGE,
+            view: 'intro',
         };
     }
 
     render() {
-        return ( <div>hello</div> );
+        return (
+            <div>
+                {this.state.view === 'intro' && <IntroView desc={"helloaklsdjfhlasdkjhfkashdlf"}/>}
+                {this.state.view === 'stage' && <StageView />}
+                <button onClick={() => this.setState({ view: 'stage'})}> Get started </button>
+            </div>
+        );
+
     }
 }
