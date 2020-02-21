@@ -87,18 +87,11 @@ class Citizen:
     for now).
     """
 
-    # pylint: disable=too-many-arguments
     def __init__(self, name):
         self.name = name
         self.province = ""
         # Left these traits in to keep budget simulator working
-        self.traits = {
-            'lives_in_rural_area': False,
-            'has_access_to_electricity': False,
-            'has_access_to_sanitation': False,
-            'has_access_to_water': False,
-            'is_educated': False,
-        }
+        self.traits = {}
         self.will_support = False
 
     def __str__(self):
@@ -126,6 +119,7 @@ class Population:
         self.country = country
         self.population_size = 0
 
+    # pylint: disable=too-many-nested-blocks
     def create_citizens(self, number_to_create, demographic_data=None):
         """
         citizens are randomly generated (from the distribution) and added to citizen list
@@ -140,14 +134,13 @@ class Population:
                 province['population'] = round(number_to_create * (province['population'] /
                                                                    country_population))
             for k, province in enumerate(provinces):
-                preferences = province['topic_preferences']
                 people_to_create = province['population'] if k < len(provinces) - 1 \
                     else number_to_create - len(self.citizen_list)
                 for i in range(people_to_create):
                     current_citizen = Citizen(str(self.population_size + 1))
                     current_citizen.province = province['name']
 
-                    for topic in preferences:
+                    for topic in province['topic_preferences']:
                         preference_choice = random.randint(0, 100)
                         accumulate = 0
 
@@ -178,20 +171,20 @@ class Population:
         sanitation_access = random.randint(0, 100)
         educated = random.randint(0, 100)
 
-        if rural_area < africa_demographics_by_country[self.country]["rural_households"]:
-            citizen.traits["lives_in_rural_area"] = True
+        citizen.traits["lives_in_rural_area"] = rural_area < \
+            africa_demographics_by_country[self.country]["rural_households"]
 
-        if electricity_access < africa_demographics_by_country[self.country]["electricity_access"]:
-            citizen.traits["has_access_to_electricity"] = True
+        citizen.traits["has_access_to_electricity"] = electricity_access < \
+            africa_demographics_by_country[self.country]["electricity_access"]
 
-        if water_access < africa_demographics_by_country[self.country]["piped_water_access"]:
-            citizen.traits["has_access_to_water"] = True
+        citizen.traits["has_access_to_water"] = water_access < \
+            africa_demographics_by_country[self.country]["piped_water_access"]
 
-        if sanitation_access < africa_demographics_by_country[self.country]["sewage_system_access"]:
-            citizen.traits["has_access_to_sanitation"] = True
+        citizen.traits["has_access_to_sanitation"] = sanitation_access <\
+            africa_demographics_by_country[self.country]["sewage_system_access"]
 
-        if educated < africa_demographics_by_country[self.country]["some_formal_education"]:
-            citizen.traits["is_educated"] = True
+        citizen.traits["is_educated"] = educated <\
+            africa_demographics_by_country[self.country]["some_formal_education"]
 
         return citizen
 

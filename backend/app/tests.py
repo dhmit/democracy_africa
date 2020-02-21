@@ -22,10 +22,10 @@ class MainTests(TestCase):
 
         citizen_list = [
             Citizen("Nothing Person"),
-            Citizen("One Person", True, False, False, False, False),
-            Citizen("Everything Person", True, True, True, True, True),
-            Citizen("Two Person", True, True, False, True, True),
-            Citizen("Real Person", False, True, False, True, False),
+            Citizen("One Person"),
+            Citizen("Everything Person"),
+            Citizen("Two Person"),
+            Citizen("Real Person"),
         ]
 
         fake_citizen_list = [
