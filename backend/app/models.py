@@ -90,7 +90,6 @@ class Citizen:
     def __init__(self, name):
         self.name = name
         self.province = ""
-        # Left these traits in to keep budget simulator working
         self.traits = {}
         self.will_support = False
 
