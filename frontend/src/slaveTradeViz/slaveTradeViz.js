@@ -1,7 +1,5 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
-import Popover from 'react-bootstrap/Popover';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 
 import {
     project_features_and_create_svg_paths,
@@ -45,33 +43,20 @@ class AfricaMap extends React.Component {
                     width={this.props.scale * 1.5}
                 >
                     {this.state.map_data.map((country, i) => {
-                        const info = (
-                            <Popover id="popover-basic">
-                                <Popover.Title as="h3">
-                                    Africa
-                                </Popover.Title>
-                                <Popover.Content>
-                                    <div>Hello world</div>
-                                </Popover.Content>
-                            </Popover>);
-
                         const random_num = Math.random();
 
                         return (
-                            <OverlayTrigger
+                            <MapPath
                                 key={i}
-                                overlay={info}
-                                placement="right"
-                            >
-                                <MapPath
-                                    key={i}
-                                    path={country.svg_path}
-                                    fill={colorScale(random_num)}
-                                    stroke="black"
-                                    strokeWidth="1"
-                                    useColorTransition={true}
-                                />
-                            </OverlayTrigger>
+                                path={country.svg_path}
+                                fill={colorScale(random_num)}
+                                stroke="black"
+                                strokeWidth="1"
+                                useColorTransition={true}
+                                handle_country_click={
+                                    () => this.props.handleCountryClick(country.name)
+                                }
+                            />
                         );
                     })}
 
@@ -82,6 +67,7 @@ class AfricaMap extends React.Component {
 }
 AfricaMap.propTypes = {
     scale: PropTypes.number,
+    handleCountryClick: PropTypes.func,
 };
 
 export class SlaveTradeViz extends React.Component {
@@ -89,6 +75,7 @@ export class SlaveTradeViz extends React.Component {
         super(props);
         this.state = {
             value: "0",
+            current_country: "",
         };
     }
 
@@ -98,16 +85,26 @@ export class SlaveTradeViz extends React.Component {
         });
     }
 
+    handleCountryClick = (name) => {
+        this.setState({
+            current_country: name,
+        });
+    }
+
     render() {
         return (
             <>
                 <h1>Hello World</h1>
                 <AfricaMap
                     scale={350}
+                    handleCountryClick={this.handleCountryClick}
                 />
                 <AfricaMap
                     scale={350}
                 />
+                <h5>
+                    {this.state.current_country}
+                </h5>
                 <input
                     type="range"
                     min="0"
@@ -120,3 +117,7 @@ export class SlaveTradeViz extends React.Component {
         );
     }
 }
+SlaveTradeViz.propTypes = {
+    value: PropTypes.string,
+    current_country: PropTypes.string,
+};
