@@ -127,14 +127,12 @@ export class SlaveTradeViz extends React.Component {
         super(props);
         this.state = {
             value: "0",
-            view: 'intro',
             clicked_country: "",
             hovered_country: "",
+            stage: START_STAGE,
         };
         this.map_height = 600;
         this.map_width = 550;
-
-
     }
 
     handleSliderChange = (e) => {
@@ -156,29 +154,46 @@ export class SlaveTradeViz extends React.Component {
     }
 
     render() {
-        const blurb = "There are many variations of passages of Lorem Ipsum " +
-            "available, but the majority have suffered alteration in some form," +
-            " by injected humour, or randomised words which don't look even slightly " +
-            "believable. If you are going to use a passage of Lorem Ipsum, you need " +
-            "to be sure there isn't anything embarrassing hidden in the middle of text. " +
-            "All the Lorem Ipsum generators on the Internet tend to repeat predefined " +
-            "chunks as necessary, making this the first true generator on the I";
-
-        //TODO: make skeleton
-        //TODO: move current stuff (<>) to startView.js
-        //TODO: figure out what to move to startView??
 
 
 
+        let district_info;
+        if (this.state.hovered_country) {
+            district_info = (
+                <DistrictInfo
+                    name={this.state.hovered_country}
+                    initial_value={10}
+                    current_value={12}
+                />
+            );
+        }
 
         return (
-            <div>
-                {this.state.view === 'intro' && <IntroView desc={blurb}/>}
-                {this.state.view === 'stage' && <StartView/>}
-                <button onClick={() => this.setState({ view: 'stage'})}> Get started </button>
-            </div>
 
-
+            <>
+                <AfricaMap
+                    height={this.map_height}
+                    width={this.map_width}
+                    handleCountryClick={this.handleCountryClick}
+                    handleMouseOver={this.handleMouseOver}
+                />
+                <AfricaMap
+                    height={this.map_height}
+                    width={this.map_width}
+                />
+                <h5>
+                    {this.state.current_country}
+                </h5>
+                <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value={this.state.value}
+                    onChange={this.handleSliderChange}
+                />
+                {district_info}
+            </>
         );
     }
 }
