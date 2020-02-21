@@ -1,5 +1,4 @@
-@import '_reset';
-@import '_variables';
+@import 'variables';
 
 // https://www.paulirish.com/2012/box-sizing-border-box-ftw/
 html {
@@ -12,9 +11,6 @@ html {
 html {
   font-size: 80%;
 
-  @include breakpoint2 {
-    font-size: 100%;
-  }
 }
 
 // loading
@@ -32,9 +28,6 @@ body, input, p {
 
 section {
   padding: 30px 0;
-  @include breakpoint2 {
-    padding: 90px 0;
-  }
 
   img {
     margin: 0 auto;
@@ -114,16 +107,10 @@ a {
 }
 
 blockquote {
-  border-color: $color_primary_500;
-  border-style: solid;
-  border-left-width: 3px;
+  border-left: 3px solid $color_primary_500;
   font-style: italic;
   letter-spacing: -0.02rem;
   padding-left: 10px;
-  @include breakpoint2 {
-    border-left-width: 5px;
-    padding-left: 15px;
-  }
 }
 
 strong, b {
