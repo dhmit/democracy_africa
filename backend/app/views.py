@@ -31,7 +31,7 @@ def load_africa_geojson() -> dict:
     Read the GeoJSON file of the countries in Africa from disk
     and return a dict of the parsed json
     """
-    filename = 'africa.geo.json'
+    filename = 'africa.geojson'
     path = Path(settings.BACKEND_DATA_DIR, filename)
     with open(path, encoding='utf-8') as africa_geojson_file:
         africa_geojson_string = africa_geojson_file.read()
