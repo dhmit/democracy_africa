@@ -1,7 +1,7 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
 
-class QuestionContainer extends React.Component{
+export class QuestionContainer extends React.Component{
     constructor(){
         super();
         this.state = {
@@ -11,11 +11,22 @@ class QuestionContainer extends React.Component{
 
     render(){
         return(
-            <Question question={"Question 1"} answers={[1,2,3,4]} correct_answer={1}
-                correct = {null}></Question>
+            <Question
+                question={this.props.question}
+                answers={this.props.answers}
+                correct_answer={this.props.correct_answer}
+                correct = {this.props.correct}
+            />
         );
     }
 }
+
+QuestionContainer.propTypes = {
+    question: PropTypes.string,
+    answers: PropTypes.array,
+    correct_answer: PropTypes.number,
+    correct: PropTypes.bool,
+};
 
 class Question extends React.Component{
     constructor(props) {
@@ -26,6 +37,7 @@ class Question extends React.Component{
     }
 
     render(){
+        console.log(this.props.question);
         return(
             <div className="question-box">
                 <p>{this.props.question}</p>

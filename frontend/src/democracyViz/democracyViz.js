@@ -3,6 +3,7 @@ import * as PropTypes from 'prop-types';
 import * as d3 from 'd3';
 
 import { MapPath } from "../UILibrary/components";
+import { QuestionContainer } from "../UILibrary/mapQuestions";
 
 import {
     getCookie,
@@ -15,6 +16,50 @@ import {
  * Handles all logic, displays information, and makes database query/posts
  */
 
+let questionjso = {
+    "questions": [
+        {
+            "Question": "This is question 1",
+            "Answers":
+                {
+                    "answer1": true,
+                    "answer2": false,
+                    "answer3": false,
+                    "answer4": false
+                }
+        },
+        {
+            "Question": "This is question 2",
+            "Answers":
+                {
+                    "answer1": true,
+                    "answer2": false,
+                    "answer3": false,
+                    "answer4": false
+                }
+        },
+        {
+            "Question": "This is question 3",
+            "Answers":
+                {
+                    "answer1": true,
+                    "answer2": false,
+                    "answer3": false,
+                    "answer4": false
+                }
+        },
+        {
+            "Question": "This is question 4",
+            "Answers":
+                {
+                    "answer1": true,
+                    "answer2": false,
+                    "answer3": false,
+                    "answer4": false
+                }
+        }
+    ]
+};
 
 export class DemocracyViz extends  React.Component {
     constructor(props) {
@@ -103,10 +148,69 @@ export class DemocracyViz extends  React.Component {
 
                     />
                 </div>
+                <QuestionDataBase/>
             </>
         );
     }
 }
+
+
+
+export class QuestionDataBase extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            current_question: null,
+            questions: questionjso,
+            index: null,
+            correct: null,
+        };
+    }
+
+    async componentDidMount() {
+        this.setState({
+            index: 0,
+            current_question: questionjso["questions"][0]["Question"],
+        });
+    }
+
+    handleGoToNext(){
+        this.setState({
+            index: this.state.index + 1,
+            current_question: this.state.questions["questions"][this.state.index]["Question"],
+            correct: false,
+        });
+    }
+
+    handleAnswer(){
+
+    }
+
+    render() {
+
+        return (
+            <QuestionContainer
+                handleAnswer = {this.handleAnswer}
+                handleGoToNext = {this.handleGoToNext}
+                question={this.state.current_question}
+                answers={[1,2,3,4]}
+                correct_answer={1}
+                correct = {null}
+
+            />
+        );
+    }
+
+}
+
+QuestionDataBase.propTypes = {
+    questions: PropTypes.object,
+    current_question: PropTypes.number,
+    index: PropTypes.number,
+    correct: PropTypes.bool,
+    handleAnswer: PropTypes.func,
+    handleGoToNext: PropTypes.func,
+};
 
 export class DemocracyMap extends React.Component {
     constructor(props) {
