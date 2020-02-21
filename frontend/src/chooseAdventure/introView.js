@@ -13,13 +13,19 @@ class IntroView extends React.Component {
     }
 
     render() {
-        return ( <div>{this.props.desc}</div> );
+        return (
+            <div>
+                <div>{this.props.desc}</div>
+            </div>
+
+        );
 
     }
 }
 
 IntroView.propTypes = {
     desc: PropTypes.string,
+
 };
 
 export default IntroView;
