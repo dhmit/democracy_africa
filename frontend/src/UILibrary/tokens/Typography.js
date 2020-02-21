@@ -11,9 +11,8 @@ const Typography = () => (
         description=""
     >
         <p>
-            We adopt
-            <a href="https://material.io/design/typography/the-type-system.html#applying-the-type-scale" target="_blank" rel="noopener noreferrer">
-                Material Design&apos;s typography system
+            We adopt <a href="https://github.com/edx/edx-bootstrap" target="_blank" rel="noopener noreferrer">
+                edX&apos;s typography system
             </a>
             .
         </p>
@@ -40,19 +39,14 @@ const Typography = () => (
 
         <p>
           We plan to dynamically serve custom fonts for writing scripts that are, these
-          days, no longer common. Take
-            <a href="https://en.wikipedia.org/wiki/Egyptian_hieroglyphs" target="_blank" rel="noopener noreferrer">
+          days, no longer common. Take <a href="https://en.wikipedia.org/wiki/Egyptian_hieroglyphs" target="_blank" rel="noopener noreferrer">
                 Egyptian hieroglyphs
-            </a>
-          for example. If you view
-            <a href="https://en.wikipedia.org/wiki/Egyptian_Hieroglyphs_(Unicode_block)" target="_blank"  rel="noopener noreferrer">
+            </a> for example. If you view <a href="https://en.wikipedia.org/wiki/Egyptian_Hieroglyphs_(Unicode_block)" target="_blank"  rel="noopener noreferrer">
                 a page that has Egyptian hieroglyphs embedded
             </a>,
           you&apos;ll see that these characters aren&apos;t shown on your computer. Unless
           you already have such a font installed, of course. But, by default most people
-          don&apos;t. We plan to use
-            <a href="https://www.google.com/get/noto/" target="_blank" rel="noopener noreferrer">Noto</a>
-          for such use cases.
+          don&apos;t. We plan to use <a href="https://www.google.com/get/noto/" target="_blank" rel="noopener noreferrer">Noto</a> for such use cases.
         </p>
 
         <h3>Our app font</h3>
@@ -66,9 +60,6 @@ const Typography = () => (
           For any remaining minority scripts we can conditionally load specific Noto font
           sets on the fly.
         </p>
-        <br />
-        <hr />
-        <br />
         <br />
         <Font name="Heading 1" elem="h1" />
         <Font name="Heading 2" elem="h2" />
