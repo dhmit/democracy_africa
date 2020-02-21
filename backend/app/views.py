@@ -66,6 +66,20 @@ def population(request):
     return Response(serializer.data)
 
 
+@api_view(['POST'])
+def campaign_population(request):
+    """
+    Generates a population of Citizen objects that then get passed into the frontend
+    for campaign game
+    """
+    country_name = request.data.get("country_name")
+    campaign_json = load_json('campaign_info.json')[country_name]
+    population_obj = Population(country=country_name)
+    population_obj.create_citizens(100, campaign_json)
+    serializer = PopulationSerializer(instance=population_obj)
+    return Response(serializer.data)
+
+
 # moved it out because tests says that there were too many local variables
 country_name_index = 0
 country_text_id_index = 1
@@ -137,11 +151,3 @@ def normalize(data, max_values):
         if float(max_values[score_type]) != 0:
             data[score_type] = float(data[score_type]) / float(max_values[score_type])
     return data
-
-@api_view(['GET'])
-def get_campaign_info(request):
-    """
-    Gets the campaign info from reading the json in the backend
-    """
-    campaign_json = load_json('campaign_info.json')
-    return Response(json.dumps(campaign_json))

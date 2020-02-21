@@ -9,11 +9,7 @@ from rest_framework import serializers
 class CitizenSerializer(serializers.Serializer):
     """Serializes citizens class and its related attributes"""
     name = serializers.ReadOnlyField()
-    lives_in_rural_area = serializers.ReadOnlyField()
-    has_access_to_electricity = serializers.ReadOnlyField()
-    has_access_to_water = serializers.ReadOnlyField()
-    has_access_to_sanitation = serializers.ReadOnlyField()
-    is_educated = serializers.ReadOnlyField()
+    province = serializers.ReadOnlyField()
     traits = serializers.ReadOnlyField()
     will_support = serializers.ReadOnlyField()
 

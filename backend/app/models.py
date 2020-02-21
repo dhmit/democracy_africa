@@ -88,20 +88,16 @@ class Citizen:
     """
 
     # pylint: disable=too-many-arguments
-    def __init__(self, name,
-                 lives_in_rural_area=False,
-                 has_access_to_electricity=False,
-                 has_access_to_sanitation=False,
-                 has_access_to_water=False,
-                 is_educated=False,
-                 ):
+    def __init__(self, name):
         self.name = name
+        self.province = ""
+        # Left these traits in to keep budget simulator working
         self.traits = {
-            'lives_in_rural_area': lives_in_rural_area,
-            'has_access_to_electricity': has_access_to_electricity,
-            'has_access_to_sanitation': has_access_to_sanitation,
-            'has_access_to_water': has_access_to_water,
-            'is_educated': is_educated,
+            'lives_in_rural_area': False,
+            'has_access_to_electricity': False,
+            'has_access_to_sanitation': False,
+            'has_access_to_water': False,
+            'is_educated': False,
         }
         self.will_support = False
 
@@ -110,36 +106,7 @@ class Citizen:
         Just to print out information on the Citizen for debugging, no actual use
         :return: String representation of the Citizen
         """
-        return_string = self.name + "\n"
-
-        if self.traits["lives_in_rural_area"]:
-            return_string += "Lives in a(n) rural area\n"
-        else:
-            return_string += "Lives in a(n) urban area\n"
-
-        if self.traits["has_access_to_water"]:
-            return_string += "Has access to clean/fresh water"
-        else:
-            return_string += "Does not have access to clean/fresh water"
-        return_string += "\n"
-
-        if self.traits["has_access_to_electricity"]:
-            return_string += "Has access to electricity"
-        else:
-            return_string += "Does not have access to electricity"
-        return_string += "\n"
-
-        if self.traits["has_access_to_sanitation"]:
-            return_string += "Has access to sanitation"
-        else:
-            return_string += "Does not have access to sanitation"
-        return_string += "\n"
-
-        if self.traits["is_educated"]:
-            return_string += "Has had some education"
-        else:
-            return_string += "Has not had any education"
-        return_string += "\n"
+        return_string = self.name + "\n" + str(self.traits)
 
         return return_string
 
@@ -159,17 +126,44 @@ class Population:
         self.country = country
         self.population_size = 0
 
-    def create_citizens(self, number_to_create):
+    def create_citizens(self, number_to_create, demographic_data=None):
         """
         citizens are randomly generated (from the distribution) and added to citizen list
         :param number_to_create: Number of citizens to make
+        :param demographic_data: demographic data to base citizen creation on
         :return: Nothing, just saves it to a class attribute
         """
-        for i in range(number_to_create):
-            current_citizen = Citizen(str(self.population_size + 1))
-            self.assign_demographic_properties(current_citizen)
-            self.citizen_list.append(current_citizen)
-            self.population_size += 1
+        if demographic_data:
+            provinces = demographic_data["provinces"]
+            country_population = sum([province['population'] for province in provinces])
+            for province in provinces:
+                province['population'] = round(number_to_create * (province['population'] /
+                                                                   country_population))
+            for k, province in enumerate(provinces):
+                preferences = province['topic_preferences']
+                people_to_create = province['population'] if k < len(provinces) - 1 \
+                    else number_to_create - len(self.citizen_list)
+                for i in range(people_to_create):
+                    current_citizen = Citizen(str(self.population_size + 1))
+                    current_citizen.province = province['name']
+
+                    for topic in preferences:
+                        preference_choice = random.randint(0, 100)
+                        accumulate = 0
+
+                        for j, percent in enumerate(topic['preferences']):
+                            accumulate += percent
+                            if preference_choice <= accumulate:
+                                current_citizen.traits[topic['name']] = j + 1
+                                break
+                    self.citizen_list.append(current_citizen)
+                    self.population_size += 1
+        else:  # for the old budget simulator
+            for i in range(number_to_create):
+                current_citizen = Citizen(str(self.population_size + 1))
+                self.assign_demographic_properties(current_citizen)
+                self.citizen_list.append(current_citizen)
+                self.population_size += 1
 
     def assign_demographic_properties(self, citizen):
         """

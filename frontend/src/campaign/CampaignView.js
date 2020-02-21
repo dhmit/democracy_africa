@@ -5,7 +5,7 @@ export class CampaignView extends  React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            budgetData: null,
+            populationData: null,
         };
     }
 
@@ -14,10 +14,19 @@ export class CampaignView extends  React.Component {
      */
     async componentDidMount() {
         try {
-            const res = await fetch('/api/campaign_info/');
-            const budgetData = await res.json();
+            const data = {
+                country_name: "South Africa",
+            };
+            const res = await fetch('/api/campaign_info/', {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-type': 'application/json',
+                }
+            });
+            const populationData = await res.json();
             this.setState({
-                budgetData: JSON.parse(budgetData),
+                populationData: populationData,
             });
         } catch (e) {
             console.log(e);
@@ -26,7 +35,7 @@ export class CampaignView extends  React.Component {
 
 
     render() {
-        if (!this.state.budgetData) {
+        if (!this.state.populationData) {
             return (<div>Loading!</div>);
         }
         return (
