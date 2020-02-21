@@ -25,7 +25,7 @@ const Component = ({ title, children }) => (
 
 Component.propTypes = {
     title: PropTypes.string,
-    children: PropTypes.array,
+    children: PropTypes.object,
 };
 
 const Forms = () => (
@@ -38,7 +38,7 @@ const Forms = () => (
         </p>
 
         <Component title="Slider">
-            <div> 
+            <div>
                 <input type="range" />
             </div>
         </Component>

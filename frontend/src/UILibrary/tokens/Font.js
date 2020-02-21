@@ -25,7 +25,7 @@ class Font extends React.Component {
     }
 
     render () {
-        const { name, elem } = this.props;
+        const { name, elem, serif } = this.props;
         const { accordionExpanded } = this.state;
 
         return (
@@ -33,6 +33,7 @@ class Font extends React.Component {
                 style={{
                     width: '100%',
                 }}
+                class={serif ? '-serif' : ''}
             >
                 <div
                     className="accordionHead"

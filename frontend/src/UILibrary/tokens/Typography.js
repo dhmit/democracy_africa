@@ -27,12 +27,14 @@ const Typography = () => (
             so, we keep things simple and utilise system fonts on the web, and Noto on apps.
             Performance being the main factor in this decision.
         </p>
+        <p>
+          Reference these <a href="https://github.com/edx/edx-bootstrap/blob/master/scss/edx/_variables.scss#L301">font variables</a>.
+        </p>
 
         <h3>Our web font stack</h3>
 
         <blockquote>
-            font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, Helvetica,
-            &quot;Liberation Sans&quot;, &quot;Noto Sans&quot;, sans-serif;
+            &quot;Roboto&quot;, &quot;Helvetica Neue&quot;, Arial, sans-serif !default;
         </blockquote>
 
         <h4>A word on minority scripts on the web</h4>
@@ -61,6 +63,7 @@ const Typography = () => (
           sets on the fly.
         </p>
         <br />
+        <h3>Sans Serif</h3>
         <Font name="Heading 1" elem="h1" />
         <Font name="Heading 2" elem="h2" />
         <Font name="Heading 3" elem="h3" />
@@ -74,6 +77,20 @@ const Typography = () => (
         <Font name="Blockquote" elem="blockquote" />
         <Font name="Cite" elem="cite" />
         <Font name="Code" elem="code" />
+        <h3>Serif</h3>
+        <Font name="Heading 1" elem="h1" serif />
+        <Font name="Heading 2" elem="h2" serif />
+        <Font name="Heading 3" elem="h3" serif />
+        <Font name="Heading 4" elem="h4" serif />
+        <Font name="Heading 5" elem="h5" serif />
+        <Font name="Heading 6" elem="h6" serif />
+        <Font name="Label" elem="label" serif />
+        <Font name="Link" elem="a" serif />
+        <Font name="Caption" elem="button" serif />
+        <Font name="Paragraph" elem="p" serif />
+        <Font name="Blockquote" elem="blockquote" serif />
+        <Font name="Cite" elem="cite" serif />
+        <Font name="Code" elem="code" serif />
     </Token>
 );
 
