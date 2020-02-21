@@ -10,6 +10,8 @@ export class CampaignView extends  React.Component {
             map_data: null,
             budgetData: null,
         };
+        this.map_height = 800;
+        this.map_width = 800;
     }
 
     /**
@@ -24,7 +26,8 @@ export class CampaignView extends  React.Component {
                 }
             });
             const geo_json = await map.json();
-            const map_data = project_features_and_create_svg_paths(geo_json);
+            const map_data = project_features_and_create_svg_paths(geo_json, this.map_width,
+                this.map_height);
             const input_tracker = this.initialize_input_tracker(map_data);
             await this.setState({
                 map_data: map_data,
