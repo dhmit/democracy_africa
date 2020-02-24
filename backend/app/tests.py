@@ -173,8 +173,3 @@ class MainTests(TestCase):
         self.assertIn("electricity", first_citizen_traits)
         self.assertIn("sanitation", first_citizen_traits)
         self.assertIn("gas", first_citizen_traits)
-
-
-
-
-
