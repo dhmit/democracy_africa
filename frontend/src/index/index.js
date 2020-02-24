@@ -38,6 +38,13 @@ export class IndexView extends React.Component {
                         Learn how indices measuring electoral democracy in Africa change over time.
                     '
                 />
+                <IndexCard
+                    url='/ethnolinguistic_campaign/'
+                    title='Ethnolinguistic Campaign'
+                    description='
+                        TBD
+                    '
+                />
 
                 <IndexCard
                     url='/all_view/'
