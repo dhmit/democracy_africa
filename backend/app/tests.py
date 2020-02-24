@@ -5,7 +5,7 @@ Tests for the main app.
 from django.test import TestCase
 from .models import Population
 from .models import Citizen
-from .views import load_democracy_data, normalize
+from .views import load_democracy_data, normalize, load_json
 
 
 class MainTests(TestCase):
@@ -72,17 +72,17 @@ class MainTests(TestCase):
         :return: Nothing
         """
         empty_population = self.empty_population
-        empty_population.create_citizens(0)
+        empty_population.create_citizens_budget_sim(0)
 
         other_population = self.population_to_fill
-        other_population.create_citizens(1)
+        other_population.create_citizens_budget_sim(1)
 
         cits_population = self.population_with_citizens
-        cits_population.create_citizens(5)
+        cits_population.create_citizens_budget_sim(5)
 
         fake_cits_population = self.population_with_fake_citizens
         # Creates a list of 5 dictionaries and then 5 Citizen objects
-        fake_cits_population.create_citizens(5)
+        fake_cits_population.create_citizens_budget_sim(5)
 
         # Test that the correct number of citizens were created
         self.assertEqual(len(empty_population.citizen_list), 0)
@@ -147,3 +147,34 @@ class MainTests(TestCase):
         actual_normalized_data = normalize(test_data, test_max_values)
         for k in test_data:
             self.assertAlmostEqual(actual_normalized_data[k], expected_normalized_data[k])
+
+    def test_campaign_game_data(self):
+        """
+        Tests loading the campaign game data and
+        :return:
+        """
+        south_africa_data = load_json("campaign_info.json")["South Africa"]
+
+        # Make sure that the country demographic data has the right keys
+        # and that there is at least one province
+        self.assertIn("iso", south_africa_data)
+        self.assertIn("provinces", south_africa_data)
+        self.assertNotEqual(len(south_africa_data["provinces"]), 0)
+
+        # Make sure that create_citizens_campaign_game creates the correct amount of citizens
+        campaign_population = Population(country="South Africa")
+        campaign_population.create_citizens_campaign_game(999, south_africa_data)
+        citizens = campaign_population.citizen_list
+        self.assertEqual(999, len(citizens))
+
+        # Makes sure that the citizens has the right traits
+        first_citizen_traits = citizens[0].traits
+        self.assertIn("water", first_citizen_traits)
+        self.assertIn("electricity", first_citizen_traits)
+        self.assertIn("sanitation", first_citizen_traits)
+        self.assertIn("gas", first_citizen_traits)
+
+
+
+
+

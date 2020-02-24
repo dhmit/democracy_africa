@@ -118,44 +118,49 @@ class Population:
         self.country = country
         self.population_size = 0
 
-    # pylint: disable=too-many-nested-blocks
-    def create_citizens(self, number_to_create, demographic_data=None):
+    def create_citizens_campaign_game(self, number_to_create, demographic_data=None):
         """
-        citizens are randomly generated (from the distribution) and added to citizen list
+        Citizens are randomly generated (from the distribution) and added to citizen list
+        based on demographic data of provinces
         :param number_to_create: Number of citizens to make
         :param demographic_data: demographic data to base citizen creation on
         :return: Nothing, just saves it to a class attribute
         """
-        if demographic_data:
-            provinces = demographic_data["provinces"]
-            country_population = sum([province['population'] for province in provinces])
-            for province in provinces:
-                province['population'] = round(number_to_create * (province['population'] /
-                                                                   country_population))
-            for k, province in enumerate(provinces):
-                people_to_create = province['population'] if k < len(provinces) - 1 \
-                    else number_to_create - len(self.citizen_list)
-                for i in range(people_to_create):
-                    current_citizen = Citizen(str(self.population_size + 1))
-                    current_citizen.province = province['name']
-
-                    for topic in province['topic_preferences']:
-                        preference_choice = random.randint(0, 100)
-                        accumulate = 0
-
-                        for j, percent in enumerate(topic['preferences']):
-                            accumulate += percent
-                            if preference_choice <= accumulate:
-                                current_citizen.traits[topic['name']] = j + 1
-                                break
-                    self.citizen_list.append(current_citizen)
-                    self.population_size += 1
-        else:  # for the old budget simulator
-            for i in range(number_to_create):
+        provinces = demographic_data["provinces"]
+        country_population = sum([province['population'] for province in provinces])
+        for province in provinces:
+            province['population'] = round(number_to_create * (province['population'] /
+                                                               country_population))
+        for k, province in enumerate(provinces):
+            people_to_create = province['population'] if k < len(provinces) - 1 \
+                else number_to_create - len(self.citizen_list)
+            for i in range(people_to_create):
                 current_citizen = Citizen(str(self.population_size + 1))
-                self.assign_demographic_properties(current_citizen)
+                current_citizen.province = province['name']
+
+                for topic in province['topic_preferences']:
+                    preference_choice = random.randint(0, 100)
+                    accumulate = 0
+
+                    for j, percent in enumerate(topic['preferences']):
+                        accumulate += percent
+                        if preference_choice <= accumulate:
+                            current_citizen.traits[topic['name']] = j + 1
+                            break
                 self.citizen_list.append(current_citizen)
                 self.population_size += 1
+
+    def create_citizens_budget_sim(self, number_to_create):
+        """
+        citizens are randomly generated (from the distribution) and added to citizen list
+        :param number_to_create: Number of citizens to make
+        :return: Nothing, just saves it to a class attribute
+        """
+        for i in range(number_to_create):
+            current_citizen = Citizen(str(self.population_size + 1))
+            self.assign_demographic_properties(current_citizen)
+            self.citizen_list.append(current_citizen)
+            self.population_size += 1
 
     def assign_demographic_properties(self, citizen):
         """
