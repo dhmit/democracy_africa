@@ -87,22 +87,10 @@ class Citizen:
     for now).
     """
 
-    # pylint: disable=too-many-arguments
-    def __init__(self, name,
-                 lives_in_rural_area=False,
-                 has_access_to_electricity=False,
-                 has_access_to_sanitation=False,
-                 has_access_to_water=False,
-                 is_educated=False,
-                 ):
+    def __init__(self, name):
         self.name = name
-        self.traits = {
-            'lives_in_rural_area': lives_in_rural_area,
-            'has_access_to_electricity': has_access_to_electricity,
-            'has_access_to_sanitation': has_access_to_sanitation,
-            'has_access_to_water': has_access_to_water,
-            'is_educated': is_educated,
-        }
+        self.province = ""
+        self.traits = {}
         self.will_support = False
 
     def __str__(self):
@@ -110,36 +98,7 @@ class Citizen:
         Just to print out information on the Citizen for debugging, no actual use
         :return: String representation of the Citizen
         """
-        return_string = self.name + "\n"
-
-        if self.traits["lives_in_rural_area"]:
-            return_string += "Lives in a(n) rural area\n"
-        else:
-            return_string += "Lives in a(n) urban area\n"
-
-        if self.traits["has_access_to_water"]:
-            return_string += "Has access to clean/fresh water"
-        else:
-            return_string += "Does not have access to clean/fresh water"
-        return_string += "\n"
-
-        if self.traits["has_access_to_electricity"]:
-            return_string += "Has access to electricity"
-        else:
-            return_string += "Does not have access to electricity"
-        return_string += "\n"
-
-        if self.traits["has_access_to_sanitation"]:
-            return_string += "Has access to sanitation"
-        else:
-            return_string += "Does not have access to sanitation"
-        return_string += "\n"
-
-        if self.traits["is_educated"]:
-            return_string += "Has had some education"
-        else:
-            return_string += "Has not had any education"
-        return_string += "\n"
+        return_string = self.name + "\n" + str(self.traits)
 
         return return_string
 
@@ -159,7 +118,39 @@ class Population:
         self.country = country
         self.population_size = 0
 
-    def create_citizens(self, number_to_create):
+    def create_citizens_campaign_game(self, number_to_create, demographic_data=None):
+        """
+        Citizens are randomly generated (from the distribution) and added to citizen list
+        based on demographic data of provinces
+        :param number_to_create: Number of citizens to make
+        :param demographic_data: demographic data to base citizen creation on
+        :return: Nothing, just saves it to a class attribute
+        """
+        provinces = demographic_data["provinces"]
+        country_population = sum([province['population'] for province in provinces])
+        for province in provinces:
+            province['population'] = round(number_to_create * (province['population'] /
+                                                               country_population))
+        for k, province in enumerate(provinces):
+            people_to_create = province['population'] if k < len(provinces) - 1 \
+                else number_to_create - len(self.citizen_list)
+            for i in range(people_to_create):
+                current_citizen = Citizen(str(self.population_size + 1))
+                current_citizen.province = province['name']
+
+                for topic in province['topic_preferences']:
+                    preference_choice = random.randint(0, 100)
+                    accumulate = 0
+
+                    for j, percent in enumerate(topic['preferences']):
+                        accumulate += percent
+                        if preference_choice <= accumulate:
+                            current_citizen.traits[topic['name']] = j + 1
+                            break
+                self.citizen_list.append(current_citizen)
+                self.population_size += 1
+
+    def create_citizens_budget_sim(self, number_to_create):
         """
         citizens are randomly generated (from the distribution) and added to citizen list
         :param number_to_create: Number of citizens to make
@@ -184,20 +175,20 @@ class Population:
         sanitation_access = random.randint(0, 100)
         educated = random.randint(0, 100)
 
-        if rural_area < africa_demographics_by_country[self.country]["rural_households"]:
-            citizen.traits["lives_in_rural_area"] = True
+        citizen.traits["lives_in_rural_area"] = rural_area < \
+            africa_demographics_by_country[self.country]["rural_households"]
 
-        if electricity_access < africa_demographics_by_country[self.country]["electricity_access"]:
-            citizen.traits["has_access_to_electricity"] = True
+        citizen.traits["has_access_to_electricity"] = electricity_access < \
+            africa_demographics_by_country[self.country]["electricity_access"]
 
-        if water_access < africa_demographics_by_country[self.country]["piped_water_access"]:
-            citizen.traits["has_access_to_water"] = True
+        citizen.traits["has_access_to_water"] = water_access < \
+            africa_demographics_by_country[self.country]["piped_water_access"]
 
-        if sanitation_access < africa_demographics_by_country[self.country]["sewage_system_access"]:
-            citizen.traits["has_access_to_sanitation"] = True
+        citizen.traits["has_access_to_sanitation"] = sanitation_access <\
+            africa_demographics_by_country[self.country]["sewage_system_access"]
 
-        if educated < africa_demographics_by_country[self.country]["some_formal_education"]:
-            citizen.traits["is_educated"] = True
+        citizen.traits["is_educated"] = educated <\
+            africa_demographics_by_country[self.country]["some_formal_education"]
 
         return citizen
 

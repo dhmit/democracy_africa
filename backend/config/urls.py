@@ -23,6 +23,7 @@ from app.views import (
     population,
     africa_demographics_by_country,
     democracy_score_json,
+    campaign_population,
 )
 
 
@@ -47,6 +48,7 @@ urlpatterns = [
     path('api/population/', population),
     path('api/country_demographics/', africa_demographics_by_country),
     path('api/democracy_scores/', democracy_score_json),
+    path('api/campaign_info/', campaign_population),
 
     # React views
     path('', render_react_view, {'component_name': 'IndexView'}),
@@ -54,4 +56,5 @@ urlpatterns = [
     edx_path('map_quiz/', 'MapQuiz'),
     edx_path('budget_voting_simulation/', 'BudgetVotingSimViz'),
     edx_path('heat_map/', 'DemocracyViz'),
+    edx_path('campaign_game/', 'CampaignView')
 ]
