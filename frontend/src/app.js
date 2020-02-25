@@ -13,6 +13,7 @@ import { MapQuiz } from './mapQuiz/mapQuiz.js';
 import { EthnolinguisticCampaign } from './ethnolinguisticCampaign/ethnolinguisticCampaign.js';
 import { BudgetVotingSimViz } from './budgetSimulation/budgetSimulation.js';
 import { DemocracyViz } from './democracyViz/democracyViz.js';
+import { CampaignView } from "./campaign/CampaignView";
 import { EdXView } from "./UILibrary/components";
 
 // Import all styles
@@ -29,5 +30,6 @@ window.app_modules = {
     BudgetVotingSimViz,
     DemocracyViz,
     EthnolinguisticCampaign,
+    CampaignView,
     EdXView,
 };

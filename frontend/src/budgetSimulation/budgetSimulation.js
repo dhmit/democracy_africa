@@ -394,6 +394,7 @@ class AggregateData extends React.Component {
                                     this.state.selected[category]) {
                                     table_row_classnames += " selected_row";
                                 }
+                                console.log(aggregate_values);
                                 return (
                                     <tr key={key} className={table_row_classnames}
                                         onClick={() => this.select_table_row(category)}>

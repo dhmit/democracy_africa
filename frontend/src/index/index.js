@@ -47,6 +47,14 @@ export class IndexView extends React.Component {
                 />
 
                 <IndexCard
+                    url='/campaign_game/'
+                    title='Campaign Game'
+                    description='
+                        Try to make a speech to get people to vote for you.
+                    '
+                />
+
+                <IndexCard
                     url='/all_view/'
                     title='All View'
                     description='
