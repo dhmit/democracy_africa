@@ -42,11 +42,9 @@ class Speech extends React.Component {
 
     /**
      * Handles when the slider changes by changing the state of what the maximum values should
-     * be for each category and updates the number of supporters and the budget proposal as a
-     * whole
+     * be for each category and updates the number of supporters
      * @param e The event that is triggered, use e.target.value to get the value of the slider
-     * @param resource Tells which resource the slider belongs to so that it updates the budget
-     * correctly
+     * @param topic Tells which topic the slider belongs to so that it updates the speech
      */
     handleSliderOnChange = (e, topic) => {
         const newVal = parseInt(e.target.value);
@@ -63,8 +61,8 @@ class Speech extends React.Component {
     };
 
     /**
-     * Determines whether a citizen will support the proposed budget.
-     * @returns {number} Number of people that will support a given budget
+     * Determines whether a citizen will support you based on your speech.
+     * @returns {number} Number of people that will support you
      */
     countSupporters = () => {
         let count = 0;
