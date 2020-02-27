@@ -24,6 +24,7 @@ from app.views import (
     africa_demographics_by_country,
     democracy_score_json,
     trust_data,
+    state_map_geojson,
 )
 
 
@@ -46,6 +47,7 @@ urlpatterns = [
     # API endpoints
     path('api/africa_map_geojson/', africa_map_geojson),
     path('api/population/', population),
+    path('api/state_map_geojson/<str:map_name>/', state_map_geojson),
     path('api/country_demographics/', africa_demographics_by_country),
     path('api/democracy_scores/', democracy_score_json),
     path('api/trust_data/', trust_data),

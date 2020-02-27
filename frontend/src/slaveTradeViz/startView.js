@@ -10,7 +10,7 @@ import {
 import { MapPath } from "../UILibrary/components";
 import * as d3 from "d3";
 
-class AfricaMap extends React.Component {
+export class AfricaMap extends React.Component {
     constructor(props) {
         super(props);
         this.state = {

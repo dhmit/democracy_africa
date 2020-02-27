@@ -1,7 +1,7 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
-import IntroView from './introView.js';
-import StartView from './startView.js';
+// import IntroView from './introView.js';
+// import StartView from './startView.js';
 
 import {
     project_features_and_create_svg_paths,
@@ -25,7 +25,13 @@ class AfricaMap extends React.Component {
 
     async componentDidMount() {
         try {
-            const res = await fetch('/api/africa_map_geojson/');
+            const res = await fetch('/api/state_map_geojson/ZAF/', {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                }
+            });
+            // const res = await fetch('/api/africa_map_geojson/');
             const geo_json = await res.json();
             const map_data = project_features_and_create_svg_paths(
                 geo_json,
@@ -145,9 +151,10 @@ export class SlaveTradeViz extends React.Component {
 
     }
 
+
     handleSliderChange = (e) => {
         this.setState({
-            slider_value: e.target.value,
+            value: e.target.value,
         });
     }
 
@@ -164,94 +171,94 @@ export class SlaveTradeViz extends React.Component {
     }
 
     render() {
-        // let district_info;
-        // if (this.state.hovered_country) {
-        //     // hardcoded values until we get data from the backend
-        //     district_info = (
-        //         <DistrictInfo
-        //             name={this.state.hovered_country}
-        //             initial_value={10}
-        //             current_value={12}
-        //         />
-        //     );
-        // }
-        //
-        // return (
-        //     <>
-        //         <div>
-        //             <h1>{this.state.resource_counter} left</h1>
-        //         </div>
-        //         <div className="slave-trade-viz">
-        //             <div
-        //                 className="map-container"
-        //             >
-        //                 <h3>Slave Exports</h3>
-        //                 <AfricaMap
-        //                     height={this.map_height}
-        //                     width={this.map_width}
-        //                     handleCountryClick={this.handleCountryClick}
-        //                     handleMouseOver={this.handleMouseOver}
-        //                 />
-        //                 {
-        //                     this.state.show_aggregate_data
-        //                         ? <AggregateData/>
-        //                         : ""
-        //                 }
-        //
-        //             </div>
-        //             <div className="map-container">
-        //                 <h3>Interpersonal Trust</h3>
-        //                 <AfricaMap
-        //                     height={this.map_height}
-        //                     width={this.map_width}
-        //                 />
-        //             </div>
-        //         </div>
-        //         <h5>
-        //             {this.state.clicked_country}
-        //         </h5>
-        //         <input
-        //             type="range"
-        //             min="0"
-        //             max="1"
-        //             step="0.01"
-        //             value={this.state.value}
-        //             onChange={this.handleSliderChange}
-        //         />
-        //         <button
-        //             type="submit"
-        //             onClick={
-        //                 () => this.setState({show_aggregate_data: !this.state.show_aggregate_data})
-        //             }
-        //         >
-        //             Submit
-        //         </button>
-        //         {district_info}
-        //
-        //     </>
-
-        const blurb = "There are many variations of passages of Lorem Ipsum " +
-            "available, but the majority have suffered alteration in some form," +
-            " by injected humour, or randomised words which don't look even slightly " +
-            "believable. If you are going to use a passage of Lorem Ipsum, you need " +
-            "to be sure there isn't anything embarrassing hidden in the middle of text. " +
-            "All the Lorem Ipsum generators on the Internet tend to repeat predefined " +
-            "chunks as necessary, making this the first true generator on the I";
-
-        //TODO: make skeleton
-        //TODO: move current stuff (<>) to startView.js
-        //TODO: figure out what to move to startView??
-
-
-
+        let district_info;
+        if (this.state.hovered_country) {
+            // hardcoded values until we get data from the backend
+            district_info = (
+                <DistrictInfo
+                    name={this.state.hovered_country}
+                    initial_value={10}
+                    current_value={12}
+                />
+            );
+        }
 
         return (
-            <div>
-                {this.state.view === 'intro' && <IntroView desc={blurb}/>}
-                {this.state.view === 'stage' && <StartView/>}
-                <button onClick={() => this.setState({ view: 'stage'})}> Get started </button>
-            </div>
-        );
+            <>
+                <div>
+                    <h1>{this.state.resource_counter} left</h1>
+                </div>
+                <div className="slave-trade-viz">
+                    <div
+                        className="map-container"
+                    >
+                        <h3>Slave Exports</h3>
+                        <AfricaMap
+                            height={this.map_height}
+                            width={this.map_width}
+                            handleCountryClick={this.handleCountryClick}
+                            handleMouseOver={this.handleMouseOver}
+                        />
+                        {
+                            this.state.show_aggregate_data
+                                ? <AggregateData/>
+                                : ""
+                        }
+
+                    </div>
+                    <div className="map-container">
+                        <h3>Interpersonal Trust</h3>
+                        <AfricaMap
+                            height={this.map_height}
+                            width={this.map_width}
+                        />
+                    </div>
+                </div>
+                <h5>
+                    {this.state.clicked_country}
+                </h5>
+                <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value={this.state.value}
+                    onChange={this.handleSliderChange}
+                />
+                <button
+                    type="submit"
+                    onClick={
+                        () => this.setState({show_aggregate_data: !this.state.show_aggregate_data})
+                    }
+                >
+                    Submit
+                </button>
+                {district_info}
+
+            </>);
+        //
+        // const blurb = "There are many variations of passages of Lorem Ipsum " +
+        //     "available, but the majority have suffered alteration in some form," +
+        //     " by injected humour, or randomised words which don't look even slightly " +
+        //     "believable. If you are going to use a passage of Lorem Ipsum, you need " +
+        //     "to be sure there isn't anything embarrassing hidden in the middle of text. " +
+        //     "All the Lorem Ipsum generators on the Internet tend to repeat predefined " +
+        //     "chunks as necessary, making this the first true generator on the I";
+        //
+        // //TODO: make skeleton
+        // //TODO: move current stuff (<>) to startView.js
+        // //TODO: figure out what to move to startView??
+        //
+        //
+        //
+        //
+        // return (
+        //     <div>
+        //         {this.state.view === 'intro' && <IntroView desc={blurb}/>}
+        //         {this.state.view === 'stage' && <StartView/>}
+        //         <button onClick={() => this.setState({ view: 'stage'})}> Get started </button>
+        //     </div>
+        // );
     }
 }
 SlaveTradeViz.propTypes = {

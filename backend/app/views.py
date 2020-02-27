@@ -25,6 +25,14 @@ from .models import africa_demographics_by_country as demographics_dict
 
 from .serializers import PopulationSerializer
 
+def load_json(filename) -> dict:
+    """
+    Reads the JSON file and returns it as a dictionary
+    """
+    path = Path(settings.BACKEND_DATA_DIR, filename)
+    with open(path, encoding='utf-8') as json_file:
+        file_string = json_file.read()
+    return json.loads(file_string)
 
 def load_africa_geojson() -> dict:
     """
@@ -127,6 +135,13 @@ def democracy_score_json(request):
     democracy_data = load_democracy_data()[0]
     return Response(json.dumps(democracy_data))
 
+@api_view(['GET'])
+def state_map_geojson(request, map_name):
+    """
+    Load state_level_map GeoJSON for frontend
+    """
+    state_geojson = load_json('state_level_maps/' + map_name + '.geojson')
+    return Response(state_geojson)
 
 def load_trust_data():
     """
