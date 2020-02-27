@@ -71,7 +71,21 @@ def population(request):
     """
     country_name = request.data.get("country_name")
     population_obj = Population(country=country_name)
-    population_obj.create_citizens(1000)
+    population_obj.create_citizens_budget_sim(1000)
+    serializer = PopulationSerializer(instance=population_obj)
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+def campaign_population(request):
+    """
+    Generates a population of Citizen objects that then get passed into the frontend
+    for campaign game
+    """
+    country_name = request.data.get("country_name")
+    campaign_json = load_json('campaign_info.json')[country_name]
+    population_obj = Population(country=country_name)
+    population_obj.create_citizens_campaign_game(100, campaign_json)
     serializer = PopulationSerializer(instance=population_obj)
     return Response(serializer.data)
 
@@ -147,11 +161,3 @@ def normalize(data, max_values):
         if float(max_values[score_type]) != 0:
             data[score_type] = float(data[score_type]) / float(max_values[score_type])
     return data
-
-@api_view(['GET'])
-def get_campaign_info(request):
-    """
-    Gets the campaign info from reading the json in the backend
-    """
-    campaign_json = load_json('campaign_info.json')
-    return Response(json.dumps(campaign_json))

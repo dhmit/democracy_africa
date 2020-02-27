@@ -9,7 +9,265 @@
                     {
                         "name": "water",
                         "preferences": [
-                            0.25, 0.2, 0.2, 0.25, 0.1
+                            25, 20, 20, 25, 10
+                        ]
+                    },
+                    {
+                        "name": "electricity",
+                        "preferences": [
+                            10, 10, 10, 10, 60
+                        ]
+                    },
+                    {
+                        "name": "sanitation",
+                        "preferences": [
+                            20, 20, 20, 20, 20
+                        ]
+                    },
+                    {
+                        "name": "gas",
+                        "preferences": [
+                            0, 20, 20, 25, 35
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Western Cape",
+                "population": 500,
+                "topic_preferences": [
+                    {
+                        "name": "water",
+                        "preferences": [
+                            25, 20, 20, 25, 10
+                        ]
+                    },
+                    {
+                        "name": "electricity",
+                        "preferences": [
+                            10, 10, 10, 10, 60
+                        ]
+                    },
+                    {
+                        "name": "sanitation",
+                        "preferences": [
+                            20, 20, 20, 20, 20
+                        ]
+                    },
+                    {
+                        "name": "gas",
+                        "preferences": [
+                            0, 20, 20, 25, 35
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Eastern Cape",
+                "population": 500,
+                "topic_preferences": [
+                    {
+                        "name": "water",
+                        "preferences": [
+                            25, 20, 20, 25, 10
+                        ]
+                    },
+                    {
+                        "name": "electricity",
+                        "preferences": [
+                            10, 10, 10, 10, 60
+                        ]
+                    },
+                    {
+                        "name": "sanitation",
+                        "preferences": [
+                            20, 20, 20, 20, 20
+                        ]
+                    },
+                    {
+                        "name": "gas",
+                        "preferences": [
+                            0, 20, 20, 25, 35
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "North West",
+                "population": 500,
+                "topic_preferences": [
+                    {
+                        "name": "water",
+                        "preferences": [
+                            25, 20, 20, 25, 10
+                        ]
+                    },
+                    {
+                        "name": "electricity",
+                        "preferences": [
+                            10, 10, 10, 10, 60
+                        ]
+                    },
+                    {
+                        "name": "sanitation",
+                        "preferences": [
+                            20, 20, 20, 20, 20
+                        ]
+                    },
+                    {
+                        "name": "gas",
+                        "preferences": [
+                            0, 20, 20, 25, 35
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Free State",
+                "population": 500,
+                "topic_preferences": [
+                    {
+                        "name": "water",
+                        "preferences": [
+                            25, 20, 20, 25, 10
+                        ]
+                    },
+                    {
+                        "name": "electricity",
+                        "preferences": [
+                            10, 10, 10, 10, 60
+                        ]
+                    },
+                    {
+                        "name": "sanitation",
+                        "preferences": [
+                            20, 20, 20, 20, 20
+                        ]
+                    },
+                    {
+                        "name": "gas",
+                        "preferences": [
+                            0, 20, 20, 25, 35
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Limpopo",
+                "population": 500,
+                "topic_preferences": [
+                    {
+                        "name": "water",
+                        "preferences": [
+                            25, 20, 20, 25, 10
+                        ]
+                    },
+                    {
+                        "name": "electricity",
+                        "preferences": [
+                            10, 10, 10, 10, 60
+                        ]
+                    },
+                    {
+                        "name": "sanitation",
+                        "preferences": [
+                            20, 20, 20, 20, 20
+                        ]
+                    },
+                    {
+                        "name": "gas",
+                        "preferences": [
+                            0, 20, 20, 25, 35
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Mpumalanga",
+                "population": 500,
+                "topic_preferences": [
+                    {
+                        "name": "water",
+                        "preferences": [
+                            25, 20, 20, 25, 10
+                        ]
+                    },
+                    {
+                        "name": "electricity",
+                        "preferences": [
+                            10, 10, 10, 10, 60
+                        ]
+                    },
+                    {
+                        "name": "sanitation",
+                        "preferences": [
+                            20, 20, 20, 20, 20
+                        ]
+                    },
+                    {
+                        "name": "gas",
+                        "preferences": [
+                            0, 20, 20, 25, 35
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "KwaZulu-Natal",
+                "population": 500,
+                "topic_preferences": [
+                    {
+                        "name": "water",
+                        "preferences": [
+                            25, 20, 20, 25, 10
+                        ]
+                    },
+                    {
+                        "name": "electricity",
+                        "preferences": [
+                            10, 10, 10, 10, 60
+                        ]
+                    },
+                    {
+                        "name": "sanitation",
+                        "preferences": [
+                            20, 20, 20, 20, 20
+                        ]
+                    },
+                    {
+                        "name": "gas",
+                        "preferences": [
+                            0, 20, 20, 25, 35
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Gauteng",
+                "population": 500,
+                "topic_preferences": [
+                    {
+                        "name": "water",
+                        "preferences": [
+                            25, 20, 20, 25, 10
+                        ]
+                    },
+                    {
+                        "name": "electricity",
+                        "preferences": [
+                            10, 10, 10, 10, 60
+                        ]
+                    },
+                    {
+                        "name": "sanitation",
+                        "preferences": [
+                            20, 20, 20, 20, 20
+                        ]
+                    },
+                    {
+                        "name": "gas",
+                        "preferences": [
+                            0, 20, 20, 25, 35
                         ]
                     }
                 ]
