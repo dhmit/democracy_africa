@@ -18,7 +18,7 @@ class Speech extends React.Component {
             result: 0,
             total: 4,
         };
-        this.difference_threshold = 5;
+        this.difference_threshold = 6;
         this.max_priority_points = 20;
     }
 
@@ -80,6 +80,7 @@ class Speech extends React.Component {
                 count++;
             }
         });
+        this.props.updatePopulation(this.props.population);
         return count;
     };
 
@@ -127,7 +128,8 @@ class Speech extends React.Component {
 }
 Speech.propTypes = {
     population: PropTypes.array,
-    country_name: PropTypes.string,
+    countryName: PropTypes.string,
+    updatePopulation: PropTypes.func,
 };
 
 export class CampaignView extends  React.Component {
@@ -136,6 +138,8 @@ export class CampaignView extends  React.Component {
         this.state = {
             populationData: null,
         };
+        this.updatePopulation = this.updatePopulation.bind(this);
+        this.getProvinceInfo = this.getProvinceInfo.bind(this);
     }
 
     /**
@@ -162,17 +166,62 @@ export class CampaignView extends  React.Component {
         }
     }
 
+    updatePopulation(newCitizenList) {
+        const {populationData} = this.state;
+        populationData.citizen_list = newCitizenList;
+        this.setState({populationData});
+    }
+
+    getProvinceInfo() {
+        const provinceInfo = {};
+        for (const citizen of this.state.populationData.citizen_list) {
+            const province = citizen['province'];
+            if (!(province in provinceInfo)){
+                provinceInfo[province] = {"totalPeople": 0, "totalSupporters": 0};
+            }
+            provinceInfo[province]["totalPeople"]++;
+            if (citizen.will_support) {
+                provinceInfo[province]["totalSupporters"]++;
+            }
+        }
+        return provinceInfo;
+    }
 
     render() {
         if (!this.state.populationData) {
             return (<div>Loading!</div>);
         }
+        const provinceInfo = this.getProvinceInfo();
+        console.log(provinceInfo);
         return (
             <>
                 <h1>Campaign Game</h1><hr/>
+                <div>
+                    <h2>Province Info</h2>
+                    <table border={1}>
+                        <tbody>
+                            <tr>
+                                <th>Province</th>
+                                <th>Supporters</th>
+                                <th>Total People</th>
+                            </tr>
+
+                            {Object.keys(provinceInfo).map((province, k) => {
+                                return (
+                                    <tr key={k}>
+                                        <td>{province}</td>
+                                        <td>{provinceInfo[province]["totalSupporters"]}</td>
+                                        <td>{provinceInfo[province]["totalPeople"]}</td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
+                </div>
                 <Speech
                     population={this.state.populationData['citizen_list']}
-                    country_name={"South Africa"}
+                    countryName={"South Africa"}
+                    updatePopulation={this.updatePopulation}
                 />
             </>
         );
