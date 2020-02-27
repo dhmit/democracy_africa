@@ -2,6 +2,7 @@ import React from 'react';
 import {project_features_and_create_svg_paths} from "../common";
 import {MapPath} from "../UILibrary/components";
 import * as PropTypes from "prop-types";
+import './campaign.scss';
 
 
 const get_default_proposal = (topic_names) => {
@@ -111,7 +112,7 @@ class Speech extends React.Component {
 
         return(
             <>
-                <div>
+                <div className={"province-info-text"}>
                     You have {this.max_priority_points - this.state.total} priority points left.
                 </div>
                 <br/>
@@ -146,8 +147,8 @@ export class campaignView extends  React.Component {
             populationData: null,
             clicked_province: null,
         };
-        this.map_height = 800;
-        this.map_width = 800;
+        this.map_height = 1200;
+        this.map_width = 1200;
         this.updatePopulation = this.updatePopulation.bind(this);
         this.getProvinceInfo = this.getProvinceInfo.bind(this);
     }
@@ -232,9 +233,10 @@ export class campaignView extends  React.Component {
                     countryName={"South Africa"}
                     updatePopulation={this.updatePopulation}
                 />
+                <hr/>
                 {this.state.clicked_province &&
                     (
-                        <div>
+                        <div className={"province-info-text"}>
                             {this.state.clicked_province}&nbsp;has&nbsp;
                             {provinceInfo[this.state.clicked_province]["totalSupporters"]}
                             &nbsp;out of&nbsp;
@@ -244,8 +246,8 @@ export class campaignView extends  React.Component {
                     )
                 }
                 <svg
-                    height="800"
-                    width="800"
+                    height="600"
+                    width="1200"
                     id="content"
                 >
                     {this.state.map_data.map((country, i) => {
