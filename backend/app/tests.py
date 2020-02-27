@@ -6,7 +6,7 @@ from django.test import TestCase
 from django.test import Client
 from .models import Population
 from .models import Citizen
-from .views import load_democracy_data, normalize, africa_map_geojson, state_map_geojson, load_json
+from .views import load_democracy_data, normalize, load_json
 
 class MainTests(TestCase):
     """
@@ -161,8 +161,8 @@ class MainTests(TestCase):
         Tests the API endpoint to load a map of Africa
         :return:
         """
-        c = Client()
-        africa_geojson = c.get('/api/africa_map_geojson/').json()
+        client = Client()
+        africa_geojson = client.get('/api/africa_map_geojson/').json()
         self.assertEqual(54, len(africa_geojson['features']))
 
     def test_loading_states_map(self):
@@ -171,8 +171,8 @@ class MainTests(TestCase):
         Africa)
         :return:
         """
-        c = Client()
-        south_africa_geojson = c.get('/api/state_map_geojson/ZAF/').json()
+        client = Client()
+        south_africa_geojson = client.get('/api/state_map_geojson/ZAF/').json()
         self.assertEqual(9, len(south_africa_geojson['features']))
 
     def test_campaign_game_data(self):
