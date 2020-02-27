@@ -1,5 +1,8 @@
 import React from 'react';
+import {project_features_and_create_svg_paths} from "../common";
+import {MapPath} from "../UILibrary/components";
 import * as PropTypes from "prop-types";
+
 
 const get_default_proposal = (topic_names) => {
     let proposal = {};
@@ -8,6 +11,7 @@ const get_default_proposal = (topic_names) => {
     });
     return proposal;
 };
+
 
 class Speech extends React.Component {
     constructor(props){
@@ -107,7 +111,9 @@ class Speech extends React.Component {
 
         return(
             <>
-                You have {this.max_priority_points - this.state.total} priority points left.
+                <div>
+                    You have {this.max_priority_points - this.state.total} priority points left.
+                </div>
                 <br/>
                 <div>
                     {topics}
@@ -132,12 +138,16 @@ Speech.propTypes = {
     updatePopulation: PropTypes.func,
 };
 
-export class CampaignView extends  React.Component {
+export class campaignView extends  React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            map_data: null,
             populationData: null,
+            clicked_province: null,
         };
+        this.map_height = 800;
+        this.map_width = 800;
         this.updatePopulation = this.updatePopulation.bind(this);
         this.getProvinceInfo = this.getProvinceInfo.bind(this);
     }
@@ -146,6 +156,22 @@ export class CampaignView extends  React.Component {
      * When this component is mounted to the DOM, get democracy score data from the server
      */
     async componentDidMount() {
+        try {
+            const map= await fetch('/api/state_map_geojson/ZAF/', {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                }
+            });
+            const geo_json = await map.json();
+            const map_data = project_features_and_create_svg_paths(geo_json, this.map_width,
+                this.map_height);
+            await this.setState({
+                map_data: map_data,
+            });
+        } catch (e) {
+            console.log(e);
+        }
         try {
             const data = {
                 country_name: "South Africa",
@@ -161,7 +187,7 @@ export class CampaignView extends  React.Component {
             this.setState({
                 populationData: populationData,
             });
-        } catch (e) {
+        }catch (e) {
             console.log(e);
         }
     }
@@ -187,42 +213,56 @@ export class CampaignView extends  React.Component {
         return provinceInfo;
     }
 
+    handle_province_map_click(province) {
+        this.setState({
+            clicked_province: province,
+        });
+    }
+
     render() {
         if (!this.state.populationData) {
             return (<div>Loading!</div>);
         }
         const provinceInfo = this.getProvinceInfo();
-        console.log(provinceInfo);
         return (
             <>
                 <h1>Campaign Game</h1><hr/>
-                <div>
-                    <h2>Province Info</h2>
-                    <table border={1}>
-                        <tbody>
-                            <tr>
-                                <th>Province</th>
-                                <th>Supporters</th>
-                                <th>Total People</th>
-                            </tr>
-
-                            {Object.keys(provinceInfo).map((province, k) => {
-                                return (
-                                    <tr key={k}>
-                                        <td>{province}</td>
-                                        <td>{provinceInfo[province]["totalSupporters"]}</td>
-                                        <td>{provinceInfo[province]["totalPeople"]}</td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
-                </div>
                 <Speech
                     population={this.state.populationData['citizen_list']}
                     countryName={"South Africa"}
                     updatePopulation={this.updatePopulation}
                 />
+                {this.state.clicked_province &&
+                    (
+                        <div>
+                            {this.state.clicked_province}&nbsp;has&nbsp;
+                            {provinceInfo[this.state.clicked_province]["totalSupporters"]}
+                            &nbsp;out of&nbsp;
+                            {provinceInfo[this.state.clicked_province]["totalPeople"]}
+                            &nbsp;people who support you.
+                        </div>
+                    )
+                }
+                <svg
+                    height="800"
+                    width="800"
+                    id="content"
+                >
+                    {this.state.map_data.map((country, i) => {
+                        let countryFill = "#F6F4D2";
+                        return <MapPath
+                            key={i}
+                            path={country.svg_path}
+                            id={country.postal}
+                            fill={countryFill}
+                            stroke="black"
+                            strokeWidth="1"
+                            handle_country_click={() =>
+                                this.handle_province_map_click(country.name)}
+                            useColorTransition={false}
+                        />;
+                    })}
+                </svg>
             </>
         );
     }
