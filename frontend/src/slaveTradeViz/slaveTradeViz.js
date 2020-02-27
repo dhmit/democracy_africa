@@ -7,6 +7,11 @@ import {
 
 import { MapPath } from "../UILibrary/components";
 import * as d3 from "d3";
+import "./slaveTradeViz.scss";
+
+// TODO: once district maps are in (1) allow for options btwn countries and hardcode fake data
+// TODO: probably DRC, MOZ, NGA, MLI
+
 
 class AfricaMap extends React.Component {
     constructor(props) {
@@ -88,7 +93,7 @@ class DistrictInfo extends React.Component {
     }
     render() {
         return(
-            <div>
+            <div className={this.state.show ? "" : "d-hidden"}>
                 <h3>{this.props.name}</h3>
                 <strong> Initial: </strong>
                 {this.props.initial_value}
@@ -105,28 +110,32 @@ DistrictInfo.propTypes = {
     current_value: PropTypes.number,
 };
 
-// class AggregateData extends React.Component {
-//     constructor(props) {
-//         super(props);
-//     }
-//     render() {
-//         return (
-//             <div>
-//                 <h3>
-//                     Aggregate Data
-//                 </h3>
-//             </div>
-//         );
-//     }
-// }
+class AggregateData extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        return (
+            <div>
+                <h6>
+                    Aggregate Data
+                </h6>
+                min, mean, median mode
+
+            </div>
+        );
+    }
+}
 
 export class SlaveTradeViz extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: "0",
-            clicked_country: "",
+            resource_counter: 100,
+            slider_value: "0",
+            clicked_country: "Select a province to change its values.",
             hovered_country: "",
+            show_aggregate_data: false,
         };
         this.map_height = 600;
         this.map_width = 550;
@@ -134,7 +143,7 @@ export class SlaveTradeViz extends React.Component {
 
     handleSliderChange = (e) => {
         this.setState({
-            value: e.target.value,
+            slider_value: e.target.value,
         });
     }
 
@@ -153,6 +162,7 @@ export class SlaveTradeViz extends React.Component {
     render() {
         let district_info;
         if (this.state.hovered_country) {
+            // hardcoded values until we get data from the backend
             district_info = (
                 <DistrictInfo
                     name={this.state.hovered_country}
@@ -164,18 +174,37 @@ export class SlaveTradeViz extends React.Component {
 
         return (
             <>
-                <AfricaMap
-                    height={this.map_height}
-                    width={this.map_width}
-                    handleCountryClick={this.handleCountryClick}
-                    handleMouseOver={this.handleMouseOver}
-                />
-                <AfricaMap
-                    height={this.map_height}
-                    width={this.map_width}
-                />
+                <div>
+                    <h1>{this.state.resource_counter} left</h1>
+                </div>
+                <div className="slave-trade-viz">
+                    <div
+                        className="map-container"
+                    >
+                        <h3>Slave Exports</h3>
+                        <AfricaMap
+                            height={this.map_height}
+                            width={this.map_width}
+                            handleCountryClick={this.handleCountryClick}
+                            handleMouseOver={this.handleMouseOver}
+                        />
+                        {
+                            this.state.show_aggregate_data
+                                ? <AggregateData/>
+                                : ""
+                        }
+
+                    </div>
+                    <div className="map-container">
+                        <h3>Interpersonal Trust</h3>
+                        <AfricaMap
+                            height={this.map_height}
+                            width={this.map_width}
+                        />
+                    </div>
+                </div>
                 <h5>
-                    {this.state.current_country}
+                    {this.state.clicked_country}
                 </h5>
                 <input
                     type="range"
@@ -185,7 +214,16 @@ export class SlaveTradeViz extends React.Component {
                     value={this.state.value}
                     onChange={this.handleSliderChange}
                 />
+                <button
+                    type="submit"
+                    onClick={
+                        () => this.setState({show_aggregate_data: !this.state.show_aggregate_data})
+                    }
+                >
+                    Submit
+                </button>
                 {district_info}
+
             </>
         );
     }
