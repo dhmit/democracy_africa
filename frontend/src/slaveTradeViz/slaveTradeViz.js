@@ -23,9 +23,9 @@ class AfricaMap extends React.Component {
         };
     }
 
-    async componentDidMount() {
+    async changeCountry() {
         try {
-            const res = await fetch('/api/state_map_geojson/ZAF/', {
+            const res = await fetch(`/api/state_map_geojson/${this.props.country}/`, {
                 method: 'GET',
                 headers: {
                     'Content-type': 'application/json',
@@ -45,11 +45,36 @@ class AfricaMap extends React.Component {
             console.log(e);
         }
     }
+    // async componentDidUpdate(prevProps) {
+    //     if (prevProps.country !== this.props.country) {
+    //         console.log("I have changed!");
+    //         try {
+    //             const res = await fetch(`/api/state_map_geojson/${this.props.country}/`, {
+    //                 method: 'GET',
+    //                 headers: {
+    //                     'Content-type': 'application/json',
+    //                 }
+    //             });
+    //             // const res = await fetch('/api/africa_map_geojson/');
+    //             const geo_json = await res.json();
+    //             const map_data = project_features_and_create_svg_paths(
+    //                 geo_json,
+    //                 this.props.width,
+    //                 this.props.height
+    //             );
+    //             this.setState({
+    //                 map_data: map_data,
+    //             });
+    //         } catch (e) {
+    //             console.log(e);
+    //         }
+    //     }
+    // }
 
     render() {
-        if (!this.state.map_data) {
-            return(<div>Loading!</div>);
-        }
+        // if (!this.prop.map_data) {
+        //     return(<div>Loading!</div>);
+        // }
         const colorScale = d3.scaleLinear()
             .domain([0, 1])
             .range(['yellow', 'red']);
@@ -59,7 +84,7 @@ class AfricaMap extends React.Component {
                     height={this.props.height}
                     width={this.props.width}
                 >
-                    {this.state.map_data.map((country, i) => {
+                    {this.props.map_data.map((country, i) => {
                         const random_num = Math.random();
 
                         return (
@@ -88,6 +113,8 @@ class AfricaMap extends React.Component {
 AfricaMap.propTypes = {
     height: PropTypes.number,
     width: PropTypes.number,
+    country: PropTypes.string,
+    map_data: PropTypes.object,
     handleCountryClick: PropTypes.func,
     handleMouseOver: PropTypes.func,
 };
@@ -141,6 +168,7 @@ export class SlaveTradeViz extends React.Component {
         this.state = {
             value: "0",
             view: 'intro',
+            map_data: null,
             clicked_country: "",
             hovered_country: "",
             show_aggregate_data: false,
@@ -151,6 +179,31 @@ export class SlaveTradeViz extends React.Component {
 
     }
 
+    async componentDidUpdate(prevProps, prevState) {
+        if (prevState.country !== this.state.country) {
+            console.log("I have changed!");
+            try {
+                const res = await fetch(`/api/state_map_geojson/${this.state.country}/`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-type': 'application/json',
+                    }
+                });
+                // const res = await fetch('/api/africa_map_geojson/');
+                const geo_json = await res.json();
+                const map_data = project_features_and_create_svg_paths(
+                    geo_json,
+                    this.map_width,
+                    this.map_height
+                );
+                this.setState({
+                    map_data: map_data,
+                });
+            } catch (e) {
+                console.log(e);
+            }
+        }
+    }
 
     handleSliderChange = (e) => {
         this.setState({
@@ -170,6 +223,12 @@ export class SlaveTradeViz extends React.Component {
         });
     }
 
+    handleCountryChange = (e) => {
+        this.setState({
+            country: e.target.value,
+        });
+    }
+
     render() {
         let district_info;
         if (this.state.hovered_country) {
@@ -185,6 +244,16 @@ export class SlaveTradeViz extends React.Component {
 
         return (
             <>
+                <select
+                    value={this.state.country}
+                    onChange={this.handleCountryChange}
+                >
+                    <option value="none" selected disabled hidden>Select a country to start</option>
+                    <option value="MOZ">Mozambique</option>
+                    <option value="COD">Democratic Republic of the Congo</option>
+                    <option value="NGA">Nigeria</option>
+                    <option value="MLI">Mali</option>
+                </select>
                 <div>
                     <h1>{this.state.resource_counter} left</h1>
                 </div>
@@ -193,12 +262,17 @@ export class SlaveTradeViz extends React.Component {
                         className="map-container"
                     >
                         <h3>Slave Exports</h3>
-                        <AfricaMap
-                            height={this.map_height}
-                            width={this.map_width}
-                            handleCountryClick={this.handleCountryClick}
-                            handleMouseOver={this.handleMouseOver}
-                        />
+                        {this.state.map_data
+                            ? <AfricaMap
+                                height={this.map_height}
+                                width={this.map_width}
+                                country="MOZ"
+                                map_data={this.state.map_data}
+                                handleCountryClick={this.handleCountryClick}
+                                handleMouseOver={this.handleMouseOver}
+                            />
+                            : ""
+                        }
                         {
                             this.state.show_aggregate_data
                                 ? <AggregateData/>
@@ -208,10 +282,17 @@ export class SlaveTradeViz extends React.Component {
                     </div>
                     <div className="map-container">
                         <h3>Interpersonal Trust</h3>
-                        <AfricaMap
-                            height={this.map_height}
-                            width={this.map_width}
-                        />
+                        { this.state.map_data
+                            ? <AfricaMap
+                                map_data={this.state.map_data}
+                                height={this.map_height}
+                                width={this.map_width}
+                                country="MOZ"
+                            />
+                            : ""
+
+                        }
+
                     </div>
                 </div>
                 <h5>
