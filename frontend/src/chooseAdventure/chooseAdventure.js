@@ -3,6 +3,11 @@ import IntroView from './introView.js';
 import StageView from './stageView.js';
 // import * as PropTypes from 'prop-types';
 
+
+const INITIAL_DATA = {
+
+};
+
 // TODO: hardcode data structure here
 
 const START_STAGE = {
@@ -40,9 +45,11 @@ const DIRECT_STAGE = {
     }],
 };
 
-const NAME_TO_STAGE = {'START_STAGE' : START_STAGE,
+const NAME_TO_STAGE = {
+    'START_STAGE' : START_STAGE,
     'MEDIA_STAGE' : MEDIA_STAGE,
-    'DIRECT_STAGE' : DIRECT_STAGE};
+    'DIRECT_STAGE' : DIRECT_STAGE
+};
 
 //TODO use this so that we can get rid of the nolint
 // eslint-disable-next-line no-unused-vars
@@ -60,6 +67,13 @@ export class ChooseAdventureView extends React.Component {
         this.state = {
             view: 'intro',
         };
+    }
+
+    componentDidMount() {
+        // do your fetch and set initial state
+        this.setState(
+            INITIAL_DATA,
+        );
     }
 
     render() {
