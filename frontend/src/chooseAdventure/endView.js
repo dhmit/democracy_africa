@@ -10,18 +10,24 @@ class EndView extends React.Component {
         super(props);
     }
 
+    resetAdventure = () => {
+        this.props.setView('stage');
+        this.props.resetSuccess();
+    }
+
     render() {
         return (
             <div>
                 <div>Your success total was {this.props.successTotal}</div>
+                <button onClick={() => this.resetAdventure()}>Try again</button>
             </div>
-
         );
-
     }
 }
 
 EndView.propTypes = {
+    setView: PropTypes.func,
+    resetSuccess: PropTypes.func,
     successTotal: PropTypes.number,
 };
 

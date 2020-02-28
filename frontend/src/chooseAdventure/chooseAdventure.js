@@ -29,6 +29,10 @@ export class ChooseAdventureView extends React.Component {
         }));
     }
 
+    resetSuccess = () => {
+        this.setState({ successTotal: 0 });
+    }
+
     render() {
         const desc = 'example paragraph: Paragraphs are the building blocks of papers. Many ' +
             'students ' +
@@ -53,7 +57,11 @@ export class ChooseAdventureView extends React.Component {
                     <StageView setView={this.setView}
                         updateSuccess={this.updateSuccess}
                     />}
-                {this.state.view === 'end' && <EndView successTotal={this.state.successTotal}/>}
+                {this.state.view === 'end' && <EndView
+                    successTotal={this.state.successTotal}
+                    setView={this.setView}
+                    resetSuccess={this.resetSuccess}
+                />}
             </div>
         );
 
