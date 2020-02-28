@@ -12,8 +12,9 @@ class EndView extends React.Component {
 
     resetAdventure = () => {
         this.props.setView('stage');
+        this.props.resetHistory();
         this.props.resetSuccess();
-    }
+    };
 
     render() {
         return (
@@ -29,6 +30,7 @@ EndView.propTypes = {
     setView: PropTypes.func,
     resetSuccess: PropTypes.func,
     successTotal: PropTypes.number,
+    resetHistory: PropTypes.func,
 };
 
 

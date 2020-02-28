@@ -102,7 +102,7 @@ class StageView extends React.Component {
             this.props.setView('end');
         }
         this.setState({ stage: stage });
-    }
+    };
 
     render() {
         let optionComponents = <div>Loading...</div>;

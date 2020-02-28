@@ -26,7 +26,7 @@ export class ChooseAdventureView extends React.Component {
 
     updateHistory = (option) => {
         const history = this.state.history.slice();
-        history.append(option);
+        history.push(option);
         this.setState({history});
     };
 
@@ -34,11 +34,15 @@ export class ChooseAdventureView extends React.Component {
         this.setState((prevState) => ({
             successTotal: prevState.successTotal + successFactor,
         }));
-    }
+    };
 
     resetSuccess = () => {
         this.setState({ successTotal: 0 });
-    }
+    };
+
+    resetHistory = () => {
+        this.setState({ history: [] });
+    };
 
     render() {
         const desc = 'example paragraph: Paragraphs are the building blocks of papers. Many ' +
@@ -57,6 +61,7 @@ export class ChooseAdventureView extends React.Component {
             'can be just one sentence long. Ultimately, a paragraph is a sentence or group of ' +
             'sentences that support one main idea. In this handout, we will refer to this as the ' +
             '“controlling idea,” because it controls what happens in the rest of the paragraph.';
+        console.log("rerendering");
         return (
             <div>
                 {this.state.view === 'intro' && <IntroView desc={desc} setView={this.setView} />}
@@ -69,6 +74,7 @@ export class ChooseAdventureView extends React.Component {
                     successTotal={this.state.successTotal}
                     setView={this.setView}
                     resetSuccess={this.resetSuccess}
+                    resetHistory={this.resetHistory}
                 />}
             </div>
         );
