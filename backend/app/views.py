@@ -76,6 +76,32 @@ def population(request):
     return Response(serializer.data)
 
 
+def load_trust_data():
+    """
+    Returns a json file of interpersonal trust data
+    """
+    filename = "Nunn_Wantchekon_AER_2011.csv"
+    path = Path(settings.BACKEND_DATA_DIR, filename)
+    trust_data_list = []
+    with open(path, encoding='utf-8') as trust_data_csv_file:
+        reader = csv.DictReader(trust_data_csv_file, delimiter=',')
+        for row in reader:
+            #print(row['isocode'])
+            print(row.keys())
+            if row["district"] == "":
+                trust_data_list.append(row)
+    return trust_data_list
+
+
+@api_view(['GET'])
+def trust_data(request):
+    """
+    :return: trust_data for frontend
+    """
+    trust_data_json = load_trust_data()
+    return Response(json.dumps(trust_data_json))
+
+
 # moved it out because tests says that there were too many local variables
 country_name_index = 0
 country_text_id_index = 1
