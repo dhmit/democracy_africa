@@ -1,6 +1,7 @@
 import React from 'react';
 import IntroView from './introView.js';
 import StageView from './stageView.js';
+import EndView from './endView.js';
 
 /**
  * Component for displaying choose your own adventure skeleton
@@ -11,6 +12,7 @@ export class ChooseAdventureView extends React.Component {
         this.state = {
             view: 'intro',
             history: [],
+            successTotal: 0,
         };
     }
 
@@ -27,6 +29,16 @@ export class ChooseAdventureView extends React.Component {
         history.append(option);
         this.setState({history});
     };
+
+    updateSuccess = (successFactor) => {
+        this.setState((prevState) => ({
+            successTotal: prevState.successTotal + successFactor,
+        }));
+    }
+
+    resetSuccess = () => {
+        this.setState({ successTotal: 0 });
+    }
 
     render() {
         const desc = 'example paragraph: Paragraphs are the building blocks of papers. Many ' +
@@ -47,9 +59,17 @@ export class ChooseAdventureView extends React.Component {
             '“controlling idea,” because it controls what happens in the rest of the paragraph.';
         return (
             <div>
-                {this.state.view === 'intro' && <IntroView desc={desc} setView={this.setView}/>}
-                {this.state.view === 'stage' && <StageView stageName={"START_STAGE"}
-                    updateHistory={this.updateHistory}/>}
+                {this.state.view === 'intro' && <IntroView desc={desc} setView={this.setView} />}
+                {this.state.view === 'stage' &&
+                    <StageView setView={this.setView}
+                        updateSuccess={this.updateSuccess}
+                        updateHistory={this.updateHistory}
+                    />}
+                {this.state.view === 'end' && <EndView
+                    successTotal={this.state.successTotal}
+                    setView={this.setView}
+                    resetSuccess={this.resetSuccess}
+                />}
             </div>
         );
 

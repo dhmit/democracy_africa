@@ -8,10 +8,12 @@ const START_STAGE = {
     'options': [{
         'text': 'Start a media campaign',
         'stageName': 'MEDIA_STAGE',
+        'successFactor': 20,
     },
     {
         'text': 'Take direct action',
         'stageName': 'DIRECT_STAGE',
+        'successFactor': 10,
     }],
 };
 
@@ -19,12 +21,18 @@ const MEDIA_STAGE = {
     'text': 'You chose to start a media campaign.',
     'options': [{
         'text': 'Twitter',
+        'stageName': null,
+        'successFactor': 420,
     },
     {
         'text': 'Facebook',
+        'stageName': null,
+        'successFactor': 0,
     },
     {
         'text': 'Radio',
+        'stageName': null,
+        'successFactor': 30,
     }],
 };
 
@@ -32,9 +40,13 @@ const DIRECT_STAGE = {
     'text': 'You chose to take direct action against the school.',
     'options': [{
         'text': 'Sue the principal',
+        'stageName': null,
+        'successFactor': 10,
     },
     {
         'text': 'Ask the principal nicely',
+        'stageName': null,
+        'successFactor': 5,
     }],
 };
 
@@ -73,19 +85,22 @@ Option.propTypes = {
  * Component for displaying choose your own adventure skeleton
  */
 
-
 class StageView extends React.Component {
     constructor(props) {
         super(props);
-        let stage = getStageFromName(this.props.stageName);
-        console.log(stage);
         this.state = {
-            stage: stage,
+            stage: getStageFromName("START_STAGE"),
         };
     }
 
     setStage = (stage, option) => {
         this.props.updateHistory(option);
+        this.props.updateSuccess(option.successFactor);
+        if (option.stageName) {
+            this.setState({stage: getStageFromName(option.stageName)});
+        } else {
+            this.props.setView('end');
+        }
         this.setState({ stage: stage });
     }
 
@@ -108,6 +123,8 @@ class StageView extends React.Component {
 StageView.propTypes = {
     stageName: PropTypes.string,
     updateHistory: PropTypes.func,
+    setView: PropTypes.func,
+    updateSuccess: PropTypes.func,
 };
 
 export default StageView;
