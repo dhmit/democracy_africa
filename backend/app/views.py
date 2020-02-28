@@ -44,7 +44,10 @@ def load_country_demographics(filename):
                     district_demographics[headers[i]][category] = next_line[i]
             next_line = next(reader, "end of the line")
 
+    print(district_demographics)
     print(district_demographics["KEN: Nairobi"])
+
+
 
 
 def load_json(filename) -> dict:
@@ -75,6 +78,7 @@ def state_map_geojson(request, map_name):
     state_geojson = load_json('state_level_maps/' + map_name + '.geojson')
     load_country_demographics("language_spoken_in_home.csv")
     return Response(state_geojson)
+
 
 
 @api_view(['GET'])

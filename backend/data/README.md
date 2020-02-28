@@ -14,3 +14,5 @@ Please reference codebook at https://www.v-dem.net/en/reference/version-9-apr-20
 Data from Afrobarometer on the views of citizens on the importance of specific topics that they want 
 addressed, such as healthcare or education.
 
+### kenya_religion.csv
+Data from Afrobarometer that gives the statistics of religion of the different province and regions in Kenya.
