@@ -86,10 +86,8 @@ def load_trust_data():
     with open(path, encoding='utf-8') as trust_data_csv_file:
         reader = csv.DictReader(trust_data_csv_file, delimiter=',')
         for row in reader:
-            #print(row['isocode'])
-            print(row.keys())
-            if row["district"] == "":
-                trust_data_list.append(row)
+            if row["region"] == "altnatique":
+                trust_data_list.append(row["region"])
     return trust_data_list
 
 
@@ -175,9 +173,10 @@ def load_trust_data():
     """
     filename = "Nunn_Wantchekon_AER_2011.csv"
     path = Path(settings.BACKEND_DATA_DIR, filename)
+    trust_data = []
     with open(path, encoding='utf-8') as trust_data_csv_file:
         reader = csv.DictReader(trust_data_csv_file, delimiter=',')
-    return reader
+    return trust_data
 
 
 @api_view(['GET'])
