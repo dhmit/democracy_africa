@@ -111,12 +111,12 @@ export class DemocracyViz extends  React.Component {
         return (
             <>
                 <h1>Democracy in Africa Over Time</h1><hr/>
-                Democracy Score Type: &nbsp;
-                <select onChange={(e) => this.handleScoreTypeChange(e)}>
-                    <option>
-                        v2x_polyarchy
-                    </option>
-                </select>
+                {/*Democracy Score Type: &nbsp;*/}
+                {/*<select onChange={(e) => this.handleScoreTypeChange(e)}>*/}
+                {/*    <option>*/}
+                {/*        v2x_polyarchy*/}
+                {/*    </option>*/}
+                {/*</select>*/}
                 <br/><br/>
                 <div className = 'slidecontainer'>
                     <div className={'map'}>
@@ -127,7 +127,19 @@ export class DemocracyViz extends  React.Component {
                     </div>
                     {this.state.year}
                 </div>
+                <br/>
+                <h3 >VDem Index Quiz</h3>
+                <p>instructions for playing game and/pr motivating statement could go here</p>
+                <br/>
+                <QuestionDataBase/>
+                <div className={'map'}>
+                    <DemocracyMap
+                        democracyData={this.state.democracyData}
+                        scoreType={this.state.scoreType}
+                        year={this.state.year}
 
+                    />
+                </div>
                 <br/>
                 Currently grey either means:
                 <ul>
@@ -140,15 +152,6 @@ export class DemocracyViz extends  React.Component {
                     </li>
                 </ul>
                 <br/>
-                <div className={'map'}>
-                    <DemocracyMap
-                        democracyData={this.state.democracyData}
-                        scoreType={this.state.scoreType}
-                        year={this.state.year}
-
-                    />
-                </div>
-                <QuestionDataBase/>
             </>
         );
     }
