@@ -36,7 +36,7 @@ export class ChooseAdventureView extends React.Component {
             '“controlling idea,” because it controls what happens in the rest of the paragraph.';
         return (
             <div>
-                {this.state.view === 'intro' && <IntroView desc={"desc"}/>}
+                {this.state.view === 'intro' && <IntroView desc={desc}/>}
                 {this.state.view === 'stage' && <StageView stageName={"START_STAGE"}/>}
                 <button onClick={() => this.setState({ view: 'stage'})}> Get started </button>
             </div>
