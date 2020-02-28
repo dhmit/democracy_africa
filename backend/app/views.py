@@ -26,6 +26,18 @@ from .models import africa_demographics_by_country as demographics_dict
 from.serializers import PopulationSerializer
 
 
+def load_country_demographics(filename):
+    path = Path(settings.BACKEND_DATA_DIR, filename)
+    district_demographics = {}
+    with open(path, encoding='utf-8') as file:
+        reader = csv.reader(file, delimiter=',')
+        headers = next(reader)
+        for header in headers:
+            if header != "":
+                district_demographics[header] = {}
+    print(district_demographics)
+
+
 def load_json(filename) -> dict:
     """
     Reads the JSON file and returns it as a dictionary
@@ -36,18 +48,6 @@ def load_json(filename) -> dict:
     return json.loads(file_string)
 
 
-def load_country_geojson(country_code) -> dict:
-    """
-        Read the GeoJSON file of the country and its districts from disk
-        and return a dict of the parsed json
-        """
-    filename = 'state_level_maps/' + country_code + '.geojson'
-    path = Path(settings.BACKEND_DATA_DIR, filename)
-    with open(path, encoding='utf-8') as africa_geojson_file:
-        africa_geojson_string = africa_geojson_file.read()
-    return json.loads(africa_geojson_string)
-
-
 @api_view(['GET'])
 def africa_map_geojson(request):
     """
@@ -56,17 +56,6 @@ def africa_map_geojson(request):
 
     africa_geojson = load_json('africa.geojson')
     return Response(africa_geojson)
-
-
-@api_view(['POST'])
-def african_country_map_geojson(request):
-    """
-    Load a specific African country's GeoJSON to the frontend
-    """
-    country_code = request.data.get("country_code")
-    country_geojson = load_country_geojson(country_code)
-    return Response(country_geojson)
-
 
 
 @api_view(['GET'])
