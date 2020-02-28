@@ -26,16 +26,14 @@ from .models import africa_demographics_by_country as demographics_dict
 from.serializers import PopulationSerializer
 
 
-def load_africa_geojson() -> dict:
+def load_json(filename) -> dict:
     """
-    Read the GeoJSON file of the countries in Africa from disk
-    and return a dict of the parsed json
+    Reads the JSON file and returns it as a dictionary
     """
-    filename = 'africa.geojson'
     path = Path(settings.BACKEND_DATA_DIR, filename)
-    with open(path, encoding='utf-8') as africa_geojson_file:
-        africa_geojson_string = africa_geojson_file.read()
-    return json.loads(africa_geojson_string)
+    with open(path, encoding='utf-8') as json_file:
+        file_string = json_file.read()
+    return json.loads(file_string)
 
 
 @api_view(['GET'])
@@ -43,8 +41,18 @@ def africa_map_geojson(request):
     """
     Load Africa map GeoJSON for frontend
     """
-    africa_geojson = load_africa_geojson()
+
+    africa_geojson = load_json('africa.geojson')
     return Response(africa_geojson)
+
+
+@api_view(['GET'])
+def state_map_geojson(request, map_name):
+    """
+    Load state_level_map GeoJSON for frontend
+    """
+    state_geojson = load_json('state_level_maps/' + map_name + '.geojson')
+    return Response(state_geojson)
 
 
 @api_view(['GET'])
@@ -63,7 +71,21 @@ def population(request):
     """
     country_name = request.data.get("country_name")
     population_obj = Population(country=country_name)
-    population_obj.create_citizens(1000)
+    population_obj.create_citizens_budget_sim(1000)
+    serializer = PopulationSerializer(instance=population_obj)
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+def campaign_population(request):
+    """
+    Generates a population of Citizen objects that then get passed into the frontend
+    for campaign game
+    """
+    country_name = request.data.get("country_name")
+    campaign_json = load_json('campaign_info.json')[country_name]
+    population_obj = Population(country=country_name)
+    population_obj.create_citizens_campaign_game(100, campaign_json)
     serializer = PopulationSerializer(instance=population_obj)
     return Response(serializer.data)
 

@@ -8,3 +8,9 @@ See docs in create_project_geojson.py for sources. The filename is based on the 
 ### lieberman_afr_data.csv
 Data from https://www.v-dem.net/en/data/data-version-9/ -- curated by Evan Lieberman
 Please reference codebook at https://www.v-dem.net/en/reference/version-9-apr-2019/
+
+
+### campaign_info
+Data from Afrobarometer on the views of citizens on the importance of specific topics that they want 
+addressed, such as healthcare or education.
+
