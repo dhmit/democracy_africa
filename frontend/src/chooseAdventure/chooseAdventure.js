@@ -2,13 +2,9 @@ import React from 'react';
 import IntroView from './introView.js';
 import StageView from './stageView.js';
 
-
 /**
  * Component for displaying choose your own adventure skeleton
  */
-
-
-
 export class ChooseAdventureView extends React.Component {
     constructor(props) {
         super(props);
