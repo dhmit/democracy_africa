@@ -38,9 +38,11 @@ const DIRECT_STAGE = {
     }],
 };
 
-const NAME_TO_STAGE = {'START_STAGE' : START_STAGE,
+const NAME_TO_STAGE = {
+    'START_STAGE' : START_STAGE,
     'MEDIA_STAGE' : MEDIA_STAGE,
-    'DIRECT_STAGE' : DIRECT_STAGE};
+    'DIRECT_STAGE' : DIRECT_STAGE
+};
 
 function getStageFromName(stageName) {
     return NAME_TO_STAGE[stageName];
@@ -49,6 +51,8 @@ function getStageFromName(stageName) {
 /**
  * Component for displaying choose your own adventure skeleton
  */
+
+
 
 class StageView extends React.Component {
     constructor(props) {
