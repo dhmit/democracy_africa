@@ -44,14 +44,32 @@ const NAME_TO_STAGE = {
     'DIRECT_STAGE' : DIRECT_STAGE
 };
 
-function getStageFromName(stageName) {
+const getStageFromName = (stageName) => {
     return NAME_TO_STAGE[stageName];
+};
+
+class Option extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (
+            <button
+                onClick={() =>
+                    this.props.setActiveStage(this.props.option.stageName)}
+            >{this.props.option.text}</button>
+        );
+    }
 }
+Option.propTypes = {
+    option: PropTypes.object,
+    setActiveStage: PropTypes.func,
+};
 
 /**
  * Component for displaying choose your own adventure skeleton
  */
-
 
 
 class StageView extends React.Component {
@@ -61,32 +79,26 @@ class StageView extends React.Component {
         console.log(stage);
         this.state = {
             stage: stage,
-            optionComponents: this.buildOptionComponents(stage.options)
         };
     }
 
-    buildOptionComponents(options) {
-        let optionComponents = [];
-        for (let i = 0; i < options.length; i++) {
-            let option = options[i];
-            let component =  <Option option={option}
-                setActiveStage={(stage) => this.setActiveStage(stage)}
-                key={i}/>;
-            optionComponents.push(component);
-        }
-        return optionComponents;
-    }
-
-    setActiveStage(stage) {
-        this.setState({stage});
+    setActiveStage = (stage) => {
+        this.setState({ stage: stage });
     }
 
     render() {
+        let optionComponents = <div>Loading...</div>;
+        if (this.state.stage.options) {
+            optionComponents = this.state.stage.options.map((option, k) =>
+                <Option key={k} option={option}
+                    setActiveStage={this.setActiveStage}
+                />);
+        }
         return (
-            <React.Fragment>
+            <div className={"wrapper"}>
                 <p>{this.state.stage.text}</p>
-                {this.state.optionComponents}
-            </React.Fragment>
+                {optionComponents}
+            </div>
         );
     }
 }
@@ -94,25 +106,5 @@ StageView.propTypes = {
     stageName: PropTypes.string,
 };
 
-class Option extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        let option = this.props.option;
-        let text = option.text;
-        let stageName = option.stageName;
-        let stage = getStageFromName(stageName);
-        let setActiveStage = this.props.setActiveStage;
-        return (
-            <button onClick={setActiveStage(stage)}>{text}</button>
-        );
-    }
-}
-Option.propTypes = {
-    option: PropTypes.object,
-    setActiveStage: PropTypes.func,
-};
 
 export default StageView;

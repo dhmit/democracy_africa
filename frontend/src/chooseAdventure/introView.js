@@ -16,6 +16,7 @@ class IntroView extends React.Component {
         return (
             <div>
                 <div>{this.props.desc}</div>
+                <button onClick={() => this.props.setView('stage')}> Get started</button>
             </div>
 
         );
@@ -25,7 +26,7 @@ class IntroView extends React.Component {
 
 IntroView.propTypes = {
     desc: PropTypes.string,
-
+    setView: PropTypes.func,
 };
 
 export default IntroView;

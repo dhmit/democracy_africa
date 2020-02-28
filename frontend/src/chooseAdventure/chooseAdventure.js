@@ -1,61 +1,7 @@
 import React from 'react';
 import IntroView from './introView.js';
 import StageView from './stageView.js';
-// import * as PropTypes from 'prop-types';
 
-
-const INITIAL_DATA = {
-
-};
-
-// TODO: hardcode data structure here
-
-const START_STAGE = {
-    'text': 'Your school district\'s budget was cut!',
-    'options': [{
-        'text': 'Start a media campaign',
-        'stageName': 'MEDIA_STAGE',
-    },
-    {
-        'text': 'Take direct action',
-        'stageName': 'DIRECT_STAGE',
-    }],
-};
-
-const MEDIA_STAGE = {
-    'text': 'You chose to start a media campaign.',
-    'options': [{
-        'text': 'Twitter',
-    },
-    {
-        'text': 'Facebook',
-    },
-    {
-        'text': 'Radio',
-    }],
-};
-
-const DIRECT_STAGE = {
-    'text': 'You chose to take direct action against the school.',
-    'options': [{
-        'text': 'Sue the principal',
-    },
-    {
-        'text': 'Ask the principal nicely',
-    }],
-};
-
-const NAME_TO_STAGE = {
-    'START_STAGE' : START_STAGE,
-    'MEDIA_STAGE' : MEDIA_STAGE,
-    'DIRECT_STAGE' : DIRECT_STAGE
-};
-
-//TODO use this so that we can get rid of the nolint
-// eslint-disable-next-line no-unused-vars
-function getStageFromOption(option) {
-    return NAME_TO_STAGE[option.stageName];
-}
 
 /**
  * Component for displaying choose your own adventure skeleton
@@ -73,9 +19,10 @@ export class ChooseAdventureView extends React.Component {
 
     componentDidMount() {
         // do your fetch and set initial state
-        this.setState(
-            INITIAL_DATA,
-        );
+    }
+
+    setView = (view) => {
+        this.setState({ view: view });
     }
 
     render() {
@@ -97,9 +44,8 @@ export class ChooseAdventureView extends React.Component {
             '“controlling idea,” because it controls what happens in the rest of the paragraph.';
         return (
             <div>
-                {this.state.view === 'intro' && <IntroView desc={desc}/>}
+                {this.state.view === 'intro' && <IntroView desc={desc} setView={this.setView}/>}
                 {this.state.view === 'stage' && <StageView stageName={"START_STAGE"}/>}
-                <button onClick={() => this.setState({ view: 'stage'})}> Get started </button>
             </div>
         );
 
