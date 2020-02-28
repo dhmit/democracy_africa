@@ -139,7 +139,7 @@ Speech.propTypes = {
     updatePopulation: PropTypes.func,
 };
 
-export class campaignView extends  React.Component {
+export class CampaignView extends  React.Component {
     constructor(props) {
         super(props);
         this.state = {
