@@ -12,6 +12,7 @@ import { AllView } from './UILibrary/allView.js';
 import { MapQuiz } from './mapQuiz/mapQuiz.js';
 import { BudgetVotingSimViz } from './budgetSimulation/budgetSimulation.js';
 import { DemocracyViz } from './democracyViz/democracyViz.js';
+import { CampaignView } from "./campaign/campaignView";
 import { SlaveTradeSim } from "./slaveTradeViz/slaveTradeSim";
 import { EdXView } from "./UILibrary/components";
 
@@ -29,6 +30,7 @@ window.app_modules = {
     MapQuiz,
     BudgetVotingSimViz,
     DemocracyViz,
+    CampaignView,
     SlaveTradeSim,
     EdXView,
 };

@@ -171,6 +171,7 @@ export class SlaveTradeViz extends React.Component {
             clicked_country: "",
             hovered_country: "",
             show_aggregate_data: false,
+            trust_data: null,
         };
         this.map_height = 600;
         this.map_width = 550;
@@ -178,9 +179,22 @@ export class SlaveTradeViz extends React.Component {
 
     }
 
+    async componentDidMount() {
+        try {
+            const res = await fetch('/api/trust_data');
+            const data = await res.json();
+            this.setState({
+                trust_data: data,
+            });
+            console.log(data);
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+
     async componentDidUpdate(prevProps, prevState) {
         if (prevState.country !== this.state.country) {
-            console.log("I have changed!");
             try {
                 const res = await fetch(`/api/state_map_geojson/${this.state.country}/`, {
                     method: 'GET',
