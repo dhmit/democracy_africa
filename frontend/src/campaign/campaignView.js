@@ -1,5 +1,7 @@
 import React from 'react';
-import * as PropTypes from "prop-types";
+import {project_features_and_create_svg_paths} from "../common";
+import {MapPath} from "../UILibrary/components";
+import * as PropTypes from 'prop-types';
 
 const get_default_proposal = (topic_names) => {
     let proposal = {};
@@ -130,18 +132,39 @@ Speech.propTypes = {
     country_name: PropTypes.string,
 };
 
+
 export class CampaignView extends  React.Component {
     constructor(props) {
         super(props);
         this.state = {
             populationData: null,
+            map_data: null,
+            budgetData: null,
         };
+        this.map_height = 800;
+        this.map_width = 800;
     }
 
     /**
      * When this component is mounted to the DOM, get democracy score data from the server
      */
     async componentDidMount() {
+       try {
+            const map= await fetch('/api/state_map_geojson/ZAF/', {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                }
+            });
+            const geo_json = await map.json();
+            const map_data = project_features_and_create_svg_paths(geo_json, this.map_width,
+                this.map_height);
+            await this.setState({
+                map_data: map_data,
+            });
+        } catch (e) {
+            console.log(e);
+        }
         try {
             const data = {
                 country_name: "South Africa",
@@ -157,23 +180,53 @@ export class CampaignView extends  React.Component {
             this.setState({
                 populationData: populationData,
             });
-        } catch (e) {
+        }catch (e) {
             console.log(e);
         }
     }
+    }
 
+    initialize_input_tracker(map_data) {
+        const input_tracker = {};
+        for (const feature of map_data) {
+            input_tracker[feature.name] = "None";
+        }
+        return input_tracker;
+    }
 
     render() {
-        if (!this.state.populationData) {
+        if (!this.state.map_populationData) {
             return (<div>Loading!</div>);
+
         }
         return (
             <>
-                <h1>Campaign Game</h1><hr/>
-                <Speech
-                    population={this.state.populationData['citizen_list']}
-                    country_name={"South Africa"}
-                />
+              <h1>Campaign Game</h1><hr/>
+              <Speech
+                  population={this.state.populationData['citizen_list']}
+                  country_name={"South Africa"}
+              />
+              <svg
+                  height= {this.map_height}
+                  width= {this.map_width}
+                  id="content"
+              >
+
+                  {this.state.map_data.map((country, i) => {
+                      let countryFill = "#F6F4D2";
+
+                      return <MapPath
+                          key={i}
+                          path={country.svg_path}
+                          id={country.postal}
+                          fill={countryFill}
+                          stroke="black"
+                          strokeWidth="1"
+
+                          useColorTransition={false}
+                      />;
+                  })}
+              </svg>
             </>
         );
     }

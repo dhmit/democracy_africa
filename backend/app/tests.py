@@ -3,10 +3,10 @@ Tests for the main app.
 """
 
 from django.test import TestCase
+from django.test import Client
 from .models import Population
 from .models import Citizen
 from .views import load_democracy_data, normalize, load_json
-
 
 class MainTests(TestCase):
     """
@@ -147,6 +147,33 @@ class MainTests(TestCase):
         actual_normalized_data = normalize(test_data, test_max_values)
         for k in test_data:
             self.assertAlmostEqual(actual_normalized_data[k], expected_normalized_data[k])
+
+    def test_load_json(self):
+        """
+        Tests the load_json function for loading any geojson object
+        :return:
+        """
+        africa_geojson = load_json("africa.geojson")
+        self.assertEqual(54, len(africa_geojson['features']))
+
+    def test_loading_africa_map(self):
+        """
+        Tests the API endpoint to load a map of Africa
+        :return:
+        """
+        client = Client()
+        africa_geojson = client.get('/api/africa_map_geojson/').json()
+        self.assertEqual(54, len(africa_geojson['features']))
+
+    def test_loading_states_map(self):
+        """
+        Tests the API endpoint to load a specific state level map of a specified country (South
+        Africa)
+        :return:
+        """
+        client = Client()
+        south_africa_geojson = client.get('/api/state_map_geojson/ZAF/').json()
+        self.assertEqual(9, len(south_africa_geojson['features']))
 
     def test_campaign_game_data(self):
         """
