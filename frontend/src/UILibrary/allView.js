@@ -9,7 +9,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { MapQuiz } from '../mapQuiz/mapQuiz.js';
-import { EthnolinguisticCampaign } from '../ethnolinguisticCampaign/ethnolinguisticCampaign.js';
+import { EthnolinguisticCampaign } from '../ethnoLinguisticCampaign/ethnolinguisticCampaign.js';
 import { BudgetVotingSimViz } from '../budgetSimulation/budgetSimulation.js';
 import { DemocracyViz } from '../democracyViz/democracyViz.js';
 import { EdXView } from "./components";
@@ -33,10 +33,6 @@ export class AllView extends React.Component {
                 <EdXView
                     app={<EthnolinguisticCampaign />}
                     title="Ethnolinguistic Campaign Simulation"
-                />
-                <EdXView
-                    app={<ethnoLinguisticCampaignViz />}
-                    title="ethnoLinguisticCampaignViz"
                 />
             </>
         );

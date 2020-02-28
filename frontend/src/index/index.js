@@ -55,14 +55,6 @@ export class IndexView extends React.Component {
                 />
 
                 <IndexCard
-                    url='/ethno_ling_campaign/'
-                    title='ethnoLinguisticCampaignViz'
-                    description='
-                        in test
-                    '
-                />
-
-                <IndexCard
                     url='/all_view/'
                     title='All View'
                     description='
