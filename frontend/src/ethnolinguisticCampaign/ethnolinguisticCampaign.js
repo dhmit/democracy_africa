@@ -40,8 +40,6 @@ export class EthnolinguisticCampaign extends React.Component {
                     'Content-type': 'application/json',
                 }
             });
-            console.log("Got this far");
-            console.log(response);
             const geo_json = await response.json();
             const map_data = project_features_and_create_svg_paths(geo_json, this.map_width,
                 this.map_height);
