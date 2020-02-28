@@ -21,13 +21,13 @@ export class ChooseAdventureView extends React.Component {
     }
 
     setView = (view) => {
-        this.setState({ view: view });
+        this.setState({ view: view, });
     };
 
     updateHistory = (option) => {
-        const history = this.state.history.slice();
-        history.push(option);
-        this.setState({history});
+        this.setState((prevState) => ({
+            history: prevState.history.concat(option),
+        }));
     };
 
     updateSuccess = (successFactor) => {
@@ -36,13 +36,13 @@ export class ChooseAdventureView extends React.Component {
         }));
     };
 
-    resetSuccess = () => {
-        this.setState({ successTotal: 0 });
+    resetProgress = () => {
+        this.setState({
+            successTotal: 0,
+            history: [],
+        });
     };
 
-    resetHistory = () => {
-        this.setState({ history: [] });
-    };
 
     render() {
         const desc = 'example paragraph: Paragraphs are the building blocks of papers. Many ' +
@@ -72,9 +72,9 @@ export class ChooseAdventureView extends React.Component {
                     />}
                 {this.state.view === 'end' && <EndView
                     successTotal={this.state.successTotal}
+                    history={this.state.history}
                     setView={this.setView}
-                    resetSuccess={this.resetSuccess}
-                    resetHistory={this.resetHistory}
+                    resetProgress={this.resetProgress}
                 />}
             </div>
         );

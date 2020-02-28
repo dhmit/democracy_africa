@@ -12,14 +12,17 @@ class EndView extends React.Component {
 
     resetAdventure = () => {
         this.props.setView('stage');
-        this.props.resetHistory();
-        this.props.resetSuccess();
+        this.props.resetProgress();
     };
 
     render() {
+        const choices = this.props.history.map((option, k) => (
+            <p key={k}>Choosing {option.text} increased success by {option.successFactor}</p>
+        ));
         return (
             <div>
                 <div>Your success total was {this.props.successTotal}</div>
+                {choices}
                 <button onClick={() => this.resetAdventure()}>Try again</button>
             </div>
         );
@@ -28,9 +31,9 @@ class EndView extends React.Component {
 
 EndView.propTypes = {
     setView: PropTypes.func,
-    resetSuccess: PropTypes.func,
+    history: PropTypes.array,
     successTotal: PropTypes.number,
-    resetHistory: PropTypes.func,
+    resetProgress: PropTypes.func,
 };
 
 
