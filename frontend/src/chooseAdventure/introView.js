@@ -1,6 +1,5 @@
 import React from 'react';
 import * as PropTypes from "prop-types";
-import sample_img from './sample.jpg';
 
 
 /**
@@ -19,7 +18,7 @@ class IntroView extends React.Component {
                     <div className={'col-6'}>
                         {this.props.desc}
                     </div>
-                    <img className= 'col-6' src={sample_img} alt="Sample" />
+                    <img className= 'col-6' src='/static/img/sample.jpg' alt="Sample" />
 
                 </div>
 
