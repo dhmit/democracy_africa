@@ -222,12 +222,11 @@ export class DemocracyMap extends React.Component {
             map_data: null,
             // mouseover_country: 'Nothing',
         };
-        this.map_height = 1000;
-        this.map_width = 1000;
+        this.map_height = 0;
+        this.map_width = 0;
         this.csrftoken = getCookie('csrftoken');
         // this.map_ref = React.createRef();
         this.getCountryData = this.getCountryData.bind(this);
-
     }
 
     /**
@@ -235,7 +234,7 @@ export class DemocracyMap extends React.Component {
      */
     async componentDidMount() {
         try {
-            const res = await fetch('/api/africa_map_geojson/');
+            const  res =  await fetch('/api/africa_map_geojson/');
             const geo_json = await res.json();
             const map_data = project_features_and_create_svg_paths(geo_json, this.map_width,
                 this.map_height);
@@ -270,8 +269,8 @@ export class DemocracyMap extends React.Component {
         return (
             <>
                 <svg
-                    height="1000"
-                    width="1000"
+                    height={document.getElementById("root").clientWidth}
+                    width={document.getElementById("root").clientWidth}
                     id="content"
                 >
                     {this.state.map_data.map((country, i) => {
@@ -301,6 +300,20 @@ export class DemocracyMap extends React.Component {
                 </svg>
             </>
         );
+    }
+    async componentDidUpdate() {
+        const scale = .9;
+        if (this.state.map_height !== document.getElementById("root").clientWidth){
+            const  res =  await fetch('/api/africa_map_geojson/');
+            const geo_json = await res.json();
+            this.setState({
+                map_height: document.getElementById("root").clientWidth*scale,
+                map_width: document.getElementById("root").clientWidth*scale,
+                map_data: project_features_and_create_svg_paths(geo_json,
+                    document.getElementById("root").clientWidth*scale,
+                    document.getElementById("root").clientWidth*scale),
+            });
+        }
     }
 }
 DemocracyMap.propTypes = {
