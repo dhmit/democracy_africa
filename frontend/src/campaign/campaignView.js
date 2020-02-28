@@ -1,7 +1,9 @@
 import React from 'react';
 import {project_features_and_create_svg_paths} from "../common";
 import {MapPath} from "../UILibrary/components";
-import * as PropTypes from 'prop-types';
+import * as PropTypes from "prop-types";
+import './campaign.scss';
+
 
 const get_default_proposal = (topic_names) => {
     let proposal = {};
@@ -10,6 +12,7 @@ const get_default_proposal = (topic_names) => {
     });
     return proposal;
 };
+
 
 class Speech extends React.Component {
     constructor(props){
@@ -20,8 +23,8 @@ class Speech extends React.Component {
             result: 0,
             total: 4,
         };
-        this.difference_threshold = 14;
-        this.max_priority_points = 25;
+        this.difference_threshold = 15;
+        this.max_priority_points = 50;
     }
 
     /**
@@ -82,6 +85,7 @@ class Speech extends React.Component {
                 count++;
             }
         });
+        this.props.updatePopulation(this.props.population);
         return count;
     };
 
@@ -108,7 +112,9 @@ class Speech extends React.Component {
 
         return(
             <>
-                You have {this.max_priority_points - this.state.total} priority points left.
+                <div className={"province-info-text"}>
+                    You have {this.max_priority_points - this.state.total} priority points left.
+                </div>
                 <br/>
                 <div>
                     {topics}
@@ -129,9 +135,9 @@ class Speech extends React.Component {
 }
 Speech.propTypes = {
     population: PropTypes.array,
-    country_name: PropTypes.string,
+    countryName: PropTypes.string,
+    updatePopulation: PropTypes.func,
 };
-
 
 export class CampaignView extends  React.Component {
     constructor(props) {
@@ -139,10 +145,12 @@ export class CampaignView extends  React.Component {
         this.state = {
             populationData: null,
             map_data: null,
-            budgetData: null,
+            clicked_province: null,
         };
-        this.map_height = 800;
-        this.map_width = 800;
+        this.map_height = 700;
+        this.map_width = 700;
+        this.updatePopulation = this.updatePopulation.bind(this);
+        this.getProvinceInfo = this.getProvinceInfo.bind(this);
     }
 
     /**
@@ -180,44 +188,87 @@ export class CampaignView extends  React.Component {
             this.setState({
                 populationData: populationData,
             });
-        } catch (e) {
+        }catch (e) {
             console.log(e);
         }
+    }
+
+    updatePopulation(newCitizenList) {
+        const {populationData} = this.state;
+        populationData.citizen_list = newCitizenList;
+        this.setState({populationData});
+    }
+
+    getProvinceInfo() {
+        const provinceInfo = {};
+        for (const citizen of this.state.populationData.citizen_list) {
+            const province = citizen['province'];
+            if (!(province in provinceInfo)){
+                provinceInfo[province] = {"totalPeople": 0, "totalSupporters": 0};
+            }
+            provinceInfo[province]["totalPeople"]++;
+            if (citizen.will_support) {
+                provinceInfo[province]["totalSupporters"]++;
+            }
+        }
+        return provinceInfo;
+    }
+
+    handle_province_map_click(province) {
+        this.setState({
+            clicked_province: province,
+        });
     }
 
     render() {
         if (!this.state.populationData) {
             return (<div>Loading!</div>);
-
         }
+        const provinceInfo = this.getProvinceInfo();
         return (
             <>
                 <h1>Campaign Game</h1><hr/>
                 <Speech
                     population={this.state.populationData['citizen_list']}
-                    country_name={"South Africa"}
+                    countryName={"South Africa"}
+                    updatePopulation={this.updatePopulation}
                 />
-                <svg
-                    height= {this.map_height}
-                    width= {this.map_width}
-                    id="content"
-                >
+                <hr/>
+                {this.state.clicked_province &&
+                    (
+                        <div className={"province-info-text"}>
+                            {this.state.clicked_province}&nbsp;has&nbsp;
+                            {provinceInfo[this.state.clicked_province]["totalSupporters"]}
+                            &nbsp;out of&nbsp;
+                            {provinceInfo[this.state.clicked_province]["totalPeople"]}
+                            &nbsp;people who support you.
+                        </div>
+                    )
+                }
+                <div className={"campaign-map"}>
+                    <svg
+                        height={this.map_height}
+                        width={this.map_width}
+                        id="content"
+                    >
+                        {this.state.map_data.map((country, i) => {
+                            let countryFill = "#F6F4D2";
 
-                    {this.state.map_data.map((country, i) => {
-                        let countryFill = "#F6F4D2";
+                            return <MapPath
+                                key={i}
+                                path={country.svg_path}
+                                id={country.postal}
+                                fill={countryFill}
+                                stroke="black"
+                                strokeWidth="1"
+                                handle_country_click={() =>
+                                    this.handle_province_map_click(country.name)}
+                                useColorTransition={false}
+                            />;
+                        })}
+                    </svg>
+                </div>
 
-                        return <MapPath
-                            key={i}
-                            path={country.svg_path}
-                            id={country.postal}
-                            fill={countryFill}
-                            stroke="black"
-                            strokeWidth="1"
-
-                            useColorTransition={false}
-                        />;
-                    })}
-                </svg>
             </>
         );
     }
