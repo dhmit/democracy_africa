@@ -53,7 +53,8 @@ def africa_map_geojson(request):
     """
     Load Africa map GeoJSON for frontend
     """
-    africa_geojson = load_json('africa.geo.json')
+
+    africa_geojson = load_json('africa.geojson')
     return Response(africa_geojson)
 
 
@@ -66,6 +67,15 @@ def african_country_map_geojson(request):
     country_geojson = load_country_geojson(country_code)
     return Response(country_geojson)
 
+
+
+@api_view(['GET'])
+def state_map_geojson(request, map_name):
+    """
+    Load state_level_map GeoJSON for frontend
+    """
+    state_geojson = load_json('state_level_maps/' + map_name + '.geojson')
+    return Response(state_geojson)
 
 
 @api_view(['GET'])

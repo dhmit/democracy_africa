@@ -50,7 +50,7 @@ export class IndexView extends React.Component {
                     url='/campaign_game/'
                     title='Campaign Game'
                     description='
-                        Try to make a speech to get people to vote for you.
+                        Make a speech to try and get people to vote for you.
                     '
                 />
 

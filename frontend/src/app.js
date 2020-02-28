@@ -13,7 +13,7 @@ import { MapQuiz } from './mapQuiz/mapQuiz.js';
 import { EthnolinguisticCampaign } from './ethnolinguisticCampaign/ethnolinguisticCampaign.js';
 import { BudgetVotingSimViz } from './budgetSimulation/budgetSimulation.js';
 import { DemocracyViz } from './democracyViz/democracyViz.js';
-import { CampaignView } from "./campaign/CampaignView";
+import { CampaignView } from "./campaign/campaignView";
 import { EdXView } from "./UILibrary/components";
 
 // Import all styles
