@@ -1,0 +1,601 @@
+{
+    "South Africa": {
+        "iso": "ZAF",
+        "provinces": [
+            {
+                "name": "Northern Cape",
+                "population": 115,
+                "topic_preferences": [
+                    {
+                        "name": "Handling improving basic health services",
+                        "preferences": [
+                            32, 22, 0, 36, 10
+                        ]
+                    },
+                    {
+                        "name": "Handling addressing educational needs",
+                        "preferences": [
+                            32, 12, 1, 42, 12
+                        ]
+                    },
+                    {
+                        "name": "Handling providing water and sanitation services",
+                        "preferences": [
+                            33, 26, 0, 33, 8
+                        ]
+                    },
+                    {
+                        "name": "Handling maintaining roads and bridges",
+                        "preferences": [
+                            41, 21, 2, 30, 6
+                        ]
+                    },
+                    {
+                        "name": "Handling providing reliable electric supply",
+                        "preferences": [
+                            32, 20, 2, 35, 12
+                        ]
+                    },
+                    {
+                        "name": "Handling promoting equal rights for women",
+                        "preferences": [
+                            28, 28, 4, 29, 11
+                        ]
+                    },
+                    {
+                        "name": "Handling improving living standards for the poor",
+                        "preferences": [
+                            38, 26, 0, 29, 6
+                        ]
+                    },
+                    {
+                        "name": "Handling creating more jobs",
+                        "preferences": [
+                            42, 22, 1, 31, 5
+                        ]
+                    },
+                    {
+                        "name": "Handling fighting corruption",
+                        "preferences": [
+                            42, 29, 0, 26, 3
+                        ]
+                    },
+                    {
+                        "name": "Handling reducing violent community conflict",
+                        "preferences": [
+                            33, 20, 3, 28, 17
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Western Cape",
+                "population": 582,
+                "topic_preferences": [
+                    {
+                        "name": "Handling improving basic health services",
+                        "preferences": [
+                            45, 23, 4, 21, 6
+                        ]
+                    },
+                    {
+                        "name": "Handling addressing educational needs",
+                        "preferences": [
+                            29, 20, 3, 35, 14
+                        ]
+                    },
+                    {
+                        "name": "Handling providing water and sanitation services",
+                        "preferences": [
+                            41, 19, 2, 25, 12
+                        ]
+                    },
+                    {
+                        "name": "Handling maintaining roads and bridges",
+                        "preferences": [
+                            37, 16, 4, 28, 15
+                        ]
+                    },
+                    {
+                        "name": "Handling providing reliable electric supply",
+                        "preferences": [
+                            40, 16, 4, 29, 11
+                        ]
+                    },
+                    {
+                        "name": "Handling promoting equal rights for women",
+                        "preferences": [
+                            36, 17, 4, 33, 9
+                        ]
+                    },
+                    {
+                        "name": "Handling improving living standards for the poor",
+                        "preferences": [
+                            51, 26, 3, 17, 3
+                        ]
+                    },
+                    {
+                        "name": "Handling creating more jobs",
+                        "preferences": [
+                            60, 20, 2, 16, 1
+                        ]
+                    },
+                    {
+                        "name": "Handling fighting corruption",
+                        "preferences": [
+                            54, 24, 5, 13, 5
+                        ]
+                    },
+                    {
+                        "name": "Handling reducing violent community conflict",
+                        "preferences": [
+                            46, 23, 5, 20, 6
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Eastern Cape",
+                "population": 656,
+                "topic_preferences": [
+                    {
+                        "name": "Handling improving basic health services",
+                        "preferences": [
+                            33, 9, 5, 36, 17
+                        ]
+                    },
+                    {
+                        "name": "Handling addressing educational needs",
+                        "preferences": [
+                            29, 16, 4, 31, 20
+                        ]
+                    },
+                    {
+                        "name": "Handling providing water and sanitation services",
+                        "preferences": [
+                            51, 13, 4, 20, 13
+                        ]
+                    },
+                    {
+                        "name": "Handling maintaining roads and bridges",
+                        "preferences": [
+                            47, 12, 4, 24, 14
+                        ]
+                    },
+                    {
+                        "name": "Handling providing reliable electric supply",
+                        "preferences": [
+                            40, 14, 5, 23, 19
+                        ]
+                    },
+                    {
+                        "name": "Handling promoting equal rights for women",
+                        "preferences": [
+                            34, 15, 8, 23, 21
+                        ]
+                    },
+                    {
+                        "name": "Handling improving living standards for the poor",
+                        "preferences": [
+                            54, 14, 4, 20, 8
+                        ]
+                    },
+                    {
+                        "name": "Handling creating more jobs",
+                        "preferences": [
+                            57, 20, 1, 18, 4
+                        ]
+                    },
+                    {
+                        "name": "Handling fighting corruption",
+                        "preferences": [
+                            48, 20, 5, 19, 9
+                        ]
+                    },
+                    {
+                        "name": "Handling reducing violent community conflict",
+                        "preferences": [
+                            33, 11, 10, 30, 17
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "North West",
+                "population": 351,
+                "topic_preferences": [
+                    {
+                        "name": "Handling improving basic health services",
+                        "preferences": [
+                            22, 40, 1, 29, 8
+                        ]
+                    },
+                    {
+                        "name": "Handling addressing educational needs",
+                        "preferences": [
+                            25, 26, 0, 33, 17
+                        ]
+                    },
+                    {
+                        "name": "Handling providing water and sanitation services",
+                        "preferences": [
+                            23, 29, 1, 35, 12
+                        ]
+                    },
+                    {
+                        "name": "Handling maintaining roads and bridges",
+                        "preferences": [
+                            33, 25, 1, 26, 16
+                        ]
+                    },
+                    {
+                        "name": "Handling providing reliable electric supply",
+                        "preferences": [
+                            26, 31, 0, 30, 13
+                        ]
+                    },
+                    {
+                        "name": "Handling promoting equal rights for women",
+                        "preferences": [
+                            26, 23, 5, 33, 13
+                        ]
+                    },
+                    {
+                        "name": "Handling improving living standards for the poor",
+                        "preferences": [
+                            37, 16, 1, 38, 9
+                        ]
+                    },
+                    {
+                        "name": "Handling creating more jobs",
+                        "preferences": [
+                            48, 32, 0, 15, 5
+                        ]
+                    },
+                    {
+                        "name": "Handling fighting corruption",
+                        "preferences": [
+                            40, 43, 1, 15, 1
+                        ]
+                    },
+                    {
+                        "name": "Handling reducing violent community conflict",
+                        "preferences": [
+                            30, 38, 2, 28, 1
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Free State",
+                "population": 275,
+                "topic_preferences": [
+                    {
+                        "name": "Handling improving basic health services",
+                        "preferences": [
+                            44, 19, 1, 22, 14
+                        ]
+                    },
+                    {
+                        "name": "Handling addressing educational needs",
+                        "preferences": [
+                            33, 18, 0, 25, 24
+                        ]
+                    },
+                    {
+                        "name": "Handling providing water and sanitation services",
+                        "preferences": [
+                            40, 15, 1, 29, 14
+                        ]
+                    },
+                    {
+                        "name": "Handling maintaining roads and bridges",
+                        "preferences": [
+                            46, 13, 1, 22, 18
+                        ]
+                    },
+                    {
+                        "name": "Handling providing reliable electric supply",
+                        "preferences": [
+                            45, 12, 0, 27, 17
+                        ]
+                    },
+                    {
+                        "name": "Handling promoting equal rights for women",
+                        "preferences": [
+                            46, 18, 4, 21, 11
+                        ]
+                    },
+                    {
+                        "name": "Handling improving living standards for the poor",
+                        "preferences": [
+                            47, 29, 1, 17, 5
+                        ]
+                    },
+                    {
+                        "name": "Handling creating more jobs",
+                        "preferences": [
+                            57, 19, 0, 21, 3
+                        ]
+                    },
+                    {
+                        "name": "Handling fighting corruption",
+                        "preferences": [
+                            66, 10, 1, 11, 12
+                        ]
+                    },
+                    {
+                        "name": "Handling reducing violent community conflict",
+                        "preferences": [
+                            48, 22, 19, 10, 1
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Limpopo",
+                "population": 540,
+                "topic_preferences": [
+                    {
+                        "name": "Handling improving basic health services",
+                        "preferences": [
+                            23, 21, 2, 48, 5
+                        ]
+                    },
+                    {
+                        "name": "Handling addressing educational needs",
+                        "preferences": [
+                            18, 21, 1, 53, 6
+                        ]
+                    },
+                    {
+                        "name": "Handling providing water and sanitation services",
+                        "preferences": [
+                            26, 29, 2, 41, 2
+                        ]
+                    },
+                    {
+                        "name": "Handling maintaining roads and bridges",
+                        "preferences": [
+                            23, 36, 3, 35, 2
+                        ]
+                    },
+                    {
+                        "name": "Handling providing reliable electric supply",
+                        "preferences": [
+                            19, 24, 1, 53, 4
+                        ]
+                    },
+                    {
+                        "name": "Handling promoting equal rights for women",
+                        "preferences": [
+                            15, 29, 5, 42, 8
+                        ]
+                    },
+                    {
+                        "name": "Handling improving living standards for the poor",
+                        "preferences": [
+                            21, 30, 4, 38, 8
+                        ]
+                    },
+                    {
+                        "name": "Handling creating more jobs",
+                        "preferences": [
+                            56, 25, 1, 16, 3
+                        ]
+                    },
+                    {
+                        "name": "Handling fighting corruption",
+                        "preferences": [
+                            28, 29, 6, 35, 2
+                        ]
+                    },
+                    {
+                        "name": "Handling reducing violent community conflict",
+                        "preferences": [
+                            30, 26, 6, 29, 9
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Mpumalanga",
+                "population": 404,
+                "topic_preferences": [
+                    {
+                        "name": "Handling improving basic health services",
+                        "preferences": [
+                            40, 20, 2, 24, 15
+                        ]
+                    },
+                    {
+                        "name": "Handling addressing educational needs",
+                        "preferences": [
+                            36, 13, 2, 23, 26
+                        ]
+                    },
+                    {
+                        "name": "Handling providing water and sanitation services",
+                        "preferences": [
+                            44, 25, 2, 19, 11
+                        ]
+                    },
+                    {
+                        "name": "Handling maintaining roads and bridges",
+                        "preferences": [
+                            53, 23, 2, 17, 5
+                        ]
+                    },
+                    {
+                        "name": "Handling providing reliable electric supply",
+                        "preferences": [
+                            41, 19, 2, 23, 15
+                        ]
+                    },
+                    {
+                        "name": "Handling promoting equal rights for women",
+                        "preferences": [
+                            36, 18, 1, 24, 20
+                        ]
+                    },
+                    {
+                        "name": "Handling improving living standards for the poor",
+                        "preferences": [
+                            39, 28, 3, 24, 6
+                        ]
+                    },
+                    {
+                        "name": "Handling creating more jobs",
+                        "preferences": [
+                            51, 28, 4, 14, 3
+                        ]
+                    },
+                    {
+                        "name": "Handling fighting corruption",
+                        "preferences": [
+                            55, 22, 3, 17, 3
+                        ]
+                    },
+                    {
+                        "name": "Handling reducing violent community conflict",
+                        "preferences": [
+                            43, 26, 2, 15, 14
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "KwaZulu-Natal",
+                "population": 1027,
+                "topic_preferences": [
+                    {
+                        "name": "Handling improving basic health services",
+                        "preferences": [
+                            33, 22, 3, 34, 8
+                        ]
+                    },
+                    {
+                        "name": "Handling addressing educational needs",
+                        "preferences": [
+                            27, 19, 5, 37, 13
+                        ]
+                    },
+                    {
+                        "name": "Handling providing water and sanitation services",
+                        "preferences": [
+                            28, 24, 6, 33, 9
+                        ]
+                    },
+                    {
+                        "name": "Handling maintaining roads and bridges",
+                        "preferences": [
+                            28, 17, 5, 34, 15
+                        ]
+                    },
+                    {
+                        "name": "Handling providing reliable electric supply",
+                        "preferences": [
+                            29, 23, 5, 34, 8
+                        ]
+                    },
+                    {
+                        "name": "Handling promoting equal rights for women",
+                        "preferences": [
+                            22, 28, 7, 31, 12
+                        ]
+                    },
+                    {
+                        "name": "Handling improving living standards for the poor",
+                        "preferences": [
+                            42, 24, 4, 25, 5
+                        ]
+                    },
+                    {
+                        "name": "Handling creating more jobs",
+                        "preferences": [
+                            55, 22, 5, 15, 3
+                        ]
+                    },
+                    {
+                        "name": "Handling fighting corruption",
+                        "preferences": [
+                            41, 26, 8, 23, 3
+                        ]
+                    },
+                    {
+                        "name": "Handling reducing violent community conflict",
+                        "preferences": [
+                            26, 30, 8, 29, 8
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Gauteng",
+                "population": 1227,
+                "topic_preferences": [
+                    {
+                        "name": "Handling improving basic health services",
+                        "preferences": [
+                            28, 22, 3, 42, 5
+                        ]
+                    },
+                    {
+                        "name": "Handling addressing educational needs",
+                        "preferences": [
+                            24, 22, 3, 40, 11
+                        ]
+                    },
+                    {
+                        "name": "Handling providing water and sanitation services",
+                        "preferences": [
+                            21, 19, 1, 46, 13
+                        ]
+                    },
+                    {
+                        "name": "Handling maintaining roads and bridges",
+                        "preferences": [
+                            30, 19, 2, 36, 13
+                        ]
+                    },
+                    {
+                        "name": "Handling providing reliable electric supply",
+                        "preferences": [
+                            32, 24, 1, 34, 9
+                        ]
+                    },
+                    {
+                        "name": "Handling promoting equal rights for women",
+                        "preferences": [
+                            21, 20, 3, 41, 15
+                        ]
+                    },
+                    {
+                        "name": "Handling improving living standards for the poor",
+                        "preferences": [
+                            41, 25, 3, 26, 4
+                        ]
+                    },
+                    {
+                        "name": "Handling creating more jobs",
+                        "preferences": [
+                            49, 22, 1, 24, 3
+                        ]
+                    },
+                    {
+                        "name": "Handling fighting corruption",
+                        "preferences": [
+                            45, 25, 2, 25, 3
+                        ]
+                    },
+                    {
+                        "name": "Handling reducing violent community conflict",
+                        "preferences": [
+                            21, 27, 8, 35, 9
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
