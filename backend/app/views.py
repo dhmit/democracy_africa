@@ -41,6 +41,7 @@ def africa_map_geojson(request):
     """
     Load Africa map GeoJSON for frontend
     """
+
     africa_geojson = load_json('africa.geojson')
     return Response(africa_geojson)
 

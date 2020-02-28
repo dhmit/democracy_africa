@@ -158,7 +158,7 @@ export class campaignView extends  React.Component {
      */
     async componentDidMount() {
         try {
-            const map= await fetch('/api/state_map_geojson/ZAF/', {
+            const map = await fetch('/api/state_map_geojson/ZAF/', {
                 method: 'GET',
                 headers: {
                     'Content-type': 'application/json',
