@@ -28,7 +28,7 @@ export class SlaveTradeSim extends React.Component {
             <div>
                 {this.state.view === 'intro' && (
                     <>
-                        <IntroView desc={'gygygygy'} />
+                        <IntroView desc={'lorem'} />
                         <button
                             onClick={() => this.setState({view: 'main'})}
                         > Get started</button>
