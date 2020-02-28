@@ -147,8 +147,8 @@ export class CampaignView extends  React.Component {
             map_data: null,
             clicked_province: null,
         };
-        this.map_height = 1200;
-        this.map_width = 1200;
+        this.map_height = 700;
+        this.map_width = 700;
         this.updatePopulation = this.updatePopulation.bind(this);
         this.getProvinceInfo = this.getProvinceInfo.bind(this);
     }
@@ -228,6 +228,11 @@ export class CampaignView extends  React.Component {
         return (
             <>
                 <h1>Campaign Game</h1><hr/>
+                <Speech
+                    population={this.state.populationData['citizen_list']}
+                    countryName={"South Africa"}
+                    updatePopulation={this.updatePopulation}
+                />
                 <hr/>
                 {this.state.clicked_province &&
                     (
@@ -240,27 +245,30 @@ export class CampaignView extends  React.Component {
                         </div>
                     )
                 }
-                <svg
-                    height={this.map_height}
-                    width={this.map_width}
-                    id="content"
-                >
-                    {this.state.map_data.map((country, i) => {
-                        let countryFill = "#F6F4D2";
+                <div className={"campaign-map"}>
+                    <svg
+                        height={this.map_height}
+                        width={this.map_width}
+                        id="content"
+                    >
+                        {this.state.map_data.map((country, i) => {
+                            let countryFill = "#F6F4D2";
 
-                        return <MapPath
-                            key={i}
-                            path={country.svg_path}
-                            id={country.postal}
-                            fill={countryFill}
-                            stroke="black"
-                            strokeWidth="1"
-                            handle_country_click={() =>
-                                this.handle_province_map_click(country.name)}
-                            useColorTransition={false}
-                        />;
-                    })}
-                </svg>
+                            return <MapPath
+                                key={i}
+                                path={country.svg_path}
+                                id={country.postal}
+                                fill={countryFill}
+                                stroke="black"
+                                strokeWidth="1"
+                                handle_country_click={() =>
+                                    this.handle_province_map_click(country.name)}
+                                useColorTransition={false}
+                            />;
+                        })}
+                    </svg>
+                </div>
+
             </>
         );
     }
