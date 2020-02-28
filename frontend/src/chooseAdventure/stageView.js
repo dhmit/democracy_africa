@@ -8,10 +8,12 @@ const START_STAGE = {
     'options': [{
         'text': 'Start a media campaign',
         'stageName': 'MEDIA_STAGE',
+        'successFactor': 20,
     },
     {
         'text': 'Take direct action',
         'stageName': 'DIRECT_STAGE',
+        'successFactor': 10,
     }],
 };
 
@@ -19,12 +21,18 @@ const MEDIA_STAGE = {
     'text': 'You chose to start a media campaign.',
     'options': [{
         'text': 'Twitter',
+        'stageName': null,
+        'successFactor': 420,
     },
     {
         'text': 'Facebook',
+        'stageName': null,
+        'successFactor': 0,
     },
     {
         'text': 'Radio',
+        'stageName': null,
+        'successFactor': 30,
     }],
 };
 
@@ -32,9 +40,13 @@ const DIRECT_STAGE = {
     'text': 'You chose to take direct action against the school.',
     'options': [{
         'text': 'Sue the principal',
+        'stageName': null,
+        'successFactor': 10,
     },
     {
         'text': 'Ask the principal nicely',
+        'stageName': null,
+        'successFactor': 5,
     }],
 };
 
@@ -54,44 +66,50 @@ class Option extends React.Component {
     }
 
     render() {
+        let stage = getStageFromName(this.props.option.stageName);
+        let option = this.props.option;
         return (
             <button
                 onClick={() =>
-                    this.props.setActiveStage(this.props.option.stageName)}
+                    this.props.setStage(stage, option)}
             >{this.props.option.text}</button>
         );
     }
 }
 Option.propTypes = {
     option: PropTypes.object,
-    setActiveStage: PropTypes.func,
+    setStage: PropTypes.func,
 };
 
 /**
  * Component for displaying choose your own adventure skeleton
  */
 
-
 class StageView extends React.Component {
     constructor(props) {
         super(props);
-        let stage = getStageFromName(this.props.stageName);
-        console.log(stage);
         this.state = {
-            stage: stage,
+            stage: getStageFromName("START_STAGE"),
         };
     }
 
-    setActiveStage = (stage) => {
+    setStage = (stage, option) => {
+        this.props.updateHistory(option);
+        this.props.updateSuccess(option.successFactor);
+        if (option.stageName) {
+            this.setState({stage: getStageFromName(option.stageName)});
+        } else {
+            this.props.setView('end');
+        }
         this.setState({ stage: stage });
-    }
+    };
 
     render() {
         let optionComponents = <div>Loading...</div>;
         if (this.state.stage.options) {
             optionComponents = this.state.stage.options.map((option, k) =>
                 <Option key={k} option={option}
-                    setActiveStage={this.setActiveStage}
+                    setStage={this.setStage}
                 />);
         }
         return (
@@ -104,7 +122,9 @@ class StageView extends React.Component {
 }
 StageView.propTypes = {
     stageName: PropTypes.string,
+    updateHistory: PropTypes.func,
+    setView: PropTypes.func,
+    updateSuccess: PropTypes.func,
 };
-
 
 export default StageView;
