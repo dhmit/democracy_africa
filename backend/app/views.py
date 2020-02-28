@@ -32,8 +32,11 @@ def load_country_demographics(filename):
     with open(path, encoding='utf-8') as file:
         reader = csv.reader(file, delimiter=',')
         headers = next(reader)
+        headers = [header.replace("\n", "") for header in headers]  # removes any newline
+        # characters in the headers
         for header in headers:
-            if header != "" and header not in district_demographics.keys():
+            if header != "" and header not in district_demographics.keys() and header != "\ufeff":
+
                 district_demographics[header] = {}
         next_line = next(reader, "end of the line")
         while next_line != "end of the line":
@@ -44,7 +47,6 @@ def load_country_demographics(filename):
             next_line = next(reader, "end of the line")
 
     print(district_demographics)
-    print(district_demographics["KEN: Nairobi"])
 
 
 
@@ -75,7 +77,11 @@ def state_map_geojson(request, map_name):
     Load state_level_map GeoJSON for frontend
     """
     state_geojson = load_json('state_level_maps/' + map_name + '.geojson')
+    load_country_demographics("language_spoken_in_home.csv")
     load_country_demographics("tribe_or_ethnic_group.csv")
+    load_country_demographics("occupation_of_respondent.csv")
+    load_country_demographics("religion_of_respondent.csv")
+    load_country_demographics("kenya_population.csv")
     return Response(state_geojson)
 
 

@@ -1,4 +1,5 @@
-﻿,KEN: Nairobi,KEN: Central,KEN: Eastern,KEN: Rift Valley,KEN: Nyanza,KEN: Western,KEN: North Eastern,"KEN: Coast"
+﻿,Nairobi,Central,Eastern,Rift Valley,Nyanza,Western,North Eastern,"Coast
+"
 Never had a job,0.081,0.039,0.033,0.219,0.038,0.189,0.508,".164
 "
 Student,0.069,0.054,0.061,0.038,0.030,0.026,0.032,".019
@@ -27,7 +28,8 @@ Upper0.000level professional,0.036,0.011,0.000,0.004,0.008,0.006,0.000,".019
 "
 Other,0.090,0.000,0.029,0.060,0.009,0.025,0.024,".037
 "
-Don´t know,0.010,0.000,0.000,0.000,0.000,0.000,0.000,"0.000"
+Don´t know,0.010,0.000,0.000,0.000,0.000,0.000,0.000,"0.000
+"
 ,,,,,,,,
 ,,,,,,,,
 ,,,,,,,,
