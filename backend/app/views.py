@@ -36,7 +36,6 @@ def load_country_demographics(filename):
         # characters in the headers
         for header in headers:
             if header != "" and header not in district_demographics.keys() and header != "\ufeff":
-
                 district_demographics[header] = {}
         next_line = next(reader, "end of the line")
         while next_line != "end of the line":
@@ -47,8 +46,6 @@ def load_country_demographics(filename):
             next_line = next(reader, "end of the line")
 
     print(district_demographics)
-
-
 
 
 def load_json(filename) -> dict:
