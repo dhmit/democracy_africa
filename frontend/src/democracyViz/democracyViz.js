@@ -118,6 +118,10 @@ export class DemocracyViz extends  React.Component {
                 {/*    </option>*/}
                 {/*</select>*/}
                 <br/><br/>
+                <br/>
+                <h3 >VDem Index Quiz</h3>
+                <p>instructions for playing game and/pr motivating statement could go here</p>
+                <br/>
                 <div className = 'slidecontainer'>
                     <div className={'map'}>
                         <input onChange={(e) => this.handleYearChange(e)}
@@ -127,9 +131,6 @@ export class DemocracyViz extends  React.Component {
                     </div>
                     {this.state.year}
                 </div>
-                <br/>
-                <h3 >VDem Index Quiz</h3>
-                <p>instructions for playing game and/pr motivating statement could go here</p>
                 <br/>
                 <QuestionDataBase/>
                 <div className={'map'}>
@@ -269,8 +270,8 @@ export class DemocracyMap extends React.Component {
         return (
             <>
                 <svg
-                    height={document.getElementById("root").clientWidth}
-                    width={document.getElementById("root").clientWidth}
+                    height={document.parentElement.clientWidth}
+                    width={document.parentElement.clientWidth}
                     id="content"
                 >
                     {this.state.map_data.map((country, i) => {
@@ -286,15 +287,19 @@ export class DemocracyMap extends React.Component {
                             ? colorScale(countryScore)
                             : "grey";
                         return (
-                            <MapPath
-                                key={i}
-                                path={country.svg_path}
-                                id={country.iso}
-                                fill={color}
-                                stroke={"black"}
-                                strokeWidth={"1"}
-                                useColorTransition={true}
-                            />
+                            // TODO: fix this later so we can actually read width of parent OR
+                            //  figure out how to assign an ID
+                            <div>
+                                <MapPath
+                                    key={i}
+                                    path={country.svg_path}
+                                    id={country.iso}
+                                    fill={color}
+                                    stroke={"black"}
+                                    strokeWidth={"1"}
+                                    useColorTransition={true}
+                                />
+                            </div>
                         );
                     })}
                 </svg>
@@ -303,15 +308,15 @@ export class DemocracyMap extends React.Component {
     }
     async componentDidUpdate() {
         const scale = .9;
-        if (this.state.map_height !== document.getElementById("root").clientWidth){
+        if (this.state.map_height !== document.parentElement.clientWidth){
             const  res =  await fetch('/api/africa_map_geojson/');
             const geo_json = await res.json();
             this.setState({
-                map_height: document.getElementById("root").clientWidth*scale,
-                map_width: document.getElementById("root").clientWidth*scale,
+                map_height: document.parentElement.clientWidth*scale,
+                map_width: document.parentElement.clientWidth*scale,
                 map_data: project_features_and_create_svg_paths(geo_json,
-                    document.getElementById("root").clientWidth*scale,
-                    document.getElementById("root").clientWidth*scale),
+                    document.parentElement.clientWidth*scale,
+                    document.parentElement.clientWidth*scale),
             });
         }
     }
