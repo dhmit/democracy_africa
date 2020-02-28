@@ -10,8 +10,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { IndexView } from './index/index.js';
 import { AllView } from './UILibrary/allView.js';
 import { MapQuiz } from './mapQuiz/mapQuiz.js';
+import { EthnolinguisticCampaign } from './ethnolinguisticCampaign/ethnolinguisticCampaign.js';
 import { BudgetVotingSimViz } from './budgetSimulation/budgetSimulation.js';
 import { DemocracyViz } from './democracyViz/democracyViz.js';
+import { CampaignView } from "./campaign/campaignView";
 import { EdXView } from "./UILibrary/components";
 import { ethnoLinguisticCampaignViz } from './ethnoLinguisticCampaign/ethnoLinguisticCampaign';
 
@@ -28,6 +30,8 @@ window.app_modules = {
     MapQuiz,
     BudgetVotingSimViz,
     DemocracyViz,
+    EthnolinguisticCampaign,
+    CampaignView,
     EdXView,
     ethnoLinguisticCampaignViz,
 };
