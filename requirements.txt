@@ -1,3 +1,4 @@
+pandas
 Django>=3
 django-cors-headers>=3.0.2
 django-webpack-loader>=0.6.0
