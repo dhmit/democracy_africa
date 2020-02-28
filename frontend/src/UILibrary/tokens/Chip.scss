@@ -1,0 +1,15 @@
+.-chip-material-ui--shim {
+  border-radius: 15px;
+  background: #eee;
+  font-weight: bold;
+  font-size: 12px;
+  display: inline-block;
+  padding: 5px 16px;
+  user-select: none;
+
+  label {
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+  }
+}

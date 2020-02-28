@@ -1,0 +1,25 @@
+@mixin skeletonLoader {
+  background-color: $color_grey_200;
+	overflow: hidden;
+	position: relative;
+  text-indent: -9999px;
+  &::before {
+		animation: animationSkeleton 1s infinite;
+		background: linear-gradient(90deg, $color_grey_200 0%, darken($color_grey_200, 3%) 30%, darken($color_grey_200, 3%) 70%, $color_grey_200 100%);
+		content: '';
+		height: 100%;
+		left: 0;
+		position: absolute;
+		top: 0;
+		transform: translateX(-100%);
+		width: 100%;
+	}
+}
+
+@mixin skeletonLoaderDark {
+  @include skeletonLoader;
+  background-color: $color_grey_800;
+  &::before {
+		background: linear-gradient(90deg, $color_grey_800 0%, lighten($color_grey_800, 3%) 30%, lighten($color_grey_800, 3%) 70%, $color_grey_800 100%);
+	}
+}

@@ -2,9 +2,12 @@
  * Import all styles. This file is imported in app.js.
  */
 @import "../../node_modules/bootstrap/scss/bootstrap";
+@import './scss/index';
+@import './tokens/Chip';
+@import './tokens/Colors';
+@import './tokens/Font';
+@import './tokens/Typography';
 @import '../mapQuiz/mapQuiz';
 @import '../democracyViz/democracyViz';
 @import '../budgetSimulation/budgetSimulation';
 @import './edx.scss';
-
-
