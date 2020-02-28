@@ -21,9 +21,9 @@ class Speech extends React.Component {
         this.state = {
             speechProposal: get_default_proposal(this.topic_names),
             result: 0,
-            total: 4,
+            total: 10,
         };
-        this.difference_threshold = 15;
+        this.difference_threshold = 14;
         this.max_priority_points = 50;
     }
 
@@ -34,7 +34,7 @@ class Speech extends React.Component {
     resetSpeech = () => {
         this.setState({
             speechProposal: get_default_proposal(this.topic_names),
-            total: 4,
+            total: 10,
         }, () => {
             this.setState({result: this.countSupporters()});
         });
