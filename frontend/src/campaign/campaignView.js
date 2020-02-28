@@ -149,7 +149,7 @@ export class CampaignView extends  React.Component {
      * When this component is mounted to the DOM, get democracy score data from the server
      */
     async componentDidMount() {
-       try {
+        try {
             const map= await fetch('/api/state_map_geojson/ZAF/', {
                 method: 'GET',
                 headers: {
@@ -180,53 +180,44 @@ export class CampaignView extends  React.Component {
             this.setState({
                 populationData: populationData,
             });
-        }catch (e) {
+        } catch (e) {
             console.log(e);
         }
     }
-    }
-
-    initialize_input_tracker(map_data) {
-        const input_tracker = {};
-        for (const feature of map_data) {
-            input_tracker[feature.name] = "None";
-        }
-        return input_tracker;
-    }
 
     render() {
-        if (!this.state.map_populationData) {
+        if (!this.state.populationData) {
             return (<div>Loading!</div>);
 
         }
         return (
             <>
-              <h1>Campaign Game</h1><hr/>
-              <Speech
-                  population={this.state.populationData['citizen_list']}
-                  country_name={"South Africa"}
-              />
-              <svg
-                  height= {this.map_height}
-                  width= {this.map_width}
-                  id="content"
-              >
+                <h1>Campaign Game</h1><hr/>
+                <Speech
+                    population={this.state.populationData['citizen_list']}
+                    country_name={"South Africa"}
+                />
+                <svg
+                    height= {this.map_height}
+                    width= {this.map_width}
+                    id="content"
+                >
 
-                  {this.state.map_data.map((country, i) => {
-                      let countryFill = "#F6F4D2";
+                    {this.state.map_data.map((country, i) => {
+                        let countryFill = "#F6F4D2";
 
-                      return <MapPath
-                          key={i}
-                          path={country.svg_path}
-                          id={country.postal}
-                          fill={countryFill}
-                          stroke="black"
-                          strokeWidth="1"
+                        return <MapPath
+                            key={i}
+                            path={country.svg_path}
+                            id={country.postal}
+                            fill={countryFill}
+                            stroke="black"
+                            strokeWidth="1"
 
-                          useColorTransition={false}
-                      />;
-                  })}
-              </svg>
+                            useColorTransition={false}
+                        />;
+                    })}
+                </svg>
             </>
         );
     }
