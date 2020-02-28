@@ -10,6 +10,7 @@ export class ChooseAdventureView extends React.Component {
         super(props);
         this.state = {
             view: 'intro',
+            history: [],
         };
     }
 
@@ -19,7 +20,13 @@ export class ChooseAdventureView extends React.Component {
 
     setView = (view) => {
         this.setState({ view: view });
-    }
+    };
+
+    updateHistory = (option) => {
+        const history = this.state.history.slice();
+        history.append(option);
+        this.setState({history});
+    };
 
     render() {
         const desc = 'example paragraph: Paragraphs are the building blocks of papers. Many ' +
@@ -41,7 +48,8 @@ export class ChooseAdventureView extends React.Component {
         return (
             <div>
                 {this.state.view === 'intro' && <IntroView desc={desc} setView={this.setView}/>}
-                {this.state.view === 'stage' && <StageView stageName={"START_STAGE"}/>}
+                {this.state.view === 'stage' && <StageView stageName={"START_STAGE"}
+                    updateHistory={this.updateHistory}/>}
             </div>
         );
 

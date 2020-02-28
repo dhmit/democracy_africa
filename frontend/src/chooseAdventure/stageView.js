@@ -55,10 +55,11 @@ class Option extends React.Component {
 
     render() {
         let stage = getStageFromName(this.props.option.stageName);
+        let option = this.props.option;
         return (
             <button
                 onClick={() =>
-                    this.props.setStage(stage)}
+                    this.props.setStage(stage, option)}
             >{this.props.option.text}</button>
         );
     }
@@ -80,13 +81,13 @@ class StageView extends React.Component {
         console.log(stage);
         this.state = {
             stage: stage,
-            history: [],
         };
     }
 
-    setStage = (stage) => {
+    setStage = (stage, option) => {
+        this.props.updateHistory(option);
         this.setState({ stage: stage });
-    };
+    }
 
     render() {
         let optionComponents = <div>Loading...</div>;
@@ -106,6 +107,7 @@ class StageView extends React.Component {
 }
 StageView.propTypes = {
     stageName: PropTypes.string,
+    updateHistory: PropTypes.func,
 };
 
 export default StageView;
