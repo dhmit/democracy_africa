@@ -177,6 +177,7 @@ def load_trust_data():
     path = Path(settings.BACKEND_DATA_DIR, filename)
     with open(path, encoding='utf-8') as trust_data_csv_file:
         reader = csv.DictReader(trust_data_csv_file, delimiter=',')
+
     return reader
 
 
