@@ -29,13 +29,22 @@ from.serializers import PopulationSerializer
 def load_country_demographics(filename):
     path = Path(settings.BACKEND_DATA_DIR, filename)
     district_demographics = {}
+    print("Made it this far")
     with open(path, encoding='utf-8') as file:
         reader = csv.reader(file, delimiter=',')
         headers = next(reader)
         for header in headers:
-            if header != "":
+            if header != "" and header not in district_demographics.keys():
                 district_demographics[header] = {}
-    print(district_demographics)
+        next_line = next(reader, "end of the line")
+        while next_line != "end of the line":
+            category = next_line[0]
+            for i in range(1, len(headers)):
+                if next_line[i] != "" and category != "":
+                    district_demographics[headers[i]][category] = next_line[i]
+            next_line = next(reader, "end of the line")
+
+    print(district_demographics["KEN: Nairobi"])
 
 
 def load_json(filename) -> dict:
@@ -64,6 +73,7 @@ def state_map_geojson(request, map_name):
     Load state_level_map GeoJSON for frontend
     """
     state_geojson = load_json('state_level_maps/' + map_name + '.geojson')
+    load_country_demographics("language_spoken_in_home.csv")
     return Response(state_geojson)
 
 
