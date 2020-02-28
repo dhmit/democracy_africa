@@ -1,5 +1,5 @@
 import React from 'react';
-// import * as PropTypes from 'prop-types';
+import * as PropTypes from 'prop-types';
 
 // TODO: hardcode data structure here, add a reference with dictionary
 
@@ -44,6 +44,9 @@ const NAME_TO_STAGE = {
     'DIRECT_STAGE' : DIRECT_STAGE
 };
 
+function getStageFromName(stageName) {
+    return NAME_TO_STAGE[stageName];
+}
 
 /**
  * Component for displaying choose your own adventure skeleton
@@ -54,20 +57,62 @@ const NAME_TO_STAGE = {
 class StageView extends React.Component {
     constructor(props) {
         super(props);
+        let stage = getStageFromName(this.props.stageName);
+        console.log(stage);
         this.state = {
-            stage: START_STAGE,
+            stage: stage,
+            optionComponents: this.buildOptionComponents(stage.options)
         };
+    }
+
+    buildOptionComponents(options) {
+        let optionComponents = [];
+        for (let i = 0; i < options.length; i++) {
+            let option = options[i];
+            let component =  <Option option={option}
+                setActiveStage={(stage) => this.setActiveStage(stage)}
+                key={i}/>;
+            optionComponents.push(component);
+        }
+        return optionComponents;
+    }
+
+    setActiveStage(stage) {
+        this.setState({stage});
     }
 
     render() {
         return (
-            <div>
-                hello IVY
-
-            </div>
+            <React.Fragment>
+                <p>{this.state.stage.text}</p>
+                {this.state.optionComponents}
+            </React.Fragment>
         );
-
     }
 }
+StageView.propTypes = {
+    stageName: PropTypes.string,
+};
+
+class Option extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        let option = this.props.option;
+        let text = option.text;
+        let stageName = option.stageName;
+        let stage = getStageFromName(stageName);
+        let setActiveStage = this.props.setActiveStage;
+        return (
+            <button onClick={setActiveStage(stage)}>{text}</button>
+        );
+    }
+}
+Option.propTypes = {
+    option: PropTypes.object,
+    setActiveStage: PropTypes.func,
+};
 
 export default StageView;
