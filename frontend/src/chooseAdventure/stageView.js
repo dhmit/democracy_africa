@@ -54,17 +54,18 @@ class Option extends React.Component {
     }
 
     render() {
+        let stage = getStageFromName(this.props.option.stageName);
         return (
             <button
                 onClick={() =>
-                    this.props.setActiveStage(this.props.option.stageName)}
+                    this.props.setStage(stage)}
             >{this.props.option.text}</button>
         );
     }
 }
 Option.propTypes = {
     option: PropTypes.object,
-    setActiveStage: PropTypes.func,
+    setStage: PropTypes.func,
 };
 
 /**
@@ -79,19 +80,20 @@ class StageView extends React.Component {
         console.log(stage);
         this.state = {
             stage: stage,
+            history: [],
         };
     }
 
-    setActiveStage = (stage) => {
+    setStage = (stage) => {
         this.setState({ stage: stage });
-    }
+    };
 
     render() {
         let optionComponents = <div>Loading...</div>;
         if (this.state.stage.options) {
             optionComponents = this.state.stage.options.map((option, k) =>
                 <Option key={k} option={option}
-                    setActiveStage={this.setActiveStage}
+                    setStage={this.setStage}
                 />);
         }
         return (
@@ -105,6 +107,5 @@ class StageView extends React.Component {
 StageView.propTypes = {
     stageName: PropTypes.string,
 };
-
 
 export default StageView;
