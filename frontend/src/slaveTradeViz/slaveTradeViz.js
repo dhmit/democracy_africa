@@ -1,6 +1,5 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
-// import IntroView from './introView.js';
 // import StartView from './startView.js';
 
 import {
@@ -288,29 +287,6 @@ export class SlaveTradeViz extends React.Component {
                 {district_info}
 
             </>);
-        //
-        // const blurb = "There are many variations of passages of Lorem Ipsum " +
-        //     "available, but the majority have suffered alteration in some form," +
-        //     " by injected humour, or randomised words which don't look even slightly " +
-        //     "believable. If you are going to use a passage of Lorem Ipsum, you need " +
-        //     "to be sure there isn't anything embarrassing hidden in the middle of text. " +
-        //     "All the Lorem Ipsum generators on the Internet tend to repeat predefined " +
-        //     "chunks as necessary, making this the first true generator on the I";
-        //
-        // //TODO: make skeleton
-        // //TODO: move current stuff (<>) to startView.js
-        // //TODO: figure out what to move to startView??
-        //
-        //
-        //
-        //
-        // return (
-        //     <div>
-        //         {this.state.view === 'intro' && <IntroView desc={blurb}/>}
-        //         {this.state.view === 'stage' && <StartView/>}
-        //         <button onClick={() => this.setState({ view: 'stage'})}> Get started </button>
-        //     </div>
-        // );
     }
 }
 SlaveTradeViz.propTypes = {

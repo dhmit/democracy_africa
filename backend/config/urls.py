@@ -19,10 +19,12 @@ from django.urls import path
 
 from app.common import render_react_view
 from app.views import (
+    state_map_geojson,
     africa_map_geojson,
     population,
     africa_demographics_by_country,
     democracy_score_json,
+    campaign_population,
     trust_data,
     state_map_geojson,
 )
@@ -46,10 +48,12 @@ urlpatterns = [
 
     # API endpoints
     path('api/africa_map_geojson/', africa_map_geojson),
+    path('api/state_map_geojson/<str:map_name>/', state_map_geojson),
     path('api/population/', population),
     path('api/state_map_geojson/<str:map_name>/', state_map_geojson),
     path('api/country_demographics/', africa_demographics_by_country),
     path('api/democracy_scores/', democracy_score_json),
+    path('api/campaign_info/', campaign_population),
     path('api/trust_data/', trust_data),
 
     # React views
@@ -58,5 +62,6 @@ urlpatterns = [
     edx_path('map_quiz/', 'MapQuiz'),
     edx_path('budget_voting_simulation/', 'BudgetVotingSimViz'),
     edx_path('heat_map/', 'DemocracyViz'),
-    edx_path('trust_visualization/', 'SlaveTradeViz'),
+    edx_path('campaign_game/', 'CampaignView')
+    edx_path('trust_visualization/', 'SlaveTradeSim'),
 ]
