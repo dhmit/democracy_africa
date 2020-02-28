@@ -29,6 +29,10 @@ export class AllView extends React.Component {
                     app={<DemocracyViz />}
                     title="Map Quiz"
                 />
+                <EdXView
+                    app={<ethnoLinguisticCampaignViz />}
+                    title="ethnoLinguisticCampaignViz"
+                />
             </>
         );
     }
