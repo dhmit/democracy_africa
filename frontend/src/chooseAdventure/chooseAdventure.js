@@ -1,6 +1,7 @@
 import React from 'react';
 import IntroView from './introView.js';
 import StageView from './stageView.js';
+import EndView from './endView.js';
 
 
 /**
@@ -14,6 +15,7 @@ export class ChooseAdventureView extends React.Component {
         super(props);
         this.state = {
             view: 'intro',
+            successTotal: 0,
         };
     }
 
@@ -23,6 +25,12 @@ export class ChooseAdventureView extends React.Component {
 
     setView = (view) => {
         this.setState({ view: view });
+    }
+
+    updateSuccess = (successFactor) => {
+        this.setState((prevState) => ({
+            successTotal: prevState.successTotal + successFactor,
+        }));
     }
 
     render() {
@@ -44,8 +52,12 @@ export class ChooseAdventureView extends React.Component {
             '“controlling idea,” because it controls what happens in the rest of the paragraph.';
         return (
             <div>
-                {this.state.view === 'intro' && <IntroView desc={desc} setView={this.setView}/>}
-                {this.state.view === 'stage' && <StageView stageName={"START_STAGE"}/>}
+                {this.state.view === 'intro' && <IntroView desc={desc} setView={this.setView} />}
+                {this.state.view === 'stage' &&
+                    <StageView setView={this.setView}
+                        updateSuccess={this.updateSuccess}
+                    />}
+                {this.state.view === 'end' && <EndView successTotal={this.state.successTotal}/>}
             </div>
         );
 
