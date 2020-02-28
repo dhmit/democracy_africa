@@ -228,11 +228,6 @@ export class campaignView extends  React.Component {
         return (
             <>
                 <h1>Campaign Game</h1><hr/>
-                <Speech
-                    population={this.state.populationData['citizen_list']}
-                    countryName={"South Africa"}
-                    updatePopulation={this.updatePopulation}
-                />
                 <hr/>
                 {this.state.clicked_province &&
                     (
@@ -246,8 +241,8 @@ export class campaignView extends  React.Component {
                     )
                 }
                 <svg
-                    height="600"
-                    width="1200"
+                    height={this.map_height}
+                    width={this.map_width}
                     id="content"
                 >
                     {this.state.map_data.map((country, i) => {
