@@ -201,7 +201,7 @@
                 ]
             },
             {
-                "name": "North West",
+                "name": "North-West",
                 "population": 351,
                 "topic_preferences": [
                     {
@@ -333,7 +333,7 @@
                 ]
             },
             {
-                "name": "Limpopo",
+                "name": "Limpopo Province",
                 "population": 540,
                 "topic_preferences": [
                     {
