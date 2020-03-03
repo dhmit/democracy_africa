@@ -13,7 +13,7 @@ export class ChooseAdventureView extends React.Component {
         this.state = {
             view: 'intro',
             history: [],
-            successTotal: 0,
+            successTotal: 1,
         };
     }
 
@@ -33,13 +33,13 @@ export class ChooseAdventureView extends React.Component {
 
     updateSuccess = (successFactor) => {
         this.setState((prevState) => ({
-            successTotal: prevState.successTotal + successFactor,
+            successTotal: prevState.successTotal * successFactor,
         }));
     };
 
     resetProgress = () => {
         this.setState({
-            successTotal: 0,
+            successTotal: 1,
             history: [],
         });
     };

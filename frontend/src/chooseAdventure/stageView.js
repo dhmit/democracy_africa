@@ -1,19 +1,21 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
 
-// TODO: hardcode data structure here, add a reference with dictionary
-
 const START_STAGE = {
     'text': 'Your school district\'s budget was cut!',
     'options': [{
         'text': 'Start a media campaign',
         'stageName': 'MEDIA_STAGE',
-        'successFactor': 20,
+        'successFactor': 0.9,
+        'successDetail': 'Since elections are taking place soon, it\'s good to raise awareness' +
+            ' about your issue among potential voters.',
     },
     {
         'text': 'Take direct action',
         'stageName': 'DIRECT_STAGE',
-        'successFactor': 10,
+        'successFactor': 0.1,
+        'successDetail': 'Unfortunately, the school officials are corrupt in your district, so ' +
+            'direct action is not as effective.',
     }],
 };
 
@@ -22,17 +24,23 @@ const MEDIA_STAGE = {
     'options': [{
         'text': 'Twitter',
         'stageName': null,
-        'successFactor': 420,
+        'successFactor': 0.8,
+        'successDetail': 'Twitter is huge in your country! You\'ve successfully raised awareness' +
+            ' about your issue. ',
     },
     {
         'text': 'Facebook',
         'stageName': null,
         'successFactor': 0,
+        'successDetail': 'Facebook is banned in your country, so most people can\'t see your' +
+            ' posts.',
     },
     {
         'text': 'Radio',
         'stageName': null,
-        'successFactor': 30,
+        'successFactor': 0.6,
+        'successDetail': 'The people who run the most popular local radio station support your' +
+            ' cause, and agree to share your message with the community.'
     }],
 };
 
@@ -41,12 +49,15 @@ const DIRECT_STAGE = {
     'options': [{
         'text': 'Sue the principal',
         'stageName': null,
-        'successFactor': 10,
+        'successFactor': 0.1,
+        'successDetail': 'This was a joke filler option, it should be replaced with something' +
+            ' else.',
     },
     {
         'text': 'Ask the principal nicely',
         'stageName': null,
-        'successFactor': 5,
+        'successFactor': 0.5,
+        'successDetail': 'The principal says no and has security escort you out.',
     }],
 };
 

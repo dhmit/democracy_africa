@@ -17,11 +17,15 @@ class EndView extends React.Component {
 
     render() {
         const choices = this.props.history.map((option, k) => (
-            <p key={k}>Choosing {option.text} increased success by {option.successFactor}</p>
+            <div key={k}>
+                Choosing to {option.text} has a {option.successFactor} chance of success.
+                <br />
+                {option.successDetail}
+            </div>
         ));
         return (
             <div>
-                <div>Your success total was {this.props.successTotal}</div>
+                <div>You had {this.props.successTotal} chance of succeeding.</div>
                 {choices}
                 <button onClick={() => this.resetAdventure()}>Try again</button>
             </div>
