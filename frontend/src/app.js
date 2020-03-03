@@ -14,6 +14,7 @@ import { BudgetVotingSimViz } from './budgetSimulation/budgetSimulation.js';
 import { DemocracyViz } from './democracyViz/democracyViz.js';
 import { CampaignView } from "./campaign/campaignView";
 import { EdXView } from "./UILibrary/components";
+import { ChooseAdventureView } from "./chooseAdventure/chooseAdventure.js";
 
 // Import all styles
 import './UILibrary/styles.scss';
@@ -30,4 +31,5 @@ window.app_modules = {
     DemocracyViz,
     CampaignView,
     EdXView,
+    ChooseAdventureView,
 };
