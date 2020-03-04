@@ -133,14 +133,11 @@ export class DemocracyViz extends  React.Component {
                 </div>
                 <br/>
                 <QuestionDataBase/>
-                <div className={'map'}>
-                    <DemocracyMap
-                        democracyData={this.state.democracyData}
-                        scoreType={this.state.scoreType}
-                        year={this.state.year}
-
-                    />
-                </div>
+                <DemocracyMap
+                    democracyData={this.state.democracyData}
+                    scoreType={this.state.scoreType}
+                    year={this.state.year}
+                />
                 <br/>
                 Currently grey either means:
                 <ul>
@@ -223,8 +220,8 @@ export class DemocracyMap extends React.Component {
             map_data: null,
             // mouseover_country: 'Nothing',
         };
-        this.map_height = 0;
-        this.map_width = 0;
+        this.map_height = 1000;
+        this.map_width = 1000;
         this.csrftoken = getCookie('csrftoken');
         // this.map_ref = React.createRef();
         this.getCountryData = this.getCountryData.bind(this);
@@ -270,9 +267,9 @@ export class DemocracyMap extends React.Component {
         return (
             <>
                 <svg
-                    height={document.parentElement.clientWidth}
-                    width={document.parentElement.clientWidth}
-                    id="content"
+                    height={document.getElementById("root").clientWidth}
+                    width={document.getElementById("root").clientWidth}
+                    // id="content"
                 >
                     {this.state.map_data.map((country, i) => {
                         const countryData = this.getCountryData(country.iso);
@@ -289,37 +286,35 @@ export class DemocracyMap extends React.Component {
                         return (
                             // TODO: fix this later so we can actually read width of parent OR
                             //  figure out how to assign an ID
-                            <div>
-                                <MapPath
-                                    key={i}
-                                    path={country.svg_path}
-                                    id={country.iso}
-                                    fill={color}
-                                    stroke={"black"}
-                                    strokeWidth={"1"}
-                                    useColorTransition={true}
-                                />
-                            </div>
+                            <MapPath
+                                key={i}
+                                path={country.svg_path}
+                                id={country.iso}
+                                fill={color}
+                                stroke={"black"}
+                                strokeWidth={"1"}
+                                useColorTransition={true}
+                            />
                         );
                     })}
                 </svg>
             </>
         );
     }
-    async componentDidUpdate() {
-        const scale = .9;
-        if (this.state.map_height !== document.parentElement.clientWidth){
-            const  res =  await fetch('/api/africa_map_geojson/');
-            const geo_json = await res.json();
-            this.setState({
-                map_height: document.parentElement.clientWidth*scale,
-                map_width: document.parentElement.clientWidth*scale,
-                map_data: project_features_and_create_svg_paths(geo_json,
-                    document.parentElement.clientWidth*scale,
-                    document.parentElement.clientWidth*scale),
-            });
-        }
-    }
+    // async componentDidUpdate() {
+    //     const scale = .9;
+    //     if (this.state.map_height !== document.parentElement.clientWidth){
+    //         const  res =  await fetch('/api/africa_map_geojson/');
+    //         const geo_json = await res.json();
+    //         this.setState({
+    //             map_height: document.parentElement.clientWidth*scale,
+    //             map_width: document.parentElement.clientWidth*scale,
+    //             map_data: project_features_and_create_svg_paths(geo_json,
+    //                 document.parentElement.clientWidth*scale,
+    //                 document.parentElement.clientWidth*scale),
+    //         });
+    //     }
+    // }
 }
 DemocracyMap.propTypes = {
     democracyData: PropTypes.array,
