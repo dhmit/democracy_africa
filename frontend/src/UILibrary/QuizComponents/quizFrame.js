@@ -1,8 +1,8 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
-import Quiz from "../UILibrary/QuizComponents/quiz";
-import ScoreTracker from "../UILibrary/QuizComponents/scoreTracker";
-import AnswerChoices from "../UILibrary/QuizComponents/answerChoices";
+import Quiz from "quiz";
+import ScoreTracker from "scoreTracker";
+import AnswerChoices from "answerChoices";
 
 function QuizFrame(props) {
     function renderAnswerChoices(key) {

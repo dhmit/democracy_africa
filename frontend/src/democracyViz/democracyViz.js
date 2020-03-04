@@ -5,7 +5,7 @@ import * as d3 from 'd3';
 import { MapPath } from "../UILibrary/components";
 import quizQuestions from 'quizQuestions';
 import QuizFrame from "../UILibrary/QuizComponents/quizFrame";
-import Score from "../UILibrary/QuizComponents/scoreTracker";
+import Score from "../UILibrary/QuizComponents/displayScore";
 
 import {
     getCookie,
@@ -19,7 +19,7 @@ import {
  */
 
 
-export class DemocracyViz extends  React.Component {
+export class DemocracyViz extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -32,7 +32,7 @@ export class DemocracyViz extends  React.Component {
             question: '',
             answerChoices: [],
             answer: '',
-            result: 0,
+            result: '',
         };
         this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
     }
@@ -60,11 +60,11 @@ export class DemocracyViz extends  React.Component {
     /**
      *  Handles the change in democracy score type
      */
-    // handleScoreTypeChange(e) {
-    //     this.setState({
-    //         scoreType: e.target.value,
-    //     });
-    // }
+    handleScoreTypeChange(e) {
+        this.setState({
+            scoreType: e.target.value,
+        });
+    }
 
     /**
      *  Handles the change in year
@@ -75,10 +75,19 @@ export class DemocracyViz extends  React.Component {
         });
     }
 
+    handleAnswerSelected(event) {
+        this.setUserAnswer(event.currentTarget.value);
+        if (this.state.questionId < quizQuestions.length) {
+            setTimeout(() => this.setNextQuestion(), 300);
+        } else {
+            setTimeout(() => this.setResults(), 300);
+        }
+    }
+
     setUserAnswer(answer) {
-        this.setState((state) => ({
-            correct: answer ? correct+1 : correct
-        }));
+        this.setState( {
+            correct: answer ? this.state.correct+1 : this.state.correct
+        });
     }
 
     setNextQuestion() {
@@ -93,18 +102,10 @@ export class DemocracyViz extends  React.Component {
         });
     }
 
-    handleAnswerSelected(event) {
-        this.setUserAnswer(event.currentTarget.value);
-        if (this.state.questionId < quizQuestions.length) {
-            setTimeout(() => this.setNextQuestion(), 300);
-        } else {
-            setTimeout(() => this.setResults(), 300);
-        }
-    }
-
     setResults() {
         this.setState({
-            result: this.state.correct/this.state.total,
+            // result: this.state.correct/this.state.total,
+            result: 'hello',
         });
     }
 
@@ -118,12 +119,14 @@ export class DemocracyViz extends  React.Component {
                 correct={this.state.correct}
                 questionTotal={quizQuestions.length}
                 onAnswerSelected={this.handleAnswerSelected}
+                correctAnswers={this.state.correct}
+                counter={this.state.counter}
             />
         );
     }
 
     renderResult() {
-        return <Score quizResult={this.state.result} />;
+        return <Score quizScore={this.state.result} />;
     }
 
     render() {
@@ -179,61 +182,61 @@ export class DemocracyViz extends  React.Component {
 
 
 
-export class QuestionDataBase extends React.Component{
-    constructor(props) {
-        super(props);
-        this.state = {
-            current_question: null,
-            questions: questionjso,
-            index: null,
-            correct: null,
-        };
-    }
+// export class QuestionDataBase extends React.Component{
+//     constructor(props) {
+//         super(props);
+//         this.state = {
+//             current_question: null,
+//             questions: questionjso,
+//             index: null,
+//             correct: null,
+//         };
+//     }
+//
+//     async componentDidMount() {
+//         this.setState({
+//             index: 0,
+//             current_question: questionjso["questions"][0]["Question"],
+//         });
+//     }
+//
+//     handleGoToNext(){
+//         this.setState({
+//             index: this.state.index + 1,
+//             current_question: this.state.questions["questions"][this.state.index]["Question"],
+//             correct: false,
+//         });
+//     }
+//
+//     handleAnswer(){
+//
+//     }
+//
+//     render() {
+//
+//         return (
+//             <QuestionContainer
+//                 handleAnswer = {this.handleAnswer}
+//                 handleGoToNext = {this.handleGoToNext}
+//                 question={this.state.current_question}
+//                 answers={[1,2,3,4]}
+//                 correct_answer={1}
+//                 correct = {null}
+//
+//             />
+//         );
+//     }
+//
+// }
 
-    async componentDidMount() {
-        this.setState({
-            index: 0,
-            current_question: questionjso["questions"][0]["Question"],
-        });
-    }
-
-    handleGoToNext(){
-        this.setState({
-            index: this.state.index + 1,
-            current_question: this.state.questions["questions"][this.state.index]["Question"],
-            correct: false,
-        });
-    }
-
-    handleAnswer(){
-
-    }
-
-    render() {
-
-        return (
-            <QuestionContainer
-                handleAnswer = {this.handleAnswer}
-                handleGoToNext = {this.handleGoToNext}
-                question={this.state.current_question}
-                answers={[1,2,3,4]}
-                correct_answer={1}
-                correct = {null}
-
-            />
-        );
-    }
-
-}
-
-QuestionDataBase.propTypes = {
-    questions: PropTypes.object,
-    current_question: PropTypes.number,
-    index: PropTypes.number,
-    correct: PropTypes.bool,
-    handleAnswer: PropTypes.func,
-    handleGoToNext: PropTypes.func,
-};
+// QuestionDataBase.propTypes = {
+//     questions: PropTypes.object,
+//     current_question: PropTypes.number,
+//     index: PropTypes.number,
+//     correct: PropTypes.bool,
+//     handleAnswer: PropTypes.func,
+//     handleGoToNext: PropTypes.func,
+// };
 
 export class DemocracyMap extends React.Component {
     constructor(props) {
@@ -323,20 +326,6 @@ export class DemocracyMap extends React.Component {
             </>
         );
     }
-    // async componentDidUpdate() {
-    //     const scale = .9;
-    //     if (this.state.map_height !== document.parentElement.clientWidth){
-    //         const  res =  await fetch('/api/africa_map_geojson/');
-    //         const geo_json = await res.json();
-    //         this.setState({
-    //             map_height: document.parentElement.clientWidth*scale,
-    //             map_width: document.parentElement.clientWidth*scale,
-    //             map_data: project_features_and_create_svg_paths(geo_json,
-    //                 document.parentElement.clientWidth*scale,
-    //                 document.parentElement.clientWidth*scale),
-    //         });
-    //     }
-    // }
 }
 DemocracyMap.propTypes = {
     democracyData: PropTypes.array,

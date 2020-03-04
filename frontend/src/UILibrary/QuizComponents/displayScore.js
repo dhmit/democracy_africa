@@ -4,13 +4,13 @@ import * as PropTypes from 'prop-types';
 function Score(props) {
   return (
     <div className="score">
-      You got <strong>{props.quizResult}</strong>!
+      You got <strong>{props.quizScore}</strong>!
     </div>
   );
 }
 
-Result.propTypes = {
-  quizResult: PropTypes.string.isRequired,
+Score.propTypes = {
+  quizScore: PropTypes.string.isRequired,
 };
 
-export default Result;
+export default Score;

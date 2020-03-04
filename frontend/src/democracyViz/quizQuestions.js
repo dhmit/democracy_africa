@@ -1,4 +1,3 @@
-
 const quizQuestions = [
   {
       question: "This is question 1",
