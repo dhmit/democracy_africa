@@ -3,7 +3,9 @@ import * as PropTypes from 'prop-types';
 import * as d3 from 'd3';
 
 import { MapPath } from "../UILibrary/components";
-import { QuestionContainer } from "../UILibrary/mapQuestions";
+import quizQuestions from 'quizQuestions';
+import QuizFrame from "../UILibrary/QuizComponents/quizFrame";
+import Score from "../UILibrary/QuizComponents/scoreTracker";
 
 import {
     getCookie,
@@ -16,50 +18,6 @@ import {
  * Handles all logic, displays information, and makes database query/posts
  */
 
-let questionjso = {
-    "questions": [
-        {
-            "Question": "This is question 1",
-            "Answers":
-                {
-                    "answer1": true,
-                    "answer2": false,
-                    "answer3": false,
-                    "answer4": false
-                }
-        },
-        {
-            "Question": "This is question 2",
-            "Answers":
-                {
-                    "answer1": true,
-                    "answer2": false,
-                    "answer3": false,
-                    "answer4": false
-                }
-        },
-        {
-            "Question": "This is question 3",
-            "Answers":
-                {
-                    "answer1": true,
-                    "answer2": false,
-                    "answer3": false,
-                    "answer4": false
-                }
-        },
-        {
-            "Question": "This is question 4",
-            "Answers":
-                {
-                    "answer1": true,
-                    "answer2": false,
-                    "answer3": false,
-                    "answer4": false
-                }
-        }
-    ]
-};
 
 export class DemocracyViz extends  React.Component {
     constructor(props) {
@@ -68,13 +26,26 @@ export class DemocracyViz extends  React.Component {
             democracyData: null,
             scoreType: "v2x_polyarchy",
             year: "1981",
+            counter: 0,
+            correct: 0,
+            questionId: 1,
+            question: '',
+            answerChoices: [],
+            answer: '',
+            result: 0,
         };
+        this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
     }
 
     /**
      * When this component is mounted to the DOM, get democracy score data from the server
      */
     async componentDidMount() {
+        this.setState({
+            question: quizQuestions[0].question,
+            answerChoices: quizQuestions.answers[0]
+        });
+
         try {
             const res = await fetch('/api/democracy_scores/');
             const democracy_data = await res.json();
@@ -89,11 +60,11 @@ export class DemocracyViz extends  React.Component {
     /**
      *  Handles the change in democracy score type
      */
-    handleScoreTypeChange(e) {
-        this.setState({
-            scoreType: e.target.value,
-        });
-    }
+    // handleScoreTypeChange(e) {
+    //     this.setState({
+    //         scoreType: e.target.value,
+    //     });
+    // }
 
     /**
      *  Handles the change in year
@@ -102,6 +73,57 @@ export class DemocracyViz extends  React.Component {
         this.setState({
             year: e.target.value,
         });
+    }
+
+    setUserAnswer(answer) {
+        this.setState((state) => ({
+            correct: answer ? correct+1 : correct
+        }));
+    }
+
+    setNextQuestion() {
+        const counter = this.state.counter + 1;
+        const questionId = this.state.questionId + 1;
+        this.setState({
+            counter: counter,
+            questionId: questionId,
+            question: quizQuestions[counter].question,
+            answerChoices: quizQuestions[counter].answers,
+            answer: ''
+        });
+    }
+
+    handleAnswerSelected(event) {
+        this.setUserAnswer(event.currentTarget.value);
+        if (this.state.questionId < quizQuestions.length) {
+            setTimeout(() => this.setNextQuestion(), 300);
+        } else {
+            setTimeout(() => this.setResults(), 300);
+        }
+    }
+
+    setResults() {
+        this.setState({
+            result: this.state.correct/this.state.total,
+        });
+    }
+
+    renderQuiz() {
+        return (
+            <QuizFrame
+                answer={this.state.answer}
+                answerChoices={this.state.answerChoices}
+                questionId={this.state.questionId}
+                question={this.state.question}
+                correct={this.state.correct}
+                questionTotal={quizQuestions.length}
+                onAnswerSelected={this.handleAnswerSelected}
+            />
+        );
+    }
+
+    renderResult() {
+        return <Score quizResult={this.state.result} />;
     }
 
     render() {
@@ -132,7 +154,7 @@ export class DemocracyViz extends  React.Component {
                     {this.state.year}
                 </div>
                 <br/>
-                <QuestionDataBase/>
+                {this.state.result ? this.renderResult() : this.renderQuiz()}
                 <DemocracyMap
                     democracyData={this.state.democracyData}
                     scoreType={this.state.scoreType}

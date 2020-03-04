@@ -42,6 +42,7 @@ class Question extends React.Component{
             <div className="question-box">
                 <p>{this.props.question}</p>
 
+
             </div>
         );
     }
@@ -54,3 +55,26 @@ Question.propTypes = {
     correct: PropTypes.bool,
 };
 
+class AnswerChoices extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            choices: this.props.options,
+            correct: this.props.correct,
+        };
+    }
+
+    render() {
+        return(
+            <button
+                onClick={() =>
+                    this.props.setStage(stage, option)}
+            >{this.props.option.text}</button>
+        )
+    }
+}
+
+AnswerChoices.propTypes ={
+    options: PropTypes.object,
+    correct: PropTypes.bool,
+}
