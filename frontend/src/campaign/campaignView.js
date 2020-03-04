@@ -51,7 +51,7 @@ class Speech extends React.Component {
      * @param e The event that is triggered, use e.target.value to get the value of the slider
      * @param topic Tells which topic the slider belongs to so that it updates the speech
      */
-    handleSliderOnChange = (e, topic) => {
+    handleButtonOnChange = (e, topic) => {
         const newVal = parseInt(e.target.value);
         const newProposal = this.state.speechProposal;
         let oldVal = newProposal[topic];
@@ -91,19 +91,40 @@ class Speech extends React.Component {
 
     render() {
         const topics = this.topic_names.map((topic, key) => (
-            <div key={key} className="individual_slider_containers">
-                <p className="slider_descriptor">
+            <div key={key} className="individual_button_containers">
+                <p className="button_descriptor">
                     <strong>{topic}</strong> has {this.state.speechProposal[topic]} priority point.
                 </p>
-                <input
-                    className="slider"
-                    type="range"
-                    min="1"
-                    max="5"
-                    step="1"
-                    value={this.state.speechProposal[topic] + ""}
-                    onChange={(e) => this.handleSliderOnChange(e, topic)}
-                />
+                <div className="form-check form-check-inline">
+                    <input className="form-check-input" type="radio" name={topic}
+                        id="inlineRadio1" value="1"
+                        onChange={(e) => this.handleButtonOnChange(e, topic)}/>
+                    <label className="form-check-label" htmlFor="inlineRadio1">1</label>
+                </div>
+                <div className="form-check form-check-inline">
+                    <input className="form-check-input" type="radio" name={topic}
+                        id="inlineRadio2" value="2"
+                        onChange={(e) => this.handleButtonOnChange(e, topic)}/>
+                    <label className="form-check-label" htmlFor="inlineRadio2">2</label>
+                </div>
+                <div className="form-check form-check-inline">
+                    <input className="form-check-input" type="radio" name={topic}
+                        id="inlineRadio3" value="3"
+                        onChange={(e) => this.handleButtonOnChange(e, topic)}/>
+                    <label className="form-check-label" htmlFor="inlineRadio3">3</label>
+                </div>
+                <div className="form-check form-check-inline">
+                    <input className="form-check-input" type="radio" name={topic}
+                        id="inlineRadio4" value="4"
+                        onChange={(e) => this.handleButtonOnChange(e, topic)}/>
+                    <label className="form-check-label" htmlFor="inlineRadio4">4</label>
+                </div>
+                <div className="form-check form-check-inline">
+                    <input className="form-check-input" type="radio" name={topic}
+                        id="inlineRadio5" value="5"
+                        onChange={(e) => this.handleButtonOnChange(e, topic)}/>
+                    <label className="form-check-label" htmlFor="inlineRadio5">5</label>
+                </div>
             </div>
         ));
 
