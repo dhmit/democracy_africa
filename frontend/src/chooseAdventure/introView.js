@@ -26,13 +26,7 @@ class IntroView extends React.Component {
                     Get started
                 </button>
             </div>
-
-
-
-
-
         );
-
     }
 }
 
