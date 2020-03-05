@@ -8,7 +8,8 @@
 }
 
 .button-containers{
-    padding: 4px 2%;
+    padding-left: 10%;
+
 }
 
 .score-button{
@@ -21,4 +22,18 @@
 
 .country-selector{
     text-align: center;
+}
+
+.campaign-container{
+    display: flex;
+    flex-basis: 0;
+    justify-content: center;
+}
+
+.map-div{
+    width: 58%
+}
+
+.speech-maker{
+    width: 42%
 }
