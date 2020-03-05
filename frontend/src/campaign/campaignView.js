@@ -154,12 +154,13 @@ export class CampaignView extends  React.Component {
             populationData: null,
             mapData: null,
             clickedProvince: null,
-            countryName: "South Africa"
+            countryName: "South Africa",
+            provinceInfo: {},
         };
         this.map_height = 500;
         this.map_width = 500;
         this.updatePopulation = this.updatePopulation.bind(this);
-        this.getProvinceInfo = this.getProvinceInfo.bind(this);
+        this.updateProvinceInfo = this.updateProvinceInfo.bind(this);
     }
 
     async fetchPopulation() {
@@ -215,10 +216,10 @@ export class CampaignView extends  React.Component {
     updatePopulation(newCitizenList) {
         const {populationData} = this.state;
         populationData.citizen_list = newCitizenList;
-        this.setState({populationData});
+        this.setState({populationData}, () => this.updateProvinceInfo());
     }
 
-    getProvinceInfo() {
+    updateProvinceInfo() {
         const provinceInfo = {countryTotal: 0, countrySupporters: 0};
         for (const citizen of this.state.populationData.citizen_list) {
             const province = citizen['province'];
@@ -232,13 +233,16 @@ export class CampaignView extends  React.Component {
                 provinceInfo["countrySupporters"]++;
             }
         }
-        return provinceInfo;
+        this.setState({provinceInfo});
     }
 
-    handleProvinceMapClick(province) {
-        this.setState({
-            clickedProvince: province,
-        });
+    handleProvinceMapClick(e, province) {
+        const tagname = e.target.tagName;
+        if (tagname === "svg" || (tagname === "path" && province)) {
+            this.setState({
+                clickedProvince: province,
+            });
+        }
     }
 
     changeCountry(e) {
@@ -253,8 +257,8 @@ export class CampaignView extends  React.Component {
         if (!this.state.populationData) {
             return (<div>Loading!</div>);
         }
-        const provinceInfo = this.getProvinceInfo();
         const {clickedProvince} = this.state;
+        const {provinceInfo} = this.state;
         return (
             <>
                 <h1>Campaign Game</h1><hr/>
@@ -302,6 +306,7 @@ export class CampaignView extends  React.Component {
                                     height={this.map_height}
                                     width={this.map_width}
                                     id="content"
+                                    onClick={(e) => this.handleProvinceMapClick(e, "")}
                                 >
                                     {this.state.mapData.map((country, i) => {
                                         let countryFill = "#F6F4D2";
@@ -313,8 +318,8 @@ export class CampaignView extends  React.Component {
                                             fill={countryFill}
                                             stroke="black"
                                             strokeWidth="1"
-                                            handle_country_click={() =>
-                                                this.handleProvinceMapClick(country.name)}
+                                            handle_country_click={(e) =>
+                                                this.handleProvinceMapClick(e, country.name)}
                                             useColorTransition={false}
                                         />;
                                     })}
