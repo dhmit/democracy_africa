@@ -122,9 +122,6 @@ class Speech extends React.Component {
             </div>
         ));
 
-        const supportString = this.state.result + " out of " + this.props.population.length +
-        " people support you.";
-
         return(
             <>
                 <div className={"province-info-text"}>
@@ -133,10 +130,6 @@ class Speech extends React.Component {
                 <br/>
                 <div>
                     {topics}
-                </div>
-
-                <div className="support_string">
-                    {supportString}
                 </div>
                 <div className="reset_button">
                     <button
@@ -226,15 +219,17 @@ export class CampaignView extends  React.Component {
     }
 
     getProvinceInfo() {
-        const provinceInfo = {};
+        const provinceInfo = {countryTotal: 0, countrySupporters: 0};
         for (const citizen of this.state.populationData.citizen_list) {
             const province = citizen['province'];
             if (!(province in provinceInfo)){
-                provinceInfo[province] = {"totalPeople": 0, "totalSupporters": 0};
+                provinceInfo[province] = {totalPeople: 0, totalSupporters: 0};
             }
             provinceInfo[province]["totalPeople"]++;
+            provinceInfo["countryTotal"]++;
             if (citizen.will_support) {
                 provinceInfo[province]["totalSupporters"]++;
+                provinceInfo["countrySupporters"]++;
             }
         }
         return provinceInfo;
@@ -294,8 +289,13 @@ export class CampaignView extends  React.Component {
                                         &nbsp;people support you.
                                     </div>
                                     :
-                                    <div>
-                                        <br/><br/><br/>
+                                    <div className={"province-info-text"}>
+                                        <b>{this.state.countryName}</b>
+                                        <br/>
+                                        {provinceInfo["countrySupporters"]}
+                                        &nbsp;out of&nbsp;
+                                        {provinceInfo["countryTotal"]}
+                                        &nbsp;people support you.
                                     </div>
                                 }
                                 <svg
