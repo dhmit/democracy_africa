@@ -13,6 +13,11 @@ const get_default_proposal = (topic_names) => {
     return proposal;
 };
 
+const COUNTRIES = ["South Africa", "Kenya"];
+const COUNTRY_TO_ISO = {
+    "South Africa": "ZAF",
+    "Kenya": "KEN",
+};
 
 class Speech extends React.Component {
     constructor(props){
@@ -45,13 +50,23 @@ class Speech extends React.Component {
         this.resetSpeech();
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.countryName !== this.props.countryName ||
+            prevProps.population !== this.props.population) {
+            this.setState({
+                result: this.countSupporters(),
+            });
+
+        }
+    }
+
     /**
      * Handles when the slider changes by changing the state of what the maximum values should
      * be for each category and updates the number of supporters
      * @param e The event that is triggered, use e.target.value to get the value of the slider
      * @param topic Tells which topic the slider belongs to so that it updates the speech
      */
-    handleSliderOnChange = (e, topic) => {
+    handleButtonOnChange = (e, topic) => {
         const newVal = parseInt(e.target.value);
         const newProposal = this.state.speechProposal;
         let oldVal = newProposal[topic];
@@ -91,24 +106,21 @@ class Speech extends React.Component {
 
     render() {
         const topics = this.topic_names.map((topic, key) => (
-            <div key={key} className="individual_slider_containers">
-                <p className="slider_descriptor">
-                    <strong>{topic}</strong> has {this.state.speechProposal[topic]} priority point.
+            <div key={key} className="button-containers">
+                <p className="topics">
+                    <strong>{topic}</strong>
                 </p>
-                <input
-                    className="slider"
-                    type="range"
-                    min="1"
-                    max="5"
-                    step="1"
-                    value={this.state.speechProposal[topic] + ""}
-                    onChange={(e) => this.handleSliderOnChange(e, topic)}
-                />
+                {[...Array(5).keys()].map((score, j) => (
+                    <div className="form-check form-check-inline score-button" key={j}>
+                        <input className="form-check-input" type="radio" name={topic}
+                            id={"inlineRadio" + score+1}  value={score+1}
+                            checked={this.state.speechProposal[topic] === score + 1}
+                            onChange={(e) => this.handleButtonOnChange(e, topic)}/>
+                        <label className="form-check-label" htmlFor="inlineRadio1">{score+1}</label>
+                    </div>
+                ))}
             </div>
         ));
-
-        const supportString = this.state.result + " out of " + this.props.population.length +
-        " people align with your priorities.";
 
         return(
             <>
@@ -118,10 +130,6 @@ class Speech extends React.Component {
                 <br/>
                 <div>
                     {topics}
-                </div>
-
-                <div className="support_string">
-                    {supportString}
                 </div>
                 <div className="reset_button">
                     <button
@@ -144,38 +152,21 @@ export class CampaignView extends  React.Component {
         super(props);
         this.state = {
             populationData: null,
-            map_data: null,
-            clicked_province: null,
+            mapData: null,
+            clickedProvince: null,
+            countryName: "South Africa",
+            provinceInfo: {},
         };
         this.map_height = 500;
         this.map_width = 500;
         this.updatePopulation = this.updatePopulation.bind(this);
-        this.getProvinceInfo = this.getProvinceInfo.bind(this);
+        this.updateProvinceInfo = this.updateProvinceInfo.bind(this);
     }
 
-    /**
-     * When this component is mounted to the DOM, get democracy score data from the server
-     */
-    async componentDidMount() {
-        try {
-            const map= await fetch('/api/state_map_geojson/ZAF/', {
-                method: 'GET',
-                headers: {
-                    'Content-type': 'application/json',
-                }
-            });
-            const geo_json = await map.json();
-            const map_data = project_features_and_create_svg_paths(geo_json, this.map_width,
-                this.map_height);
-            await this.setState({
-                map_data: map_data,
-            });
-        } catch (e) {
-            console.log(e);
-        }
+    async fetchPopulation() {
         try {
             const data = {
-                country_name: "South Africa",
+                country_name: this.state.countryName,
             };
             const res = await fetch('/api/campaign_info/', {
                 method: 'POST',
@@ -193,73 +184,131 @@ export class CampaignView extends  React.Component {
         }
     }
 
+    async fetchCountryMap() {
+        try {
+            const map= await fetch('/api/state_map_geojson/' +
+                COUNTRY_TO_ISO[this.state.countryName]+ '/',
+            {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                }
+            });
+            const geo_json = await map.json();
+            const map_data = project_features_and_create_svg_paths(geo_json, this.map_width,
+                this.map_height);
+            await this.setState({
+                mapData: map_data,
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    /**
+     * When this component is mounted to the DOM, get democracy score data from the server
+     */
+    async componentDidMount() {
+        this.fetchPopulation();
+        this.fetchCountryMap();
+    }
+
     updatePopulation(newCitizenList) {
         const {populationData} = this.state;
         populationData.citizen_list = newCitizenList;
-        this.setState({populationData});
+        this.setState({populationData}, () => this.updateProvinceInfo());
     }
 
-    getProvinceInfo() {
-        const provinceInfo = {};
+    updateProvinceInfo() {
+        const provinceInfo = {countryTotal: 0, countrySupporters: 0};
         for (const citizen of this.state.populationData.citizen_list) {
             const province = citizen['province'];
             if (!(province in provinceInfo)){
-                provinceInfo[province] = {"totalPeople": 0, "totalSupporters": 0};
+                provinceInfo[province] = {totalPeople: 0, totalSupporters: 0};
             }
             provinceInfo[province]["totalPeople"]++;
+            provinceInfo["countryTotal"]++;
             if (citizen.will_support) {
                 provinceInfo[province]["totalSupporters"]++;
+                provinceInfo["countrySupporters"]++;
             }
         }
-        return provinceInfo;
+        this.setState({provinceInfo});
     }
 
-    handle_province_map_click(province) {
-        this.setState({
-            clicked_province: province,
-        });
+    handleProvinceMapClick(e, province) {
+        const tagname = e.target.tagName;
+        if (tagname === "svg" || (tagname === "path" && province)) {
+            this.setState({
+                clickedProvince: province,
+            });
+        }
+    }
+
+    changeCountry(e) {
+        this.setState({countryName: e.target.value, clickedProvince: ""},
+            () => {
+                this.fetchPopulation();
+                this.fetchCountryMap();
+            });
     }
 
     render() {
         if (!this.state.populationData) {
             return (<div>Loading!</div>);
         }
-        const provinceInfo = this.getProvinceInfo();
-        const {clicked_province} = this.state;
+        const {clickedProvince} = this.state;
+        const {provinceInfo} = this.state;
         return (
             <>
                 <h1>Campaign Game</h1><hr/>
+                <div className="country-selector">
+                    Select a Country:&nbsp;
+                    <select onChange={(e) => this.changeCountry(e)}>
+                        {COUNTRIES.map((country, key) => (
+                            <option key={key}>
+                                {country}
+                            </option>
+                        ))}
+                    </select>
+                </div>
                 <div className={"container"}>
                     <div className={"row"}>
-                        <div className={"sm-col-5"}>
+                        <div className={"col-sm-5"}>
                             <Speech
                                 population={this.state.populationData['citizen_list']}
-                                countryName={"South Africa"}
+                                countryName={this.state.countryName}
                                 updatePopulation={this.updatePopulation}
                             />
                         </div>
-                        <div className={"sm-col-6 campaign-map"}>
-                            <div>
-                                {this.state.clicked_province ?
+                        <div className={"col-sm-7"}>
+                            <div className={"campaign-map"}>
+                                {this.state.clickedProvince ?
                                     <div className={"province-info-text"}>
-                                        <b>{this.state.clicked_province}</b>
+                                        <b>{this.state.clickedProvince}</b>
                                         <br/>
-                                        {provinceInfo[clicked_province]["totalSupporters"]}
+                                        {provinceInfo[clickedProvince]["totalSupporters"]}
                                         &nbsp;out of&nbsp;
-                                        {provinceInfo[clicked_province]["totalPeople"]}
+                                        {provinceInfo[clickedProvince]["totalPeople"]}
                                         &nbsp;people support you.
                                     </div>
                                     :
-                                    <div>
-                                        <br/><br/><br/>
+                                    <div className={"province-info-text"}>
+                                        <b>{this.state.countryName}</b>
+                                        <br/>
+                                        {provinceInfo["countrySupporters"]}
+                                        &nbsp;out of&nbsp;
+                                        {provinceInfo["countryTotal"]}
+                                        &nbsp;people support you.
                                     </div>
                                 }
                                 <svg
                                     height={this.map_height}
                                     width={this.map_width}
                                     id="content"
+                                    onClick={(e) => this.handleProvinceMapClick(e, "")}
                                 >
-                                    {this.state.map_data.map((country, i) => {
+                                    {this.state.mapData.map((country, i) => {
                                         let countryFill = "#F6F4D2";
 
                                         return <MapPath
@@ -269,8 +318,8 @@ export class CampaignView extends  React.Component {
                                             fill={countryFill}
                                             stroke="black"
                                             strokeWidth="1"
-                                            handle_country_click={() =>
-                                                this.handle_province_map_click(country.name)}
+                                            handle_country_click={(e) =>
+                                                this.handleProvinceMapClick(e, country.name)}
                                             useColorTransition={false}
                                         />;
                                     })}
