@@ -272,59 +272,57 @@ export class CampaignView extends  React.Component {
                         ))}
                     </select>
                 </div>
-                <div className={"container"}>
-                    <div className={"row"}>
-                        <div className={"col-sm-5"}>
-                            <Speech
-                                population={this.state.populationData['citizen_list']}
-                                countryName={this.state.countryName}
-                                updatePopulation={this.updatePopulation}
-                            />
-                        </div>
-                        <div className={"col-sm-7"}>
-                            <div className={"campaign-map"}>
-                                {this.state.clickedProvince ?
-                                    <div className={"province-info-text"}>
-                                        <b>{this.state.clickedProvince}</b>
-                                        <br/>
-                                        {provinceInfo[clickedProvince]["totalSupporters"]}
-                                        &nbsp;out of&nbsp;
-                                        {provinceInfo[clickedProvince]["totalPeople"]}
-                                        &nbsp;people support you.
-                                    </div>
-                                    :
-                                    <div className={"province-info-text"}>
-                                        <b>{this.state.countryName}</b>
-                                        <br/>
-                                        {provinceInfo["countrySupporters"]}
-                                        &nbsp;out of&nbsp;
-                                        {provinceInfo["countryTotal"]}
-                                        &nbsp;people support you.
-                                    </div>
-                                }
-                                <svg
-                                    height={this.map_height}
-                                    width={this.map_width}
-                                    id="content"
-                                    onClick={(e) => this.handleProvinceMapClick(e, "")}
-                                >
-                                    {this.state.mapData.map((country, i) => {
-                                        let countryFill = "#F6F4D2";
+                <div className={"campaign-container"}>
+                    <div className={"speech-maker"}>
+                        <Speech
+                            population={this.state.populationData['citizen_list']}
+                            countryName={this.state.countryName}
+                            updatePopulation={this.updatePopulation}
+                        />
+                    </div>
+                    <div className={"map-div"}>
+                        <div className={"campaign-map"}>
+                            {this.state.clickedProvince ?
+                                <div className={"province-info-text"}>
+                                    <b>{this.state.clickedProvince}</b>
+                                    <br/>
+                                    {provinceInfo[clickedProvince]["totalSupporters"]}
+                                    &nbsp;out of&nbsp;
+                                    {provinceInfo[clickedProvince]["totalPeople"]}
+                                    &nbsp;people support you.
+                                </div>
+                                :
+                                <div className={"province-info-text"}>
+                                    <b>{this.state.countryName}</b>
+                                    <br/>
+                                    {provinceInfo["countrySupporters"]}
+                                    &nbsp;out of&nbsp;
+                                    {provinceInfo["countryTotal"]}
+                                    &nbsp;people support you.
+                                </div>
+                            }
+                            <svg
+                                height={this.map_height}
+                                width={this.map_width}
+                                id="content"
+                                onClick={(e) => this.handleProvinceMapClick(e, "")}
+                            >
+                                {this.state.mapData.map((country, i) => {
+                                    let countryFill = "#F6F4D2";
 
-                                        return <MapPath
-                                            key={i}
-                                            path={country.svg_path}
-                                            id={country.postal}
-                                            fill={countryFill}
-                                            stroke="black"
-                                            strokeWidth="1"
-                                            handle_country_click={(e) =>
-                                                this.handleProvinceMapClick(e, country.name)}
-                                            useColorTransition={false}
-                                        />;
-                                    })}
-                                </svg>
-                            </div>
+                                    return <MapPath
+                                        key={i}
+                                        path={country.svg_path}
+                                        id={country.postal}
+                                        fill={countryFill}
+                                        stroke="black"
+                                        strokeWidth="1"
+                                        handle_country_click={(e) =>
+                                            this.handleProvinceMapClick(e, country.name)}
+                                        useColorTransition={false}
+                                    />;
+                                })}
+                            </svg>
                         </div>
                     </div>
                 </div>
