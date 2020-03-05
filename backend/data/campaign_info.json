@@ -603,7 +603,7 @@
         "iso": "KEN",
         "provinces": [
             {
-                "name": "Western",
+                "name": "Western Province",
                 "population": 115,
                 "topic_preferences": [
                     {
@@ -933,7 +933,7 @@
                 ]
             },
             {
-                "name": "North Eastern",
+                "name": "North-Eastern",
                 "population": 540,
                 "topic_preferences": [
                     {
@@ -1041,7 +1041,7 @@
                     {
                         "name": "Handling improving living standards for the poor",
                         "preferences": [
-                            29, 39, 25, 2, 6
+                            29, 39, 6, 25, 2
                         ]
                     },
                     {
@@ -1060,6 +1060,72 @@
                         "name": "Handling reducing violent community conflict",
                         "preferences": [
                             9, 26, 9, 52, 4
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Nairobi Area",
+                "population": 404,
+                "topic_preferences": [
+                    {
+                        "name": "Handling improving basic health services",
+                        "preferences": [
+                            12, 15, 3, 58, 12
+                        ]
+                    },
+                    {
+                        "name": "Handling addressing educational needs",
+                        "preferences": [
+                            8, 13, 4, 58, 17
+                        ]
+                    },
+                    {
+                        "name": "Handling providing water and sanitation services",
+                        "preferences": [
+                            13, 20, 5, 52, 10
+                        ]
+                    },
+                    {
+                        "name": "Handling maintaining roads and bridges",
+                        "preferences": [
+                            7, 15, 2, 58, 18
+                        ]
+                    },
+                    {
+                        "name": "Handling providing reliable electric supply",
+                        "preferences": [
+                            8, 7, 2, 57, 25
+                        ]
+                    },
+                    {
+                        "name": "Handling promoting equal rights for women",
+                        "preferences": [
+                            8, 16, 6, 56, 14
+                        ]
+                    },
+                    {
+                        "name": "Handling improving living standards for the poor",
+                        "preferences": [
+                            22, 36, 2, 34, 5
+                        ]
+                    },
+                    {
+                        "name": "Handling creating more jobs",
+                        "preferences": [
+                            32, 32, 2, 29, 5
+                        ]
+                    },
+                    {
+                        "name": "Handling fighting corruption",
+                        "preferences": [
+                            47, 30, 3, 20, 1
+                        ]
+                    },
+                    {
+                        "name": "Handling reducing violent community conflict",
+                        "preferences": [
+                            9, 23, 4, 56, 9
                         ]
                     }
                 ]

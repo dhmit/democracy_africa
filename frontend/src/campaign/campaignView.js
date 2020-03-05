@@ -13,6 +13,11 @@ const get_default_proposal = (topic_names) => {
     return proposal;
 };
 
+const COUNTRIES = ["South Africa", "Kenya"];
+const COUNTRY_TO_ISO = {
+    "South Africa": "ZAF",
+    "Kenya": "KEN",
+};
 
 class Speech extends React.Component {
     constructor(props){
@@ -43,6 +48,16 @@ class Speech extends React.Component {
     componentDidMount() {
         // For a given list of options set each value to 1
         this.resetSpeech();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.countryName !== this.props.countryName ||
+            prevProps.population !== this.props.population) {
+            this.setState({
+                result: this.countSupporters(),
+            });
+
+        }
     }
 
     /**
@@ -91,45 +106,24 @@ class Speech extends React.Component {
 
     render() {
         const topics = this.topic_names.map((topic, key) => (
-            <div key={key} className="individual_button_containers">
-                <p className="button_descriptor">
-                    <strong>{topic}</strong> has {this.state.speechProposal[topic]} priority point.
+            <div key={key} className="button-containers">
+                <p className="topics">
+                    <strong>{topic}</strong>
                 </p>
-                <div className="form-check form-check-inline">
-                    <input className="form-check-input" type="radio" name={topic}
-                        id="inlineRadio1" value="1"
-                        onChange={(e) => this.handleButtonOnChange(e, topic)}/>
-                    <label className="form-check-label" htmlFor="inlineRadio1">1</label>
-                </div>
-                <div className="form-check form-check-inline">
-                    <input className="form-check-input" type="radio" name={topic}
-                        id="inlineRadio2" value="2"
-                        onChange={(e) => this.handleButtonOnChange(e, topic)}/>
-                    <label className="form-check-label" htmlFor="inlineRadio2">2</label>
-                </div>
-                <div className="form-check form-check-inline">
-                    <input className="form-check-input" type="radio" name={topic}
-                        id="inlineRadio3" value="3"
-                        onChange={(e) => this.handleButtonOnChange(e, topic)}/>
-                    <label className="form-check-label" htmlFor="inlineRadio3">3</label>
-                </div>
-                <div className="form-check form-check-inline">
-                    <input className="form-check-input" type="radio" name={topic}
-                        id="inlineRadio4" value="4"
-                        onChange={(e) => this.handleButtonOnChange(e, topic)}/>
-                    <label className="form-check-label" htmlFor="inlineRadio4">4</label>
-                </div>
-                <div className="form-check form-check-inline">
-                    <input className="form-check-input" type="radio" name={topic}
-                        id="inlineRadio5" value="5"
-                        onChange={(e) => this.handleButtonOnChange(e, topic)}/>
-                    <label className="form-check-label" htmlFor="inlineRadio5">5</label>
-                </div>
+                {[...Array(5).keys()].map((score, j) => (
+                    <div className="form-check form-check-inline score-button" key={j}>
+                        <input className="form-check-input" type="radio" name={topic}
+                            id={"inlineRadio" + score+1}  value={score+1}
+                            checked={this.state.speechProposal[topic] === score + 1}
+                            onChange={(e) => this.handleButtonOnChange(e, topic)}/>
+                        <label className="form-check-label" htmlFor="inlineRadio1">{score+1}</label>
+                    </div>
+                ))}
             </div>
         ));
 
         const supportString = this.state.result + " out of " + this.props.population.length +
-        " people align with your priorities.";
+        " people support you.";
 
         return(
             <>
@@ -165,8 +159,9 @@ export class CampaignView extends  React.Component {
         super(props);
         this.state = {
             populationData: null,
-            map_data: null,
-            clicked_province: null,
+            mapData: null,
+            clickedProvince: null,
+            countryName: "South Africa"
         };
         this.map_height = 500;
         this.map_width = 500;
@@ -174,29 +169,10 @@ export class CampaignView extends  React.Component {
         this.getProvinceInfo = this.getProvinceInfo.bind(this);
     }
 
-    /**
-     * When this component is mounted to the DOM, get democracy score data from the server
-     */
-    async componentDidMount() {
-        try {
-            const map= await fetch('/api/state_map_geojson/ZAF/', {
-                method: 'GET',
-                headers: {
-                    'Content-type': 'application/json',
-                }
-            });
-            const geo_json = await map.json();
-            const map_data = project_features_and_create_svg_paths(geo_json, this.map_width,
-                this.map_height);
-            await this.setState({
-                map_data: map_data,
-            });
-        } catch (e) {
-            console.log(e);
-        }
+    async fetchPopulation() {
         try {
             const data = {
-                country_name: "South Africa",
+                country_name: this.state.countryName,
             };
             const res = await fetch('/api/campaign_info/', {
                 method: 'POST',
@@ -212,6 +188,35 @@ export class CampaignView extends  React.Component {
         }catch (e) {
             console.log(e);
         }
+    }
+
+    async fetchCountryMap() {
+        try {
+            const map= await fetch('/api/state_map_geojson/' +
+                COUNTRY_TO_ISO[this.state.countryName]+ '/',
+            {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                }
+            });
+            const geo_json = await map.json();
+            const map_data = project_features_and_create_svg_paths(geo_json, this.map_width,
+                this.map_height);
+            await this.setState({
+                mapData: map_data,
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    /**
+     * When this component is mounted to the DOM, get democracy score data from the server
+     */
+    async componentDidMount() {
+        this.fetchPopulation();
+        this.fetchCountryMap();
     }
 
     updatePopulation(newCitizenList) {
@@ -235,10 +240,18 @@ export class CampaignView extends  React.Component {
         return provinceInfo;
     }
 
-    handle_province_map_click(province) {
+    handleProvinceMapClick(province) {
         this.setState({
-            clicked_province: province,
+            clickedProvince: province,
         });
+    }
+
+    changeCountry(e) {
+        this.setState({countryName: e.target.value, clickedProvince: ""},
+            () => {
+                this.fetchPopulation();
+                this.fetchCountryMap();
+            });
     }
 
     render() {
@@ -246,28 +259,38 @@ export class CampaignView extends  React.Component {
             return (<div>Loading!</div>);
         }
         const provinceInfo = this.getProvinceInfo();
-        const {clicked_province} = this.state;
+        const {clickedProvince} = this.state;
         return (
             <>
                 <h1>Campaign Game</h1><hr/>
+                <div className="country-selector">
+                    Select a Country:&nbsp;
+                    <select onChange={(e) => this.changeCountry(e)}>
+                        {COUNTRIES.map((country, key) => (
+                            <option key={key}>
+                                {country}
+                            </option>
+                        ))}
+                    </select>
+                </div>
                 <div className={"container"}>
                     <div className={"row"}>
-                        <div className={"sm-col-5"}>
+                        <div className={"col-sm-5"}>
                             <Speech
                                 population={this.state.populationData['citizen_list']}
-                                countryName={"South Africa"}
+                                countryName={this.state.countryName}
                                 updatePopulation={this.updatePopulation}
                             />
                         </div>
-                        <div className={"sm-col-6 campaign-map"}>
-                            <div>
-                                {this.state.clicked_province ?
+                        <div className={"col-sm-7"}>
+                            <div className={"campaign-map"}>
+                                {this.state.clickedProvince ?
                                     <div className={"province-info-text"}>
-                                        <b>{this.state.clicked_province}</b>
+                                        <b>{this.state.clickedProvince}</b>
                                         <br/>
-                                        {provinceInfo[clicked_province]["totalSupporters"]}
+                                        {provinceInfo[clickedProvince]["totalSupporters"]}
                                         &nbsp;out of&nbsp;
-                                        {provinceInfo[clicked_province]["totalPeople"]}
+                                        {provinceInfo[clickedProvince]["totalPeople"]}
                                         &nbsp;people support you.
                                     </div>
                                     :
@@ -280,7 +303,7 @@ export class CampaignView extends  React.Component {
                                     width={this.map_width}
                                     id="content"
                                 >
-                                    {this.state.map_data.map((country, i) => {
+                                    {this.state.mapData.map((country, i) => {
                                         let countryFill = "#F6F4D2";
 
                                         return <MapPath
@@ -291,7 +314,7 @@ export class CampaignView extends  React.Component {
                                             stroke="black"
                                             strokeWidth="1"
                                             handle_country_click={() =>
-                                                this.handle_province_map_click(country.name)}
+                                                this.handleProvinceMapClick(country.name)}
                                             useColorTransition={false}
                                         />;
                                     })}
