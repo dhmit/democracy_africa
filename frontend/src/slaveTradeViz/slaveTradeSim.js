@@ -28,7 +28,8 @@ export class SlaveTradeSim extends React.Component {
             <div>
                 {this.state.view === 'intro' && (
                     <>
-                        <IntroView gameName={'Placeholder Title'} aboutGame={'Lorem ipsum ' +
+                        <IntroView gameName={'Visualization of Slave Trade and Interpersonal' +
+                        ' Trust'} aboutGame={'Lorem ipsum' +
                         'dolor sit amet, consectetur adipiscing elit. Donec pellentesque ' +
                         'magna efficitur metus tempus venenatis. Proin nisl erat, venenatis ' +
                         'id maximus commodo, maximus vel leo. In maximus turpis eget lorem ' +
@@ -38,7 +39,10 @@ export class SlaveTradeSim extends React.Component {
                         ' quis dapibus risus nulla eget dui. Quisque eget tristique lorem, nec' +
                         ' dapibus nisl. Vestibulum ante ipsum primis in faucibus orci luctus et' +
                         'ultrices posuere cubilia Curae; Donec vitae risus augue. Ut vitae ' +
-                        'suscipit sapien. Suspendisse sollicitudin malesuada ultricies.'} />
+                        'suscipit sapien. Suspendisse sollicitudin malesuada ultricies.'}
+                        directions={'Directions: Lorem ipsumdolor sit amet, consectetur ' +
+                        'adipiscing elit. Donec pellentesque magna efficitur metus tempus' +
+                        ' venenatis.'} />
                         <button
                             onClick={() => this.setState({view: 'main'})}
                         > Get started</button>

@@ -17,6 +17,9 @@ export class IntroView extends React.Component {
             <>
                 <h1>{this.props.gameName}</h1>
                 <p>{this.props.aboutGame}</p>
+                <hr />
+                <h6>{this.props.directions}</h6>
+                <br />
 
             </>
 
@@ -26,5 +29,6 @@ export class IntroView extends React.Component {
 IntroView.propTypes = {
     gameName: PropTypes.string,
     aboutGame: PropTypes.string,
+    directions: PropTypes.string,
 
 };
