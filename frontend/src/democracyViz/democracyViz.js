@@ -86,8 +86,9 @@ export class DemocracyViz extends React.Component {
     }
 
     setUserAnswer(answer) {
+        console.log(answer);
         this.setState( {
-            correct: answer ? this.state.correct+1 : this.state.correct
+            correct: answer==="true" ? this.state.correct+1 : this.state.correct
         });
     }
 
@@ -106,7 +107,7 @@ export class DemocracyViz extends React.Component {
     setResults() {
         this.setState({
             // result: this.state.correct/this.state.total,
-            result: 'hello',
+            result: this.state.correct + "/" + quizQuestions.length,
         });
     }
 

@@ -4,9 +4,8 @@ import * as PropTypes from 'prop-types';
 function ScoreTracker(props) {
     return (
         <div className="scoreTracker">
-            Question <span>{props.counter}</span> of <span>{props.total}</span>
-            ||
-            Score <span>{props.correct}</span> of <span>{props.total}</span>
+            <p>Question <span>{props.counter}</span> of <span>{props.total}</span></p>
+            <p>Score <span>{props.correct}</span> of <span>{props.total}</span></p>
         </div>
     );
 }
