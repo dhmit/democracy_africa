@@ -77,4 +77,4 @@ class AnswerChoices extends React.Component{
 AnswerChoices.propTypes ={
     options: PropTypes.object,
     correct: PropTypes.bool,
-}
+};
