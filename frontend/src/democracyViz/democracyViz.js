@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types';
 import * as d3 from 'd3';
 
 import { MapPath } from "../UILibrary/components";
-import quizQuestions from 'quizQuestions';
+import quizQuestions from './quizQuestions';
 import QuizFrame from "../UILibrary/QuizComponents/quizFrame";
 import Score from "../UILibrary/QuizComponents/displayScore";
 
@@ -41,9 +41,10 @@ export class DemocracyViz extends React.Component {
      * When this component is mounted to the DOM, get democracy score data from the server
      */
     async componentDidMount() {
+        const AnswerOptions = quizQuestions.map(question => question.answers);
         this.setState({
             question: quizQuestions[0].question,
-            answerChoices: quizQuestions.answers[0]
+            answerChoices: AnswerOptions[0]
         });
 
         try {
