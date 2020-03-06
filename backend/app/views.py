@@ -23,29 +23,30 @@ from django.conf import settings
 from .models import Population
 from .models import africa_demographics_by_country as demographics_dict
 
-from.serializers import PopulationSerializer
+from .serializers import PopulationSerializer
 
 
-def load_country_demographics(filename):
+def load_country_demographics(filename, demographic, district_demographics):
     path = Path(settings.BACKEND_DATA_DIR, filename)
-    district_demographics = {}
     with open(path, encoding='utf-8') as file:
         reader = csv.reader(file, delimiter=',')
         headers = next(reader)
         headers = [header.replace("\n", "") for header in headers]  # removes any newline
         # characters in the headers
         for header in headers:
-            if header != "" and header not in district_demographics.keys() and header != "\ufeff":
-                district_demographics[header] = {}
+            if header != "" and header != "\ufeff":
+                if header not in district_demographics.keys():
+                    district_demographics[header] = {}
+                district_demographics[header][demographic] = {}
         next_line = next(reader, "end of the line")
+        print(district_demographics)
         while next_line != "end of the line":
             category = next_line[0]
             for i in range(1, len(headers)):
                 if next_line[i] != "" and category != "":
-                    district_demographics[headers[i]][category] = float(next_line[i])
+                    district_demographics[headers[i]][demographic][category] = float(next_line[i])
             next_line = next(reader, "end of the line")
-
-    print(district_demographics)
+    return district_demographics
 
 
 def load_json(filename) -> dict:
@@ -68,19 +69,30 @@ def africa_map_geojson(request):
     return Response(africa_geojson)
 
 
+def generate_all_country_demographics():
+    district_demographics = {}
+
+    district_demographics = load_country_demographics("language_spoken_in_home.csv", "Language",
+                                                      district_demographics)
+    district_demographics = load_country_demographics("tribe_or_ethnic_group.csv", "Ethnic Group",
+                                                      district_demographics)
+    district_demographics = load_country_demographics("occupation_of_respondent.csv", "Occupation",
+                                                      district_demographics)
+    district_demographics = load_country_demographics("religion_of_respondent.csv", "Religion",
+                                                      district_demographics)
+    district_demographics = load_country_demographics("kenya_population.csv", "Population",
+                                                      district_demographics)
+    return district_demographics
+
+
 @api_view(['GET'])
 def state_map_geojson(request, map_name):
     """
     Load state_level_map GeoJSON for frontend
     """
     state_geojson = load_json('state_level_maps/' + map_name + '.geojson')
-    load_country_demographics("language_spoken_in_home.csv")
-    load_country_demographics("tribe_or_ethnic_group.csv")
-    load_country_demographics("occupation_of_respondent.csv")
-    load_country_demographics("religion_of_respondent.csv")
-    load_country_demographics("kenya_population.csv")
+    demographic_population()
     return Response(state_geojson)
-
 
 
 @api_view(['GET'])
@@ -100,6 +112,14 @@ def population(request):
     country_name = request.data.get("country_name")
     population_obj = Population(country=country_name)
     population_obj.create_citizens_budget_sim(1000)
+    serializer = PopulationSerializer(instance=population_obj)
+    return Response(serializer.data)
+
+
+def demographic_population():
+    kenya_demographics = generate_all_country_demographics()
+    population_obj = Population(country="Kenya")
+    population_obj.create_demographic_citizens(1, kenya_demographics)
     serializer = PopulationSerializer(instance=population_obj)
     return Response(serializer.data)
 

@@ -91,6 +91,7 @@ class Citizen:
         self.name = name
         self.province = ""
         self.traits = {}
+        self.demographics = {}
         self.will_support = False
 
     def __str__(self):
@@ -191,6 +192,42 @@ class Population:
             africa_demographics_by_country[self.country]["some_formal_education"]
 
         return citizen
+
+
+    def create_demographic_citizens(self, number_to_create, country_demographics):
+        """
+
+        :param number_to_create:
+        :param country_demographics:
+        :return:
+        """
+        for i in range(number_to_create):
+            current_citizen = Citizen(str(self.population_size + 1))
+            self.assign_demographics(current_citizen, country_demographics)
+            self.citizen_list.append(current_citizen)
+            self.population_size += 1
+
+
+    def assign_demographics(self, citizen, country_demographics):
+        demographic_chances = {}
+        for demographic in country_demographics["Nairobi"].keys():
+            demographic_chances[demographic] = random.random()
+
+        total = 0
+        for province in country_demographics.keys():
+            total += country_demographics[province]["Population"]["Population"]
+            if demographic_chances["Population"] <= total:
+                citizen.province = province
+                break
+
+        for demographic in country_demographics[citizen.province].keys():
+            total = 0
+            for stat in country_demographics[citizen.province][demographic].keys():
+                total += country_demographics[citizen.province][demographic][stat]
+                if demographic_chances[demographic] <= total:
+                    citizen.demographics[demographic] = stat
+                    break
+        print(citizen.demographics)
 
 
 class StatisticalDistributions:
