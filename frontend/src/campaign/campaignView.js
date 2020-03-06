@@ -13,10 +13,11 @@ const get_default_proposal = (topic_names) => {
     return proposal;
 };
 
-const COUNTRIES = ["South Africa", "Kenya"];
+const COUNTRIES = ["South Africa", "Kenya", "Botswana"];
 const COUNTRY_TO_ISO = {
     "South Africa": "ZAF",
     "Kenya": "KEN",
+    "Botswana": "BWA",
 };
 
 class Speech extends React.Component {
