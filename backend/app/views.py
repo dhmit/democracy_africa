@@ -193,11 +193,13 @@ def load_trust_data():
     """
     Returns a json file of interpersonal trust data
     """
-    filename = "Nunn_Wantchekon_AER_2011.csv"
+    filename = "simplified_trust_data.csv"
     path = Path(settings.BACKEND_DATA_DIR, filename)
     trust_data = []
     with open(path, encoding='utf-8') as trust_data_csv_file:
         reader = csv.DictReader(trust_data_csv_file, delimiter=',')
+    for row in reader:
+        trust_data.append(row)
     return trust_data
 
 
