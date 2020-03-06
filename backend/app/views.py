@@ -118,7 +118,7 @@ def population(request):
 def demographic_population(request):
     kenya_demographics = generate_all_country_demographics()
     population_obj = Population(country="Kenya")
-    population_obj.create_demographic_citizens(100, kenya_demographics)
+    population_obj.create_demographic_citizens(1000, kenya_demographics)
     serializer = PopulationSerializer(instance=population_obj)
     return Response(serializer.data)
 

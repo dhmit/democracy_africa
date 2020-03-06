@@ -215,7 +215,7 @@ class Population:
     def assign_demographics(self, citizen, country_demographics):
         demographic_chances = {}
         for demographic in country_demographics["Nairobi"].keys():
-            demographic_chances[demographic] = random.random()
+            demographic_chances[demographic] = random.uniform(0, .99)
 
         total = 0
         for province in country_demographics.keys():
@@ -223,6 +223,7 @@ class Population:
             if demographic_chances["Population"] <= total:
                 citizen.province = province
                 break
+
 
         for demographic in country_demographics[citizen.province].keys():
             total = 0
