@@ -182,64 +182,6 @@ export class DemocracyViz extends React.Component {
     }
 }
 
-
-
-// export class QuestionDataBase extends React.Component{
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             current_question: null,
-//             questions: questionjso,
-//             index: null,
-//             correct: null,
-//         };
-//     }
-//
-//     async componentDidMount() {
-//         this.setState({
-//             index: 0,
-//             current_question: questionjso["questions"][0]["Question"],
-//         });
-//     }
-//
-//     handleGoToNext(){
-//         this.setState({
-//             index: this.state.index + 1,
-//             current_question: this.state.questions["questions"][this.state.index]["Question"],
-//             correct: false,
-//         });
-//     }
-//
-//     handleAnswer(){
-//
-//     }
-//
-//     render() {
-//
-//         return (
-//             <QuestionContainer
-//                 handleAnswer = {this.handleAnswer}
-//                 handleGoToNext = {this.handleGoToNext}
-//                 question={this.state.current_question}
-//                 answers={[1,2,3,4]}
-//                 correct_answer={1}
-//                 correct = {null}
-//
-//             />
-//         );
-//     }
-//
-// }
-
-// QuestionDataBase.propTypes = {
-//     questions: PropTypes.object,
-//     current_question: PropTypes.number,
-//     index: PropTypes.number,
-//     correct: PropTypes.bool,
-//     handleAnswer: PropTypes.func,
-//     handleGoToNext: PropTypes.func,
-// };
-
 export class DemocracyMap extends React.Component {
     constructor(props) {
         super(props);
