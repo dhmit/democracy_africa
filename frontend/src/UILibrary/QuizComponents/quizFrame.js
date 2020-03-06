@@ -26,9 +26,9 @@ function QuizFrame(props) {
                 correct={props.correctAnswers}
             />
             <Quiz content={props.question} />
-            <ul className="answerChoices">
+            <div className="answerChoices">
                 {props.answerChoices.map(renderAnswerChoices)}
-            </ul>
+            </div>
         </div>
     );
 }

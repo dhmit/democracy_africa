@@ -13,7 +13,7 @@ function AnswerChoices(props) {
                 disabled={props.answer}
                 onChange={props.onAnswerSelected}
             />
-            <label className="radioCustomLabel" >
+            <label className="radioCustomLabel">
                 {props.answerContent}
             </label>
         </li>
