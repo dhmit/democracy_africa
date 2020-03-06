@@ -30,7 +30,7 @@ class Speech extends React.Component {
             total: 10,
         };
         this.difference_threshold = 14;
-        this.max_priority_points = 50;
+        this.max_priority_points = 30;
     }
 
     /**
