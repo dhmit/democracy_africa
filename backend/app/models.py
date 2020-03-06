@@ -5,7 +5,8 @@ Models for the democracy_africa app.
 import random
 
 # Demographics from Afrobarometer 2016/2018 results
-# https://www.afrobarometer.org/online-data-analysis/analyse-online?fbclid=IwAR1iKKoydnKdD0UTDPIqH_PEn6bJuJjYPuVvOA657hrNaN6HHsfpp6vxBpg
+# https://www.afrobarometer.org/online-data-analysis/analyse-online?fbclid
+# =IwAR1iKKoydnKdD0UTDPIqH_PEn6bJuJjYPuVvOA657hrNaN6HHsfpp6vxBpg
 africa_demographics_by_country = {
     'Botswana': {
         'electricity_access': 93.2,
@@ -99,7 +100,7 @@ class Citizen:
         Just to print out information on the Citizen for debugging, no actual use
         :return: String representation of the Citizen
         """
-        return_string = self.name + "\n" + str(self.traits)
+        return_string = self.name + "\n" + str(self.demographics)
 
         return return_string
 
@@ -177,22 +178,26 @@ class Population:
         educated = random.randint(0, 100)
 
         citizen.traits["lives_in_rural_area"] = rural_area < \
-            africa_demographics_by_country[self.country]["rural_households"]
+                                                africa_demographics_by_country[self.country][
+                                                    "rural_households"]
 
         citizen.traits["has_access_to_electricity"] = electricity_access < \
-            africa_demographics_by_country[self.country]["electricity_access"]
+                                                      africa_demographics_by_country[self.country][
+                                                          "electricity_access"]
 
         citizen.traits["has_access_to_water"] = water_access < \
-            africa_demographics_by_country[self.country]["piped_water_access"]
+                                                africa_demographics_by_country[self.country][
+                                                    "piped_water_access"]
 
-        citizen.traits["has_access_to_sanitation"] = sanitation_access <\
-            africa_demographics_by_country[self.country]["sewage_system_access"]
+        citizen.traits["has_access_to_sanitation"] = sanitation_access < \
+                                                     africa_demographics_by_country[self.country][
+                                                         "sewage_system_access"]
 
-        citizen.traits["is_educated"] = educated <\
-            africa_demographics_by_country[self.country]["some_formal_education"]
+        citizen.traits["is_educated"] = educated < \
+                                        africa_demographics_by_country[self.country][
+                                            "some_formal_education"]
 
         return citizen
-
 
     def create_demographic_citizens(self, number_to_create, country_demographics):
         """
@@ -206,7 +211,6 @@ class Population:
             self.assign_demographics(current_citizen, country_demographics)
             self.citizen_list.append(current_citizen)
             self.population_size += 1
-
 
     def assign_demographics(self, citizen, country_demographics):
         demographic_chances = {}
@@ -222,12 +226,14 @@ class Population:
 
         for demographic in country_demographics[citizen.province].keys():
             total = 0
+            if demographic == "Population":
+                continue
             for stat in country_demographics[citizen.province][demographic].keys():
                 total += country_demographics[citizen.province][demographic][stat]
                 if demographic_chances[demographic] <= total:
                     citizen.demographics[demographic] = stat
                     break
-        print(citizen.demographics)
+        return citizen
 
 
 class StatisticalDistributions:
@@ -236,6 +242,7 @@ class StatisticalDistributions:
     life distributions of certain traits. Currently these are all hardcoded and unused (the values
     are used, but by just hardcoding magic numbers into the assign_demographic_properties function
     """
+
     # TODO: Once we determine how we will use the simulation, make this class into a usable way
     #  to gather real life distributions of usable data that can then be accessed by the
     #  Population class

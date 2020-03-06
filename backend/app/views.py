@@ -39,7 +39,6 @@ def load_country_demographics(filename, demographic, district_demographics):
                     district_demographics[header] = {}
                 district_demographics[header][demographic] = {}
         next_line = next(reader, "end of the line")
-        print(district_demographics)
         while next_line != "end of the line":
             category = next_line[0]
             for i in range(1, len(headers)):
@@ -91,7 +90,6 @@ def state_map_geojson(request, map_name):
     Load state_level_map GeoJSON for frontend
     """
     state_geojson = load_json('state_level_maps/' + map_name + '.geojson')
-    demographic_population()
     return Response(state_geojson)
 
 
@@ -116,10 +114,11 @@ def population(request):
     return Response(serializer.data)
 
 
-def demographic_population():
+@api_view(["GET"])
+def demographic_population(request):
     kenya_demographics = generate_all_country_demographics()
     population_obj = Population(country="Kenya")
-    population_obj.create_demographic_citizens(1, kenya_demographics)
+    population_obj.create_demographic_citizens(100, kenya_demographics)
     serializer = PopulationSerializer(instance=population_obj)
     return Response(serializer.data)
 

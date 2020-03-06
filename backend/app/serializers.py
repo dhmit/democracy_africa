@@ -11,6 +11,7 @@ class CitizenSerializer(serializers.Serializer):
     name = serializers.ReadOnlyField()
     province = serializers.ReadOnlyField()
     traits = serializers.ReadOnlyField()
+    demographics = serializers.ReadOnlyField()
     will_support = serializers.ReadOnlyField()
 
     def create(self, validated_data):

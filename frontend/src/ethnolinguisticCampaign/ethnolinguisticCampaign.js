@@ -50,6 +50,19 @@ export class EthnolinguisticCampaign extends React.Component {
         } catch (e) {
             console.log(e);
         }
+
+        try {
+            const response = await fetch('/api/demographic_population/', {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                }
+            });
+            const population = await response.json();
+            console.log(population);
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     render() {
@@ -111,6 +124,20 @@ class Citizen extends React.Component {
         this.state = {
             show: false,
         };
+    }
+
+    async componentDidMount() {
+        try {
+            const response = await fetch('/api/demographic_population/', {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                }
+            });
+            console.log(response);
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     render() {
