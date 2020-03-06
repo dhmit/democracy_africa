@@ -7,7 +7,7 @@ import * as PropTypes from "prop-types";
  * Component for displaying choose your own adventure skeleton
  */
 
-class IntroView extends React.Component {
+export class IntroView extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -19,13 +19,9 @@ class IntroView extends React.Component {
             </div>
 
         );
-
     }
 }
-
 IntroView.propTypes = {
     desc: PropTypes.string,
 
 };
-
-export default IntroView;

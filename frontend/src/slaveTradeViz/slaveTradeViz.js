@@ -1,6 +1,5 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
-// import IntroView from './introView.js';
 // import StartView from './startView.js';
 
 import {
@@ -10,9 +9,6 @@ import {
 import { MapPath } from "../UILibrary/components";
 import * as d3 from "d3";
 import "./slaveTradeViz.scss";
-
-// TODO: once district maps are in (1) allow for options btwn countries and hardcode fake data
-// TODO: probably DRC, MOZ, NGA, MLI
 
 
 class AfricaMap extends React.Component {
@@ -45,66 +41,42 @@ class AfricaMap extends React.Component {
             console.log(e);
         }
     }
-    // async componentDidUpdate(prevProps) {
-    //     if (prevProps.country !== this.props.country) {
-    //         console.log("I have changed!");
-    //         try {
-    //             const res = await fetch(`/api/state_map_geojson/${this.props.country}/`, {
-    //                 method: 'GET',
-    //                 headers: {
-    //                     'Content-type': 'application/json',
-    //                 }
-    //             });
-    //             // const res = await fetch('/api/africa_map_geojson/');
-    //             const geo_json = await res.json();
-    //             const map_data = project_features_and_create_svg_paths(
-    //                 geo_json,
-    //                 this.props.width,
-    //                 this.props.height
-    //             );
-    //             this.setState({
-    //                 map_data: map_data,
-    //             });
-    //         } catch (e) {
-    //             console.log(e);
-    //         }
-    //     }
-    // }
 
     render() {
-        // if (!this.prop.map_data) {
-        //     return(<div>Loading!</div>);
-        // }
         const colorScale = d3.scaleLinear()
-            .domain([0, 1])
+            .domain([0, 10])
             .range(['yellow', 'red']);
         return(
             <>
                 <svg
                     height={this.props.height}
                     width={this.props.width}
+                    onMouseEnter={() => this.props.handleMouseOver("")}
                 >
-                    {this.props.map_data.map((country, i) => {
-                        const random_num = Math.random();
+                    <g
+                        onMouseLeave={() => this.props.handleMouseOver("")}
+                    >
+                        {this.props.map_data.map((country, i) => {
+                            const random_num = Math.random() * 10;
 
-                        return (
-                            <MapPath
-                                key={i}
-                                path={country.svg_path}
-                                fill={colorScale(random_num)}
-                                stroke="black"
-                                strokeWidth="1"
-                                useColorTransition={true}
-                                handle_country_click={
-                                    () => this.props.handleCountryClick(country.name)
-                                }
-                                handle_country_mouseover={
-                                    () => this.props.handleMouseOver(country.name)
-                                }
-                            />
-                        );
-                    })}
-
+                            return (
+                                <MapPath
+                                    key={i}
+                                    path={country.svg_path}
+                                    fill={colorScale(random_num)}
+                                    stroke="black"
+                                    strokeWidth="1"
+                                    useColorTransition={true}
+                                    handle_country_click={
+                                        () => this.props.handleCountryClick(country.name)
+                                    }
+                                    handle_country_mouseover={
+                                        () => this.props.handleMouseOver(country.name)
+                                    }
+                                />
+                            );
+                        })}
+                    </g>
                 </svg>
             </>
         );
@@ -176,21 +148,6 @@ export class SlaveTradeViz extends React.Component {
         };
         this.map_height = 600;
         this.map_width = 550;
-
-
-    }
-
-    async componentDidMount() {
-        try {
-            const res = await fetch('/api/trust_data');
-            const data = await res.json();
-            this.setState({
-                trust_data: data,
-            });
-            console.log(data);
-        } catch (e) {
-            console.log(e);
-        }
     }
 
 
@@ -203,7 +160,6 @@ export class SlaveTradeViz extends React.Component {
                         'Content-type': 'application/json',
                     }
                 });
-                // const res = await fetch('/api/africa_map_geojson/');
                 const geo_json = await res.json();
                 const map_data = project_features_and_create_svg_paths(
                     geo_json,
@@ -331,29 +287,6 @@ export class SlaveTradeViz extends React.Component {
                 {district_info}
 
             </>);
-        //
-        // const blurb = "There are many variations of passages of Lorem Ipsum " +
-        //     "available, but the majority have suffered alteration in some form," +
-        //     " by injected humour, or randomised words which don't look even slightly " +
-        //     "believable. If you are going to use a passage of Lorem Ipsum, you need " +
-        //     "to be sure there isn't anything embarrassing hidden in the middle of text. " +
-        //     "All the Lorem Ipsum generators on the Internet tend to repeat predefined " +
-        //     "chunks as necessary, making this the first true generator on the I";
-        //
-        // //TODO: make skeleton
-        // //TODO: move current stuff (<>) to startView.js
-        // //TODO: figure out what to move to startView??
-        //
-        //
-        //
-        //
-        // return (
-        //     <div>
-        //         {this.state.view === 'intro' && <IntroView desc={blurb}/>}
-        //         {this.state.view === 'stage' && <StartView/>}
-        //         <button onClick={() => this.setState({ view: 'stage'})}> Get started </button>
-        //     </div>
-        // );
     }
 }
 SlaveTradeViz.propTypes = {
