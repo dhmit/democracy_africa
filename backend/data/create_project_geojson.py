@@ -239,6 +239,15 @@ def create_state_geojsons(country_iso_code):
         # https://en.wikipedia.org/wiki/ISO_3166-2
         if iso_a3 == country_iso_code:
             iso_3166_2 = properties['iso_3166_2']
+
+            # This is the South African province Western Cape,
+            # which contains Marion Island and Prince Edward Island, which are way off
+            # in the ocean and we want to remove from our map
+            # They are the first two items in our MultiPolygon
+            if iso_3166_2 == 'ZA-WC':
+                geo_coords = state['geometry']['coordinates'][2:]
+                state['geometry']['coordinates'] = geo_coords
+
             new_props = {
                 'ISO_3166_2': iso_3166_2,
                 'ISO_A3': iso_a3,
