@@ -84,6 +84,7 @@ class Campaign extends React.Component {
             total: 0,
             sampleSize: 100,
             showReactionSample: false,
+            traitMax: 3,
         };
     }
 
@@ -120,19 +121,20 @@ class Campaign extends React.Component {
     handleOnClick = (e, resource) => {
         const newProposal = this.state.campaign;
         let checkBox = e.target.checked;
+        let newTotal = this.state.total;
 
         if (checkBox === true){
             newProposal[resource] = 100;
+            newTotal += 1;
         } else {
             newProposal[resource] = 0;
+            newTotal -= 1;
         }
-        if (this.state.total <= 3){
-            this.setState({
-                campaign: newProposal,
-                total: this.state.total + 1,
-                result: this.countSupporters(),
-            });
-        }
+        this.setState({
+            campaign: newProposal,
+            total: newTotal,
+            result: this.countSupporters(),
+        });
 
     };
 
@@ -232,9 +234,8 @@ class Campaign extends React.Component {
         }
     }
     render() {
-
         const budgetOptions = Object.keys(this.state.campaign).map((resource, key) => (
-            <div key={key} className="individual_slider_containers">
+            <div key={key} className="individual_checkbox_containers">
                 <p className="campaign_descriptor">
                     {(this.state.campaign[resource]).toFixed(0)} huh based on
                     <strong> {resource} </strong>
@@ -244,6 +245,10 @@ class Campaign extends React.Component {
                     type="checkbox"
                     value={this.state.campaign[resource] + ""}
                     onChange={(e) => this.handleOnClick(e, resource)}
+                    disabled={
+                        this.state.total >= this.state.traitMax
+                        && !this.state.campaign[resource]
+                    }
                 />
 
             </div>
