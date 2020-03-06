@@ -14,14 +14,17 @@ export class IntroView extends React.Component {
 
     render() {
         return (
-            <div>
-                <div>{this.props.desc}</div>
-            </div>
+            <>
+                <h1>{this.props.gameName}</h1>
+                <p>{this.props.aboutGame}</p>
+
+            </>
 
         );
     }
 }
 IntroView.propTypes = {
-    desc: PropTypes.string,
+    gameName: PropTypes.string,
+    aboutGame: PropTypes.string,
 
 };
