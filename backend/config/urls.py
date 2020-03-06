@@ -55,6 +55,7 @@ urlpatterns = [
     # React views
     path('', render_react_view, {'component_name': 'IndexView'}),
     path('all_view/', render_react_view, {'component_name': 'AllView'}),
+    edx_path('adventure/', 'ChooseAdventureView'),
     edx_path('map_quiz/', 'MapQuiz'),
     edx_path('budget_voting_simulation/', 'BudgetVotingSimViz'),
     edx_path('heat_map/', 'DemocracyViz'),
