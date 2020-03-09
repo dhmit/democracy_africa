@@ -187,7 +187,7 @@ export class CampaignView extends  React.Component {
 
     async fetchCountryMap() {
         try {
-            const map= await fetch('/api/state_map_geojson/' +
+            const map = await fetch('/api/state_map_geojson/' +
                 COUNTRY_TO_ISO[this.state.countryName]+ '/',
             {
                 method: 'GET',
@@ -196,10 +196,13 @@ export class CampaignView extends  React.Component {
                 }
             });
             const geo_json = await map.json();
-            const map_data = project_features_and_create_svg_paths(geo_json, this.map_width,
-                this.map_height);
-            await this.setState({
-                mapData: map_data,
+            const mapData = project_features_and_create_svg_paths(
+                geo_json,
+                this.map_width,
+                this.map_height
+            );
+            this.setState({
+                mapData: mapData,
             });
         } catch (e) {
             console.log(e);
@@ -255,7 +258,7 @@ export class CampaignView extends  React.Component {
     }
 
     render() {
-        if (!this.state.populationData) {
+        if (!(this.state.populationData && this.state.mapData)) {
             return (<div>Loading!</div>);
         }
         const {clickedProvince} = this.state;
