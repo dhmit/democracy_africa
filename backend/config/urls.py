@@ -58,6 +58,6 @@ urlpatterns = [
     edx_path('adventure/', 'ChooseAdventureView'),
     edx_path('map_quiz/', 'MapQuiz'),
     edx_path('budget_voting_simulation/', 'BudgetVotingSimViz'),
-    edx_path('heat_map/', 'DemocracyViz'),
+    edx_path('democracy_quiz/', 'DemocracyViz'),
     edx_path('campaign_game/', 'CampaignView')
 ]
