@@ -144,11 +144,6 @@ class QuizView extends React.Component {
                 {/*        v2x_polyarchy*/}
                 {/*    </option>*/}
                 {/*</select>*/}
-                <br/><br/>
-                <br/>
-                <h3 >VDem Index Quiz</h3>
-                <p>instructions for playing game and/pr motivating statement could go here</p>
-                <br/>
                 <div className = 'slidecontainer'>
                     <div className={'map'}>
                         <input onChange={(e) => this.handleYearChange(e)}
@@ -189,8 +184,8 @@ export class DemocracyMap extends React.Component {
             map_data: null,
             // mouseover_country: 'Nothing',
         };
-        this.map_height = 1000;
-        this.map_width = 1000;
+        this.map_height = 500;
+        this.map_width = 500;
         this.csrftoken = getCookie('csrftoken');
         // this.map_ref = React.createRef();
         this.getCountryData = this.getCountryData.bind(this);
@@ -236,8 +231,8 @@ export class DemocracyMap extends React.Component {
         return (
             <>
                 <svg
-                    height={document.getElementById("root").clientWidth}
-                    width={document.getElementById("root").clientWidth}
+                    height={this.map_height}
+                    width={this.map_width}
                     // id="content"
                 >
                     {this.state.map_data.map((country, i) => {

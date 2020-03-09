@@ -32,8 +32,8 @@ export class IndexView extends React.Component {
                 />
 
                 <IndexCard
-                    url='/heat_map/'
-                    title='Electoral Democracy Scores'
+                    url='/democracy_quiz/'
+                    title='Quiz on Electoral Democracy Scores'
                     description='
                         Learn how indices measuring electoral democracy in Africa change over time.
                     '
@@ -46,6 +46,13 @@ export class IndexView extends React.Component {
                         Make a speech to try and get people to vote for you.
                     '
                 />
+
+                <IndexCard
+                    url='/adventure/'
+                    title='Choose your own adventure'
+                    description=''
+                />
+
 
                 <IndexCard
                     url='/all_view/'
