@@ -31,7 +31,7 @@ class EndView extends React.Component {
         ));
         return (
             <div>
-                <div>You had a {(this.props.successTotal * 100).toFixed(2)}%
+                <div>You had a {this.formatAsPercentage(this.props.successTotal)}%
                     chance of succeeding.</div>
                 {choices}
                 <button onClick={() => this.resetAdventure()}>Try again</button>
