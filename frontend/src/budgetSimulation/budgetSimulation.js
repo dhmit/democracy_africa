@@ -35,14 +35,21 @@ class Citizen extends React.Component {
             <Popover id={"popover-basic"}>
                 <Popover.Title as={"h3"}> {this.props.data.name} </Popover.Title>
                 <Popover.Content>
-                    {Object.keys(this.props.data.traits).map((trait, key) =>
-                        (<div key={key}>
-                            <strong>
-                                {trait.split("_").join(" ")}: &nbsp;
-                            </strong>
-                            {this.props.data.traits[trait] ? "True" : "False"}
-                            <br/>
-                        </div>)
+                    Citizen {this.props.data.name} &nbsp;
+                    {Object.keys(this.props.data.traits).map((trait, i) => {
+                        console.log(Object.keys(this.props.data.traits).length);
+                        return (<>
+                            {this.props.data.traits[trait]
+                                ? trait.split("_").join(" ")
+                                : trait.split("_")
+                                    .join(" ")
+                                    .replace("has", "does not have")
+                            }{i === Object.keys(this.props.data.traits).length - 2
+                                ? ", and " :
+                                i === Object.keys(this.props.data.traits).length - 1
+                                    ? "."
+                                    : ", " }
+                        </>);}
                     )}
                 </Popover.Content>
             </Popover>
