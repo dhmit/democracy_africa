@@ -8,7 +8,7 @@ import './campaign.scss';
 const get_default_proposal = (topic_names) => {
     let proposal = {};
     topic_names.forEach((topic) => {
-        proposal[topic] = 1;
+        proposal[topic] = 3;
     });
     return proposal;
 };
