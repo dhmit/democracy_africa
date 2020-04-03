@@ -43,6 +43,7 @@ class Citizen extends React.Component {
                                 : trait.split("_")
                                     .join(" ")
                                     .replace("has", "does not have")
+                                    .replace("is", "is not")
                             }{i === Object.keys(this.props.data.traits).length - 2
                                 ? ", and " :
                                 i === Object.keys(this.props.data.traits).length - 1
