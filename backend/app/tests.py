@@ -205,4 +205,3 @@ class MainTests(TestCase):
         self.assertIn("Creating more jobs", first_citizen_traits)
         self.assertIn("Fighting corruption", first_citizen_traits)
         self.assertIn("Reducing violent community conflict", first_citizen_traits)
-
