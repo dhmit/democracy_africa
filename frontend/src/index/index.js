@@ -14,6 +14,27 @@ export class IndexView extends React.Component {
         return (
             <>
                 <h1>Gamifying Democracy and Development: Perspectives from Africa</h1>
+                <h3>Quick links</h3>
+                <ul>
+                    <li>
+                        <a href="https://www.edx.org/course/democracy-and-development-perspectives-from-afri-2">
+                            The course on edX: Democracy and Development: Perspectives from Africa
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="https://docs.google.com/document/d/1k5J-yIODumamCIt0DdmvV-ISXFxIVRvQpVubuP0KPqU/edit">
+                            Brainstorming Doc
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="https://drive.google.com/drive/folders/1EfQKscfSVw9GlMRiJ1N3B66COrKMo6e1?usp=sharing">
+                            Google Drive folder
+                        </a>
+                    </li>
+                </ul>
+
                 <IndexCard
                     url='/map_quiz/'
                     title='Africa Map Quiz'
@@ -48,6 +69,17 @@ export class IndexView extends React.Component {
                 />
 
                 <IndexCard
+                    url='/adventure/'
+                    title='Choose Your Own Adventure'
+                    description="
+                        Make a speech to try and get people to vote for you.
+                        Here's a link to our
+                        <a href='https://docs.google.com/document/d/1gTZ_Sk_Wz4dYxiKfTVKSn9aZV6cKTnHBRUZGYimwpr8/edit'>
+                        draft Google Doc</a>.
+                    "
+                />
+
+                <IndexCard
                     url='/all_view/'
                     title='All View'
                     description='
@@ -64,6 +96,10 @@ export class IndexView extends React.Component {
 
 class IndexCard extends React.Component {
     render() {
+        const createMarkup = () => {
+            return { __html: this.props.description } ;
+        };
+
         return (
             <div className='card mb-4'>
                 <div className='card-header'>
@@ -72,9 +108,10 @@ class IndexCard extends React.Component {
                         href={this.props.url}
                     >{this.props.title}</a>
                 </div>
-                <div className='card-body'>
-                    {this.props.description}
-                </div>
+                <div
+                    className='card-body'
+                    dangerouslySetInnerHTML={createMarkup()}
+                />
             </div>
         );
     }
