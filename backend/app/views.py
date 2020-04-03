@@ -132,7 +132,7 @@ def campaign_population(request):
     country_name = request.data.get("country_name")
     campaign_json = load_json('campaign_info.json')[country_name]
     population_obj = Population(country=country_name)
-    population_obj.create_citizens_campaign_game(100, campaign_json)
+    population_obj.create_citizens_campaign_game(1000, campaign_json)
     serializer = PopulationSerializer(instance=population_obj)
     return Response(serializer.data)
 

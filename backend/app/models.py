@@ -147,7 +147,9 @@ class Population:
                     for j, percent in enumerate(topic['preferences']):
                         accumulate += percent
                         if preference_choice <= accumulate:
-                            current_citizen.traits[topic['name']] = j + 1
+                            # The data in the JSON file goes from bad to good
+                            # So if the government isn't giving you something, you would want it.
+                            current_citizen.traits[topic['name']] = 5 - j
                             break
                 self.citizen_list.append(current_citizen)
                 self.population_size += 1
