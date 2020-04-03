@@ -33,7 +33,6 @@ class Citizen extends React.Component {
     render() {
         const statistic = (
             <Popover id={"popover-basic"}>
-                <Popover.Title as={"h3"}> {this.props.data.name} </Popover.Title>
                 <Popover.Content>
                     Citizen {this.props.data.name} &nbsp;
                     {Object.keys(this.props.data.traits).map((trait, i) => {
