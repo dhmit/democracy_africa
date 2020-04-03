@@ -10,8 +10,8 @@ import PopoverContent from 'react-bootstrap/PopoverContent';
 const resources = [
     "infrastructure",
     "electricity",
-    "sanitation",
     "water",
+    "sanitation",
     "education",
 ];
 
@@ -94,11 +94,11 @@ class Budget extends React.Component {
     resetBudget = () => {
         let proposal = {};
         resources.forEach((resource) => {
-            proposal[resource] = 0;
+            proposal[resource] = 20;
         });
         this.setState({
             budgetProposal: proposal,
-            total: 0,
+            total: 100,
             result: 0,
             sampleSize: 100,
         });
