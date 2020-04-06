@@ -12,9 +12,9 @@ import { AllView } from './UILibrary/allView.js';
 import { MapQuiz } from './mapQuiz/mapQuiz.js';
 import { BudgetVotingSimViz } from './budgetSimulation/budgetSimulation.js';
 import { DemocracyViz } from './democracyViz/democracyViz.js';
-import { CampaignView } from "./campaign/campaignView";
-import { EdXView } from "./UILibrary/components";
-import { ChooseAdventureView } from "./chooseAdventure/chooseAdventure.js";
+import { CampaignView } from './campaign/campaignView';
+import { EdXView } from './UILibrary/components';
+import { ChooseAdventureView } from './chooseAdventure/chooseAdventure.js';
 
 // Import all styles
 import './UILibrary/styles.scss';
