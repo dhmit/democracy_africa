@@ -15,23 +15,31 @@ class EndView extends React.Component {
         this.props.resetProgress();
     };
 
+    formatAsPercentage = (probability) => {
+        const unrounded = probability * 100;
+        return unrounded.toFixed(2);
+    };
+
     render() {
         const choices = this.props.history.map((option, k) => (
             <div key={k}>
-                Choosing to {option.text} has a {option.successFactor} chance of success.
+                Choosing to {option.text} has
+                a {this.formatAsPercentage(option.successFactor)}% chance of success.
                 <br />
                 {option.successDetail}
             </div>
         ));
         return (
             <div>
-                <div>You had {this.props.successTotal} chance of succeeding.</div>
+                <div>You had a {this.formatAsPercentage(this.props.successTotal)}%
+                    chance of succeeding.</div>
                 {choices}
                 <button onClick={() => this.resetAdventure()}>Try again</button>
             </div>
         );
     }
 }
+
 
 EndView.propTypes = {
     setView: PropTypes.func,
