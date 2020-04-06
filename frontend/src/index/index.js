@@ -97,7 +97,7 @@ export class IndexView extends React.Component {
 class IndexCard extends React.Component {
     render() {
         const createMarkup = () => {
-            return { __html: this.props.description } ;
+            return { __html: this.props.description };
         };
 
         return (

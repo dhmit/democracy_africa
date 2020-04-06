@@ -2,7 +2,7 @@
  * Common.js -- miscellaneous routines useful throughout the system
  */
 
-import * as d3 from "d3";
+import * as d3 from 'd3';
 
 
 /**
@@ -31,18 +31,18 @@ export function getCookie(name) {
  * projects all of the geometries from lon-lat into x-y coords in SVG-space,
  * and returns a list of objects containing these paths, and some metadata (iso, name)
  */
-export function project_features_and_create_svg_paths(geo_json, width=800, height=800) {
+export function project_features_and_create_svg_paths(geo_json, width = 800, height = 800) {
     const center = [2, 15];
 
     const projection = d3.geoMercator()
         .center(center)
-        //fitExtent documentation can be found here https://github.com/d3/d3-geo#projection_fitExtent
+        // fitExtent documentation can be found here https://github.com/d3/d3-geo#projection_fitExtent
         .fitExtent([
-            [0,0],
+            [0, 0],
             [
                 width,
-                height
-            ]
+                height,
+            ],
         ],
         geo_json);
     const geoGenerator = d3.geoPath().projection(projection);
@@ -51,8 +51,8 @@ export function project_features_and_create_svg_paths(geo_json, width=800, heigh
     for (const feature of geo_json.features) {
         const svg_path = geoGenerator(feature.geometry);
         const iso = feature.properties.ISO_A3;
-        const name = feature.properties.name;
-        map_data.push({svg_path, name, iso});
+        const { name } = feature.properties;
+        map_data.push({ svg_path, name, iso });
     }
     return map_data;
 }
