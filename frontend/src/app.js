@@ -19,12 +19,6 @@ import { ChooseAdventureView } from './chooseAdventure/chooseAdventure.js';
 // Import all styles
 import './UILibrary/styles.scss';
 
-// Testing CI vs local eslint setting
-const foo = 'hmm';
-   const bad_indent = 'bar';
-
-
-
 window.app_modules = {
     React,  // Make React accessible from the base template
     ReactDOM,  // Make ReactDOM accessible from the base template
