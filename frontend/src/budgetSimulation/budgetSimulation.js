@@ -34,20 +34,20 @@ class Citizen extends React.Component {
 
     generateDescription() {
         const traits = Object.keys(this.props.data.traits).map((trait, i) => {
-            let hasTrait = this.props.data.traits[trait];
-            let numTraits = Object.keys(this.props.data.traits).length;
-            let prose = trait.split("_").join(" ");
+            const hasTrait = this.props.data.traits[trait];
+            const numTraits = Object.keys(this.props.data.traits).length;
+            let prose = trait.split('_').join(' ');
             if (!hasTrait) {
                 prose = prose
-                    .replace("has", "does not have")
-                    .replace("is", "is not");
+                    .replace('has', 'does not have')
+                    .replace('is', 'is not');
             }
-            if(i === numTraits - 2) {
-                prose += ", and";
-            } else if(i === numTraits - 1) {
-                prose += ".";
+            if (i === numTraits - 2) {
+                prose += ', and';
+            } else if (i === numTraits - 1) {
+                prose += '.';
             } else {
-                prose += ", ";
+                prose += ', ';
             }
 
             return (<> {prose} </>);
@@ -59,6 +59,7 @@ class Citizen extends React.Component {
             </div>
         );
     }
+
     render() {
         const statistic = (
             <Popover id='popover-basic'>
