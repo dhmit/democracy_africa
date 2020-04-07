@@ -2,9 +2,9 @@
  *  Components that are reused frequently throughout the project
  */
 
-import React from "react";
-import * as PropTypes from "prop-types";
-import * as d3 from "d3";
+import React from 'react';
+import * as PropTypes from 'prop-types';
+import * as d3 from 'd3';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -12,7 +12,7 @@ import {
     faChevronRight,
     faChevronLeft,
     faFilm,
-} from "@fortawesome/free-solid-svg-icons";
+} from '@fortawesome/free-solid-svg-icons';
 
 /**
  * Component used to render paths into SVGs
@@ -42,15 +42,14 @@ export class MapPath extends React.Component {
                 d3.select(this.path_ref.current)
                     .transition()
                     .duration(500)
-                    .attr("fill", () => {
+                    .attr('fill', () => {
                         return this.props.fill;
                     })
-                    .on("end", () => {
-                        this.setState({fill: this.props.fill});
+                    .on('end', () => {
+                        this.setState({ fill: this.props.fill });
                     });
-            }
-            else {
-                this.setState({fill: this.props.fill});
+            } else {
+                this.setState({ fill: this.props.fill });
             }
         }
     }
@@ -90,23 +89,23 @@ MapPath.propTypes = {
 export class EdXView extends React.Component {
     render() {
         return (
-            <section className="edx-course-content">
-                <header className="edx-page-header">
+            <section className='edx-course-content'>
+                <header className='edx-page-header'>
                     <a>Course</a>
                     &gt; <a>Module 2: Module Description</a>
                     &gt; <a>Section of the Module</a>
                     &gt; {this.props.title}
                 </header>
-                <main className="edx-app-main">
+                <main className='edx-app-main'>
                     <div className='text-center'>
-                        <nav className="edx-sequence-nav">
+                        <nav className='edx-sequence-nav'>
                             <button>
                                 <FontAwesomeIcon icon={faChevronLeft} /> Previous
                             </button>
                             <button>
                                 <FontAwesomeIcon icon={faFilm} />
                             </button>
-                            <button className="edx-sequence-nav-active-button">
+                            <button className='edx-sequence-nav-active-button'>
                                 <FontAwesomeIcon icon={faBook} />
                             </button>
                             <button>
@@ -116,7 +115,7 @@ export class EdXView extends React.Component {
                     </div>
                     {this.props.app}
                     <div className='text-center'>
-                        <nav className="edx-sequence-nav">
+                        <nav className='edx-sequence-nav'>
                             <button className='ml-auto'>
                                 <FontAwesomeIcon icon={faChevronLeft} /> Previous
                             </button>

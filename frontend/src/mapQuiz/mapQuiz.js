@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types';
 
 import {
     MapPath,
-} from "../UILibrary/components";
+} from '../UILibrary/components';
 
 import {
     getCookie,
@@ -23,8 +23,8 @@ export class MapQuiz extends React.Component {
             map_data: null,
             clicked_country: null,
             score: 0,
-            minutes : 5,
-            seconds : 0,
+            minutes: 5,
+            seconds: 0,
         };
         this.map_height = 800;
         this.map_width = 800;
@@ -57,14 +57,14 @@ export class MapQuiz extends React.Component {
     initialize_input_tracker(map_data) {
         const input_tracker = {};
         for (const feature of map_data) {
-            input_tracker[feature.name] = "None";
+            input_tracker[feature.name] = 'None';
         }
         return input_tracker;
     }
 
     handle_country_map_click(country) {
         this.timer_ref.current.startTimer();
-        if (this.state.input_tracker[country.name] === "None") {
+        if (this.state.input_tracker[country.name] === 'None') {
             this.setState({
                 clicked_country: country.name,
             });
@@ -80,18 +80,18 @@ export class MapQuiz extends React.Component {
     handle_submit_answer(answer) {
         const selected_country = this.state.clicked_country;
         if (selected_country.toLowerCase() === answer.toLowerCase()) {
-            this.setState(prevState => ({
+            this.setState((prevState) => ({
                 input_tracker: {
                     ...prevState.input_tracker,
-                    [selected_country]: "Correct",
-                }
+                    [selected_country]: 'Correct',
+                },
             }));
         } else {
-            this.setState(prevState => ({
+            this.setState((prevState) => ({
                 input_tracker: {
                     ...prevState.input_tracker,
-                    [selected_country]: "Incorrect",
-                }
+                    [selected_country]: 'Incorrect',
+                },
             }));
         }
         // const country_list = Object.keys(this.state.input_tracker);
@@ -99,7 +99,7 @@ export class MapQuiz extends React.Component {
         //         //     this.state.input_tracker[country] === "None" &&
         //         //     country !== this.state.clicked_country);
         //         // this.setState({ clicked_country: unanswered_countries[0] });
-        this.setState({ clicked_country: null});
+        this.setState({ clicked_country: null });
     }
 
     reset_map() {
@@ -114,9 +114,10 @@ export class MapQuiz extends React.Component {
         let score = 0;
         if (this.state.input_tracker) {
             const correct_responses = Object.values(this.state.input_tracker).filter(
-                (input) => input === "Correct");
+                (input) => input === 'Correct',
+            );
             score = correct_responses.length;
-            if(score === 54){
+            if (score === 54) {
                 this.timer_ref.current.stopTimer();
             }
         }
@@ -134,13 +135,13 @@ export class MapQuiz extends React.Component {
                             id="content"
                         >
                             {this.state.map_data.map((country, i) => {
-                                let countryFill = "#F6F4D2";
-                                if (this.state.input_tracker[country.name] === "Correct") {
-                                    countryFill = "#B8E39B";
-                                } else if (this.state.input_tracker[country.name] === "Incorrect") {
-                                    countryFill = "#F19C79";
+                                let countryFill = '#F6F4D2';
+                                if (this.state.input_tracker[country.name] === 'Correct') {
+                                    countryFill = '#B8E39B';
+                                } else if (this.state.input_tracker[country.name] === 'Incorrect') {
+                                    countryFill = '#F19C79';
                                 } else if (this.state.clicked_country === country.name) {
-                                    countryFill = "#C0CCD3";
+                                    countryFill = '#C0CCD3';
                                 }
 
                                 return <MapPath
@@ -196,9 +197,9 @@ export class CountryButtons extends React.Component {
         return (
             <div className="mt-4">
                 <h3>Countries</h3>
-                <div className={"grid-container"}>
+                <div className={'grid-container'}>
                     {this.props.map_data.map((country, i) => {
-                        if (this.props.input_tracker[country.name] === "Correct") {
+                        if (this.props.input_tracker[country.name] === 'Correct') {
                             return (
                                 <button
                                     key={i}
@@ -207,15 +208,14 @@ export class CountryButtons extends React.Component {
                                 >{country.name}
                                 </button>
                             );
-                        } else {
-                            return (
-                                <button key={i}
-                                    className={"country-btn"}
-                                    onClick={() => this.props.handle_submit_answer(country.name)}>
-                                    {country.name}
-                                </button>
-                            );
                         }
+                        return (
+                            <button key={i}
+                                className={'country-btn'}
+                                onClick={() => this.props.handle_submit_answer(country.name)}>
+                                {country.name}
+                            </button>
+                        );
                     })}
                 </div>
             </div>
@@ -235,13 +235,13 @@ CountryButtons.propTypes = {
  * Starts at 5 minutes and decrements by 1 second
  */
 export class Timer extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            minutes : props.minutes,
-            seconds : props.seconds,
-            //started represents whether or not the timer is currently counting down
-            started : false,
+            minutes: props.minutes,
+            seconds: props.seconds,
+            // started represents whether or not the timer is currently counting down
+            started: false,
         };
     }
 
@@ -250,12 +250,12 @@ export class Timer extends React.Component {
     }
 
     startTimer = () => {
-        if(this.state.started === false){
+        if (this.state.started === false) {
             this.interval = setInterval(() => {
-                const {minutes, seconds} = this.state;
+                const { minutes, seconds } = this.state;
                 if (seconds > 0) {
                     this.setState((prevState) => ({
-                        seconds: prevState.seconds - 1
+                        seconds: prevState.seconds - 1,
                     }));
                 }
                 if (seconds === 0) {
@@ -264,31 +264,31 @@ export class Timer extends React.Component {
                     } else {
                         this.setState((prevState) => ({
                             minutes: prevState.minutes - 1,
-                            seconds: 59
+                            seconds: 59,
                         }));
                     }
                 }
             }, 1000);
-            this.setState({started : true});
+            this.setState({ started: true });
         }
     };
 
     stopTimer = () => {
         clearInterval((this.interval));
-        this.setState({started : false});
+        this.setState({ started: false });
     };
 
     resetTimer = () => {
         this.setState({
-            minutes : this.props.minutes,
-            seconds : this.props.seconds,
+            minutes: this.props.minutes,
+            seconds: this.props.seconds,
         });
         this.stopTimer();
     };
 
     render() {
         const { minutes, seconds } = this.state;
-        return(
+        return (
             <span className="timer">
                 Time remaining: {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
             </span>
@@ -297,8 +297,8 @@ export class Timer extends React.Component {
 }
 
 Timer.propTypes = {
-    minutes : PropTypes.number,
-    seconds : PropTypes.number,
+    minutes: PropTypes.number,
+    seconds: PropTypes.number,
 };
 
 
@@ -316,7 +316,7 @@ export class NameForm extends React.Component {
     }
 
     handleChange(event) {
-        this.setState({value: event.target.value});
+        this.setState({ value: event.target.value });
         event.preventDefault();
     }
 
@@ -338,7 +338,7 @@ export class NameForm extends React.Component {
                         value={this.state.value}
                         onChange={this.handleChange}
                     />
-                    <button className={"submit-btn"} onClick={this.handleSubmit}>Submit</button>
+                    <button className={'submit-btn'} onClick={this.handleSubmit}>Submit</button>
                 </form>
             </div>
         );
