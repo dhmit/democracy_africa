@@ -50,7 +50,7 @@ class Citizen extends React.Component {
                 prose += ', ';
             }
 
-            return (<> {prose} </>);
+            return (<span key={i}> {prose} </span>);
         });
         return (
             <div>
@@ -301,7 +301,7 @@ class AggregateData extends React.Component {
     constructor(props) {
         super(props);
         const selections = {};
-        for (const trait of Object.keys(this.props.population[0])['traits']) {
+        for (const trait of Object.keys(this.props.population[0]['traits'])) {
             selections[trait] = false;
         }
         this.state = {
