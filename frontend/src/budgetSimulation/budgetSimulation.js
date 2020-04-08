@@ -12,8 +12,8 @@ import { getCookie } from '../common';
 const resources = [
     'infrastructure',
     'electricity',
-    'sanitation',
     'water',
+    'sanitation',
     'education',
 ];
 
@@ -32,20 +32,39 @@ class Citizen extends React.Component {
         };
     }
 
+    generateDescription() {
+        const traits = Object.keys(this.props.data.traits).map((trait, i) => {
+            const hasTrait = this.props.data.traits[trait];
+            const numTraits = Object.keys(this.props.data.traits).length;
+            let prose = trait.split('_').join(' ');
+            if (!hasTrait) {
+                prose = prose
+                    .replace('has', 'does not have')
+                    .replace('is', 'is not');
+            }
+            if (i === numTraits - 2) {
+                prose += ', and';
+            } else if (i === numTraits - 1) {
+                prose += '.';
+            } else {
+                prose += ', ';
+            }
+
+            return (<span key={i}> {prose} </span>);
+        });
+        return (
+            <div>
+                Citizen {this.props.data.name}
+                {traits}
+            </div>
+        );
+    }
+
     render() {
         const statistic = (
-            <Popover id={'popover-basic'}>
-                <Popover.Title as={'h3'}> {this.props.data.name} </Popover.Title>
+            <Popover id='popover-basic'>
                 <Popover.Content>
-                    {Object.keys(this.props.data.traits).map((trait, key) => {
-                        return (<div key={key}>
-                            <strong>
-                                {trait.split('_').join(' ')}: &nbsp;
-                            </strong>
-                            {this.props.data.traits[trait] ? 'True' : 'False'}
-                            <br/>
-                        </div>);
-                    })}
+                    {this.generateDescription()}
                 </Popover.Content>
             </Popover>
         );
@@ -96,11 +115,11 @@ class Budget extends React.Component {
     resetBudget = () => {
         const proposal = {};
         resources.forEach((resource) => {
-            proposal[resource] = 0;
+            proposal[resource] = 20;
         });
         this.setState({
             budgetProposal: proposal,
-            total: 0,
+            total: 100,
             result: 0,
             sampleSize: 100,
         });
@@ -282,7 +301,7 @@ class AggregateData extends React.Component {
     constructor(props) {
         super(props);
         const selections = {};
-        for (const trait of Object.keys(this.props.population[0])['traits']) {
+        for (const trait of Object.keys(this.props.population[0]['traits'])) {
             selections[trait] = false;
         }
         this.state = {
@@ -394,7 +413,6 @@ class AggregateData extends React.Component {
                                     && this.state.selected[category]) {
                                     table_row_classnames += ' selected_row';
                                 }
-                                console.log(aggregate_values);
                                 return (
                                     <tr key={key} className={table_row_classnames}
                                         onClick={() => this.select_table_row(category)}>
