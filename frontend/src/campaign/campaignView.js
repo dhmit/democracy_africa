@@ -4,6 +4,8 @@ import {MapPath} from "../UILibrary/components";
 import * as PropTypes from "prop-types";
 import './campaign.scss';
 
+import IntroView from "../chooseAdventure/introView";
+
 
 const get_default_proposal = (topic_names) => {
     let proposal = {};
@@ -157,6 +159,7 @@ export class CampaignView extends  React.Component {
             clickedProvince: null,
             countryName: "South Africa",
             provinceInfo: {},
+            view: "intro",
         };
         this.map_height = 500;
         this.map_width = 500;
@@ -260,6 +263,15 @@ export class CampaignView extends  React.Component {
     render() {
         if (!(this.state.populationData && this.state.mapData)) {
             return (<div>Loading!</div>);
+        }
+        if (this.state.view === "intro") {
+            const description = "Welcome to the Campaign Game. The goal of this game is to" +
+                " create a campaign that will appeal to the most people in a country. You do" +
+                " this by allocating your priority points towards different services. If your" +
+                " priorities align with those of a given citizen, that citizen will support you.";
+            return (
+                <IntroView desc={description} setView={(view) => {this.setState({view: view});}}/>
+            );
         }
         const {clickedProvince} = this.state;
         const {provinceInfo} = this.state;
