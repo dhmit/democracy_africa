@@ -4,6 +4,8 @@ import { project_features_and_create_svg_paths } from '../common';
 import { MapPath } from '../UILibrary/components';
 import './campaign.scss';
 
+import IntroView from '../chooseAdventure/introView';
+
 
 const get_default_proposal = (topic_names) => {
     const proposal = {};
@@ -105,19 +107,19 @@ class Speech extends React.Component {
 
     render() {
         const topics = this.topic_names.map((topic, key) => (
-            <div key={key} className="button-containers">
-                <p className="topics">
+            <div key={key} className='button-containers'>
+                <p className='topics'>
                     <strong>{topic}</strong>
                 </p>
                 {[...Array(5).keys()].map((score, j) => (
-                    <div className="form-check form-check-inline score-button" key={j}>
-                        <input className="form-check-input" type="radio" name={topic}
+                    <div className='form-check form-check-inline score-button' key={j}>
+                        <input className='form-check-input' type='radio' name={topic}
                             id={'inlineRadio' + score + 1} value={score + 1}
                             checked={this.state.speechProposal[topic] === score + 1}
                             onChange={(e) => this.handleButtonOnChange(e, topic)}/>
                         <label
-                            className="form-check-label"
-                            htmlFor="inlineRadio1"
+                            className='form-check-label'
+                            htmlFor='inlineRadio1'
                         >{score + 1}
                         </label>
                     </div>
@@ -134,7 +136,7 @@ class Speech extends React.Component {
                 <div>
                     {topics}
                 </div>
-                <div className="reset_button">
+                <div className='reset_button'>
                     <button
                         type={'submit'}
                         onClick={this.resetSpeech}
@@ -159,6 +161,7 @@ export class CampaignView extends React.Component {
             clickedProvince: null,
             countryName: 'South Africa',
             provinceInfo: {},
+            view: 'intro',
         };
         this.map_height = 500;
         this.map_width = 500;
@@ -263,12 +266,28 @@ export class CampaignView extends React.Component {
         if (!(this.state.populationData && this.state.mapData)) {
             return (<div>Loading!</div>);
         }
+        if (this.state.view === 'intro') {
+            const description = 'Welcome to the Campaign Game. The goal of this game is to'
+                + ' create a campaign that will appeal to the most people in a country. You do'
+                + ' this by allocating your priority points towards different services. If your'
+                + ' priorities align with those of a given citizen, that citizen will support'
+                + ' you. Citizens from different provinces will tend to favor some services more'
+                + ' than others, so you can play with the assignments until you gain a majority of'
+                + ' supporters.';
+            return (
+                <IntroView
+                    desc={description}
+                    setView={(view) => { this.setState({ view: view }); }}
+                    imgFile={'/static/img/campaign.jpg'}
+                />
+            );
+        }
         const { clickedProvince } = this.state;
         const { provinceInfo } = this.state;
         return (
             <>
                 <h1>Campaign Game</h1><hr/>
-                <div className="country-selector">
+                <div className='country-selector'>
                     Select a Country:&nbsp;
                     <select onChange={(e) => this.changeCountry(e)}>
                         {COUNTRIES.map((country, key) => (
@@ -309,7 +328,7 @@ export class CampaignView extends React.Component {
                             <svg
                                 height={this.map_height}
                                 width={this.map_width}
-                                id="content"
+                                id='content'
                                 onClick={(e) => this.handleProvinceMapClick(e, '')}
                             >
                                 {this.state.mapData.map((country, i) => {
@@ -320,8 +339,8 @@ export class CampaignView extends React.Component {
                                         path={country.svg_path}
                                         id={country.postal}
                                         fill={countryFill}
-                                        stroke="black"
-                                        strokeWidth="1"
+                                        stroke='black'
+                                        strokeWidth='1'
                                         handle_country_click={
                                             (e) => this.handleProvinceMapClick(e, country.name)
                                         }
