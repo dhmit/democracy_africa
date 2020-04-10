@@ -268,9 +268,16 @@ export class CampaignView extends  React.Component {
             const description = "Welcome to the Campaign Game. The goal of this game is to" +
                 " create a campaign that will appeal to the most people in a country. You do" +
                 " this by allocating your priority points towards different services. If your" +
-                " priorities align with those of a given citizen, that citizen will support you.";
+                " priorities align with those of a given citizen, that citizen will support you." +
+                " Citizens from different provinces will tend to favor some services more than" +
+                " others, so you can play with the assignments until you gain a majority of" +
+                " supporters.";
             return (
-                <IntroView desc={description} setView={(view) => {this.setState({view: view});}}/>
+                <IntroView
+                    desc={description}
+                    setView={(view) => {this.setState({view: view});}}
+                    imgFile={'/static/img/campaign.jpg'}
+                />
             );
         }
         const {clickedProvince} = this.state;

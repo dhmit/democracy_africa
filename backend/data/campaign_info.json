@@ -7,61 +7,61 @@
                 "population": 115,
                 "topic_preferences": [
                     {
-                        "name": "Handling improving basic health services",
+                        "name": "Health services",
                         "preferences": [
                             32, 22, 0, 36, 10
                         ]
                     },
                     {
-                        "name": "Handling addressing educational needs",
+                        "name": "Education",
                         "preferences": [
                             32, 12, 1, 42, 12
                         ]
                     },
                     {
-                        "name": "Handling providing water and sanitation services",
+                        "name": "Water and sanitation",
                         "preferences": [
                             33, 26, 0, 33, 8
                         ]
                     },
                     {
-                        "name": "Handling maintaining roads and bridges",
+                        "name": "Roads and bridges",
                         "preferences": [
                             41, 21, 2, 30, 6
                         ]
                     },
                     {
-                        "name": "Handling providing reliable electric supply",
+                        "name": "Electricity",
                         "preferences": [
                             32, 20, 2, 35, 12
                         ]
                     },
                     {
-                        "name": "Handling promoting equal rights for women",
+                        "name": "Equal rights for women",
                         "preferences": [
                             28, 28, 4, 29, 11
                         ]
                     },
                     {
-                        "name": "Handling improving living standards for the poor",
+                        "name": "Improving living standards for the poor",
                         "preferences": [
                             38, 26, 0, 29, 6
                         ]
                     },
                     {
-                        "name": "Handling creating more jobs",
+                        "name": "Creating jobs",
                         "preferences": [
                             42, 22, 1, 31, 5
                         ]
                     },
                     {
-                        "name": "Handling fighting corruption",
+                        "name": "Fighting corruption",
                         "preferences": [
                             42, 29, 0, 26, 3
                         ]
                     },
                     {
-                        "name": "Handling reducing violent community conflict",
+                        "name": "Reducing violent community conflict",
                         "preferences": [
                             33, 20, 3, 28, 17
                         ]
@@ -73,61 +73,61 @@
                 "population": 582,
                 "topic_preferences": [
                     {
-                        "name": "Handling improving basic health services",
+                        "name": "Health services",
                         "preferences": [
                             45, 23, 4, 21, 6
                         ]
                     },
                     {
-                        "name": "Handling addressing educational needs",
+                        "name": "Education",
                         "preferences": [
                             29, 20, 3, 35, 14
                         ]
                     },
                     {
-                        "name": "Handling providing water and sanitation services",
+                        "name": "Water and sanitation",
                         "preferences": [
                             41, 19, 2, 25, 12
                         ]
                     },
                     {
-                        "name": "Handling maintaining roads and bridges",
+                        "name": "Roads and bridges",
                         "preferences": [
                             37, 16, 4, 28, 15
                         ]
                     },
                     {
-                        "name": "Handling providing reliable electric supply",
+                        "name": "Electricity",
                         "preferences": [
                             40, 16, 4, 29, 11
                         ]
                     },
                     {
-                        "name": "Handling promoting equal rights for women",
+                        "name": "Equal rights for women",
                         "preferences": [
                             36, 17, 4, 33, 9
                         ]
                     },
                     {
-                        "name": "Handling improving living standards for the poor",
+                        "name": "Improving living standards for the poor",
                         "preferences": [
                             51, 26, 3, 17, 3
                         ]
                     },
                     {
-                        "name": "Handling creating more jobs",
+                        "name": "Creating jobs",
                         "preferences": [
                             60, 20, 2, 16, 1
                         ]
                     },
                     {
-                        "name": "Handling fighting corruption",
+                        "name": "Fighting corruption",
                         "preferences": [
                             54, 24, 5, 13, 5
                         ]
                     },
                     {
-                        "name": "Handling reducing violent community conflict",
+                        "name": "Reducing violent community conflict",
                         "preferences": [
                             46, 23, 5, 20, 6
                         ]
@@ -139,61 +139,61 @@
                 "population": 656,
                 "topic_preferences": [
                     {
-                        "name": "Handling improving basic health services",
+                        "name": "Health services",
                         "preferences": [
                             33, 9, 5, 36, 17
                         ]
                     },
                     {
-                        "name": "Handling addressing educational needs",
+                        "name": "Education",
                         "preferences": [
                             29, 16, 4, 31, 20
                         ]
                     },
                     {
-                        "name": "Handling providing water and sanitation services",
+                        "name": "Water and sanitation",
                         "preferences": [
                             51, 13, 4, 20, 13
                         ]
                     },
                     {
-                        "name": "Handling maintaining roads and bridges",
+                        "name": "Roads and bridges",
                         "preferences": [
                             47, 12, 4, 24, 14
                         ]
                     },
                     {
-                        "name": "Handling providing reliable electric supply",
+                        "name": "Electricity",
                         "preferences": [
                             40, 14, 5, 23, 19
                         ]
                     },
                     {
-                        "name": "Handling promoting equal rights for women",
+                        "name": "Equal rights for women",
                         "preferences": [
                             34, 15, 8, 23, 21
                         ]
                     },
                     {
-                        "name": "Handling improving living standards for the poor",
+                        "name": "Improving living standards for the poor",
                         "preferences": [
                             54, 14, 4, 20, 8
                         ]
                     },
                     {
-                        "name": "Handling creating more jobs",
+                        "name": "Creating jobs",
                         "preferences": [
                             57, 20, 1, 18, 4
                         ]
                     },
                     {
-                        "name": "Handling fighting corruption",
+                        "name": "Fighting corruption",
                         "preferences": [
                             48, 20, 5, 19, 9
                         ]
                     },
                     {
-                        "name": "Handling reducing violent community conflict",
+                        "name": "Reducing violent community conflict",
                         "preferences": [
                             33, 11, 10, 30, 17
                         ]
@@ -205,61 +205,61 @@
                 "population": 351,
                 "topic_preferences": [
                     {
-                        "name": "Handling improving basic health services",
+                        "name": "Health services",
                         "preferences": [
                             22, 40, 1, 29, 8
                         ]
                     },
                     {
-                        "name": "Handling addressing educational needs",
+                        "name": "Education",
                         "preferences": [
                             25, 26, 0, 33, 17
                         ]
                     },
                     {
-                        "name": "Handling providing water and sanitation services",
+                        "name": "Water and sanitation",
                         "preferences": [
                             23, 29, 1, 35, 12
                         ]
                     },
                     {
-                        "name": "Handling maintaining roads and bridges",
+                        "name": "Roads and bridges",
                         "preferences": [
                             33, 25, 1, 26, 16
                         ]
                     },
                     {
-                        "name": "Handling providing reliable electric supply",
+                        "name": "Electricity",
                         "preferences": [
                             26, 31, 0, 30, 13
                         ]
                     },
                     {
-                        "name": "Handling promoting equal rights for women",
+                        "name": "Equal rights for women",
                         "preferences": [
                             26, 23, 5, 33, 13
                         ]
                     },
                     {
-                        "name": "Handling improving living standards for the poor",
+                        "name": "Improving living standards for the poor",
                         "preferences": [
                             37, 16, 1, 38, 9
                         ]
                     },
                     {
-                        "name": "Handling creating more jobs",
+                        "name": "Creating jobs",
                         "preferences": [
                             48, 32, 0, 15, 5
                         ]
                     },
                     {
-                        "name": "Handling fighting corruption",
+                        "name": "Fighting corruption",
                         "preferences": [
                             40, 43, 1, 15, 1
                         ]
                     },
                     {
-                        "name": "Handling reducing violent community conflict",
+                        "name": "Reducing violent community conflict",
                         "preferences": [
                             30, 38, 2, 28, 1
                         ]
@@ -271,61 +271,61 @@
                 "population": 275,
                 "topic_preferences": [
                     {
-                        "name": "Handling improving basic health services",
+                        "name": "Health services",
                         "preferences": [
                             44, 19, 1, 22, 14
                         ]
                     },
                     {
-                        "name": "Handling addressing educational needs",
+                        "name": "Education",
                         "preferences": [
                             33, 18, 0, 25, 24
                         ]
                     },
                     {
-                        "name": "Handling providing water and sanitation services",
+                        "name": "Water and sanitation",
                         "preferences": [
                             40, 15, 1, 29, 14
                         ]
                     },
                     {
-                        "name": "Handling maintaining roads and bridges",
+                        "name": "Roads and bridges",
                         "preferences": [
                             46, 13, 1, 22, 18
                         ]
                     },
                     {
-                        "name": "Handling providing reliable electric supply",
+                        "name": "Electricity",
                         "preferences": [
                             45, 12, 0, 27, 17
                         ]
                     },
                     {
-                        "name": "Handling promoting equal rights for women",
+                        "name": "Equal rights for women",
                         "preferences": [
                             46, 18, 4, 21, 11
                         ]
                     },
                     {
-                        "name": "Handling improving living standards for the poor",
+                        "name": "Improving living standards for the poor",
                         "preferences": [
                             47, 29, 1, 17, 5
                         ]
                     },
                     {
-                        "name": "Handling creating more jobs",
+                        "name": "Creating jobs",
                         "preferences": [
                             57, 19, 0, 21, 3
                         ]
                     },
                     {
-                        "name": "Handling fighting corruption",
+                        "name": "Fighting corruption",
                         "preferences": [
                             66, 10, 1, 11, 12
                         ]
                     },
                     {
-                        "name": "Handling reducing violent community conflict",
+                        "name": "Reducing violent community conflict",
                         "preferences": [
                             48, 22, 19, 10, 1
                         ]
@@ -337,61 +337,61 @@
                 "population": 540,
                 "topic_preferences": [
                     {
-                        "name": "Handling improving basic health services",
+                        "name": "Health services",
                         "preferences": [
                             23, 21, 2, 48, 5
                         ]
                     },
                     {
-                        "name": "Handling addressing educational needs",
+                        "name": "Education",
                         "preferences": [
                             18, 21, 1, 53, 6
                         ]
                     },
                     {
-                        "name": "Handling providing water and sanitation services",
+                        "name": "Water and sanitation",
                         "preferences": [
                             26, 29, 2, 41, 2
                         ]
                     },
                     {
-                        "name": "Handling maintaining roads and bridges",
+                        "name": "Roads and bridges",
                         "preferences": [
                             23, 36, 3, 35, 2
                         ]
                     },
                     {
-                        "name": "Handling providing reliable electric supply",
+                        "name": "Electricity",
                         "preferences": [
                             19, 24, 1, 53, 4
                         ]
                     },
                     {
-                        "name": "Handling promoting equal rights for women",
+                        "name": "Equal rights for women",
                         "preferences": [
                             15, 29, 5, 42, 8
                         ]
                     },
                     {
-                        "name": "Handling improving living standards for the poor",
+                        "name": "Improving living standards for the poor",
                         "preferences": [
                             21, 30, 4, 38, 8
                         ]
                     },
                     {
-                        "name": "Handling creating more jobs",
+                        "name": "Creating jobs",
                         "preferences": [
                             56, 25, 1, 16, 3
                         ]
                     },
                     {
-                        "name": "Handling fighting corruption",
+                        "name": "Fighting corruption",
                         "preferences": [
                             28, 29, 6, 35, 2
                         ]
                     },
                     {
-                        "name": "Handling reducing violent community conflict",
+                        "name": "Reducing violent community conflict",
                         "preferences": [
                             30, 26, 6, 29, 9
                         ]
@@ -403,61 +403,61 @@
                 "population": 404,
                 "topic_preferences": [
                     {
-                        "name": "Handling improving basic health services",
+                        "name": "Health services",
                         "preferences": [
                             40, 20, 2, 24, 15
                         ]
                     },
                     {
-                        "name": "Handling addressing educational needs",
+                        "name": "Education",
                         "preferences": [
                             36, 13, 2, 23, 26
                         ]
                     },
                     {
-                        "name": "Handling providing water and sanitation services",
+                        "name": "Water and sanitation",
                         "preferences": [
                             44, 25, 2, 19, 11
                         ]
                     },
                     {
-                        "name": "Handling maintaining roads and bridges",
+                        "name": "Roads and bridges",
                         "preferences": [
                             53, 23, 2, 17, 5
                         ]
                     },
                     {
-                        "name": "Handling providing reliable electric supply",
+                        "name": "Electricity",
                         "preferences": [
                             41, 19, 2, 23, 15
                         ]
                     },
                     {
-                        "name": "Handling promoting equal rights for women",
+                        "name": "Equal rights for women",
                         "preferences": [
                             36, 18, 1, 24, 20
                         ]
                     },
                     {
-                        "name": "Handling improving living standards for the poor",
+                        "name": "Improving living standards for the poor",
                         "preferences": [
                             39, 28, 3, 24, 6
                         ]
                     },
                     {
-                        "name": "Handling creating more jobs",
+                        "name": "Creating jobs",
                         "preferences": [
                             51, 28, 4, 14, 3
                         ]
                     },
                     {
-                        "name": "Handling fighting corruption",
+                        "name": "Fighting corruption",
                         "preferences": [
                             55, 22, 3, 17, 3
                         ]
                     },
                     {
-                        "name": "Handling reducing violent community conflict",
+                        "name": "Reducing violent community conflict",
                         "preferences": [
                             43, 26, 2, 15, 14
                         ]
@@ -469,61 +469,61 @@
                 "population": 1027,
                 "topic_preferences": [
                     {
-                        "name": "Handling improving basic health services",
+                        "name": "Health services",
                         "preferences": [
                             33, 22, 3, 34, 8
                         ]
                     },
                     {
-                        "name": "Handling addressing educational needs",
+                        "name": "Education",
                         "preferences": [
                             27, 19, 5, 37, 13
                         ]
                     },
                     {
-                        "name": "Handling providing water and sanitation services",
+                        "name": "Water and sanitation",
                         "preferences": [
                             28, 24, 6, 33, 9
                         ]
                     },
                     {
-                        "name": "Handling maintaining roads and bridges",
+                        "name": "Roads and bridges",
                         "preferences": [
                             28, 17, 5, 34, 15
                         ]
                     },
                     {
-                        "name": "Handling providing reliable electric supply",
+                        "name": "Electricity",
                         "preferences": [
                             29, 23, 5, 34, 8
                         ]
                     },
                     {
-                        "name": "Handling promoting equal rights for women",
+                        "name": "Equal rights for women",
                         "preferences": [
                             22, 28, 7, 31, 12
                         ]
                     },
                     {
-                        "name": "Handling improving living standards for the poor",
+                        "name": "Improving living standards for the poor",
                         "preferences": [
                             42, 24, 4, 25, 5
                         ]
                     },
                     {
-                        "name": "Handling creating more jobs",
+                        "name": "Creating jobs",
                         "preferences": [
                             55, 22, 5, 15, 3
                         ]
                     },
                     {
-                        "name": "Handling fighting corruption",
+                        "name": "Fighting corruption",
                         "preferences": [
                             41, 26, 8, 23, 3
                         ]
                     },
                     {
-                        "name": "Handling reducing violent community conflict",
+                        "name": "Reducing violent community conflict",
                         "preferences": [
                             26, 30, 8, 29, 8
                         ]
@@ -535,61 +535,61 @@
                 "population": 1227,
                 "topic_preferences": [
                     {
-                        "name": "Handling improving basic health services",
+                        "name": "Health services",
                         "preferences": [
                             28, 22, 3, 42, 5
                         ]
                     },
                     {
-                        "name": "Handling addressing educational needs",
+                        "name": "Education",
                         "preferences": [
                             24, 22, 3, 40, 11
                         ]
                     },
                     {
-                        "name": "Handling providing water and sanitation services",
+                        "name": "Water and sanitation",
                         "preferences": [
                             21, 19, 1, 46, 13
                         ]
                     },
                     {
-                        "name": "Handling maintaining roads and bridges",
+                        "name": "Roads and bridges",
                         "preferences": [
                             30, 19, 2, 36, 13
                         ]
                     },
                     {
-                        "name": "Handling providing reliable electric supply",
+                        "name": "Electricity",
                         "preferences": [
                             32, 24, 1, 34, 9
                         ]
                     },
                     {
-                        "name": "Handling promoting equal rights for women",
+                        "name": "Equal rights for women",
                         "preferences": [
                             21, 20, 3, 41, 15
                         ]
                     },
                     {
-                        "name": "Handling improving living standards for the poor",
+                        "name": "Improving living standards for the poor",
                         "preferences": [
                             41, 25, 3, 26, 4
                         ]
                     },
                     {
-                        "name": "Handling creating more jobs",
+                        "name": "Creating jobs",
                         "preferences": [
                             49, 22, 1, 24, 3
                         ]
                     },
                     {
-                        "name": "Handling fighting corruption",
+                        "name": "Fighting corruption",
                         "preferences": [
                             45, 25, 2, 25, 3
                         ]
                     },
                     {
-                        "name": "Handling reducing violent community conflict",
+                        "name": "Reducing violent community conflict",
                         "preferences": [
                             21, 27, 8, 35, 9
                         ]
@@ -608,61 +608,61 @@
                 "population": 115,
                 "topic_preferences": [
                     {
-                        "name": "Handling improving basic health services",
+                        "name": "Health services",
                         "preferences": [
                             13, 15, 0, 53, 18
                         ]
                     },
                     {
-                        "name": "Handling addressing educational needs",
+                        "name": "Education",
                         "preferences": [
                             6, 15, 0, 49, 29
                         ]
                     },
                     {
-                        "name": "Handling providing water and sanitation services",
+                        "name": "Water and sanitation",
                         "preferences": [
                             13, 24, 13, 32, 18
                         ]
                     },
                     {
-                        "name": "Handling maintaining roads and bridges",
+                        "name": "Roads and bridges",
                         "preferences": [
                             9, 16, 0, 60, 15
                         ]
                     },
                     {
-                        "name": "Handling providing reliable electric supply",
+                        "name": "Electricity",
                         "preferences": [
                             12, 16, 4, 43, 24
                         ]
                     },
                     {
-                        "name": "Handling promoting equal rights for women",
+                        "name": "Equal rights for women",
                         "preferences": [
                             5, 11, 4, 49, 31
                         ]
                     },
                     {
-                        "name": "Handling improving living standards for the poor",
+                        "name": "Improving living standards for the poor",
                         "preferences": [
                             43, 37, 0, 18, 0
                         ]
                     },
                     {
-                        "name": "Handling creating more jobs",
+                        "name": "Creating jobs",
                         "preferences": [
                             43, 35, 4, 17, 0
                         ]
                     },
                     {
-                        "name": "Handling fighting corruption",
+                        "name": "Fighting corruption",
                         "preferences": [
                             48, 31, 0, 19, 0
                         ]
                     },
                     {
-                        "name": "Handling reducing violent community conflict",
+                        "name": "Reducing violent community conflict",
                         "preferences": [
                             8, 21, 20, 44, 8
                         ]
@@ -674,61 +674,61 @@
                 "population": 125,
                 "topic_preferences": [
                     {
-                        "name": "Handling improving basic health services",
+                        "name": "Health services",
                         "preferences": [
                             22, 27, 0, 39, 12
                         ]
                     },
                     {
-                        "name": "Handling addressing educational needs",
+                        "name": "Education",
                         "preferences": [
                             14, 22, 0, 47, 17
                         ]
                     },
                     {
-                        "name": "Handling providing water and sanitation services",
+                        "name": "Water and sanitation",
                         "preferences": [
                             26, 37, 0, 28, 7
                         ]
                     },
                     {
-                        "name": "Handling maintaining roads and bridges",
+                        "name": "Roads and bridges",
                         "preferences": [
                             24, 26, 0, 38, 12
                         ]
                     },
                     {
-                        "name": "Handling providing reliable electric supply",
+                        "name": "Electricity",
                         "preferences": [
                             20, 24, 0, 42, 13
                         ]
                     },
                     {
-                        "name": "Handling promoting equal rights for women",
+                        "name": "Equal rights for women",
                         "preferences": [
                             20, 27, 0, 40, 12
                         ]
                     },
                     {
-                        "name": "Handling improving living standards for the poor",
+                        "name": "Improving living standards for the poor",
                         "preferences": [
                             45, 27, 0, 24, 3
                         ]
                     },
                     {
-                        "name": "Handling creating more jobs",
+                        "name": "Creating jobs",
                         "preferences": [
                             47, 31, 0, 19, 0
                         ]
                     },
                     {
-                        "name": "Handling fighting corruption",
+                        "name": "Fighting corruption",
                         "preferences": [
                             62, 24, 0, 11, 3
                         ]
                     },
                     {
-                        "name": "Handling reducing violent community conflict",
+                        "name": "Reducing violent community conflict",
                         "preferences": [
                             31, 31, 4, 28, 7
                         ]
@@ -740,61 +740,61 @@
                 "population": 255,
                 "topic_preferences": [
                     {
-                        "name": "Handling improving basic health services",
+                        "name": "Health services",
                         "preferences": [
                             11, 15, 0, 58, 14
                         ]
                     },
                     {
-                        "name": "Handling addressing educational needs",
+                        "name": "Education",
                         "preferences": [
                             7, 11, 0, 59, 21
                         ]
                     },
                     {
-                        "name": "Handling providing water and sanitation services",
+                        "name": "Water and sanitation",
                         "preferences": [
                             17, 29, 3, 43, 8
                         ]
                     },
                     {
-                        "name": "Handling maintaining roads and bridges",
+                        "name": "Roads and bridges",
                         "preferences": [
                             19, 20, 0, 49, 10
                         ]
                     },
                     {
-                        "name": "Handling providing reliable electric supply",
+                        "name": "Electricity",
                         "preferences": [
                             12, 17, 3, 49, 18
                         ]
                     },
                     {
-                        "name": "Handling promoting equal rights for women",
+                        "name": "Equal rights for women",
                         "preferences": [
                             6, 17, 8, 53, 16
                         ]
                     },
                     {
-                        "name": "Handling improving living standards for the poor",
+                        "name": "Improving living standards for the poor",
                         "preferences": [
                             23, 34, 3, 37, 3
                         ]
                     },
                     {
-                        "name": "Handling creating more jobs",
+                        "name": "Creating jobs",
                         "preferences": [
                             29, 32, 4, 30, 4
                         ]
                     },
                     {
-                        "name": "Handling fighting corruption",
+                        "name": "Fighting corruption",
                         "preferences": [
                             32, 27, 9, 29, 3
                         ]
                     },
                     {
-                        "name": "Handling reducing violent community conflict",
+                        "name": "Reducing violent community conflict",
                         "preferences": [
                             8, 20, 11, 48, 13
                         ]
@@ -806,61 +806,61 @@
                 "population": 110,
                 "topic_preferences": [
                     {
-                        "name": "Handling improving basic health services",
+                        "name": "Health services",
                         "preferences": [
                             10, 16, 0, 54, 20
                         ]
                     },
                     {
-                        "name": "Handling addressing educational needs",
+                        "name": "Education",
                         "preferences": [
                             6, 11, 0, 56, 26
                         ]
                     },
                     {
-                        "name": "Handling providing water and sanitation services",
+                        "name": "Water and sanitation",
                         "preferences": [
                             15, 16, 0, 44, 23
                         ]
                     },
                     {
-                        "name": "Handling maintaining roads and bridges",
+                        "name": "Roads and bridges",
                         "preferences": [
                             13, 14, 0, 48, 25
                         ]
                     },
                     {
-                        "name": "Handling providing reliable electric supply",
+                        "name": "Electricity",
                         "preferences": [
                             9, 4, 0, 51, 35
                         ]
                     },
                     {
-                        "name": "Handling promoting equal rights for women",
+                        "name": "Equal rights for women",
                         "preferences": [
                             14, 11, 0, 55, 18
                         ]
                     },
                     {
-                        "name": "Handling improving living standards for the poor",
+                        "name": "Improving living standards for the poor",
                         "preferences": [
                             23, 30, 0, 39, 7
                         ]
                     },
                     {
-                        "name": "Handling creating more jobs",
+                        "name": "Creating jobs",
                         "preferences": [
                             33, 27, 0, 36, 4
                         ]
                     },
                     {
-                        "name": "Handling fighting corruption",
+                        "name": "Fighting corruption",
                         "preferences": [
                             36, 32, 0, 27, 5
                         ]
                     },
                     {
-                        "name": "Handling reducing violent community conflict",
+                        "name": "Reducing violent community conflict",
                         "preferences": [
                             17, 10, 52, 4, 17
                         ]
@@ -872,61 +872,61 @@
                 "population": 136,
                 "topic_preferences": [
                     {
-                        "name": "Handling improving basic health services",
+                        "name": "Health services",
                         "preferences": [
                             8, 24, 0, 57, 12
                         ]
                     },
                     {
-                        "name": "Handling addressing educational needs",
+                        "name": "Education",
                         "preferences": [
                             6, 19, 0, 59, 16
                         ]
                     },
                     {
-                        "name": "Handling providing water and sanitation services",
+                        "name": "Water and sanitation",
                         "preferences": [
                             28, 27, 0, 41, 4
                         ]
                     },
                     {
-                        "name": "Handling maintaining roads and bridges",
+                        "name": "Roads and bridges",
                         "preferences": [
                             25, 23, 0, 40, 12
                         ]
                     },
                     {
-                        "name": "Handling providing reliable electric supply",
+                        "name": "Electricity",
                         "preferences": [
                             16, 20, 0, 45, 19
                         ]
                     },
                     {
-                        "name": "Handling promoting equal rights for women",
+                        "name": "Equal rights for women",
                         "preferences": [
                             6, 19, 0, 66, 8
                         ]
                     },
                     {
-                        "name": "Handling improving living standards for the poor",
+                        "name": "Improving living standards for the poor",
                         "preferences": [
                             24, 38, 0, 33, 4
                         ]
                     },
                     {
-                        "name": "Handling creating more jobs",
+                        "name": "Creating jobs",
                         "preferences": [
                             29, 39, 0, 29, 2
                         ]
                     },
                     {
-                        "name": "Handling fighting corruption",
+                        "name": "Fighting corruption",
                         "preferences": [
                             41, 28, 0, 28, 0
                         ]
                     },
                     {
-                        "name": "Handling reducing violent community conflict",
+                        "name": "Reducing violent community conflict",
                         "preferences": [
                             9, 27, 0, 56, 7
                         ]
@@ -939,61 +939,61 @@
 
                 "topic_preferences": [
                     {
-                        "name": "Handling improving basic health services",
+                        "name": "Health services",
                         "preferences": [
                             20, 13, 0, 59, 5
                         ]
                     },
                     {
-                        "name": "Handling addressing educational needs",
+                        "name": "Education",
                         "preferences": [
                             22, 11, 0, 60, 5
                         ]
                     },
                     {
-                        "name": "Handling providing water and sanitation services",
+                        "name": "Water and sanitation",
                         "preferences": [
                             43, 39, 0, 14, 0
                         ]
                     },
                     {
-                        "name": "Handling maintaining roads and bridges",
+                        "name": "Roads and bridges",
                         "preferences": [
                             33, 24, 0, 41, 0
                         ]
                     },
                     {
-                        "name": "Handling providing reliable electric supply",
+                        "name": "Electricity",
                         "preferences": [
                             41, 19, 5, 29, 7
                         ]
                     },
                     {
-                        "name": "Handling promoting equal rights for women",
+                        "name": "Equal rights for women",
                         "preferences": [
                             26, 28, 7, 38, 0
                         ]
                     },
                     {
-                        "name": "Handling improving living standards for the poor",
+                        "name": "Improving living standards for the poor",
                         "preferences": [
                             40, 47, 3, 9, 0
                         ]
                     },
                     {
-                        "name": "Handling creating more jobs",
+                        "name": "Creating jobs",
                         "preferences": [
                             53, 37, 4, 4, 0
                         ]
                     },
                     {
-                        "name": "Handling fighting corruption",
+                        "name": "Fighting corruption",
                         "preferences": [
                             54, 19, 8, 19, 0
                         ]
                     },
                     {
-                        "name": "Handling reducing violent community conflict",
+                        "name": "Reducing violent community conflict",
                         "preferences": [
                             33, 15, 9, 40, 2
                         ]
@@ -1005,61 +1005,61 @@
                 "population": 86,
                 "topic_preferences": [
                     {
-                        "name": "Handling improving basic health services",
+                        "name": "Health services",
                         "preferences": [
                             11, 14, 4, 64, 7
                         ]
                     },
                     {
-                        "name": "Handling addressing educational needs",
+                        "name": "Education",
                         "preferences": [
                             9, 14, 4, 58, 15
                         ]
                     },
                     {
-                        "name": "Handling providing water and sanitation services",
+                        "name": "Water and sanitation",
                         "preferences": [
                             27, 33, 6, 29, 4
                         ]
                     },
                     {
-                        "name": "Handling maintaining roads and bridges",
+                        "name": "Roads and bridges",
                         "preferences": [
                             8, 19, 3, 50, 20
                         ]
                     },
                     {
-                        "name": "Handling providing reliable electric supply",
+                        "name": "Electricity",
                         "preferences": [
                             13, 9, 4, 53, 21
                         ]
                     },
                     {
-                        "name": "Handling promoting equal rights for women",
+                        "name": "Equal rights for women",
                         "preferences": [
                             11, 34, 6, 43, 6
                         ]
                     },
                     {
-                        "name": "Handling improving living standards for the poor",
+                        "name": "Improving living standards for the poor",
                         "preferences": [
                             29, 39, 6, 25, 2
                         ]
                     },
                     {
-                        "name": "Handling creating more jobs",
+                        "name": "Creating jobs",
                         "preferences": [
                             35, 42, 4, 18, 0
                         ]
                     },
                     {
-                        "name": "Handling fighting corruption",
+                        "name": "Fighting corruption",
                         "preferences": [
                             43, 32, 6, 19, 0
                         ]
                     },
                     {
-                        "name": "Handling reducing violent community conflict",
+                        "name": "Reducing violent community conflict",
                         "preferences": [
                             9, 26, 9, 52, 4
                         ]
@@ -1071,61 +1071,61 @@
                 "population": 404,
                 "topic_preferences": [
                     {
-                        "name": "Handling improving basic health services",
+                        "name": "Health services",
                         "preferences": [
                             12, 15, 3, 58, 12
                         ]
                     },
                     {
-                        "name": "Handling addressing educational needs",
+                        "name": "Education",
                         "preferences": [
                             8, 13, 4, 58, 17
                         ]
                     },
                     {
-                        "name": "Handling providing water and sanitation services",
+                        "name": "Water and sanitation",
                         "preferences": [
                             13, 20, 5, 52, 10
                         ]
                     },
                     {
-                        "name": "Handling maintaining roads and bridges",
+                        "name": "Roads and bridges",
                         "preferences": [
                             7, 15, 2, 58, 18
                         ]
                     },
                     {
-                        "name": "Handling providing reliable electric supply",
+                        "name": "Electricity",
                         "preferences": [
                             8, 7, 2, 57, 25
                         ]
                     },
                     {
-                        "name": "Handling promoting equal rights for women",
+                        "name": "Equal rights for women",
                         "preferences": [
                             8, 16, 6, 56, 14
                         ]
                     },
                     {
-                        "name": "Handling improving living standards for the poor",
+                        "name": "Improving living standards for the poor",
                         "preferences": [
                             22, 36, 2, 34, 5
                         ]
                     },
                     {
-                        "name": "Handling creating more jobs",
+                        "name": "Creating jobs",
                         "preferences": [
                             32, 32, 2, 29, 5
                         ]
                     },
                     {
-                        "name": "Handling fighting corruption",
+                        "name": "Fighting corruption",
                         "preferences": [
                             47, 30, 3, 20, 1
                         ]
                     },
                     {
-                        "name": "Handling reducing violent community conflict",
+                        "name": "Reducing violent community conflict",
                         "preferences": [
                             9, 23, 4, 56, 9
                         ]
@@ -1145,61 +1145,61 @@
                 "population": 115,
                 "topic_preferences": [
                     {
-                        "name": "Handling improving basic health services",
+                        "name": "Health services",
                         "preferences": [
                             13, 25, 0, 38, 25
                         ]
                     },
                     {
-                        "name": "Handling addressing educational needs",
+                        "name": "Education",
                         "preferences": [
                             22, 13, 0, 42, 24
                         ]
                     },
                     {
-                        "name": "Handling providing water and sanitation services",
+                        "name": "Water and sanitation",
                         "preferences": [
                             12, 8, 5, 45, 30
                         ]
                     },
                     {
-                        "name": "Handling maintaining roads and bridges",
+                        "name": "Roads and bridges",
                         "preferences": [
                             13, 13, 0, 58, 17
                         ]
                     },
                     {
-                        "name": "Handling providing reliable electric supply",
+                        "name": "Electricity",
                         "preferences": [
                             12, 8, 0 ,47, 33
                         ]
                     },
                     {
-                        "name": "Handling promoting equal rights for women",
+                        "name": "Equal rights for women",
                         "preferences": [
                             0, 8, 5, 53, 34
                         ]
                     },
                     {
-                        "name": "Handling improving living standards for the poor",
+                        "name": "Improving living standards for the poor",
                         "preferences": [
                             22, 0, 0, 28, 50
                         ]
                     },
                     {
-                        "name": "Handling creating more jobs",
+                        "name": "Creating jobs",
                         "preferences": [
                             42, 38, 0, 20, 0
                         ]
                     },
                     {
-                        "name": "Handling fighting corruption",
+                        "name": "Fighting corruption",
                         "preferences": [
                             22, 16, 8, 26, 28
                         ]
                     },
                     {
-                        "name": "Handling reducing violent community conflict",
+                        "name": "Reducing violent community conflict",
                         "preferences": [
                             0, 8, 5, 53, 34
                         ]
@@ -1211,61 +1211,61 @@
                 "population": 582,
                 "topic_preferences": [
                     {
-                        "name": "Handling improving basic health services",
+                        "name": "Health services",
                         "preferences": [
                             4, 15, 0, 62, 17
                         ]
                     },
                     {
-                        "name": "Handling addressing educational needs",
+                        "name": "Education",
                         "preferences": [
                             8, 19, 0, 55, 16
                         ]
                     },
                     {
-                        "name": "Handling providing water and sanitation services",
+                        "name": "Water and sanitation",
                         "preferences": [
                             12, 22, 0, 53, 11
                         ]
                     },
                     {
-                        "name": "Handling maintaining roads and bridges",
+                        "name": "Roads and bridges",
                         "preferences": [
                             18, 26, 3, 43, 11
                         ]
                     },
                     {
-                        "name": "Handling providing reliable electric supply",
+                        "name": "Electricity",
                         "preferences": [
                             4, 16, 3, 63, 14
                         ]
                     },
                     {
-                        "name": "Handling promoting equal rights for women",
+                        "name": "Equal rights for women",
                         "preferences": [
                             0, 8, 0, 61, 28
                         ]
                     },
                     {
-                        "name": "Handling improving living standards for the poor",
+                        "name": "Improving living standards for the poor",
                         "preferences": [
                             5, 15, 0, 54, 24
                         ]
                     },
                     {
-                        "name": "Handling creating more jobs",
+                        "name": "Creating jobs",
                         "preferences": [
                             33, 35, 2, 26, 4
                         ]
                     },
                     {
-                        "name": "Handling fighting corruption",
+                        "name": "Fighting corruption",
                         "preferences": [
                             11, 23, 5, 49, 11
                         ]
                     },
                     {
-                        "name": "Handling reducing violent community conflict",
+                        "name": "Reducing violent community conflict",
                         "preferences": [
                             3, 7, 5, 51, 35
                         ]
@@ -1277,61 +1277,61 @@
                 "population": 656,
                 "topic_preferences": [
                     {
-                        "name": "Handling improving basic health services",
+                        "name": "Health services",
                         "preferences": [
                             12, 18, 3, 52, 16
                         ]
                     },
                     {
-                        "name": "Handling addressing educational needs",
+                        "name": "Education",
                         "preferences": [
                             9, 18, 0, 53, 18
                         ]
                     },
                     {
-                        "name": "Handling providing water and sanitation services",
+                        "name": "Water and sanitation",
                         "preferences": [
                             17, 12, 4, 50, 18
                         ]
                     },
                     {
-                        "name": "Handling maintaining roads and bridges",
+                        "name": "Roads and bridges",
                         "preferences": [
                             18, 23, 0, 46, 10
                         ]
                     },
                     {
-                        "name": "Handling providing reliable electric supply",
+                        "name": "Electricity",
                         "preferences": [
                             10, 13, 3, 57, 17
                         ]
                     },
                     {
-                        "name": "Handling promoting equal rights for women",
+                        "name": "Equal rights for women",
                         "preferences": [
                             4, 10, 3, 56, 28
                         ]
                     },
                     {
-                        "name": "Handling improving living standards for the poor",
+                        "name": "Improving living standards for the poor",
                         "preferences": [
                             6, 10, 0, 51, 31
                         ]
                     },
                     {
-                        "name": "Handling creating more jobs",
+                        "name": "Creating jobs",
                         "preferences": [
                             36, 33, 2, 26, 4
                         ]
                     },
                     {
-                        "name": "Handling fighting corruption",
+                        "name": "Fighting corruption",
                         "preferences": [
                             17, 21, 5, 40, 18
                         ]
                     },
                     {
-                        "name": "Handling reducing violent community conflict",
+                        "name": "Reducing violent community conflict",
                         "preferences": [
                             0, 3, 6, 55, 34
                         ]
@@ -1343,61 +1343,61 @@
                 "population": 351,
                 "topic_preferences": [
                     {
-                        "name": "Handling improving basic health services",
+                        "name": "Health services",
                         "preferences": [
                             4, 27, 0, 59, 7
                         ]
                     },
                     {
-                        "name": "Handling addressing educational needs",
+                        "name": "Education",
                         "preferences": [
                             8, 32, 0, 54, 7
                         ]
                     },
                     {
-                        "name": "Handling providing water and sanitation services",
+                        "name": "Water and sanitation",
                         "preferences": [
                             0, 34, 0, 51, 13
                         ]
                     },
                     {
-                        "name": "Handling maintaining roads and bridges",
+                        "name": "Roads and bridges",
                         "preferences": [
                             22, 38, 0, 34, 7
                         ]
                     },
                     {
-                        "name": "Handling providing reliable electric supply",
+                        "name": "Electricity",
                         "preferences": [
                             8, 25, 0, 52, 13
                         ]
                     },
                     {
-                        "name": "Handling promoting equal rights for women",
+                        "name": "Equal rights for women",
                         "preferences": [
                             27, 35, 0, 49, 9
                         ]
                     },
                     {
-                        "name": "Handling improving living standards for the poor",
+                        "name": "Improving living standards for the poor",
                         "preferences": [
                             0, 24, 0, 54, 20
                         ]
                     },
                     {
-                        "name": "Handling creating more jobs",
+                        "name": "Creating jobs",
                         "preferences": [
                             417, 54, 0, 23, 7
                         ]
                     },
                     {
-                        "name": "Handling fighting corruption",
+                        "name": "Fighting corruption",
                         "preferences": [
                             10, 24, 0, 59, 7
                         ]
                     },
                     {
-                        "name": "Handling reducing violent community conflict",
+                        "name": "Reducing violent community conflict",
                         "preferences": [
                             0, 24, 0, 61, 13
                         ]
@@ -1409,61 +1409,61 @@
                 "population": 275,
                 "topic_preferences": [
                     {
-                        "name": "Handling improving basic health services",
+                        "name": "Health services",
                         "preferences": [
                             5, 18, 0, 52, 25
                         ]
                     },
                     {
-                        "name": "Handling addressing educational needs",
+                        "name": "Education",
                         "preferences": [
                             0, 34, 0, 54, 10
                         ]
                     },
                     {
-                        "name": "Handling providing water and sanitation services",
+                        "name": "Water and sanitation",
                         "preferences": [
                             5, 21, 0, 75, 0
                         ]
                     },
                     {
-                        "name": "Handling maintaining roads and bridges",
+                        "name": "Roads and bridges",
                         "preferences": [
                             12, 38, 3, 47, 0
                         ]
                     },
                     {
-                        "name": "Handling providing reliable electric supply",
+                        "name": "Electricity",
                         "preferences": [
                             7, 28, 0, 62, 0
                         ]
                     },
                     {
-                        "name": "Handling promoting equal rights for women",
+                        "name": "Equal rights for women",
                         "preferences": [
                             5, 26, 0, 62, 7
                         ]
                     },
                     {
-                        "name": "Handling improving living standards for the poor",
+                        "name": "Improving living standards for the poor",
                         "preferences": [
                             13, 11, 0, 67, 7
                         ]
                     },
                     {
-                        "name": "Handling creating more jobs",
+                        "name": "Creating jobs",
                         "preferences": [
                             36, 33, 2, 26, 4
                         ]
                     },
                     {
-                        "name": "Handling fighting corruption",
+                        "name": "Fighting corruption",
                         "preferences": [
                             23, 20, 8, 49, 0
                         ]
                     },
                     {
-                        "name": "Handling reducing violent community conflict",
+                        "name": "Reducing violent community conflict",
                         "preferences": [
                             0, 18, 3, 72, 5
                         ]
@@ -1475,61 +1475,61 @@
                 "population": 540,
                 "topic_preferences": [
                     {
-                        "name": "Handling improving basic health services",
+                        "name": "Health services",
                         "preferences": [
                             6, 18, 0, 67, 7
                         ]
                     },
                     {
-                        "name": "Handling addressing educational needs",
+                        "name": "Education",
                         "preferences": [
                             15, 13, 0, 58, 12
                         ]
                     },
                     {
-                        "name": "Handling providing water and sanitation services",
+                        "name": "Water and sanitation",
                         "preferences": [
                             27, 25, 0, 42, 4
                         ]
                     },
                     {
-                        "name": "Handling maintaining roads and bridges",
+                        "name": "Roads and bridges",
                         "preferences": [
                             17, 27, 0, 52, 5
                         ]
                     },
                     {
-                        "name": "Handling providing reliable electric supply",
+                        "name": "Electricity",
                         "preferences": [
                             9, 22, 5, 48, 16
                         ]
                     },
                     {
-                        "name": "Handling promoting equal rights for women",
+                        "name": "Equal rights for women",
                         "preferences": [
                             7, 13, 4, 48, 29
                         ]
                     },
                     {
-                        "name": "Handling improving living standards for the poor",
+                        "name": "Improving living standards for the poor",
                         "preferences": [
                             10, 15, 0, 53, 20
                         ]
                     },
                     {
-                        "name": "Handling creating more jobs",
+                        "name": "Creating jobs",
                         "preferences": [
                             32, 35, 0, 28, 3
                         ]
                     },
                     {
-                        "name": "Handling fighting corruption",
+                        "name": "Fighting corruption",
                         "preferences": [
                             16, 29, 4, 48, 0
                         ]
                     },
                     {
-                        "name": "Handling reducing violent community conflict",
+                        "name": "Reducing violent community conflict",
                         "preferences": [
                             4, 11, 0, 46, 37
                         ]
@@ -1541,61 +1541,61 @@
                 "population": 404,
                 "topic_preferences": [
                     {
-                        "name": "Handling improving basic health services",
+                        "name": "Health services",
                         "preferences": [
                             11, 14, 0, 59, 14
                         ]
                     },
                     {
-                        "name": "Handling addressing educational needs",
+                        "name": "Education",
                         "preferences": [
                             11, 16, 0, 50, 20
                         ]
                     },
                     {
-                        "name": "Handling providing water and sanitation services",
+                        "name": "Water and sanitation",
                         "preferences": [
                             16, 22, 3, 49, 10
                         ]
                     },
                     {
-                        "name": "Handling maintaining roads and bridges",
+                        "name": "Roads and bridges",
                         "preferences": [
                             19, 15, 3, 49, 14
                         ]
                     },
                     {
-                        "name": "Handling providing reliable electric supply",
+                        "name": "Electricity",
                         "preferences": [
                             9, 20, 0, 54, 14
                         ]
                     },
                     {
-                        "name": "Handling promoting equal rights for women",
+                        "name": "Equal rights for women",
                         "preferences": [
                             5, 8, 3, 56, 27
                         ]
                     },
                     {
-                        "name": "Handling improving living standards for the poor",
+                        "name": "Improving living standards for the poor",
                         "preferences": [
                             11, 16, 3, 51, 19
                         ]
                     },
                     {
-                        "name": "Handling creating more jobs",
+                        "name": "Creating jobs",
                         "preferences": [
                             36, 33, 2, 26, 4
                         ]
                     },
                     {
-                        "name": "Handling fighting corruption",
+                        "name": "Fighting corruption",
                         "preferences": [
                             20, 21, 6, 46, 7
                         ]
                     },
                     {
-                        "name": "Handling reducing violent community conflict",
+                        "name": "Reducing violent community conflict",
                         "preferences": [
                             5, 3, 6, 52, 34
                         ]
@@ -1607,61 +1607,61 @@
                 "population": 1027,
                 "topic_preferences": [
                     {
-                        "name": "Handling improving basic health services",
+                        "name": "Health services",
                         "preferences": [
                             13, 23, 0, 52, 10
                         ]
                     },
                     {
-                        "name": "Handling addressing educational needs",
+                        "name": "Education",
                         "preferences": [
                             12, 20, 0, 51, 15
                         ]
                     },
                     {
-                        "name": "Handling providing water and sanitation services",
+                        "name": "Water and sanitation",
                         "preferences": [
                             12, 19, 0, 55, 13
                         ]
                     },
                     {
-                        "name": "Handling maintaining roads and bridges",
+                        "name": "Roads and bridges",
                         "preferences": [
                             21, 25, 0, 45, 8
                         ]
                     },
                     {
-                        "name": "Handling providing reliable electric supply",
+                        "name": "Electricity",
                         "preferences": [
                             10, 14, 0, 58, 16
                         ]
                     },
                     {
-                        "name": "Handling promoting equal rights for women",
+                        "name": "Equal rights for women",
                         "preferences": [
                             4, 12, 3, 59, 22
                         ]
                     },
                     {
-                        "name": "Handling improving living standards for the poor",
+                        "name": "Improving living standards for the poor",
                         "preferences": [
                             20, 22, 0, 48, 8
                         ]
                     },
                     {
-                        "name": "Handling creating more jobs",
+                        "name": "Creating jobs",
                         "preferences": [
                             48, 25, 0, 23, 0
                         ]
                     },
                     {
-                        "name": "Handling fighting corruption",
+                        "name": "Fighting corruption",
                         "preferences": [
                             34, 24, 5, 31, 6
                         ]
                     },
                     {
-                        "name": "Handling reducing violent community conflict",
+                        "name": "Reducing violent community conflict",
                         "preferences": [
                             4, 12, 5, 41, 38
                         ]
@@ -1673,61 +1673,61 @@
                 "population": 1227,
                 "topic_preferences": [
                     {
-                        "name": "Handling improving basic health services",
+                        "name": "Health services",
                         "preferences": [
                             10, 25, 0, 49, 15
                         ]
                     },
                     {
-                        "name": "Handling addressing educational needs",
+                        "name": "Education",
                         "preferences": [
                             13, 21, 8, 44, 13
                         ]
                     },
                     {
-                        "name": "Handling providing water and sanitation services",
+                        "name": "Water and sanitation",
                         "preferences": [
                             7, 20, 0, 61, 13
                         ]
                     },
                     {
-                        "name": "Handling maintaining roads and bridges",
+                        "name": "Roads and bridges",
                         "preferences": [
                             17, 18, 6, 57, 0
                         ]
                     },
                     {
-                        "name": "Handling providing reliable electric supply",
+                        "name": "Electricity",
                         "preferences": [
                             12, 19, 0, 62, 5
                         ]
                     },
                     {
-                        "name": "Handling promoting equal rights for women",
+                        "name": "Equal rights for women",
                         "preferences": [
                             0, 11, 5, 55, 28
                         ]
                     },
                     {
-                        "name": "Handling improving living standards for the poor",
+                        "name": "Improving living standards for the poor",
                         "preferences": [
                             10, 15, 0, 53, 20
                         ]
                     },
                     {
-                        "name": "Handling creating more jobs",
+                        "name": "Creating jobs",
                         "preferences": [
                             31, 36, 2, 26, 4
                         ]
                     },
                     {
-                        "name": "Handling fighting corruption",
+                        "name": "Fighting corruption",
                         "preferences": [
                             28, 22, 10, 39, 2
                         ]
                     },
                     {
-                        "name": "Handling reducing violent community conflict",
+                        "name": "Reducing violent community conflict",
                         "preferences": [
                             0, 0, 9, 53, 35
                         ]
