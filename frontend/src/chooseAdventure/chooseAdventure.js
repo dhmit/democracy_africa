@@ -62,7 +62,6 @@ export class ChooseAdventureView extends React.Component {
             + 'can be just one sentence long. Ultimately, a paragraph is a sentence or group of '
             + 'sentences that support one main idea. In this handout, we will refer to this as the '
             + '“controlling idea,” because it controls what happens in the rest of the paragraph.';
-        console.log('rerendering');
         return (
             <div>
                 {this.state.view === 'intro' && <IntroView
