@@ -65,12 +65,16 @@ export class ChooseAdventureView extends React.Component {
         console.log('rerendering');
         return (
             <div>
-                {this.state.view === 'intro' && <IntroView desc={desc} setView={this.setView} />}
-                {this.state.view === 'stage'
-                    && <StageView setView={this.setView}
-                        updateSuccess={this.updateSuccess}
-                        updateHistory={this.updateHistory}
-                    />}
+                {this.state.view === 'intro' && <IntroView
+                    desc={desc}
+                    setView={this.setView}
+                    imgFile={'/static/img/sample.jpg'}
+                />}
+                {this.state.view === 'stage' && <StageView
+                    setView={this.setView}
+                    pdateSuccess={this.updateSuccess}
+                    updateHistory={this.updateHistory}
+                />}
                 {this.state.view === 'end' && <EndView
                     successTotal={this.state.successTotal}
                     history={this.state.history}
