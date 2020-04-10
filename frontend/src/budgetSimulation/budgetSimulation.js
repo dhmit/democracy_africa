@@ -1,18 +1,20 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
-import { getCookie }from "../common";
+
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import PopoverContent from 'react-bootstrap/PopoverContent';
 
+import { getCookie } from '../common';
+
 
 // hardcoded list of resources for now
 const resources = [
-    "infrastructure",
-    "electricity",
-    "sanitation",
-    "water",
-    "education",
+    'infrastructure',
+    'electricity',
+    'water',
+    'sanitation',
+    'education',
 ];
 
 /**
@@ -23,41 +25,60 @@ const resources = [
  */
 
 class Citizen extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             show: false,
         };
     }
 
+    generateDescription() {
+        const traits = Object.keys(this.props.data.traits).map((trait, i) => {
+            const hasTrait = this.props.data.traits[trait];
+            const numTraits = Object.keys(this.props.data.traits).length;
+            let prose = trait.split('_').join(' ');
+            if (!hasTrait) {
+                prose = prose
+                    .replace('has', 'does not have')
+                    .replace('is', 'is not');
+            }
+            if (i === numTraits - 2) {
+                prose += ', and';
+            } else if (i === numTraits - 1) {
+                prose += '.';
+            } else {
+                prose += ', ';
+            }
+
+            return (<span key={i}> {prose} </span>);
+        });
+        return (
+            <div>
+                Citizen {this.props.data.name}
+                {traits}
+            </div>
+        );
+    }
+
     render() {
         const statistic = (
-            <Popover id={"popover-basic"}>
-                <Popover.Title as={"h3"}> {this.props.data.name} </Popover.Title>
+            <Popover id='popover-basic'>
                 <Popover.Content>
-                    {Object.keys(this.props.data.traits).map((trait, key) =>
-                        (<div key={key}>
-                            <strong>
-                                {trait.split("_").join(" ")}: &nbsp;
-                            </strong>
-                            {this.props.data.traits[trait] ? "True" : "False"}
-                            <br/>
-                        </div>)
-                    )}
+                    {this.generateDescription()}
                 </Popover.Content>
             </Popover>
         );
         return (
             <OverlayTrigger
                 overlay={statistic}
-                placement={"right"}
+                placement={'right'}
             >
-                <svg className={"budget-reaction-citizen"} height="20" width="20">
+                <svg className={'budget-reaction-citizen'} height='20' width='20'>
                     <circle
-                        cx="10"
-                        cy="10"
-                        r="10"
-                        fill={this.props.data["will_support"] ? "green" : "#c0c0c0"}
+                        cx='10'
+                        cy='10'
+                        r='10'
+                        fill={this.props.data['will_support'] ? 'green' : '#c0c0c0'}
                     />
                 </svg>
             </OverlayTrigger>
@@ -76,7 +97,7 @@ Citizen.propTypes = {
 
 class Budget extends React.Component {
     // Once MainView is set up, there will be no state, but rather each will be a prop
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             budgetProposal: {},
@@ -92,13 +113,13 @@ class Budget extends React.Component {
      * Used when component mounts and upon onClick of a button
      */
     resetBudget = () => {
-        let proposal = {};
+        const proposal = {};
         resources.forEach((resource) => {
-            proposal[resource] = 0;
+            proposal[resource] = 20;
         });
         this.setState({
             budgetProposal: proposal,
-            total: 0,
+            total: 100,
             result: 0,
             sampleSize: 100,
         });
@@ -129,8 +150,8 @@ class Budget extends React.Component {
     handleSliderOnChange = (e, resource) => {
         const newVal = parseFloat(e.target.value);
         const newProposal = this.state.budgetProposal;
-        let oldVal = newProposal[resource];
-        if (this.state.total + newVal - oldVal <= 100 ){
+        const oldVal = newProposal[resource];
+        if (this.state.total + newVal - oldVal <= 100) {
             newProposal[resource] = newVal;
             this.setState({
                 budgetProposal: newProposal,
@@ -151,36 +172,32 @@ class Budget extends React.Component {
     countSupporters = () => {
         let count = 0;
         this.props.population.forEach((citizen) => {
-            let needs = Object.keys(citizen["traits"]).filter((trait) => {
-                return !citizen["traits"][trait];
+            const needs = Object.keys(citizen['traits']).filter((trait) => {
+                return !citizen['traits'][trait];
             });
-            let numOfNeeds = needs.length;
+            const numOfNeeds = needs.length;
             if (numOfNeeds === 0) { return; }
-            let numToVote = Math.ceil(numOfNeeds / 2);
-            let cutoff = 75 / numOfNeeds;
+            const numToVote = Math.ceil(numOfNeeds / 2);
+            const cutoff = 75 / numOfNeeds;
 
             let numOfNeedsMet = 0;
             Object.keys(this.state.budgetProposal).forEach((resource) => {
-                let proposal = this.state.budgetProposal[resource];
+                const proposal = this.state.budgetProposal[resource];
                 if (needs.includes('lives_in_rural_area')
                     && resource === 'infrastructure') {
                     if (proposal >= cutoff) { numOfNeedsMet++; }
-                }
-                else if (needs.includes('is_educated')
+                } else if (needs.includes('is_educated')
                         && resource === 'education') {
                     if (proposal >= cutoff) { numOfNeedsMet++; }
-                }
-                else if (needs.includes('has_access_to_water')
-                        && resource === 'water'){
-                    if (proposal >= cutoff) { numOfNeedsMet++;  }
-                }
-                else if (needs.includes('has_access_to_sanitation')
+                } else if (needs.includes('has_access_to_water')
+                        && resource === 'water') {
+                    if (proposal >= cutoff) { numOfNeedsMet++; }
+                } else if (needs.includes('has_access_to_sanitation')
                         && resource === 'sanitation') {
-                    if (proposal >= cutoff) { numOfNeedsMet++;  }
-                }
-                else if (needs.includes('has_access_to_electricity')
-                        && resource === 'electricity' ){
-                    if (proposal >= cutoff) { numOfNeedsMet++;  }
+                    if (proposal >= cutoff) { numOfNeedsMet++; }
+                } else if (needs.includes('has_access_to_electricity')
+                        && resource === 'electricity') {
+                    if (proposal >= cutoff) { numOfNeedsMet++; }
                 }
             });
 
@@ -202,7 +219,7 @@ class Budget extends React.Component {
      */
     handleInputChange = (e) => {
         const newVal = e.target.value;
-        if (newVal === ""
+        if (newVal === ''
             || parseInt(newVal) < this.props.population.length) {
             this.setState({
                 sampleSize: e.target.value,
@@ -213,61 +230,60 @@ class Budget extends React.Component {
             });
         }
     }
-    render() {
 
+    render() {
         const budgetOptions = Object.keys(this.state.budgetProposal).map((resource, key) => (
-            <div key={key} className="individual_slider_containers">
-                <p className="slider_descriptor">
+            <div key={key} className='individual_slider_containers'>
+                <p className='slider_descriptor'>
                     {(this.state.budgetProposal[resource]).toFixed(0)}%
                     of the budget is being allocated towards <strong> {resource} </strong>
                 </p>
                 <input
-                    className="slider"
-                    type="range"
-                    min="0"
-                    max="100"
-                    step="1"
-                    value={this.state.budgetProposal[resource] + ""}
+                    className='slider'
+                    type='range'
+                    min='0'
+                    max='100'
+                    step='1'
+                    value={`${this.state.budgetProposal[resource]}`}
                     onChange={(e) => this.handleSliderOnChange(e, resource)}
                 />
 
             </div>
         ));
 
-        const supportString = this.state.result + " out of " + this.props.population.length +
-        " people support your budget";
+        const supportString = `${this.state.result} out of ${this.props.population.length}`
+             + 'people support your budget';
 
-        const reactions = this.props.population.slice(0,this.state.sampleSize).map((citizen,key) =>
-            <Citizen key={key} data={citizen}/>
-        );
+        const sample = this.props.population.slice(0, this.state.sampleSize);
+        const reactions = sample.map((citizen, key) => <Citizen key={key} data={citizen}/>);
 
-        return(
+        return (
             <>
                 <div>
                     {budgetOptions}
                 </div>
 
-                <div className="support_string">
+                <div className='support_string'>
                     {supportString}
                 </div>
-                <div className="reset_button">
+                <div className='reset_button'>
                     <button
-                        type={"submit"}
+                        type={'submit'}
                         onClick={this.resetBudget}
                     > Reset </button>
                 </div>
                 <div>
                     Sample size:
                     <input
-                        type={"number"}
-                        name={"sampleSize"}
-                        step={"1"}
-                        min={"0"}
+                        type={'number'}
+                        name={'sampleSize'}
+                        step={'1'}
+                        min={'0'}
                         max={this.props.population.length}
                         value={this.state.sampleSize}
                         onChange={this.handleInputChange}
                     />
-                    <div className={"budget-reaction"}>
+                    <div className={'budget-reaction'}>
                         {reactions}
                     </div>
                 </div>
@@ -284,12 +300,12 @@ Budget.propTypes = {
 class AggregateData extends React.Component {
     constructor(props) {
         super(props);
-        let selections = {};
-        for (const trait in this.props.population[0]["traits"]) {
+        const selections = {};
+        for (const trait of Object.keys(this.props.population[0]['traits'])) {
             selections[trait] = false;
         }
         this.state = {
-            categories: Object.keys(this.props.population[0]["traits"]),
+            categories: Object.keys(this.props.population[0]['traits']),
             selected: selections,
             overall_selection: false,
         };
@@ -300,12 +316,18 @@ class AggregateData extends React.Component {
      * row is selected
      * @param row_trait The trait of the row that has been selected (used for indexing)
      */
-    select_table_row (row_trait) {
+    select_table_row(row_trait) {
         const selections = this.state.selected;
         let any_selected = this.state.overall_selection;
 
         selections[row_trait] = !selections[row_trait];
-        for (const trait in selections) {
+
+        // @DOUBLE-CHECK THIS WORKS
+        // @DOUBLE-CHECK THIS WORKS
+        // @DOUBLE-CHECK THIS WORKS
+        // @DOUBLE-CHECK THIS WORKS
+        // @DOUBLE-CHECK THIS WORKS
+        for (const trait of Object.keys(selections)) {
             if (selections[trait]) {
                 any_selected = true;
                 break;
@@ -313,7 +335,7 @@ class AggregateData extends React.Component {
             any_selected = false;
         }
 
-        this.setState({selected: selections, overall_selection: any_selected});
+        this.setState({ selected: selections, overall_selection: any_selected });
     }
 
     /**
@@ -322,24 +344,22 @@ class AggregateData extends React.Component {
      *
      * return: String which states the number of people that lack the given characteristics
      */
-    generate_data () {
+    generate_data() {
         const selections = this.state.selected;
         let total = 0;
-        const population = this.props.population;
+        const { population } = this.props;
         for (let i = 0; i < population.length; i++) {
             let should_count_person = true;
             const person = population[i];
-            for (const attribute in person["traits"]) {
+            for (const attribute in person['traits']) {
                 if (selections[attribute] === undefined) {
-                    if (person["traits"][attribute]) {
+                    if (person['traits'][attribute]) {
                         should_count_person = false;
                         break;
                     }
-                } else {
-                    if (selections[attribute] && person["traits"][attribute]) {
-                        should_count_person = false;
-                        break;
-                    }
+                } else if (selections[attribute] && person['traits'][attribute]) {
+                    should_count_person = false;
+                    break;
                 }
             }
             if (should_count_person) {
@@ -347,62 +367,60 @@ class AggregateData extends React.Component {
             }
         }
 
-        return String(total) + " people lack this combination of traits";
+        return `${String(total)} people lack this combination of traits`;
     }
 
     render() {
-
         const aggregate_values = {};
         const total_values = {};
         for (let i = 0; i < this.state.categories.length; i++) {
             let total = 0;
-            let category = this.state.categories[i];
+            const category = this.state.categories[i];
             for (let j = 0; j < this.props.population.length; j++) {
-                let citizen = this.props.population[j];
-                total += citizen["traits"][category];
-                //Above: index into the population to get the citizen, then that citizen's
+                const citizen = this.props.population[j];
+                total += citizen['traits'][category];
+                // Above: index into the population to get the citizen, then that citizen's
                 // traits and then the value (true or false) of that trait for each category
             }
-            aggregate_values[category] = total/this.props.population.length;
+            aggregate_values[category] = total / this.props.population.length;
             total_values[category] = total;
         }
-        //Usses the React-bootstrap Overlay and Popover classes. See
-        //https://react-bootstrap.github.io/components/overlays/#overlay-props for more details
+        // Usses the React-bootstrap Overlay and Popover classes. See
+        // https://react-bootstrap.github.io/components/overlays/#overlay-props for more details
         return (
-            <div className="row">
-                <div className="col-9">
-                    <table className="aggregate_data_table">
+            <div className='row'>
+                <div className='col-9'>
+                    <table className='aggregate_data_table'>
                         <thead>
                             <tr>
-                                <th className="aggregate_data_table_header">
+                                <th className='aggregate_data_table_header'>
                                     Trait
                                 </th>
-                                <th className="aggregate_data_table_data">
+                                <th className='aggregate_data_table_data'>
                                     Percentage of Population
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
                             {this.state.categories.map((category, key) => {
-                                let category_name = category.replace(/_/g, " ");
+                                let category_name = category.replace(/_/g, ' ');
                                 const first_letter = category_name[0];
                                 category_name = category_name.replace(first_letter,
                                     first_letter.toUpperCase());
 
-                                let table_row_classnames = "aggregate_data_table_rows";
-                                if (this.state.selected !== null &&
-                                    this.state.selected[category]) {
-                                    table_row_classnames += " selected_row";
+                                let table_row_classnames = 'aggregate_data_table_rows';
+                                if (this.state.selected !== null
+                                    && this.state.selected[category]) {
+                                    table_row_classnames += ' selected_row';
                                 }
-                                console.log(aggregate_values);
                                 return (
                                     <tr key={key} className={table_row_classnames}
                                         onClick={() => this.select_table_row(category)}>
-                                        <td className="aggregate_data_table_data">
+                                        <td className='aggregate_data_table_data'>
                                             {category_name}
                                         </td>
-                                        <td className="aggregate_data_table_data">
-                                            {(aggregate_values[category]*100).toFixed(1)}%
+                                        <td className='aggregate_data_table_data'>
+                                            {(aggregate_values[category] * 100).toFixed(1)}%
                                             ({total_values[category]})
                                         </td>
                                     </tr>
@@ -412,12 +430,12 @@ class AggregateData extends React.Component {
 
                     </table>
                 </div>
-                <div className="col-3">
-                    <Popover id="popover-basic">
+                <div className='col-3'>
+                    <Popover id='popover-basic'>
                         <PopoverContent>
-                            {this.state.overall_selection ? this.generate_data() :
-                                "Click on different rows to see the amount of the population " +
-                        "lacking those characteristics"}
+                            {this.state.overall_selection ? this.generate_data()
+                                : 'Click on different rows to see the amount of the population '
+                        + 'lacking those characteristics'}
                         </PopoverContent>
                     </Popover>
                 </div>
@@ -437,7 +455,7 @@ export class BudgetVotingSimViz extends React.Component {
         this.state = {
             population: null,
             countries: null,
-            country_name: "South Africa",
+            country_name: 'South Africa',
         };
         this.csrftoken = getCookie('csrftoken');
     }
@@ -465,11 +483,13 @@ export class BudgetVotingSimViz extends React.Component {
                 body: JSON.stringify(data),
                 headers: {
                     'Content-type': 'application/json',
-                }
+                },
             });
             const population = await response.json();
-            this.setState({population: population["citizen_list"],
-                country_name: selected_country});
+            this.setState({
+                population: population['citizen_list'],
+                country_name: selected_country,
+            });
         } catch (e) {
             console.log(e);
         }
@@ -482,7 +502,7 @@ export class BudgetVotingSimViz extends React.Component {
             );
         }
 
-        let countrySelection = "";
+        let countrySelection = '';
         if (this.state.countries) {
             countrySelection = this.state.countries.map((country, key) => {
                 return (<option key={key} value={country}>{country}</option>);
@@ -492,12 +512,12 @@ export class BudgetVotingSimViz extends React.Component {
         return (
             <>
                 <h1>Budget Voting Simulation</h1>
-                <div className="row instructions" >
+                <div className='row instructions' >
                     <p>Use this dropdown menu to select different countries</p>
                 </div>
-                <div className="row">
-                    <div className="col-md-8 col-lg-4 col-sm-12 form-group country_list">
-                        <select className="form-control "
+                <div className='row'>
+                    <div className='col-md-8 col-lg-4 col-sm-12 form-group country_list'>
+                        <select className='form-control '
                             value={this.state.country_name}
                             onChange={(e) => this.update_population(e.target.value)}
                         >
@@ -506,16 +526,16 @@ export class BudgetVotingSimViz extends React.Component {
                     </div>
                 </div>
 
-                <div className="row">
-                    <div className="col-md-8 col-lg-4 col-sm-12 data_container">
+                <div className='row'>
+                    <div className='col-md-8 col-lg-4 col-sm-12 data_container'>
                         <AggregateData
                             population={this.state.population}
                         />
                     </div>
                 </div>
 
-                <div className="row">
-                    <div className="col-md-8 col-lg-6 col-sm-12 budget_container">
+                <div className='row'>
+                    <div className='col-md-8 col-lg-6 col-sm-12 budget_container'>
                         <Budget
                             country_name={this.state.country_name}
                             population={this.state.population}
@@ -524,6 +544,5 @@ export class BudgetVotingSimViz extends React.Component {
                 </div>
             </>
         );
-
     }
 }
