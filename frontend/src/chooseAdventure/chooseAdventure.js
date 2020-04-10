@@ -73,6 +73,7 @@ export class ChooseAdventureView extends React.Component {
                     setView={this.setView}
                     updateSuccess={this.updateSuccess}
                     updateHistory={this.updateHistory}
+                    imgFile={'/static/img/sample.jpg'}
                 />}
                 {this.state.view === 'end' && <EndView
                     successTotal={this.state.successTotal}

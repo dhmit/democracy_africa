@@ -84,8 +84,8 @@ class Option extends React.Component {
         const { option } = this.props;
         return (
             <li className='option_selector'>
-                <a className='option_selector_link' onClick={() =>
-                    this.props.setStage(stage, option)}>
+                <a className='option_selector_link'
+                    onClick={() => this.props.setStage(stage, option)}>
                     <img className="option_selector_img" src={this.props.img_url} alt=""/>
                     <p>{this.props.option.text}</p>
                 </a>
@@ -135,10 +135,16 @@ class StageView extends React.Component {
         }
         return (
             <div className={'wrapper'}>
-                <p>{this.state.stage.text}</p>
-                <ul className="option_selectors_list">
-                    {optionComponents}
-                </ul>
+                <div className='row'>
+                    <div className={'col-6'}>
+                        <p>{this.state.stage.text}</p>
+                        <ul className="option_selectors_list">
+                            {optionComponents}
+                        </ul>
+                    </div>
+                    <img className= 'col-6' src={this.props.imgFile} alt="Sample" />
+                </div>
+
             </div>
         );
     }
@@ -148,6 +154,7 @@ StageView.propTypes = {
     updateHistory: PropTypes.func,
     setView: PropTypes.func,
     updateSuccess: PropTypes.func,
+    imgFile: PropTypes.string,
 };
 
 export default StageView;
