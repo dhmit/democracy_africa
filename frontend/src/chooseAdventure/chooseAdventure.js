@@ -71,7 +71,7 @@ export class ChooseAdventureView extends React.Component {
                 />}
                 {this.state.view === 'stage' && <StageView
                     setView={this.setView}
-                    pdateSuccess={this.updateSuccess}
+                    updateSuccess={this.updateSuccess}
                     updateHistory={this.updateHistory}
                 />}
                 {this.state.view === 'end' && <EndView
