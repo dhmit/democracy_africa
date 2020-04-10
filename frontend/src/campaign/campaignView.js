@@ -246,7 +246,6 @@ export class CampaignView extends React.Component {
     }
 
     updatePopulation(newPopulation) {
-        // this.setState({ populationData }, () => this.updateProvinceInfo());
         this.setState({
             populationData: newPopulation,
         });
@@ -299,9 +298,7 @@ export class CampaignView extends React.Component {
                 />
             );
         }
-        const { clickedProvince } = this.state;
-        // const { provinceInfo } = this.state;
-        const { populationData } = this.state;
+        const { clickedProvince, populationData } = this.state;
         const aggregateResult = this.countTotalSupport();
         return (
             <>
