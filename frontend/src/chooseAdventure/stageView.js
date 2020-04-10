@@ -84,7 +84,7 @@ class Option extends React.Component {
         const { option } = this.props;
         return (
             <li className='option_selector'>
-                <a className='option_selector_link' href="#" onClick={() =>
+                <a className='option_selector_link' onClick={() =>
                     this.props.setStage(stage, option)}>
                     <img className="option_selector_img" src={this.props.img_url} alt=""/>
                     <p>{this.props.option.text}</p>
