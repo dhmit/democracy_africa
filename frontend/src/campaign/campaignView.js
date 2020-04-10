@@ -29,10 +29,10 @@ class Speech extends React.Component {
         this.state = {
             speechProposal: get_default_proposal(this.topic_names),
             result: 0,
-            total: 10,
+            total: 30,
         };
         this.difference_threshold = 14;
-        this.max_priority_points = 30;
+        this.max_priority_points = 35;
     }
 
     /**
@@ -42,7 +42,7 @@ class Speech extends React.Component {
     resetSpeech = () => {
         this.setState({
             speechProposal: get_default_proposal(this.topic_names),
-            total: 10,
+            total: 30,
         }, () => {
             this.setState({ result: this.countSupporters() });
         });
@@ -346,6 +346,9 @@ export class CampaignView extends React.Component {
                 <div>
                     <h1>Here are your final results for {this.state.resultsData.countryName}</h1>
                     <Results data={this.state.resultsData}/>
+                    <button onClick={() => { this.setState({ view: 'stage' }); } }>
+                        Go Back
+                    </button>
                 </div>
             );
         }
@@ -419,7 +422,6 @@ export class CampaignView extends React.Component {
                         </div>
                     </div>
                 </div>
-                <Results data={this.state.resultsData} />
             </>
         );
     }
