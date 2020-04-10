@@ -1,29 +1,31 @@
 import React from 'react';
-import {project_features_and_create_svg_paths} from "../common";
-import {MapPath} from "../UILibrary/components";
-import * as PropTypes from "prop-types";
+import * as PropTypes from 'prop-types';
+import { project_features_and_create_svg_paths } from '../common';
+import { MapPath } from '../UILibrary/components';
 import './campaign.scss';
+
+import IntroView from '../chooseAdventure/introView';
 
 
 const get_default_proposal = (topic_names) => {
-    let proposal = {};
+    const proposal = {};
     topic_names.forEach((topic) => {
-        proposal[topic] = 1;
+        proposal[topic] = 3;
     });
     return proposal;
 };
 
-const COUNTRIES = ["South Africa", "Kenya", "Botswana"];
+const COUNTRIES = ['South Africa', 'Kenya', 'Botswana'];
 const COUNTRY_TO_ISO = {
-    "South Africa": "ZAF",
-    "Kenya": "KEN",
-    "Botswana": "BWA",
+    'South Africa': 'ZAF',
+    'Kenya': 'KEN',
+    'Botswana': 'BWA',
 };
 
 class Speech extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.topic_names = Object.keys(this.props.population[0]["traits"]);
+        this.topic_names = Object.keys(this.props.population[0]['traits']);
         this.state = {
             speechProposal: get_default_proposal(this.topic_names),
             result: 0,
@@ -42,7 +44,7 @@ class Speech extends React.Component {
             speechProposal: get_default_proposal(this.topic_names),
             total: 10,
         }, () => {
-            this.setState({result: this.countSupporters()});
+            this.setState({ result: this.countSupporters() });
         });
     };
 
@@ -52,12 +54,11 @@ class Speech extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.countryName !== this.props.countryName ||
-            prevProps.population !== this.props.population) {
+        if (prevProps.countryName !== this.props.countryName
+            || prevProps.population !== this.props.population) {
             this.setState({
                 result: this.countSupporters(),
             });
-
         }
     }
 
@@ -70,8 +71,8 @@ class Speech extends React.Component {
     handleButtonOnChange = (e, topic) => {
         const newVal = parseInt(e.target.value);
         const newProposal = this.state.speechProposal;
-        let oldVal = newProposal[topic];
-        if (this.state.total + newVal - oldVal <= this.max_priority_points ){
+        const oldVal = newProposal[topic];
+        if (this.state.total + newVal - oldVal <= this.max_priority_points) {
             newProposal[topic] = newVal;
             this.setState({
                 speechProposal: newProposal,
@@ -89,14 +90,13 @@ class Speech extends React.Component {
         let count = 0;
         this.props.population.forEach((citizen) => {
             let difference_score = 0;
-            for (const topic in this.state.speechProposal) {
-                difference_score += Math.abs(citizen['traits'][topic] -
-                    this.state.speechProposal[topic]);
+            for (const topic of Object.keys(this.state.speechProposal)) {
+                difference_score += Math.abs(citizen['traits'][topic]
+                    - this.state.speechProposal[topic]);
             }
-            if (difference_score > this.difference_threshold){
+            if (difference_score > this.difference_threshold) {
                 citizen.will_support = false;
-            }
-            else {
+            } else {
                 citizen.will_support = true;
                 count++;
             }
@@ -107,34 +107,38 @@ class Speech extends React.Component {
 
     render() {
         const topics = this.topic_names.map((topic, key) => (
-            <div key={key} className="button-containers">
-                <p className="topics">
+            <div key={key} className='button-containers'>
+                <p className='topics'>
                     <strong>{topic}</strong>
                 </p>
                 {[...Array(5).keys()].map((score, j) => (
-                    <div className="form-check form-check-inline score-button" key={j}>
-                        <input className="form-check-input" type="radio" name={topic}
-                            id={"inlineRadio" + score+1}  value={score+1}
+                    <div className='form-check form-check-inline score-button' key={j}>
+                        <input className='form-check-input' type='radio' name={topic}
+                            id={'inlineRadio' + score + 1} value={score + 1}
                             checked={this.state.speechProposal[topic] === score + 1}
                             onChange={(e) => this.handleButtonOnChange(e, topic)}/>
-                        <label className="form-check-label" htmlFor="inlineRadio1">{score+1}</label>
+                        <label
+                            className='form-check-label'
+                            htmlFor='inlineRadio1'
+                        >{score + 1}
+                        </label>
                     </div>
                 ))}
             </div>
         ));
 
-        return(
+        return (
             <>
-                <div className={"province-info-text"}>
+                <div className={'province-info-text'}>
                     You have {this.max_priority_points - this.state.total} priority points left.
                 </div>
                 <br/>
                 <div>
                     {topics}
                 </div>
-                <div className="reset_button">
+                <div className='reset_button'>
                     <button
-                        type={"submit"}
+                        type={'submit'}
                         onClick={this.resetSpeech}
                     > Reset </button>
                 </div>
@@ -148,15 +152,16 @@ Speech.propTypes = {
     updatePopulation: PropTypes.func,
 };
 
-export class CampaignView extends  React.Component {
+export class CampaignView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             populationData: null,
             mapData: null,
             clickedProvince: null,
-            countryName: "South Africa",
+            countryName: 'South Africa',
             provinceInfo: {},
+            view: 'intro',
         };
         this.map_height = 500;
         this.map_width = 500;
@@ -174,32 +179,32 @@ export class CampaignView extends  React.Component {
                 body: JSON.stringify(data),
                 headers: {
                     'Content-type': 'application/json',
-                }
+                },
             });
             const populationData = await res.json();
             this.setState({
                 populationData: populationData,
             });
-        }catch (e) {
+        } catch (e) {
             console.log(e);
         }
     }
 
     async fetchCountryMap() {
         try {
-            const map = await fetch('/api/state_map_geojson/' +
-                COUNTRY_TO_ISO[this.state.countryName]+ '/',
+            const map = await fetch('/api/state_map_geojson/'
+                + COUNTRY_TO_ISO[this.state.countryName] + '/',
             {
                 method: 'GET',
                 headers: {
                     'Content-type': 'application/json',
-                }
+                },
             });
             const geo_json = await map.json();
             const mapData = project_features_and_create_svg_paths(
                 geo_json,
                 this.map_width,
-                this.map_height
+                this.map_height,
             );
             this.setState({
                 mapData: mapData,
@@ -218,31 +223,31 @@ export class CampaignView extends  React.Component {
     }
 
     updatePopulation(newCitizenList) {
-        const {populationData} = this.state;
+        const { populationData } = this.state;
         populationData.citizen_list = newCitizenList;
-        this.setState({populationData}, () => this.updateProvinceInfo());
+        this.setState({ populationData }, () => this.updateProvinceInfo());
     }
 
     updateProvinceInfo() {
-        const provinceInfo = {countryTotal: 0, countrySupporters: 0};
+        const provinceInfo = { countryTotal: 0, countrySupporters: 0 };
         for (const citizen of this.state.populationData.citizen_list) {
             const province = citizen['province'];
-            if (!(province in provinceInfo)){
-                provinceInfo[province] = {totalPeople: 0, totalSupporters: 0};
+            if (!(province in provinceInfo)) {
+                provinceInfo[province] = { totalPeople: 0, totalSupporters: 0 };
             }
-            provinceInfo[province]["totalPeople"]++;
-            provinceInfo["countryTotal"]++;
+            provinceInfo[province]['totalPeople']++;
+            provinceInfo['countryTotal']++;
             if (citizen.will_support) {
-                provinceInfo[province]["totalSupporters"]++;
-                provinceInfo["countrySupporters"]++;
+                provinceInfo[province]['totalSupporters']++;
+                provinceInfo['countrySupporters']++;
             }
         }
-        this.setState({provinceInfo});
+        this.setState({ provinceInfo });
     }
 
     handleProvinceMapClick(e, province) {
         const tagname = e.target.tagName;
-        if (tagname === "svg" || (tagname === "path" && province)) {
+        if (tagname === 'svg' || (tagname === 'path' && province)) {
             this.setState({
                 clickedProvince: province,
             });
@@ -250,7 +255,7 @@ export class CampaignView extends  React.Component {
     }
 
     changeCountry(e) {
-        this.setState({countryName: e.target.value, clickedProvince: ""},
+        this.setState({ countryName: e.target.value, clickedProvince: '' },
             () => {
                 this.fetchPopulation();
                 this.fetchCountryMap();
@@ -261,12 +266,28 @@ export class CampaignView extends  React.Component {
         if (!(this.state.populationData && this.state.mapData)) {
             return (<div>Loading!</div>);
         }
-        const {clickedProvince} = this.state;
-        const {provinceInfo} = this.state;
+        if (this.state.view === 'intro') {
+            const description = 'Welcome to the Campaign Game. The goal of this game is to'
+                + ' create a campaign that will appeal to the most people in a country. You do'
+                + ' this by allocating your priority points towards different services. If your'
+                + ' priorities align with those of a given citizen, that citizen will support'
+                + ' you. Citizens from different provinces will tend to favor some services more'
+                + ' than others, so you can play with the assignments until you gain a majority of'
+                + ' supporters.';
+            return (
+                <IntroView
+                    desc={description}
+                    setView={(view) => { this.setState({ view: view }); }}
+                    imgFile={'/static/img/campaign.jpg'}
+                />
+            );
+        }
+        const { clickedProvince } = this.state;
+        const { provinceInfo } = this.state;
         return (
             <>
                 <h1>Campaign Game</h1><hr/>
-                <div className="country-selector">
+                <div className='country-selector'>
                     Select a Country:&nbsp;
                     <select onChange={(e) => this.changeCountry(e)}>
                         {COUNTRIES.map((country, key) => (
@@ -276,53 +297,53 @@ export class CampaignView extends  React.Component {
                         ))}
                     </select>
                 </div>
-                <div className={"campaign-container"}>
-                    <div className={"speech-maker"}>
+                <div className={'campaign-container'}>
+                    <div className={'speech-maker'}>
                         <Speech
                             population={this.state.populationData['citizen_list']}
                             countryName={this.state.countryName}
                             updatePopulation={this.updatePopulation}
                         />
                     </div>
-                    <div className={"map-div"}>
-                        <div className={"campaign-map"}>
-                            {this.state.clickedProvince ?
-                                <div className={"province-info-text"}>
+                    <div className={'map-div'}>
+                        <div className={'campaign-map'}>
+                            {this.state.clickedProvince
+                                ? <div className={'province-info-text'}>
                                     <b>{this.state.clickedProvince}</b>
                                     <br/>
-                                    {provinceInfo[clickedProvince]["totalSupporters"]}
+                                    {provinceInfo[clickedProvince]['totalSupporters']}
                                     &nbsp;out of&nbsp;
-                                    {provinceInfo[clickedProvince]["totalPeople"]}
+                                    {provinceInfo[clickedProvince]['totalPeople']}
                                     &nbsp;people support you.
                                 </div>
-                                :
-                                <div className={"province-info-text"}>
+                                : <div className={'province-info-text'}>
                                     <b>{this.state.countryName}</b>
                                     <br/>
-                                    {provinceInfo["countrySupporters"]}
+                                    {provinceInfo['countrySupporters']}
                                     &nbsp;out of&nbsp;
-                                    {provinceInfo["countryTotal"]}
+                                    {provinceInfo['countryTotal']}
                                     &nbsp;people support you.
                                 </div>
                             }
                             <svg
                                 height={this.map_height}
                                 width={this.map_width}
-                                id="content"
-                                onClick={(e) => this.handleProvinceMapClick(e, "")}
+                                id='content'
+                                onClick={(e) => this.handleProvinceMapClick(e, '')}
                             >
                                 {this.state.mapData.map((country, i) => {
-                                    let countryFill = "#F6F4D2";
+                                    const countryFill = '#F6F4D2';
 
                                     return <MapPath
                                         key={i}
                                         path={country.svg_path}
                                         id={country.postal}
                                         fill={countryFill}
-                                        stroke="black"
-                                        strokeWidth="1"
-                                        handle_country_click={(e) =>
-                                            this.handleProvinceMapClick(e, country.name)}
+                                        stroke='black'
+                                        strokeWidth='1'
+                                        handle_country_click={
+                                            (e) => this.handleProvinceMapClick(e, country.name)
+                                        }
                                         useColorTransition={false}
                                     />;
                                 })}

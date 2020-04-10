@@ -1,5 +1,5 @@
 import React from 'react';
-import * as PropTypes from "prop-types";
+import * as PropTypes from 'prop-types';
 
 
 /**
@@ -18,7 +18,7 @@ class IntroView extends React.Component {
                     <div className={'col-6'}>
                         {this.props.desc}
                     </div>
-                    <img className= 'col-6' src='/static/img/sample.jpg' alt="Sample" />
+                    <img className= 'col-6' src={this.props.imgFile} alt="Sample" />
 
                 </div>
 
@@ -33,6 +33,7 @@ class IntroView extends React.Component {
 IntroView.propTypes = {
     desc: PropTypes.string,
     setView: PropTypes.func,
+    imgFile: PropTypes.string,
 };
 
 export default IntroView;
