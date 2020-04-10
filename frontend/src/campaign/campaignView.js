@@ -314,6 +314,16 @@ export class CampaignView extends  React.Component {
                                 {this.state.mapData.map((country, i) => {
                                     let countryFill = "#F6F4D2";
 
+                                    if(provinceInfo[country.name]){
+                                        const province = provinceInfo[country.name];
+                                        (province["totalSupporters"] / province["totalPeople"] > .5)
+                                            ? countryFill = "#B8E39B": countryFill = "#F19C79";
+                                    }
+
+                                    if (clickedProvince === country.name){
+                                        countryFill = "#C0CCD3";
+                                    }
+
                                     return <MapPath
                                         key={i}
                                         path={country.svg_path}
