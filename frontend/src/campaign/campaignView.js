@@ -278,7 +278,7 @@ export class CampaignView extends React.Component {
                 <IntroView
                     desc={description}
                     setView={(view) => { this.setState({ view: view }); }}
-                    imgFile={'/static/img/campaign.jpg'}
+                    imgFile={'/static/img/mandela_voting_in_1994.jpg'}
                 />
             );
         }

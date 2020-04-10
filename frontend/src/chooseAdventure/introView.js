@@ -18,7 +18,11 @@ class IntroView extends React.Component {
                     <div className={'col-6'}>
                         {this.props.desc}
                     </div>
-                    <img className= 'col-6' src={this.props.imgFile} alt="Sample" />
+                    <img
+                        className= 'col-6' src={this.props.imgFile}
+                        alt='intro_image'
+                        height='600'
+                    />
 
                 </div>
 
