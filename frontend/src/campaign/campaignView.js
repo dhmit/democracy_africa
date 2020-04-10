@@ -25,7 +25,8 @@ const COUNTRY_TO_ISO = {
 class Speech extends React.Component {
     constructor(props) {
         super(props);
-        this.topic_names = Object.keys(this.props.population[0]['traits']);
+        this.topic_names = Object
+            .keys(Object.values(this.props.population)[0]['citizens'][0]['traits']);
         this.state = {
             speechProposal: get_default_proposal(this.topic_names),
             result: 0,
@@ -88,19 +89,23 @@ class Speech extends React.Component {
      */
     countSupporters = () => {
         let count = 0;
-        this.props.population.forEach((citizen) => {
-            let difference_score = 0;
-            for (const topic of Object.keys(this.state.speechProposal)) {
-                difference_score += Math.abs(citizen['traits'][topic]
-                    - this.state.speechProposal[topic]);
-            }
-            if (difference_score > this.difference_threshold) {
-                citizen.will_support = false;
-            } else {
-                citizen.will_support = true;
-                count++;
-            }
+        Object.keys(this.props.population).forEach((province) => {
+            this.props.population[province]['citizens'].forEach((citizen) => {
+                let difference_score = 0;
+                for (const topic of Object.keys(this.state.speechProposal)) {
+                    difference_score += Math.abs(citizen['traits'][topic]
+                        - this.state.speechProposal[topic]);
+                }
+                if (difference_score > this.difference_threshold) {
+                    citizen.will_support = false;
+                } else {
+                    citizen.will_support = true;
+                    this.props.population[province]['totalSupporters'] += 1;
+                    count++;
+                }
+            });
         });
+
         this.props.updatePopulation(this.props.population);
         return count;
     };
@@ -147,7 +152,7 @@ class Speech extends React.Component {
     }
 }
 Speech.propTypes = {
-    population: PropTypes.array,
+    population: PropTypes.object,
     countryName: PropTypes.string,
     updatePopulation: PropTypes.func,
 };
@@ -161,12 +166,13 @@ export class CampaignView extends React.Component {
             clickedProvince: null,
             countryName: 'South Africa',
             provinceInfo: {},
-            view: 'intro',
+            // view: 'intro',
+            view: '',
         };
         this.map_height = 500;
         this.map_width = 500;
         this.updatePopulation = this.updatePopulation.bind(this);
-        this.updateProvinceInfo = this.updateProvinceInfo.bind(this);
+        // this.updateProvinceInfo = this.updateProvinceInfo.bind(this);
     }
 
     async fetchPopulation() {
@@ -182,13 +188,28 @@ export class CampaignView extends React.Component {
                 },
             });
             const populationData = await res.json();
+            // restructure population data
+            const population = {};
+            populationData.citizen_list.forEach((citizen) => {
+                const province = citizen['province'];
+                if (province in population) {
+                    population[province]['citizens'].push(citizen);
+                } else {
+                    population[province] = {
+                        'citizens': [citizen],
+                        'totalSupporters': 0,
+                    };
+                }
+            });
+
             this.setState({
-                populationData: populationData,
+                populationData: population,
             });
         } catch (e) {
             console.log(e);
         }
     }
+
 
     async fetchCountryMap() {
         try {
@@ -222,28 +243,29 @@ export class CampaignView extends React.Component {
         this.fetchCountryMap();
     }
 
-    updatePopulation(newCitizenList) {
-        const { populationData } = this.state;
-        populationData.citizen_list = newCitizenList;
-        this.setState({ populationData }, () => this.updateProvinceInfo());
+    updatePopulation(newPopulation) {
+        // this.setState({ populationData }, () => this.updateProvinceInfo());
+        this.setState({
+            populationData: newPopulation,
+        });
     }
 
-    updateProvinceInfo() {
-        const provinceInfo = { countryTotal: 0, countrySupporters: 0 };
-        for (const citizen of this.state.populationData.citizen_list) {
-            const province = citizen['province'];
-            if (!(province in provinceInfo)) {
-                provinceInfo[province] = { totalPeople: 0, totalSupporters: 0 };
-            }
-            provinceInfo[province]['totalPeople']++;
-            provinceInfo['countryTotal']++;
-            if (citizen.will_support) {
-                provinceInfo[province]['totalSupporters']++;
-                provinceInfo['countrySupporters']++;
-            }
-        }
-        this.setState({ provinceInfo });
-    }
+    // updateProvinceInfo() {
+    //     const provinceInfo = { countryTotal: 0, countrySupporters: 0 };
+    //     for (const citizen of this.state.populationData.citizen_list) {
+    //         const province = citizen['province'];
+    //         if (!(province in provinceInfo)) {
+    //             provinceInfo[province] = { totalPeople: 0, totalSupporters: 0 };
+    //         }
+    //         provinceInfo[province]['totalPeople']++;
+    //         provinceInfo['countryTotal']++;
+    //         if (citizen.will_support) {
+    //             provinceInfo[province]['totalSupporters']++;
+    //             provinceInfo['countrySupporters']++;
+    //         }
+    //     }
+    //     this.setState({ provinceInfo });
+    // }
 
     handleProvinceMapClick(e, province) {
         const tagname = e.target.tagName;
@@ -284,6 +306,7 @@ export class CampaignView extends React.Component {
         }
         const { clickedProvince } = this.state;
         const { provinceInfo } = this.state;
+        const { populationData } = this.state;
         return (
             <>
                 <h1>Campaign Game</h1><hr/>
@@ -300,7 +323,7 @@ export class CampaignView extends React.Component {
                 <div className={'campaign-container'}>
                     <div className={'speech-maker'}>
                         <Speech
-                            population={this.state.populationData['citizen_list']}
+                            population={this.state.populationData}
                             countryName={this.state.countryName}
                             updatePopulation={this.updatePopulation}
                         />
@@ -311,9 +334,9 @@ export class CampaignView extends React.Component {
                                 ? <div className={'province-info-text'}>
                                     <b>{this.state.clickedProvince}</b>
                                     <br/>
-                                    {provinceInfo[clickedProvince]['totalSupporters']}
+                                    {populationData[clickedProvince]['totalSupporters']}
                                     &nbsp;out of&nbsp;
-                                    {provinceInfo[clickedProvince]['totalPeople']}
+                                    {populationData[clickedProvince]['citizens'].length}
                                     &nbsp;people support you.
                                 </div>
                                 : <div className={'province-info-text'}>
