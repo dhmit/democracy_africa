@@ -318,7 +318,7 @@ export class CampaignView extends React.Component {
     submitPriorities = () => {
         const resultsData = this.state.provinceInfo;
         resultsData.countryName = this.state.countryName;
-        this.setState({ resultsData });
+        this.setState({ resultsData, view: 'submitted' });
     };
 
     render() {
@@ -339,6 +339,14 @@ export class CampaignView extends React.Component {
                     setView={(view) => { this.setState({ view: view }); }}
                     imgFile={'/static/img/campaign.jpg'}
                 />
+            );
+        }
+        if (this.state.view === 'submitted') {
+            return (
+                <div>
+                    <h1>Here are your final results for {this.state.resultsData.countryName}</h1>
+                    <Results data={this.state.resultsData}/>
+                </div>
             );
         }
         const { clickedProvince } = this.state;
