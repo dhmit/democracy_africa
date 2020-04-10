@@ -138,9 +138,13 @@ class Speech extends React.Component {
                 </div>
                 <div className='reset_button'>
                     <button
-                        type={'submit'}
                         onClick={this.resetSpeech}
                     > Reset </button>
+                    <button
+                        onClick={this.props.submitPriorities}
+                    >
+                        Submit
+                    </button>
                 </div>
             </>
         );
@@ -150,6 +154,54 @@ Speech.propTypes = {
     population: PropTypes.array,
     countryName: PropTypes.string,
     updatePopulation: PropTypes.func,
+    submitPriorities: PropTypes.func,
+};
+
+export class Results extends React.Component {
+    render() {
+        const resultsData = this.props.data;
+        if (!resultsData) {
+            return (<></>);
+        }
+        return (
+            <div>
+                <table border='1'>
+                    <tbody>
+                        <tr>
+                            <th>Province Name</th>
+                            <th>Number of Supporters</th>
+                            <th>Number of People</th>
+                            <th>Percentage of Votes</th>
+                        </tr>
+                        <tr>
+                            <td>{resultsData.countryName}</td>
+                            <td>{resultsData.countrySupporters}</td>
+                            <td>{resultsData.countryTotal}</td>
+                            <td>{Math.round((resultsData.countrySupporters
+                                                / resultsData.countryTotal) * 100)}%</td>
+                        </tr>
+                        {Object.keys(resultsData).map((province, k) => (
+                            (
+                                province !== 'countryTotal'
+                                && province !== 'countrySupporters'
+                                && province !== 'countryName'
+                            )
+                            && <tr key={k}>
+                                <td>{province}</td>
+                                <td>{resultsData[province].totalSupporters}</td>
+                                <td>{resultsData[province].totalPeople}</td>
+                                <td>{Math.round((resultsData[province].totalSupporters
+                                    / resultsData[province].totalPeople) * 100)}%</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        );
+    }
+}
+Results.propTypes = {
+    data: PropTypes.object,
 };
 
 export class CampaignView extends React.Component {
@@ -162,6 +214,7 @@ export class CampaignView extends React.Component {
             countryName: 'South Africa',
             provinceInfo: {},
             view: 'intro',
+            resultsData: null,
         };
         this.map_height = 500;
         this.map_width = 500;
@@ -262,6 +315,12 @@ export class CampaignView extends React.Component {
             });
     }
 
+    submitPriorities = () => {
+        const resultsData = this.state.provinceInfo;
+        resultsData.countryName = this.state.countryName;
+        this.setState({ resultsData });
+    };
+
     render() {
         if (!(this.state.populationData && this.state.mapData)) {
             return (<div>Loading!</div>);
@@ -303,6 +362,7 @@ export class CampaignView extends React.Component {
                             population={this.state.populationData['citizen_list']}
                             countryName={this.state.countryName}
                             updatePopulation={this.updatePopulation}
+                            submitPriorities={this.submitPriorities}
                         />
                     </div>
                     <div className={'map-div'}>
@@ -351,6 +411,7 @@ export class CampaignView extends React.Component {
                         </div>
                     </div>
                 </div>
+                <Results data={this.state.resultsData} />
             </>
         );
     }
