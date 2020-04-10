@@ -1,5 +1,5 @@
 import React from 'react';
-import * as PropTypes from "prop-types";
+import * as PropTypes from 'prop-types';
 
 
 /**
@@ -26,13 +26,7 @@ class IntroView extends React.Component {
                     Get started
                 </button>
             </div>
-
-
-
-
-
         );
-
     }
 }
 
