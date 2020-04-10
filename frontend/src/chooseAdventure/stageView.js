@@ -80,16 +80,20 @@ class Option extends React.Component {
         let stage = getStageFromName(this.props.option.stageName);
         let option = this.props.option;
         return (
-            <button
-                onClick={() =>
-                    this.props.setStage(stage, option)}
-            >{this.props.option.text}</button>
+            <li className={"option_selector"}>
+                <a className={"option_selector_link"} href="#" onClick={() =>
+                    this.props.setStage(stage, option)}>
+                    <img className="option_selector_img" src={this.props.img_url} alt=""/>
+                    <p>{this.props.option.text}</p>
+                </a>
+            </li>
         );
     }
 }
 Option.propTypes = {
     option: PropTypes.object,
     setStage: PropTypes.func,
+    img_url: PropTypes.string,
 };
 
 /**
@@ -126,7 +130,9 @@ class StageView extends React.Component {
         return (
             <div className={"wrapper"}>
                 <p>{this.state.stage.text}</p>
-                {optionComponents}
+                <ul className="option_selectors_list">
+                    {optionComponents}
+                </ul>
             </div>
         );
     }
