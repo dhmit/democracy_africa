@@ -7,15 +7,17 @@ const START_STAGE = {
         'text': 'Start a media campaign',
         'stageName': 'MEDIA_STAGE',
         'successFactor': 0.9,
-        'successDetail': 'Since elections are taking place soon, it\'s good to raise awareness' +
-            ' about your issue among potential voters.',
+        'successDetail':
+            'Since elections are taking place soon, it\'s good to raise awareness'
+            + ' about your issue among potential voters.',
     },
     {
         'text': 'Take direct action',
         'stageName': 'DIRECT_STAGE',
         'successFactor': 0.1,
-        'successDetail': 'Unfortunately, the school officials are corrupt in your district, so ' +
-            'direct action is not as effective.',
+        'successDetail':
+            'Unfortunately, the school officials are corrupt in your district, so '
+            + 'direct action is not as effective.',
     }],
 };
 
@@ -25,22 +27,23 @@ const MEDIA_STAGE = {
         'text': 'Twitter',
         'stageName': null,
         'successFactor': 0.8,
-        'successDetail': 'Twitter is huge in your country! You\'ve successfully raised awareness' +
-            ' about your issue. ',
+        'successDetail':
+            'Twitter is huge in your country! You\'ve successfully raised awareness'
+            + ' about your issue. ',
     },
     {
         'text': 'Facebook',
         'stageName': null,
         'successFactor': 0,
-        'successDetail': 'Facebook is banned in your country, so most people can\'t see your' +
-            ' posts.',
+        'successDetail': 'Facebook is banned in your country, so most people can\'t see your'
+            + ' posts.',
     },
     {
         'text': 'Radio',
         'stageName': null,
         'successFactor': 0.6,
-        'successDetail': 'The people who run the most popular local radio station support your' +
-            ' cause, and agree to share your message with the community.'
+        'successDetail': 'The people who run the most popular local radio station support your'
+            + ' cause, and agree to share your message with the community.',
     }],
 };
 
@@ -50,8 +53,8 @@ const DIRECT_STAGE = {
         'text': 'Sue the principal',
         'stageName': null,
         'successFactor': 0.1,
-        'successDetail': 'This was a joke filler option, it should be replaced with something' +
-            ' else.',
+        'successDetail': 'This was a joke filler option, it should be replaced with something'
+            + ' else.',
     },
     {
         'text': 'Ask the principal nicely',
@@ -62,9 +65,9 @@ const DIRECT_STAGE = {
 };
 
 const NAME_TO_STAGE = {
-    'START_STAGE' : START_STAGE,
-    'MEDIA_STAGE' : MEDIA_STAGE,
-    'DIRECT_STAGE' : DIRECT_STAGE
+    'START_STAGE': START_STAGE,
+    'MEDIA_STAGE': MEDIA_STAGE,
+    'DIRECT_STAGE': DIRECT_STAGE,
 };
 
 const getStageFromName = (stageName) => {
@@ -77,11 +80,11 @@ class Option extends React.Component {
     }
 
     render() {
-        let stage = getStageFromName(this.props.option.stageName);
-        let option = this.props.option;
+        const stage = getStageFromName(this.props.option.stageName);
+        const { option } = this.props;
         return (
-            <li className={"option_selector"}>
-                <a className={"option_selector_link"} href="#" onClick={() =>
+            <li className='option_selector'>
+                <a className='option_selector_link' href="#" onClick={() =>
                     this.props.setStage(stage, option)}>
                     <img className="option_selector_img" src={this.props.img_url} alt=""/>
                     <p>{this.props.option.text}</p>
@@ -104,7 +107,7 @@ class StageView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            stage: getStageFromName("START_STAGE"),
+            stage: getStageFromName('START_STAGE'),
         };
     }
 
@@ -112,7 +115,7 @@ class StageView extends React.Component {
         this.props.updateHistory(option);
         this.props.updateSuccess(option.successFactor);
         if (option.stageName) {
-            this.setState({stage: getStageFromName(option.stageName)});
+            this.setState({ stage: getStageFromName(option.stageName) });
         } else {
             this.props.setView('end');
         }
@@ -122,13 +125,16 @@ class StageView extends React.Component {
     render() {
         let optionComponents = <div>Loading...</div>;
         if (this.state.stage.options) {
-            optionComponents = this.state.stage.options.map((option, k) =>
-                <Option key={k} option={option}
-                    setStage={this.setStage}
-                />);
+            optionComponents = this.state.stage.options.map((option, k) => {
+                return (
+                    <Option
+                        key={k} option={option} setStage={this.setStage}
+                    />
+                );
+            });
         }
         return (
-            <div className={"wrapper"}>
+            <div className={'wrapper'}>
                 <p>{this.state.stage.text}</p>
                 <ul className="option_selectors_list">
                     {optionComponents}

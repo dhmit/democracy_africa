@@ -2,7 +2,7 @@ import React from 'react';
 import * as PropTypes from 'prop-types';
 import * as d3 from 'd3';
 
-import { MapPath } from "../UILibrary/components";
+import { MapPath } from '../UILibrary/components';
 
 import {
     getCookie,
@@ -16,13 +16,13 @@ import {
  */
 
 
-export class DemocracyViz extends  React.Component {
+export class DemocracyViz extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             democracyData: null,
-            scoreType: "v2x_polyarchy",
-            year: "1981",
+            scoreType: 'v2x_polyarchy',
+            year: '1981',
         };
     }
 
@@ -86,9 +86,9 @@ export class DemocracyViz extends  React.Component {
                 <br/>
                 Currently grey either means:
                 <ul>
-                    {/*Remove this later once we fix data*/}
+                    {/* Remove this later once we fix data */}
                     <li>Country doesn&apos;t exist in CSV</li>
-                    {/*Maybe keep this bottom one*/}
+                    {/* Maybe keep this bottom one */}
                     <li>
                         The country does exist but there is no data for that particular
                         score type in that particular year
@@ -120,7 +120,6 @@ export class DemocracyMap extends React.Component {
         this.csrftoken = getCookie('csrftoken');
         // this.map_ref = React.createRef();
         this.getCountryData = this.getCountryData.bind(this);
-
     }
 
     /**
@@ -147,10 +146,11 @@ export class DemocracyMap extends React.Component {
      */
     getCountryData(countryCode) {
         for (const countryData of this.props.democracyData) {
-            if (countryCode === countryData["country_text_id"]) {
+            if (countryCode === countryData['country_text_id']) {
                 return countryData;
             }
         }
+        throw new Error(`ISO code ${countryCode} is not in our list of ISO codes`);
     }
 
     render() {
@@ -163,30 +163,30 @@ export class DemocracyMap extends React.Component {
         return (
             <>
                 <svg
-                    height="1000"
-                    width="1000"
-                    id="content"
+                    height='1000'
+                    width='1000'
+                    id='content'
                 >
                     {this.state.map_data.map((country, i) => {
                         const countryData = this.getCountryData(country.iso);
                         // Using ternary because some country data doesn't exist
                         const countryScores = countryData
-                            ? countryData["democracy_scores"][this.props.year]
+                            ? countryData['democracy_scores'][this.props.year]
                             : null;
                         const countryScore = countryScores
                             ? countryScores[this.props.scoreType]
-                            : "";
-                        const color = countryScore !== ""
+                            : '';
+                        const color = countryScore !== ''
                             ? colorScale(countryScore)
-                            : "grey";
+                            : 'grey';
                         return (
                             <MapPath
                                 key={i}
                                 path={country.svg_path}
                                 id={country.iso}
                                 fill={color}
-                                stroke={"black"}
-                                strokeWidth={"1"}
+                                stroke={'black'}
+                                strokeWidth={'1'}
                                 useColorTransition={true}
                             />
                         );
