@@ -196,7 +196,6 @@ class MainTests(TestCase):
 
         # Makes sure that the citizens has the right traits
         first_citizen_traits = citizens[0].traits
-        
         self.assertIn("Health services", first_citizen_traits)
         self.assertIn("Education", first_citizen_traits)
         self.assertIn("Water and sanitation", first_citizen_traits)
