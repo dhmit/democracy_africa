@@ -313,12 +313,13 @@ export class CampaignView extends React.Component {
                 />
             );
         }
-        
-        const { clickedProvince, populationData } = this.state;
+        const { clickedProvince, populationData, provinceInfo } = this.state;
         const aggregateResult = this.countTotalSupport();
+        const overlay_title = clickedProvince === null || clickedProvince === '' ? 'No province'
+            + ' selected.' : clickedProvince;
         const popover = (
             <Popover show={clickedProvince !== null && clickedProvince !== ''} id="popover-basic">
-                <PopoverTitle as="h3">{clickedProvince}</PopoverTitle>
+                <PopoverTitle as="h3">{overlay_title}</PopoverTitle>
             </Popover>
         );
 
@@ -399,7 +400,7 @@ export class CampaignView extends React.Component {
                                         />;
                                     })}
                                 </svg>
-                            </OverlayTrigger>;
+                            </OverlayTrigger>
                         </div>
                     </div>
                 </div>
