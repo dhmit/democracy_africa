@@ -1,6 +1,15 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
+
+// eslint-disable-next-line no-unused-vars
+import Popover from 'react-bootstrap/Popover';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import PopoverTitle from 'react-bootstrap/PopoverTitle';
+import Overlay from 'react-bootstrap/Overlay';
+// eslint-disable-next-line no-unused-vars
+import PopoverContent from 'react-bootstrap/PopoverContent';
 import { project_features_and_create_svg_paths } from '../common';
+
 import { MapPath } from '../UILibrary/components';
 import './campaign.scss';
 
@@ -156,6 +165,7 @@ export class CampaignView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+
             populationData: null,
             mapData: null,
             clickedProvince: null,
@@ -181,6 +191,7 @@ export class CampaignView extends React.Component {
                     'Content-type': 'application/json',
                 },
             });
+
             const populationData = await res.json();
             this.setState({
                 populationData: populationData,
@@ -262,6 +273,10 @@ export class CampaignView extends React.Component {
             });
     }
 
+
+
+
+
     render() {
         if (!(this.state.populationData && this.state.mapData)) {
             return (<div>Loading!</div>);
@@ -284,6 +299,12 @@ export class CampaignView extends React.Component {
         }
         const { clickedProvince } = this.state;
         const { provinceInfo } = this.state;
+        const popover = (
+            <Popover show={clickedProvince !== null && clickedProvince !== ''} id="popover-basic">
+                <PopoverTitle as="h3">{clickedProvince}</PopoverTitle>
+            </Popover>
+        );
+
         return (
             <>
                 <h1>Campaign Game</h1><hr/>
@@ -325,38 +346,42 @@ export class CampaignView extends React.Component {
                                     &nbsp;people support you.
                                 </div>
                             }
-                            <svg
-                                height={this.map_height}
-                                width={this.map_width}
-                                id='content'
-                                onClick={(e) => this.handleProvinceMapClick(e, '')}
-                            >
-                                {this.state.mapData.map((country, i) => {
-                                    let countryFill = '#F6F4D2';
-                                    if (provinceInfo[country.name]) {
-                                        const province = provinceInfo[country.name];
-                                        countryFill = province['totalSupporters']
-                                        / province['totalPeople'] > 0.5 ? '#B8E39B' : '#F19C79';
-                                    }
 
-                                    if (clickedProvince === country.name) {
-                                        countryFill = '#C0CCD3';
-                                    }
-
-                                    return <MapPath
-                                        key={i}
-                                        path={country.svg_path}
-                                        id={country.postal}
-                                        fill={countryFill}
-                                        stroke='black'
-                                        strokeWidth='1'
-                                        handle_country_click={
-                                            (e) => this.handleProvinceMapClick(e, country.name)
+                            {/* eslint-disable-next-line max-len */}
+                            <OverlayTrigger trigger="hover" placement="right" overlay={popover}>
+                                <svg
+                                    height={this.map_height}
+                                    width={this.map_width}
+                                    id='content'
+                                    onClick={(e) => this.handleProvinceMapClick(e, '')}
+                                >
+                                    {this.state.mapData.map((country, i) => {
+                                        let countryFill = '#F6F4D2';
+                                        if (provinceInfo[country.name]) {
+                                            const province = provinceInfo[country.name];
+                                            countryFill = province['totalSupporters']
+                                            / province['totalPeople'] > 0.5 ? '#B8E39B' : '#F19C79';
                                         }
-                                        useColorTransition={false}
-                                    />;
-                                })}
-                            </svg>
+
+                                        if (clickedProvince === country.name) {
+                                            countryFill = '#C0CCD3';
+                                        }
+
+                                        return <MapPath
+                                            key={i}
+                                            path={country.svg_path}
+                                            id={country.postal}
+                                            fill={countryFill}
+                                            stroke='black'
+                                            strokeWidth='1'
+                                            handle_country_click={
+                                                (e) => this.handleProvinceMapClick(e, country.name)
+                                            }
+                                            useColorTransition={false}
+                                        />;
+                                    })}
+                                </svg>
+                            </OverlayTrigger>;
                         </div>
                     </div>
                 </div>
