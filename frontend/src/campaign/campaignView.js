@@ -351,11 +351,13 @@ export class CampaignView extends React.Component {
                 + ' you. Citizens from different provinces will tend to favor some services more'
                 + ' than others, so you can play with the assignments until you gain a majority of'
                 + ' supporters.';
+            const altText = 'Nelson Mandela voting in the 1994 South African general election.';
             return (
                 <IntroView
                     desc={description}
                     setView={(view) => { this.setState({ view: view }); }}
-                    imgFile={'/static/img/campaign.jpg'}
+                    imgFile={'/static/img/mandela_voting_in_1994.jpg'}
+                    altText={altText}
                 />
             );
         }
