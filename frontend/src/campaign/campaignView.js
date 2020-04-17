@@ -456,7 +456,7 @@ export class CampaignView extends React.Component {
                                     {this.state.mapData.map((country, i) => {
                                         let countryFill = '#F6F4D2';
                                         let width = '1';
-                                        if (this.state.populationData) {
+                                        if (this.state.populationData[country.name]) {
                                             const data = this.state.populationData[country.name];
                                             countryFill = data['totalSupporters']
                                             / data['citizens'].length > 0.5 ? '#B8E39B'
