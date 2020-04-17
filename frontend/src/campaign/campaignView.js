@@ -165,7 +165,7 @@ export class Results extends React.Component {
         }
         return (
             <div>
-                <table border='1'>
+                <table border='1' className={'resultTable'}>
                     <tbody>
                         <tr>
                             <th>Province Name</th>
@@ -344,7 +344,9 @@ export class CampaignView extends React.Component {
         if (this.state.view === 'submitted') {
             return (
                 <div>
-                    <h1>Here are your final results for {this.state.resultsData.countryName}</h1>
+                    <p className={'resultHeader'}>
+                        Final Results for {this.state.resultsData.countryName}
+                    </p>
                     <Results data={this.state.resultsData}/>
                     <button onClick={() => { this.setState({ view: 'stage' }); } }>
                         Go Back
