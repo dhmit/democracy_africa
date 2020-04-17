@@ -17,7 +17,7 @@ class EndView extends React.Component {
 
     formatAsPercentage = (probability) => {
         const unrounded = probability * 100;
-        return unrounded.toFixed(2);
+        return unrounded.toFixed(0);
     };
 
     render() {
