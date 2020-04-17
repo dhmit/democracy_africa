@@ -46,7 +46,7 @@ export class ChooseAdventureView extends React.Component {
 
 
     render() {
-        const desc = 'example paragraph: Paragraphs are the building blocks of papers. Many '
+        const desc = 'Paragraphs are the building blocks of papers. Many '
             + 'students '
             + 'define paragraphs in terms of length: a paragraph is a group of at least five '
             + 'sentences, '

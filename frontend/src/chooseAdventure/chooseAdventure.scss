@@ -2,54 +2,48 @@
 
 }
 
-.cyoa-button{
-    position: center;
+.intro-btn-container {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
 }
 
-.option-selectors-list{
-    list-style-type: none;
-    padding-inline-start: 0;
-}
-
-.option-selector{
-    border: 1px solid gray;
-    
+.cyoa-button {
+    border: 1px solid #d0d0d0;
     border-radius: 1rem;
-    transition: 300ms;
-    margin: 0 0 3px 0;
-}
-
-.option-selector:hover{
     background: #f7f7f7;
-    border: 1px solid #c1c0c0;
-
+    transition: 0.8s;
+    margin-top: 10px;
+    padding: 10px;
 }
 
-
-.option-selector-link{
-    /*padding: 10px 0px !important;*/
-    /*height: inherit;*/
-    width: 100%;
-    display: inline-block;
-    padding: 1rem 1rem 1rem 0;
-
+.cyoa-button:hover {
+    background: #f0f0f0;
+    border: 1px solid #787878;
+    cursor: pointer;
 }
 
-.option-selector-link:hover{
+.cyoa-button a:hover {
     text-decoration: none;
 }
 
-.option-selector-img{
-    max-height: 175px;
-    float: left;
-    border-radius: 2rem;
-
-    margin-right: 1rem;
-    padding-left: 1rem;
+.intro-img {
+    margin-bottom: 20px;
 }
 
-.option-selector-link p{
-    color: black;
-    /*padding-top: 40px;*/
+.start-button {
+    //border: 1px solid white !important;
+    //background-color: #6186b0;
+    //color: white;
+    text-align: center;
+    width: 10em;
+}
+
+.start-button:hover {
+    //background-color: #6d95c2;
+}
+
+.end-button {
+    width: 200px;
 }
 
