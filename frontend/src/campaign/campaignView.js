@@ -374,16 +374,17 @@ export class CampaignView extends React.Component {
         const aggregateResult = this.countTotalSupport();
         const overlay_title = clickedProvince === null || clickedProvince === '' ? 'No province'
             + ' selected' : clickedProvince;
-        const popover = (
+        const overlay_content = 'Health Services:';
+        const province_info_overlay = (
             <Popover id="popover-basic">
                 <PopoverTitle as="h3">{overlay_title}</PopoverTitle>
                 <PopoverContent>
                     {clickedProvince !== null && clickedProvince !== ''
-                        ? populationData[clickedProvince]['totalSupporters'] : ''}
+                        ? overlay_content : ''}
                 </PopoverContent>
             </Popover>
         );
-
+        console.log(this.state.populationData);
 
         if (this.state.view === 'submitted') {
             return (
@@ -446,7 +447,8 @@ export class CampaignView extends React.Component {
                             }
 
                             {/* eslint-disable-next-line max-len */}
-                            <OverlayTrigger trigger="hover" placement="right" overlay={popover}>
+                            <OverlayTrigger trigger="hover" placement="right"
+                                overlay={province_info_overlay}>
                                 <svg
                                     height={this.map_height}
                                     width={this.map_width}
