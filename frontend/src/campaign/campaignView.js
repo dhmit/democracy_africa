@@ -464,7 +464,7 @@ export class CampaignView extends React.Component {
                                         }
 
                                         if (clickedProvince === country.name) {
-                                            width = '2';
+                                            width = '3';
                                         }
 
                                         return <MapPath
