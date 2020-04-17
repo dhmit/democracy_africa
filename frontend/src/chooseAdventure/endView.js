@@ -22,7 +22,7 @@ class EndView extends React.Component {
 
     render() {
         const choices = this.props.history.map((option, k) => (
-            <div className={'cyoa-button'} key={k}>
+            <div className={'end-option'} key={k}>
                 <strong>{option.text}</strong>
                 <br />
                 This option has a {this.formatAsPercentage(option.successFactor)}%
