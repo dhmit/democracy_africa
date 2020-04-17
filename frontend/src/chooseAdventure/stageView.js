@@ -138,7 +138,7 @@ class StageView extends React.Component {
                             {optionComponents}
                         </div>
                     </div>
-                    <img className='col-6' src={this.props.imgFile} alt="Sample" />
+                    <img className='col-6 stage-img' src={this.props.imgFile} alt="Sample" />
                 </div>
 
             </div>
