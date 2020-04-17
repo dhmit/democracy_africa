@@ -376,10 +376,11 @@ export class CampaignView extends React.Component {
                                 >
                                     {this.state.mapData.map((country, i) => {
                                         let countryFill = '#F6F4D2';
-                                        if (provinceInfo[country.name]) {
-                                            const province = provinceInfo[country.name];
-                                            countryFill = province['totalSupporters']
-                                            / province['totalPeople'] > 0.5 ? '#B8E39B' : '#F19C79';
+                                        if (this.state.populationData) {
+                                            const data = this.state.populationData[country.name];
+                                            countryFill = data['totalSupporters']
+                                            / data['citizens'].length > 0.5 ? '#B8E39B'
+                                                : '#F19C79';
                                         }
 
                                         if (clickedProvince === country.name) {
