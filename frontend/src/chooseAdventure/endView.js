@@ -22,9 +22,11 @@ class EndView extends React.Component {
 
     render() {
         const choices = this.props.history.map((option, k) => (
-            <div key={k}>
-                Choosing to {option.text} has
-                a {this.formatAsPercentage(option.successFactor)}% chance of success.
+            <div className={'cyoa-button'} key={k}>
+                <strong>{option.text}</strong>
+                <br />
+                This option has a {this.formatAsPercentage(option.successFactor)}%
+                 chance of success.
                 <br />
                 {option.successDetail}
             </div>
@@ -33,6 +35,7 @@ class EndView extends React.Component {
             <div>
                 <div>You had a {this.formatAsPercentage(this.props.successTotal)}%
                     chance of succeeding.</div>
+                <div>Your choices:</div>
                 {choices}
                 <div className='cyoa-button end-button'
                      onClick={() => this.resetAdventure()}>
