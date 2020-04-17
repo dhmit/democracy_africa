@@ -166,7 +166,7 @@ Speech.propTypes = {
 
 export class Results extends React.Component {
     render() {
-        const resultsData = this.props.data;
+        const resultsData = this.props.provinceData;
         if (!resultsData) {
             return (<></>);
         }
@@ -181,11 +181,12 @@ export class Results extends React.Component {
                             <th>Percentage of Votes</th>
                         </tr>
                         <tr>
-                            <td>{resultsData.countryName}</td>
-                            <td>{resultsData.countrySupporters}</td>
-                            <td>{resultsData.countryTotal}</td>
-                            <td>{Math.round((resultsData.countrySupporters
-                                                / resultsData.countryTotal) * 100)}%</td>
+                            <td>{this.props.countryName}</td>
+                            <td>{this.props.countryData.totalSupport}</td>
+                            <td>{this.props.countryData.totalPopulation}</td>
+                            <td>{Math.round((this.props.countryData.totalSupport
+                                                / this.props.countryData.totalPopulation) * 100)}%
+                            </td>
                         </tr>
                         {Object.keys(resultsData).map((province, k) => (
                             (
@@ -196,9 +197,9 @@ export class Results extends React.Component {
                             && <tr key={k}>
                                 <td>{province}</td>
                                 <td>{resultsData[province].totalSupporters}</td>
-                                <td>{resultsData[province].totalPeople}</td>
+                                <td>{resultsData[province].citizens.length}</td>
                                 <td>{Math.round((resultsData[province].totalSupporters
-                                    / resultsData[province].totalPeople) * 100)}%</td>
+                                    / resultsData[province].citizens.length) * 100)}%</td>
                             </tr>
                         ))}
                     </tbody>
@@ -208,7 +209,9 @@ export class Results extends React.Component {
     }
 }
 Results.propTypes = {
-    data: PropTypes.object,
+    provinceData: PropTypes.object,
+    countryData: PropTypes.object,
+    countryName: PropTypes.string,
 };
 
 export class CampaignView extends React.Component {
@@ -219,9 +222,8 @@ export class CampaignView extends React.Component {
             mapData: null,
             clickedProvince: null,
             countryName: 'South Africa',
-            provinceInfo: {},
             resultsData: null,
-            view: '',
+            view: 'intro',
         };
         this.map_height = 500;
         this.map_width = 500;
@@ -331,15 +333,16 @@ export class CampaignView extends React.Component {
     }
 
     submitPriorities = () => {
-        const resultsData = this.state.provinceInfo;
-        resultsData.countryName = this.state.countryName;
-        this.setState({ resultsData, view: 'submitted' });
+        this.setState({ view: 'submitted' });
     };
 
     render() {
         if (!(this.state.populationData && this.state.mapData)) {
             return (<div>Loading!</div>);
         }
+        const { clickedProvince, populationData } = this.state;
+        const aggregateResult = this.countTotalSupport();
+
         if (this.state.view === 'intro') {
             const description = 'Welcome to the Campaign Game. The goal of this game is to'
                 + ' create a campaign that will appeal to the most people in a country. You do'
@@ -360,17 +363,19 @@ export class CampaignView extends React.Component {
             return (
                 <div>
                     <p className={'resultHeader'}>
-                        Final Results for {this.state.resultsData.countryName}
+                        Final Results for {this.state.countryName}
                     </p>
-                    <Results data={this.state.resultsData}/>
+                    <Results
+                        provinceData={this.state.populationData}
+                        countryData={aggregateResult}
+                        countryName={this.state.countryName}
+                    />
                     <button onClick={() => { this.setState({ view: 'stage' }); } }>
                         Go Back
                     </button>
                 </div>
             );
         }
-        const { clickedProvince, populationData } = this.state;
-        const aggregateResult = this.countTotalSupport();
         return (
             <>
                 <h1>Campaign Game</h1><hr/>
