@@ -290,8 +290,7 @@ export class CampaignView extends React.Component {
                 + ' you. Citizens from different provinces will tend to favor some services more'
                 + ' than others, so you can play with the assignments until you gain a majority of'
                 + ' supporters.';
-            const altText = 'A picture of Nelson Mandela voting in the 1994 South African'
-                + ' general election.';
+            const altText = 'Nelson Mandela voting in the 1994 South African general election.';
             return (
                 <IntroView
                     desc={description}
