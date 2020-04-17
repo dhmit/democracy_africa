@@ -457,6 +457,7 @@ export class CampaignView extends React.Component {
                                 >
                                     {this.state.mapData.map((country, i) => {
                                         let countryFill = '#F6F4D2';
+                                        let width = '1';
                                         if (this.state.populationData) {
                                             const data = this.state.populationData[country.name];
                                             countryFill = data['totalSupporters']
@@ -465,7 +466,7 @@ export class CampaignView extends React.Component {
                                         }
 
                                         if (clickedProvince === country.name) {
-                                            countryFill = '#C0CCD3';
+                                            width = '2';
                                         }
 
                                         return <MapPath
@@ -474,7 +475,7 @@ export class CampaignView extends React.Component {
                                             id={country.postal}
                                             fill={countryFill}
                                             stroke='black'
-                                            strokeWidth='1'
+                                            strokeWidth={width}
                                             handle_country_click={
                                                 (e) => this.handleProvinceMapClick(e, country.name)
                                             }
