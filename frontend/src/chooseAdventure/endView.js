@@ -38,7 +38,7 @@ class EndView extends React.Component {
                 <div>Your choices:</div>
                 {choices}
                 <div className='cyoa-button end-button'
-                     onClick={() => this.resetAdventure()}>
+                    onClick={() => this.resetAdventure()}>
                     Try again
                 </div>
             </div>

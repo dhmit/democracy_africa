@@ -19,7 +19,7 @@ class IntroView extends React.Component {
                         {this.props.desc}
                         <div className='intro-btn-container'>
                             <div className='cyoa-button start-button'
-                                 onClick={() => this.props.setView('stage')}>
+                                onClick={() => this.props.setView('stage')}>
                                 Get started
                             </div>
                         </div>
