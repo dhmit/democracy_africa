@@ -39,10 +39,10 @@ class Speech extends React.Component {
         this.state = {
             speechProposal: get_default_proposal(this.topic_names),
             result: 0,
-            total: 10,
+            total: 30,
         };
         this.difference_threshold = 14;
-        this.max_priority_points = 30;
+        this.max_priority_points = 35;
     }
 
     /**
@@ -52,7 +52,7 @@ class Speech extends React.Component {
     resetSpeech = () => {
         this.setState({
             speechProposal: get_default_proposal(this.topic_names),
-            total: 10,
+            total: 30,
         }, () => {
             this.setState({ result: this.countSupporters() });
         });
@@ -154,9 +154,13 @@ class Speech extends React.Component {
                 </div>
                 <div className='reset_button'>
                     <button
-                        type={'submit'}
                         onClick={this.resetSpeech}
                     > Reset </button>
+                    <button
+                        onClick={this.props.submitPriorities}
+                    >
+                        Submit
+                    </button>
                 </div>
             </>
         );
@@ -166,6 +170,57 @@ Speech.propTypes = {
     population: PropTypes.object,
     countryName: PropTypes.string,
     updatePopulation: PropTypes.func,
+    submitPriorities: PropTypes.func,
+};
+
+export class Results extends React.Component {
+    render() {
+        const resultsData = this.props.provinceData;
+        if (!resultsData) {
+            return (<></>);
+        }
+        return (
+            <div>
+                <table border='1' className={'resultTable'}>
+                    <tbody>
+                        <tr>
+                            <th>Province Name</th>
+                            <th>Number of Supporters</th>
+                            <th>Number of People</th>
+                            <th>Percentage of Votes</th>
+                        </tr>
+                        <tr>
+                            <td>{this.props.countryName}</td>
+                            <td>{this.props.countryData.totalSupport}</td>
+                            <td>{this.props.countryData.totalPopulation}</td>
+                            <td>{Math.round((this.props.countryData.totalSupport
+                                                / this.props.countryData.totalPopulation) * 100)}%
+                            </td>
+                        </tr>
+                        {Object.keys(resultsData).map((province, k) => (
+                            (
+                                province !== 'countryTotal'
+                                && province !== 'countrySupporters'
+                                && province !== 'countryName'
+                            )
+                            && <tr key={k}>
+                                <td>{province}</td>
+                                <td>{resultsData[province].totalSupporters}</td>
+                                <td>{resultsData[province].citizens.length}</td>
+                                <td>{Math.round((resultsData[province].totalSupporters
+                                    / resultsData[province].citizens.length) * 100)}%</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        );
+    }
+}
+Results.propTypes = {
+    provinceData: PropTypes.object,
+    countryData: PropTypes.object,
+    countryName: PropTypes.string,
 };
 
 export class CampaignView extends React.Component {
@@ -177,9 +232,8 @@ export class CampaignView extends React.Component {
             mapData: null,
             clickedProvince: null,
             countryName: 'South Africa',
-            provinceInfo: {},
-            // view: 'intro',
-            view: '',
+            resultsData: null,
+            view: 'intro',
         };
         this.map_height = 500;
         this.map_width = 500;
@@ -289,14 +343,15 @@ export class CampaignView extends React.Component {
             });
     }
 
-
-
-
+    submitPriorities = () => {
+        this.setState({ view: 'submitted' });
+    };
 
     render() {
         if (!(this.state.populationData && this.state.mapData)) {
             return (<div>Loading!</div>);
         }
+
         if (this.state.view === 'intro') {
             const description = 'Welcome to the Campaign Game. The goal of this game is to'
                 + ' create a campaign that will appeal to the most people in a country. You do'
@@ -305,15 +360,17 @@ export class CampaignView extends React.Component {
                 + ' you. Citizens from different provinces will tend to favor some services more'
                 + ' than others, so you can play with the assignments until you gain a majority of'
                 + ' supporters.';
+            const altText = 'Nelson Mandela voting in the 1994 South African general election.';
             return (
                 <IntroView
                     desc={description}
                     setView={(view) => { this.setState({ view: view }); }}
-                    imgFile={'/static/img/campaign.jpg'}
+                    imgFile={'/static/img/mandela_voting_in_1994.jpg'}
+                    altText={altText}
                 />
             );
         }
-        const { clickedProvince, populationData, provinceInfo } = this.state;
+        const { clickedProvince, populationData } = this.state;
         const aggregateResult = this.countTotalSupport();
         const overlay_title = clickedProvince === null || clickedProvince === '' ? 'No province'
             + ' selected' : clickedProvince;
@@ -328,6 +385,23 @@ export class CampaignView extends React.Component {
         );
 
 
+        if (this.state.view === 'submitted') {
+            return (
+                <div>
+                    <p className={'resultHeader'}>
+                        Final Results for {this.state.countryName}
+                    </p>
+                    <Results
+                        provinceData={this.state.populationData}
+                        countryData={aggregateResult}
+                        countryName={this.state.countryName}
+                    />
+                    <button onClick={() => { this.setState({ view: 'stage' }); } }>
+                        Go Back
+                    </button>
+                </div>
+            );
+        }
         return (
             <>
                 <h1>Campaign Game</h1><hr/>
@@ -347,6 +421,7 @@ export class CampaignView extends React.Component {
                             population={this.state.populationData}
                             countryName={this.state.countryName}
                             updatePopulation={this.updatePopulation}
+                            submitPriorities={this.submitPriorities}
                         />
                     </div>
                     <div className={'map-div'}>
