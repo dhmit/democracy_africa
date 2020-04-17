@@ -83,13 +83,13 @@ class Option extends React.Component {
         const stage = getStageFromName(this.props.option.stageName);
         const { option } = this.props;
         return (
-            <li className='option_selector'>
-                <a className='option_selector_link'
+            <div className='option-selector'>
+                <a className='option-selector-link'
                     onClick={() => this.props.setStage(stage, option)}>
-                    <img className="option_selector_img" src={this.props.img_url} alt=""/>
+                    <img className="option-selector-img" src={this.props.img_url} alt=""/>
                     <p>{this.props.option.text}</p>
                 </a>
-            </li>
+            </div>
         );
     }
 }
@@ -138,11 +138,11 @@ class StageView extends React.Component {
                 <div className='row'>
                     <div className={'col-6'}>
                         <p>{this.state.stage.text}</p>
-                        <ul className="option_selectors_list">
+                        <div className="option-selectors-list">
                             {optionComponents}
-                        </ul>
+                        </div>
                     </div>
-                    <img className= 'col-6' src={this.props.imgFile} alt="Sample" />
+                    <img className='col-6' src={this.props.imgFile} alt="Sample" />
                 </div>
 
             </div>

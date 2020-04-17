@@ -68,6 +68,7 @@ export class ChooseAdventureView extends React.Component {
                     desc={desc}
                     setView={this.setView}
                     imgFile={'/static/img/sample.jpg'}
+                    altText={'sample image'}
                 />}
                 {this.state.view === 'stage' && <StageView
                     setView={this.setView}

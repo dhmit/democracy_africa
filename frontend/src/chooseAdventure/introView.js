@@ -18,8 +18,12 @@ class IntroView extends React.Component {
                     <div className={'col-6'}>
                         {this.props.desc}
                     </div>
-                    <img className= 'col-6' src={this.props.imgFile} alt="Sample" />
-
+                    <img
+                        className= 'col-6'
+                        src={this.props.imgFile}
+                        alt={this.props.altText}
+                        height='600'
+                    />
                 </div>
 
                 <button className='col-5 cyoa-button' onClick={() => this.props.setView('stage')}>
@@ -34,6 +38,7 @@ IntroView.propTypes = {
     desc: PropTypes.string,
     setView: PropTypes.func,
     imgFile: PropTypes.string,
+    altText: PropTypes.string,
 };
 
 export default IntroView;
