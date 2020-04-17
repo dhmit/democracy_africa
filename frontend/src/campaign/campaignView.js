@@ -316,10 +316,14 @@ export class CampaignView extends React.Component {
         const { clickedProvince, populationData, provinceInfo } = this.state;
         const aggregateResult = this.countTotalSupport();
         const overlay_title = clickedProvince === null || clickedProvince === '' ? 'No province'
-            + ' selected.' : clickedProvince;
+            + ' selected' : clickedProvince;
         const popover = (
-            <Popover show={clickedProvince !== null && clickedProvince !== ''} id="popover-basic">
+            <Popover id="popover-basic">
                 <PopoverTitle as="h3">{overlay_title}</PopoverTitle>
+                <PopoverContent>
+                    {clickedProvince !== null && clickedProvince !== ''
+                        ? populationData[clickedProvince]['totalSupporters'] : ''}
+                </PopoverContent>
             </Popover>
         );
 
