@@ -329,7 +329,7 @@ export class CampaignView extends React.Component {
             clickedProvince: null,
             countryName: 'South Africa',
             resultsData: null,
-            view: '',
+            view: 'intro',
             sampleSize: 50,
         };
         this.map_height = 500;
