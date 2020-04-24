@@ -2,11 +2,11 @@ import React from 'react';
 import * as PropTypes from 'prop-types';
 
 const START_STAGE = {
-    'text': 'Your school district\'s budget was cut!',
+    'text': 'A friend texts you about a sit-in at the administrative offices.'
+        + ' What is your initial reaction?',
     'options': [{
-        'text': 'Start a media campaign',
+        'text': ' Agree; you want to participate!',
         'stageName': 'MEDIA_STAGE',
-        'successFactor': 0.9,
         'successDetail':
             'Since elections are taking place soon, it\'s good to raise awareness'
             + ' about your issue among potential voters.',
@@ -14,7 +14,6 @@ const START_STAGE = {
     {
         'text': 'Take direct action',
         'stageName': 'DIRECT_STAGE',
-        'successFactor': 0.1,
         'successDetail':
             'Unfortunately, the school officials are corrupt in your district, so '
             + 'direct action is not as effective.',
@@ -26,7 +25,6 @@ const MEDIA_STAGE = {
     'options': [{
         'text': 'Twitter',
         'stageName': null,
-        'successFactor': 0.8,
         'successDetail':
             'Twitter is huge in your country! You\'ve successfully raised awareness'
             + ' about your issue. ',
@@ -34,14 +32,12 @@ const MEDIA_STAGE = {
     {
         'text': 'Facebook',
         'stageName': null,
-        'successFactor': 0,
         'successDetail': 'Facebook is banned in your country, so most people can\'t see your'
             + ' posts.',
     },
     {
         'text': 'Radio',
         'stageName': null,
-        'successFactor': 0.6,
         'successDetail': 'The people who run the most popular local radio station support your'
             + ' cause, and agree to share your message with the community.',
     }],
@@ -52,14 +48,12 @@ const DIRECT_STAGE = {
     'options': [{
         'text': 'Sue the principal',
         'stageName': null,
-        'successFactor': 0.1,
         'successDetail': 'This was a joke filler option, it should be replaced with something'
             + ' else.',
     },
     {
         'text': 'Ask the principal nicely',
         'stageName': null,
-        'successFactor': 0.5,
         'successDetail': 'The principal says no and has security escort you out.',
     }],
 };
@@ -109,7 +103,6 @@ class StageView extends React.Component {
 
     setStage = (stage, option) => {
         this.props.updateHistory(option);
-        this.props.updateSuccess(option.successFactor);
         if (option.stageName) {
             this.setState({ stage: getStageFromName(option.stageName) });
         } else {
@@ -149,7 +142,6 @@ StageView.propTypes = {
     stageName: PropTypes.string,
     updateHistory: PropTypes.func,
     setView: PropTypes.func,
-    updateSuccess: PropTypes.func,
     imgFile: PropTypes.string,
 };
 

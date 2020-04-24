@@ -13,7 +13,6 @@ export class ChooseAdventureView extends React.Component {
         this.state = {
             view: 'intro',
             history: [],
-            successTotal: 1,
         };
     }
 
@@ -31,15 +30,8 @@ export class ChooseAdventureView extends React.Component {
         }));
     };
 
-    updateSuccess = (successFactor) => {
-        this.setState((prevState) => ({
-            successTotal: prevState.successTotal * successFactor,
-        }));
-    };
-
     resetProgress = () => {
         this.setState({
-            successTotal: 1,
             history: [],
         });
     };
@@ -72,12 +64,10 @@ export class ChooseAdventureView extends React.Component {
                 />}
                 {this.state.view === 'stage' && <StageView
                     setView={this.setView}
-                    updateSuccess={this.updateSuccess}
                     updateHistory={this.updateHistory}
                     imgFile={'/static/img/sample.jpg'}
                 />}
                 {this.state.view === 'end' && <EndView
-                    successTotal={this.state.successTotal}
                     history={this.state.history}
                     setView={this.setView}
                     resetProgress={this.resetProgress}
