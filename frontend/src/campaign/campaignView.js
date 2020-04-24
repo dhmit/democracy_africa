@@ -355,7 +355,6 @@ export class CampaignView extends React.Component {
         if (!(this.state.populationData && this.state.mapData)) {
             return (<div>Loading!</div>);
         }
-        const { clickedProvince, populationData } = this.state;
         const aggregateResult = this.countTotalSupport();
 
         if (this.state.view === 'intro') {
@@ -420,24 +419,6 @@ export class CampaignView extends React.Component {
                     </div>
                     <div className={'map-div'}>
                         <div className={'campaign-map'}>
-                            {this.state.clickedProvince
-                                ? <div className={'province-info-text'}>
-                                    <b>{this.state.clickedProvince}</b>
-                                    <br/>
-                                    {populationData[clickedProvince]['totalSupporters']}
-                                    &nbsp;out of&nbsp;
-                                    {populationData[clickedProvince]['citizens'].length}
-                                    &nbsp;people support you.
-                                </div>
-                                : <div className={'province-info-text'}>
-                                    <b>{this.state.countryName}</b>
-                                    <br/>
-                                    {aggregateResult['totalSupport']}
-                                    &nbsp;out of&nbsp;
-                                    {aggregateResult['totalPopulation']}
-                                    &nbsp;people support you.
-                                </div>
-                            }
                             <svg
                                 height={this.map_height}
                                 width={this.map_width}
