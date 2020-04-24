@@ -159,7 +159,7 @@ const STAGE_2B_INT = {
         <p>You inform other people of the march on parliament and it turns out that as many as 5000
             people showed up to protest. You feel a mixed sense of relief and horror as you hear
             about that chaos towards the end of the march.</p>
-            </div>,
+    </div>,
     'options': [{
         'text': <div>Next</div>,
         'stageName': null,
@@ -173,7 +173,7 @@ const STAGE_2C_INT = {
         <p>You’re skeptical any of this will work. It might be better to stay out of this for now.
             So you choose to do nothing. </p>
         <p>Given the violent end to the march, you feel satisfied with your choice to stay back.</p>
-            </div>,
+    </div>,
     'options': [{
         'text': 'Next',
         'stageName': null,
