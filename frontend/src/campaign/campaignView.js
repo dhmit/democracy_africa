@@ -256,12 +256,12 @@ class Citizen extends React.Component {
                     height='20'
                     width='20'
                 >
-                     <circle
+                    <circle
                         cx='10'
                         cy='10'
                         r='10'
                         fill={this.props.data.will_support ? 'green' : '#c0c0c0'}
-                     />
+                    />
                 </svg>
             </OverlayTrigger>
         );
@@ -454,7 +454,7 @@ export class CampaignView extends React.Component {
         let citizenReactions;
         if (populationData && clickedProvince) {
             const citizens = populationData[clickedProvince]['citizens'];
-            const sample = citizens.slice(0, this.state.sampleSize);
+            const sample = citizens.slice(0, sampleSize);
             citizenReactions = sample.map((citizen, k) => (
                 <Citizen key={k} data={citizen}/>
             ));
@@ -473,7 +473,7 @@ export class CampaignView extends React.Component {
                         step="1"
                         min="0"
                         max={citizens.length}
-                        value={this.state.sampleSize}
+                        value={sampleSize}
                         onChange={(e) => this.changeSampleSize(e, citizens.length)}
                     />
                 </div>
