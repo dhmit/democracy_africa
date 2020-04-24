@@ -46,7 +46,7 @@ export class ChooseAdventureView extends React.Component {
 
 
     render() {
-        const desc = 'example paragraph: Paragraphs are the building blocks of papers. Many '
+        const desc = 'Paragraphs are the building blocks of papers. Many '
             + 'students '
             + 'define paragraphs in terms of length: a paragraph is a group of at least five '
             + 'sentences, '
@@ -62,18 +62,19 @@ export class ChooseAdventureView extends React.Component {
             + 'can be just one sentence long. Ultimately, a paragraph is a sentence or group of '
             + 'sentences that support one main idea. In this handout, we will refer to this as the '
             + '“controlling idea,” because it controls what happens in the rest of the paragraph.';
-        console.log('rerendering');
         return (
             <div>
                 {this.state.view === 'intro' && <IntroView
                     desc={desc}
                     setView={this.setView}
                     imgFile={'/static/img/sample.jpg'}
+                    altText={'sample image'}
                 />}
                 {this.state.view === 'stage' && <StageView
                     setView={this.setView}
-                    pdateSuccess={this.updateSuccess}
+                    updateSuccess={this.updateSuccess}
                     updateHistory={this.updateHistory}
+                    imgFile={'/static/img/sample.jpg'}
                 />}
                 {this.state.view === 'end' && <EndView
                     successTotal={this.state.successTotal}
