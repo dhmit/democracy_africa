@@ -99,6 +99,7 @@ class Speech extends React.Component {
                     difference_score += (citizen['traits'][topic]
                         - this.state.speechProposal[topic]) ** 2;
                 }
+
                 if (difference_score > this.difference_threshold) {
                     citizen.will_support = false;
                 } else {
@@ -489,7 +490,14 @@ export class CampaignView extends React.Component {
                         countryName={this.state.countryName}
                         mapData={this.state.mapData}
                     />
-                    <button onClick={() => { this.setState({ view: 'stage', round: 1 }); } }>
+                    <button onClick={() => {
+                        this.setState({
+                            view: 'stage',
+                            round: 1,
+                            countryName: 'South Africa',
+                        });
+                    }}
+                    >
                         Go Back
                     </button>
                 </div>
