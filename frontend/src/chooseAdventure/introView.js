@@ -17,18 +17,20 @@ class IntroView extends React.Component {
                 <div className='row'>
                     <div className={'col-6'}>
                         {this.props.desc}
+                        <div className='intro-btn-container'>
+                            <div className='cyoa-button start-button'
+                                onClick={() => this.props.setView('stage')}>
+                                Get started
+                            </div>
+                        </div>
                     </div>
                     <img
-                        className= 'col-6'
+                        className= 'col-6 intro-img'
                         src={this.props.imgFile}
                         alt={this.props.altText}
                         height='600'
                     />
                 </div>
-
-                <button className='col-5 cyoa-button' onClick={() => this.props.setView('stage')}>
-                    Get started
-                </button>
             </div>
         );
     }

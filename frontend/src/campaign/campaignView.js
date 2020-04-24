@@ -182,14 +182,6 @@ export class Results extends React.Component {
                             <th>Number of People</th>
                             <th>Percentage of Votes</th>
                         </tr>
-                        <tr>
-                            <td>{this.props.countryName}</td>
-                            <td>{this.props.countryData.totalSupport}</td>
-                            <td>{this.props.countryData.totalPopulation}</td>
-                            <td>{Math.round((this.props.countryData.totalSupport
-                                                / this.props.countryData.totalPopulation) * 100)}%
-                            </td>
-                        </tr>
                         {Object.keys(resultsData).map((province, k) => (
                             (
                                 province !== 'countryTotal'
@@ -204,6 +196,14 @@ export class Results extends React.Component {
                                     / resultsData[province].citizens.length) * 100)}%</td>
                             </tr>
                         ))}
+                        <tr className={'countryResult'}>
+                            <th>{this.props.countryName}</th>
+                            <th>{this.props.countryData.totalSupport}</th>
+                            <th>{this.props.countryData.totalPopulation}</th>
+                            <th>{Math.round((this.props.countryData.totalSupport
+                                                / this.props.countryData.totalPopulation) * 100)}%
+                            </th>
+                        </tr>
                     </tbody>
                 </table>
             </div>
