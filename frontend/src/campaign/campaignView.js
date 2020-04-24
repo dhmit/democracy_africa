@@ -50,9 +50,7 @@ class Speech extends React.Component {
 
     componentDidMount() {
         // For a given list of options set each value to 3
-        if (this.props.resetSpeech) {
-            this.resetSpeech();
-        }
+        this.resetSpeech();
     }
 
     componentDidUpdate(prevProps) {
@@ -165,7 +163,6 @@ Speech.propTypes = {
     submitPriorities: PropTypes.func,
     speechProposal: PropTypes.object,
     topicNames: PropTypes.array,
-    resetSpeech: PropTypes.bool,
 };
 
 export class Results extends React.Component {
@@ -335,11 +332,15 @@ export class CampaignView extends React.Component {
     }
 
     changeCountry(e) {
-        this.setState({ countryName: e.target.value, clickedProvince: '' },
-            () => {
-                this.fetchPopulation();
-                this.fetchCountryMap();
-            });
+        const confirmText = 'You will lose your progress if you switch countries. Are you sure'
+            + ' you want to switch?';
+        if (window.confirm(confirmText)) {
+            this.setState({ countryName: e.target.value, clickedProvince: '', round: 1 },
+                () => {
+                    this.fetchPopulation();
+                    this.fetchCountryMap();
+                });
+        }
     }
 
     submitPriorities = () => {
@@ -415,7 +416,6 @@ export class CampaignView extends React.Component {
                             submitPriorities={this.submitPriorities}
                             speechProposal={this.state.speechProposal}
                             topicNames={this.state.topicNames}
-                            resetSpeech={this.state.round <= 1}
                         />
                     </div>
                     <div className={'map-div'}>
