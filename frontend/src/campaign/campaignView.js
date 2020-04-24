@@ -7,6 +7,7 @@ import './campaign.scss';
 import IntroView from '../chooseAdventure/introView';
 
 
+
 const get_default_proposal = (topic_names) => {
     const proposal = {};
     topic_names.forEach((topic) => {
@@ -165,6 +166,12 @@ Speech.propTypes = {
 };
 
 export class Results extends React.Component {
+    constructor(props) {
+        super(props);
+        this.map_height = 500;
+        this.map_width = 500;
+    }
+
     render() {
         const resultsData = this.props.provinceData;
         if (!resultsData) {
@@ -204,6 +211,27 @@ export class Results extends React.Component {
                         </tr>
                     </tbody>
                 </table>
+                <svg
+                    height={this.map_height}
+                    width={this.map_width}
+                    id='content'
+                >
+                    {this.props.mapData.map((province, i) => {
+                        const countryFill = resultsData[province.name].totalSupporters
+                            / resultsData[province.name].citizens.length > 0.5
+                            ? '#5abf5a' : '#db5653';
+
+                        return <MapPath
+                            key={i}
+                            path={province.svg_path}
+                            id={province.postal}
+                            fill={countryFill}
+                            stroke='black'
+                            strokeWidth='1'
+                            useColorTransition={false}
+                        />;
+                    })}
+                </svg>
             </div>
         );
     }
@@ -212,6 +240,7 @@ Results.propTypes = {
     provinceData: PropTypes.object,
     countryData: PropTypes.object,
     countryName: PropTypes.string,
+    mapData: PropTypes.array,
 };
 
 export class CampaignView extends React.Component {
@@ -371,6 +400,7 @@ export class CampaignView extends React.Component {
                         provinceData={this.state.populationData}
                         countryData={aggregateResult}
                         countryName={this.state.countryName}
+                        mapData={this.state.mapData}
                     />
                     <button onClick={() => { this.setState({ view: 'stage' }); } }>
                         Go Back
