@@ -2,7 +2,6 @@ import React from 'react';
 import * as PropTypes from 'prop-types';
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import PopoverContent from 'react-bootstrap/PopoverContent';
 import { project_features_and_create_svg_paths } from '../common';
 import { MapPath } from '../UILibrary/components';
 import './campaign.scss';
@@ -239,6 +238,9 @@ class Citizen extends React.Component {
     render() {
         const description = (
             <Popover id='popover-basic'>
+                <Popover.Title>
+                    Preferences for {this.props.data.name}
+                </Popover.Title>
                 <Popover.Content>
                     {this.generateDescription()}
                 </Popover.Content>
@@ -268,6 +270,55 @@ class Citizen extends React.Component {
 Citizen.propTypes = {
     data: PropTypes.object,
 };
+
+class SamplePopulation extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            sampleSize: Math.min(this.props.citizens.length, 50),
+        };
+    }
+
+    changeSampleSize = (e, inputMax) => {
+        const newVal = e.target.value;
+        if (newVal === '' || parseInt(newVal) < inputMax) {
+            this.setState({
+                sampleSize: e.target.value,
+            });
+        } else {
+            this.setState({
+                sampleSize: inputMax,
+            });
+        }
+    };
+
+
+    render() {
+        return (
+            <div>
+                <div>
+                    Sample Size:
+                    <input
+                        type="number"
+                        name="sampleSize"
+                        step="1"
+                        min="0"
+                        max={this.props.citizens.length}
+                        value={this.state.sampleSize}
+                        onChange={(e) => this.changeSampleSize(e, this.props.citizens.length)}
+                    />
+                </div>
+                <div>
+
+                </div>
+            </div>
+    );
+    }
+}
+SamplePopulation.propTypes = {
+    citizens: PropTypes.array,
+};
+
 
 export class CampaignView extends React.Component {
     constructor(props) {
