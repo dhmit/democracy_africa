@@ -21,15 +21,16 @@ class EndView extends React.Component {
     // };
 
     render() {
-        const choices = this.props.history.map((option, k) => (
+        const filteredHistory = this.props.history.filter((option) => option.showOnEnd);
+        const choices = filteredHistory.map((option, k) => (
             <div className={'end-option'} key={k}>
                 <strong>{option.text}</strong>
-                <br />
-                {option.successDetail}
+                {option.detail}
             </div>
         ));
         return (
             <div>
+                <div>On 23 October, Zuma announces no increase.</div>
                 <div>Your choices:</div>
                 {choices}
                 <div className='cyoa-button end-button'
