@@ -271,54 +271,6 @@ Citizen.propTypes = {
     data: PropTypes.object,
 };
 
-class SamplePopulation extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            sampleSize: Math.min(this.props.citizens.length, 50),
-        };
-    }
-
-    changeSampleSize = (e, inputMax) => {
-        const newVal = e.target.value;
-        if (newVal === '' || parseInt(newVal) < inputMax) {
-            this.setState({
-                sampleSize: e.target.value,
-            });
-        } else {
-            this.setState({
-                sampleSize: inputMax,
-            });
-        }
-    };
-
-
-    render() {
-        return (
-            <div>
-                <div>
-                    Sample Size:
-                    <input
-                        type="number"
-                        name="sampleSize"
-                        step="1"
-                        min="0"
-                        max={this.props.citizens.length}
-                        value={this.state.sampleSize}
-                        onChange={(e) => this.changeSampleSize(e, this.props.citizens.length)}
-                    />
-                </div>
-                <div>
-
-                </div>
-            </div>
-    );
-    }
-}
-SamplePopulation.propTypes = {
-    citizens: PropTypes.array,
-};
-
 
 export class CampaignView extends React.Component {
     constructor(props) {
