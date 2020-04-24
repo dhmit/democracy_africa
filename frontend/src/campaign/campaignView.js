@@ -221,9 +221,14 @@ export class Results extends React.Component {
                     id='content'
                 >
                     {this.props.mapData.map((province, i) => {
-                        const countryFill = resultsData[province.name].totalSupporters
+                        let countryFill;
+                        if (province.name) {
+                            countryFill = resultsData[province.name].totalSupporters
                             / resultsData[province.name].citizens.length > 0.5
                             ? '#5abf5a' : '#db5653';
+                        } else {
+                            countryFill = '#F6F4D2';
+                        }
 
                         return <MapPath
                             key={i}
