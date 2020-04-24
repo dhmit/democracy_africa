@@ -1,5 +1,7 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
+import Popover from 'react-bootstrap/Popover';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import { project_features_and_create_svg_paths } from '../common';
 import { MapPath } from '../UILibrary/components';
 import './campaign.scss';
@@ -215,6 +217,62 @@ Results.propTypes = {
     countryName: PropTypes.string,
 };
 
+class Citizen extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            show: false,
+        };
+    }
+
+    generateDescription = () => {
+        const traits = this.props.data['traits'];
+        return Object.keys(traits).map((trait) => (
+            <>
+                <strong> {trait} </strong>: &nbsp;
+                {traits[trait]}
+                <br/>
+            </>
+        ));
+    };
+
+    render() {
+        const description = (
+            <Popover id='popover-basic'>
+                <Popover.Title>
+                    Preferences for {this.props.data.name}
+                </Popover.Title>
+                <Popover.Content>
+                    {this.generateDescription()}
+                </Popover.Content>
+            </Popover>
+        );
+        return (
+            <OverlayTrigger
+                overlay={description}
+                placement='right'
+            >
+                <svg
+                    className='budget-reaction-citizen'
+                    height='20'
+                    width='20'
+                >
+                    <circle
+                        cx='10'
+                        cy='10'
+                        r='10'
+                        fill={this.props.data.will_support ? 'green' : '#c0c0c0'}
+                    />
+                </svg>
+            </OverlayTrigger>
+        );
+    }
+}
+Citizen.propTypes = {
+    data: PropTypes.object,
+};
+
+
 export class CampaignView extends React.Component {
     constructor(props) {
         super(props);
@@ -228,11 +286,11 @@ export class CampaignView extends React.Component {
             round: 1,
             speechProposal: null,
             topicNames: [],
+            sampleSize: 50,
         };
         this.map_height = 500;
         this.map_width = 500;
         this.updatePopulation = this.updatePopulation.bind(this);
-        // this.updateProvinceInfo = this.updateProvinceInfo.bind(this);
     }
 
     async fetchPopulation() {
@@ -327,6 +385,7 @@ export class CampaignView extends React.Component {
         if (tagname === 'svg' || (tagname === 'path' && province)) {
             this.setState({
                 clickedProvince: province,
+                sampleSize: Math.min(this.state.populationData[province]['citizens'].length, 50),
             });
         }
     }
@@ -351,10 +410,24 @@ export class CampaignView extends React.Component {
         }
     };
 
+    changeSampleSize = (e, inputMax) => {
+        const newVal = e.target.value;
+        if (newVal === '' || parseInt(newVal) < inputMax) {
+            this.setState({
+                sampleSize: e.target.value,
+            });
+        } else {
+            this.setState({
+                sampleSize: inputMax,
+            });
+        }
+    };
+
     render() {
         if (!(this.state.populationData && this.state.mapData)) {
             return (<div>Loading!</div>);
         }
+        const { clickedProvince, populationData, sampleSize } = this.state;
         const aggregateResult = this.countTotalSupport();
 
         if (this.state.view === 'intro') {
@@ -392,6 +465,36 @@ export class CampaignView extends React.Component {
                 </div>
             );
         }
+
+        let citizenReactions;
+        if (populationData && clickedProvince) {
+            const citizens = populationData[clickedProvince]['citizens'];
+            const sample = citizens.slice(0, sampleSize);
+            citizenReactions = sample.map((citizen, k) => (
+                <Citizen key={k} data={citizen}/>
+            ));
+        }
+
+        // TODO: refactor citizen reaction into a separate component
+        let viewSample = (<p>Click on a province to view individual results</p>);
+        if (clickedProvince) {
+            const citizens = populationData[clickedProvince]['citizens'];
+            viewSample = (
+                <div>
+                    Sample Size:
+                    <input
+                        type="number"
+                        name="sampleSize"
+                        step="1"
+                        min="0"
+                        max={citizens.length}
+                        value={sampleSize}
+                        onChange={(e) => this.changeSampleSize(e, citizens.length)}
+                    />
+                </div>
+            );
+        }
+
         return (
             <>
                 <h1>Campaign Game</h1><hr/>
@@ -419,6 +522,14 @@ export class CampaignView extends React.Component {
                     </div>
                     <div className={'map-div'}>
                         <div className={'campaign-map'}>
+                            {this.state.clickedProvince
+                                ? <div className={'province-info-text'}>
+                                    <b>{this.state.clickedProvince}</b>
+                                </div>
+                                : <div className={'province-info-text'}>
+                                    <b>{this.state.countryName}</b>
+                                </div>
+                            }
                             <svg
                                 height={this.map_height}
                                 width={this.map_width}
@@ -442,6 +553,12 @@ export class CampaignView extends React.Component {
                                     />;
                                 })}
                             </svg>
+                            {this.state.round > 1
+                                && <div>
+                                    {viewSample}
+                                    {citizenReactions}
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
