@@ -25,6 +25,7 @@ from app.views import (
     africa_demographics_by_country,
     democracy_score_json,
     campaign_population,
+    campaign_hints,
 )
 
 
@@ -51,6 +52,7 @@ urlpatterns = [
     path('api/country_demographics/', africa_demographics_by_country),
     path('api/democracy_scores/', democracy_score_json),
     path('api/campaign_info/', campaign_population),
+    path('api/campaign_hints/', campaign_hints),
 
     # React views
     path('', render_react_view, {'component_name': 'IndexView'}),

@@ -1,0 +1,25 @@
+{
+    "South Africa": {
+        "hints": [
+            "South Africa Hint 1",
+            "South Africa Hint 2",
+            "South Africa Hint 3"
+        ]
+    },
+
+    "Kenya": {
+        "hints": [
+            "Kenya Hint 1",
+            "Kenya Hint 2",
+            "Kenya Hint 3"
+        ]
+    },
+
+    "Botswana": {
+        "hints": [
+            "Botswana Hint 1",
+            "Botswana Hint 2",
+            "Botswana Hint 3"
+        ]
+    }
+}
