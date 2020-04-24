@@ -25,10 +25,8 @@ const COUNTRY_TO_ISO = {
 class Speech extends React.Component {
     constructor(props) {
         super(props);
-        this.topic_names = Object
-            .keys(Object.values(this.props.population)[0]['citizens'][0]['traits']);
         this.state = {
-            speechProposal: get_default_proposal(this.topic_names),
+            speechProposal: this.props.speechProposal,
             result: 0,
             total: 30,
         };
@@ -41,8 +39,9 @@ class Speech extends React.Component {
      * Used when component mounts and upon onClick of a button
      */
     resetSpeech = () => {
+        console.log('reseting speech');
         this.setState({
-            speechProposal: get_default_proposal(this.topic_names),
+            speechProposal: get_default_proposal(this.props.topicNames),
             total: 30,
         }, () => {
             this.setState({ result: this.countSupporters() });
@@ -50,8 +49,10 @@ class Speech extends React.Component {
     };
 
     componentDidMount() {
-        // For a given list of options set each value to 1
-        this.resetSpeech();
+        // For a given list of options set each value to 3
+        if (this.props.resetSpeech) {
+            this.resetSpeech();
+        }
     }
 
     componentDidUpdate(prevProps) {
@@ -113,7 +114,7 @@ class Speech extends React.Component {
     };
 
     render() {
-        const topics = this.topic_names.map((topic, key) => (
+        const topics = this.props.topicNames.map((topic, key) => (
             <div key={key} className='button-containers'>
                 <p className='topics'>
                     <strong>{topic}</strong>
@@ -162,6 +163,9 @@ Speech.propTypes = {
     countryName: PropTypes.string,
     updatePopulation: PropTypes.func,
     submitPriorities: PropTypes.func,
+    speechProposal: PropTypes.object,
+    topicNames: PropTypes.array,
+    resetSpeech: PropTypes.bool,
 };
 
 export class Results extends React.Component {
@@ -224,6 +228,9 @@ export class CampaignView extends React.Component {
             countryName: 'South Africa',
             resultsData: null,
             view: 'intro',
+            round: 1,
+            speechProposal: null,
+            topicNames: [],
         };
         this.map_height = 500;
         this.map_width = 500;
@@ -257,9 +264,12 @@ export class CampaignView extends React.Component {
                     };
                 }
             });
-
+            const topicNames = Object
+                .keys(Object.values(population)[0]['citizens'][0]['traits']);
             this.setState({
                 populationData: population,
+                speechProposal: get_default_proposal(topicNames),
+                topicNames: topicNames,
             });
         } catch (e) {
             console.log(e);
@@ -333,7 +343,11 @@ export class CampaignView extends React.Component {
     }
 
     submitPriorities = () => {
-        this.setState({ view: 'submitted' });
+        if (this.state.round < 3) {
+            this.setState({ round: this.state.round + 1 });
+        } else {
+            this.setState({ view: 'submitted' });
+        }
     };
 
     render() {
@@ -372,7 +386,7 @@ export class CampaignView extends React.Component {
                         countryData={aggregateResult}
                         countryName={this.state.countryName}
                     />
-                    <button onClick={() => { this.setState({ view: 'stage' }); } }>
+                    <button onClick={() => { this.setState({ view: 'stage', round: 1 }); } }>
                         Go Back
                     </button>
                 </div>
@@ -393,11 +407,15 @@ export class CampaignView extends React.Component {
                 </div>
                 <div className={'campaign-container'}>
                     <div className={'speech-maker'}>
+                        Currently on round {this.state.round} / 3
                         <Speech
                             population={this.state.populationData}
                             countryName={this.state.countryName}
                             updatePopulation={this.updatePopulation}
                             submitPriorities={this.submitPriorities}
+                            speechProposal={this.state.speechProposal}
+                            topicNames={this.state.topicNames}
+                            resetSpeech={this.state.round <= 1}
                         />
                     </div>
                     <div className={'map-div'}>
