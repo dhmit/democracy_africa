@@ -32,7 +32,7 @@ class Speech extends React.Component {
             result: 0,
             total: 30,
         };
-        this.difference_threshold = 14;
+        this.difference_threshold = 20;
         this.max_priority_points = 35;
     }
 
@@ -94,8 +94,8 @@ class Speech extends React.Component {
             this.props.population[province]['citizens'].forEach((citizen) => {
                 let difference_score = 0;
                 for (const topic of Object.keys(this.state.speechProposal)) {
-                    difference_score += Math.abs(citizen['traits'][topic]
-                        - this.state.speechProposal[topic]);
+                    difference_score += (citizen['traits'][topic]
+                        - this.state.speechProposal[topic]) ** 2;
                 }
                 if (difference_score > this.difference_threshold) {
                     citizen.will_support = false;
