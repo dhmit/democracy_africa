@@ -225,7 +225,7 @@ export class Results extends React.Component {
                         if (province.name) {
                             countryFill = resultsData[province.name].totalSupporters
                             / resultsData[province.name].citizens.length > 0.5
-                            ? '#5abf5a' : '#db5653';
+                                ? '#5abf5a' : '#db5653';
                         } else {
                             countryFill = '#F6F4D2';
                         }
@@ -252,24 +252,19 @@ Results.propTypes = {
     mapData: PropTypes.array,
 };
 
-class Citizen extends React.Component {
+/**
+ * Component for displaying citizen information
+ *
+ * The fill indicates the citizen's stance on the budget,
+ * and hovering over the component displays the citizen's traits
+ */
+export class Citizen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             show: false,
         };
     }
-
-    generateDescription = () => {
-        const traits = this.props.data['traits'];
-        return Object.keys(traits).map((trait) => (
-            <>
-                <strong> {trait} </strong>: &nbsp;
-                {traits[trait]}
-                <br/>
-            </>
-        ));
-    };
 
     render() {
         const description = (
@@ -278,7 +273,7 @@ class Citizen extends React.Component {
                     Preferences for {this.props.data.name}
                 </Popover.Title>
                 <Popover.Content>
-                    {this.generateDescription()}
+                    {this.props.generateDescription(this.props.data)}
                 </Popover.Content>
             </Popover>
         );
@@ -288,7 +283,7 @@ class Citizen extends React.Component {
                 placement='right'
             >
                 <svg
-                    className='budget-reaction-citizen'
+                    className='citizen'
                     height='20'
                     width='20'
                 >
@@ -296,7 +291,7 @@ class Citizen extends React.Component {
                         cx='10'
                         cy='10'
                         r='10'
-                        fill={this.props.data.will_support ? 'green' : '#c0c0c0'}
+                        fill={this.props.data.will_support ? '#5abf5a' : '#db5653'}
                     />
                 </svg>
             </OverlayTrigger>
@@ -305,6 +300,7 @@ class Citizen extends React.Component {
 }
 Citizen.propTypes = {
     data: PropTypes.object,
+    generateDescription: PropTypes.func,
 };
 
 
@@ -458,6 +454,17 @@ export class CampaignView extends React.Component {
         }
     };
 
+    generateDescription = (data) => {
+        const traits = data['traits'];
+        return Object.keys(traits).map((trait) => (
+            <>
+                <strong> {trait} </strong>: &nbsp;
+                {traits[trait]}
+                <br/>
+            </>
+        ));
+    };
+
     render() {
         if (!(this.state.populationData && this.state.mapData)) {
             return (<div>Loading!</div>);
@@ -514,7 +521,11 @@ export class CampaignView extends React.Component {
             const citizens = populationData[clickedProvince]['citizens'];
             const sample = citizens.slice(0, sampleSize);
             citizenReactions = sample.map((citizen, k) => (
-                <Citizen key={k} data={citizen}/>
+                <Citizen
+                    key={k}
+                    data={citizen}
+                    generateDescription={this.generateDescription}
+                />
             ));
         }
 
