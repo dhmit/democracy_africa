@@ -33,8 +33,8 @@ class Speech extends React.Component {
             result: 0,
             total: 30,
         };
-        this.difference_threshold = 20;
-        this.max_priority_points = 35;
+        this.difference_threshold = 15;
+        this.max_priority_points = 33;
     }
 
     /**
@@ -171,7 +171,7 @@ Speech.propTypes = {
     topicNames: PropTypes.array,
 };
 
-export class Results extends React.Component {
+class Results extends React.Component {
     constructor(props) {
         super(props);
         this.map_height = 500;
@@ -183,6 +183,22 @@ export class Results extends React.Component {
         if (!resultsData) {
             return (<></>);
         }
+
+        // TODO: possibly refactor this further since it is similar to CampaignView
+        const sample = [];
+        Object.values(this.props.provinceData).forEach((province) => {
+            const citizens = province['citizens'];
+            sample.push(...citizens.slice(0, Math.round(citizens.length * 0.25)));
+        });
+        const citizens = sample.map((citizen, k) => (
+            <Citizen
+                key={k}
+                data={citizen}
+                title={`Citizen of ${citizen['province']}`}
+                generateDescription={this.props.generateDescription}
+            />
+        ));
+
         return (
             <div>
                 <table border='1' className={'resultTable'}>
@@ -217,32 +233,44 @@ export class Results extends React.Component {
                         </tr>
                     </tbody>
                 </table>
-                <svg
-                    height={this.map_height}
-                    width={this.map_width}
-                    id='content'
-                >
-                    {this.props.mapData.map((province, i) => {
-                        let countryFill;
-                        if (province.name) {
-                            countryFill = resultsData[province.name].totalSupporters
-                            / resultsData[province.name].citizens.length > 0.5
-                                ? '#5abf5a' : '#db5653';
-                        } else {
-                            countryFill = '#F6F4D2';
-                        }
+                <div className='campaign-result_graphics'>
+                    <svg
+                        height={this.map_height}
+                        width={this.map_width}
+                        id='content'
+                        className='result-map'
+                    >
+                        {this.props.mapData.map((province, i) => {
+                            let countryFill;
+                            if (province.name) {
+                                countryFill = resultsData[province.name].totalSupporters
+                                / resultsData[province.name].citizens.length > 0.5
+                                    ? '#5abf5a' : '#db5653';
+                            } else {
+                                countryFill = '#F6F4D2';
+                            }
 
-                        return <MapPath
-                            key={i}
-                            path={province.svg_path}
-                            id={province.postal}
-                            fill={countryFill}
-                            stroke='black'
-                            strokeWidth='1'
-                            useColorTransition={false}
-                        />;
-                    })}
-                </svg>
+                            return <MapPath
+                                key={i}
+                                path={province.svg_path}
+                                id={province.postal}
+                                fill={countryFill}
+                                stroke='black'
+                                strokeWidth='1'
+                                useColorTransition={false}
+                            />;
+                        })}
+                    </svg>
+                    <div className='result-population'>
+                        <div className='result-population_header'>
+                            Results for sample population of size {sample.length}
+                        </div>
+                        <div className='result-population_svg'>
+                            {citizens}
+                        </div>
+                    </div>
+
+                </div>
             </div>
         );
     }
@@ -252,6 +280,7 @@ Results.propTypes = {
     countryData: PropTypes.object,
     countryName: PropTypes.string,
     mapData: PropTypes.array,
+    generateDescription: PropTypes.func,
 };
 
 /**
@@ -518,6 +547,7 @@ export class CampaignView extends React.Component {
                         countryData={aggregateResult}
                         countryName={this.state.countryName}
                         mapData={this.state.mapData}
+                        generateDescription={this.generateDescription}
                     />
                     <button onClick={() => {
                         this.setState({
@@ -541,7 +571,6 @@ export class CampaignView extends React.Component {
             } else {
                 Object.values(results).forEach((province) => {
                     const citizens = province['citizens'];
-
                     sample.push(...citizens.slice(0, Math.round(citizens.length * 0.1)));
                 });
             }
