@@ -602,7 +602,7 @@ export class CampaignView extends React.Component {
                             </option>
                         ))}
                     </select><br/>
-                    <em>You will lose your progress when you switch countrys</em>
+                    <em>You will lose your progress when you switch countries</em>
                 </div>
                 <div className={'campaign-container'}>
                     <div className={'speech-maker'}>
