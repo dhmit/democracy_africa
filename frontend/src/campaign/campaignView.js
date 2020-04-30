@@ -8,7 +8,11 @@ import './campaign.scss';
 
 import IntroView from '../chooseAdventure/introView';
 
-
+const THRESHOLDS = {
+    'South Africa': 14,
+    'Kenya': 7,
+    'Botswana': 6,
+};
 
 const get_default_proposal = (topic_names) => {
     const proposal = {};
@@ -33,7 +37,7 @@ class Speech extends React.Component {
             result: 0,
             total: 30,
         };
-        this.difference_threshold = 15;
+        this.difference_threshold = THRESHOLDS[this.props.countryName];
         this.max_priority_points = 33;
     }
 
@@ -50,8 +54,15 @@ class Speech extends React.Component {
         });
     };
 
+    componentDidMount() {
+        this.countSupporters(); // in the case that user changed nothing
+    }
+
 
     componentDidUpdate(prevProps) {
+        if (prevProps.countryName !== this.props.countryName) {
+            this.resetSpeech();
+        }
         if (prevProps.countryName !== this.props.countryName
             || prevProps.population !== this.props.population) {
             this.setState({
@@ -577,6 +588,7 @@ export class CampaignView extends React.Component {
             clickedProvince,
             populationData,
             countryName,
+            topicNames,
         } = this.state;
 
         const aggregateResult = this.countTotalSupport();
@@ -612,7 +624,10 @@ export class CampaignView extends React.Component {
                 <h1>Campaign Game</h1><hr/>
                 <div className='country-selector'>
                     Select a Country:&nbsp;
-                    <select onChange={(e) => this.changeCountry(e)}>
+                    <select onChange={(e) => {
+                        this.changeCountry(e);
+                        this.setState({ view: '' });
+                    }}>
                         {COUNTRIES.map((country, key) => (
                             <option key={key}>
                                 {country}
