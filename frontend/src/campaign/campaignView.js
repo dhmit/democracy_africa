@@ -312,12 +312,12 @@ export class CampaignView extends React.Component {
             mapData: null,
             clickedProvince: null,
             countryName: 'South Africa',
-            resultsData: null,
-            view: 'intro',
+            view: '',
             round: 1,
             speechProposal: null,
             topicNames: [],
-            sampleSize: 50,
+            sampleSize: 75,
+            results: null,
         };
         this.map_height = 500;
         this.map_width = 500;
@@ -416,7 +416,7 @@ export class CampaignView extends React.Component {
         if (tagname === 'svg' || (tagname === 'path' && province)) {
             this.setState({
                 clickedProvince: province,
-                sampleSize: Math.min(this.state.populationData[province]['citizens'].length, 50),
+                sampleSize: Math.min(this.state.populationData[province]['citizens'].length, 75),
             });
         }
     }
@@ -435,41 +435,39 @@ export class CampaignView extends React.Component {
 
     submitPriorities = () => {
         if (this.state.round < 3) {
-            this.setState({ round: this.state.round + 1 });
+            this.setState({
+                round: this.state.round + 1,
+                results: JSON.parse(JSON.stringify(this.state.populationData)),
+            });
         } else {
             this.setState({ view: 'submitted' });
         }
     };
 
-    changeSampleSize = (e, inputMax) => {
-        const newVal = e.target.value;
-        if (newVal === '' || parseInt(newVal) < inputMax) {
-            this.setState({
-                sampleSize: e.target.value,
-            });
-        } else {
-            this.setState({
-                sampleSize: inputMax,
-            });
-        }
-    };
-
     generateDescription = (data) => {
         const traits = data['traits'];
-        return Object.keys(traits).map((trait) => (
+        const desc = [<>Citizen of {data['province']}<br/></>];
+        desc.push(Object.keys(traits).map((trait) => (
             <>
                 <strong> {trait} </strong>: &nbsp;
                 {traits[trait]}
                 <br/>
             </>
-        ));
+        )));
+        return desc;
     };
 
     render() {
         if (!(this.state.populationData && this.state.mapData)) {
             return (<div>Loading!</div>);
         }
-        const { clickedProvince, populationData, sampleSize } = this.state;
+        const {
+            clickedProvince,
+            populationData,
+            countryName,
+            sampleSize,
+            results,
+        } = this.state;
         const aggregateResult = this.countTotalSupport();
 
         if (this.state.view === 'intro') {
@@ -517,9 +515,17 @@ export class CampaignView extends React.Component {
         }
 
         let citizenReactions;
-        if (populationData && clickedProvince) {
-            const citizens = populationData[clickedProvince]['citizens'];
-            const sample = citizens.slice(0, sampleSize);
+        if (results) {
+            let sample = [];
+            if (clickedProvince) {
+                sample = results[clickedProvince]['citizens'].slice(0, sampleSize);
+            } else {
+                Object.values(results).forEach((province) => {
+                    const citizens = province['citizens'];
+
+                    sample.push(...citizens.slice(0, Math.round(citizens.length * 0.1)));
+                });
+            }
             citizenReactions = sample.map((citizen, k) => (
                 <Citizen
                     key={k}
@@ -528,26 +534,13 @@ export class CampaignView extends React.Component {
                 />
             ));
         }
-
-        // TODO: refactor citizen reaction into a separate component
-        let viewSample = (<p>Click on a province to view individual results</p>);
-        if (clickedProvince) {
-            const citizens = populationData[clickedProvince]['citizens'];
-            viewSample = (
-                <div>
-                    Sample Size:
-                    <input
-                        type="number"
-                        name="sampleSize"
-                        step="1"
-                        min="0"
-                        max={citizens.length}
-                        value={sampleSize}
-                        onChange={(e) => this.changeSampleSize(e, citizens.length)}
-                    />
-                </div>
-            );
-        }
+        console.log(clickedProvince !== null ? clickedProvince : countryName);
+        const sampleDescription = (<div>
+                Click on a province to change the sample population<br/>
+                <strong>
+                    Results for {clickedProvince !== null ? clickedProvince : countryName}
+                </strong>
+        </div>);
 
         return (
             <>
@@ -609,7 +602,7 @@ export class CampaignView extends React.Component {
                             </svg>
                             {this.state.round > 1
                                 && <div>
-                                    {viewSample}
+                                    {sampleDescription}
                                     {citizenReactions}
                                 </div>
                             }
