@@ -96,8 +96,10 @@ class Speech extends React.Component {
             this.props.population[province]['citizens'].forEach((citizen) => {
                 let difference_score = 0;
                 for (const topic of Object.keys(this.state.speechProposal)) {
-                    difference_score += (citizen['traits'][topic]
-                        - this.state.speechProposal[topic]) ** 2;
+                    if (this.state.speechProposal[topic] < citizen['traits'][topic]) {
+                        difference_score += (citizen['traits'][topic]
+                            - this.state.speechProposal[topic]) ** 2;
+                    }
                 }
 
                 if (difference_score > this.difference_threshold) {
@@ -270,7 +272,7 @@ export class Citizen extends React.Component {
         const description = (
             <Popover id='popover-basic'>
                 <Popover.Title>
-                    Preferences for {this.props.data.name}
+                    {this.props.title}
                 </Popover.Title>
                 <Popover.Content>
                     {this.props.generateDescription(this.props.data)}
@@ -300,6 +302,7 @@ export class Citizen extends React.Component {
 }
 Citizen.propTypes = {
     data: PropTypes.object,
+    title: PropTypes.string,
     generateDescription: PropTypes.func,
 };
 
@@ -446,14 +449,31 @@ export class CampaignView extends React.Component {
 
     generateDescription = (data) => {
         const traits = data['traits'];
-        const desc = [<>Citizen of {data['province']}<br/></>];
-        desc.push(Object.keys(traits).map((trait) => (
-            <>
-                <strong> {trait} </strong>: &nbsp;
-                {traits[trait]}
-                <br/>
-            </>
-        )));
+        const pros = [];
+        const cons = [];
+        Object.keys(traits).forEach((trait) => {
+            if (traits[trait] > this.state.speechProposal[trait]) {
+                cons.push(trait);
+            } else {
+                pros.push(trait);
+            }
+        });
+
+        const traitsList = data.will_support ? pros : cons;
+        const desc = [<>
+            I am {!data.will_support && 'not'} satisfied with the candidate&apos;s stance on&nbsp;
+        </>];
+        traitsList.forEach((issue, i) => {
+            let trait = issue.toLowerCase();
+            if (i === traitsList.length - 1) {
+                trait += '.';
+            } else if (i === traitsList.length - 2) {
+                trait += ' and ';
+            } else {
+                trait += ', ';
+            }
+            desc.push(<>{trait}</>);
+        });
         return desc;
     };
 
@@ -463,7 +483,6 @@ export class CampaignView extends React.Component {
         }
         const {
             clickedProvince,
-            populationData,
             countryName,
             sampleSize,
             results,
@@ -530,15 +549,17 @@ export class CampaignView extends React.Component {
                 <Citizen
                     key={k}
                     data={citizen}
+                    title={`Citizen of ${citizen['province']}`}
                     generateDescription={this.generateDescription}
                 />
             ));
         }
-        console.log(clickedProvince !== null ? clickedProvince : countryName);
         const sampleDescription = (<div>
-                Click on a province to change the sample population<br/>
+                {!clickedProvince
+                    && (<>Click on a province to change the sample population<br/></>)}
                 <strong>
-                    Results for {clickedProvince !== null ? clickedProvince : countryName}
+                    Round {this.state.round - 1} results for &nbsp;
+                    {clickedProvince !== null ? clickedProvince : countryName}
                 </strong>
         </div>);
 

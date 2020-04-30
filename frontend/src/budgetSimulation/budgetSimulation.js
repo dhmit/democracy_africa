@@ -214,6 +214,7 @@ class Budget extends React.Component {
         const reactions = sample.map((citizen, key) => <Citizen
                 key={key}
                 data={citizen}
+                title={`About citizen ${citizen.name}`}
                 generateDescription={this.generateDescription}
             />);
 
