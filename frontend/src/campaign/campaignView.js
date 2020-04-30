@@ -42,7 +42,6 @@ class Speech extends React.Component {
      * Used when component mounts and upon onClick of a button
      */
     resetSpeech = () => {
-        console.log('reseting speech');
         this.setState({
             speechProposal: get_default_proposal(this.props.topicNames),
             total: 30,
@@ -51,10 +50,6 @@ class Speech extends React.Component {
         });
     };
 
-    componentDidMount() {
-        // For a given list of options set each value to 3
-        this.resetSpeech();
-    }
 
     componentDidUpdate(prevProps) {
         if (prevProps.countryName !== this.props.countryName
@@ -170,6 +165,55 @@ Speech.propTypes = {
     speechProposal: PropTypes.object,
     topicNames: PropTypes.array,
 };
+
+class Feedback extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        const { results, clickedProvince } = this.props;
+        let citizenReactions;
+        if (clickedProvince) {
+            const sample = results[clickedProvince]['citizens'].slice(0, 100);
+            citizenReactions = sample.map((citizen, k) => (
+                <Citizen
+                    key={k}
+                    data={citizen}
+                    title={`Citizen of ${citizen['province']}`}
+                    generateDescription={this.props.generateDescription}
+                />
+            ));
+        }
+        const description = (<div>
+            {clickedProvince
+                ? (<strong>
+                    Round {this.props.round - 1} results for {clickedProvince}
+                </strong>)
+                : (<>Click on a province to view the responses</>)}
+        </div>);
+
+        return (
+            <div className='feedback'>
+                <div className='feedback-results'>
+                    {description}
+                    {citizenReactions}
+                </div>
+                <button className='feedback-btn' onClick={this.props.nextRound}>
+                    Next Round
+                </button>
+            </div>
+        );
+    }
+}
+Feedback.propTypes = {
+    clickedProvince: PropTypes.string,
+    generateDescription: PropTypes.func,
+    results: PropTypes.object,
+    round: PropTypes.number,
+    nextRound: PropTypes.func,
+};
+
 
 class Results extends React.Component {
     constructor(props) {
@@ -344,12 +388,11 @@ export class CampaignView extends React.Component {
             mapData: null,
             clickedProvince: null,
             countryName: 'South Africa',
-            view: 'intro',
+            view: '',
             round: 1,
             speechProposal: null,
             topicNames: [],
             sampleSize: 75,
-            results: null,
         };
         this.map_height = 500;
         this.map_width = 500;
@@ -465,7 +508,7 @@ export class CampaignView extends React.Component {
         if (this.state.round < 3) {
             this.setState({
                 round: this.state.round + 1,
-                results: JSON.parse(JSON.stringify(this.state.populationData)),
+                view: 'feedback',
             });
         } else {
             this.setState({ view: 'submitted' });
@@ -483,21 +526,25 @@ export class CampaignView extends React.Component {
                 pros.push(trait);
             }
         });
-
-        const traitsList = data.will_support ? pros : cons;
-        const desc = [<>
-            I am {!data.will_support && 'not'} satisfied with the candidate&apos;s stance on&nbsp;
-        </>];
-        traitsList.forEach((issue, i) => {
-            let trait = issue.toLowerCase();
-            if (i === traitsList.length - 1) {
-                trait += '.';
-            } else if (i === traitsList.length - 2) {
-                trait += ' and ';
-            } else {
-                trait += ', ';
-            }
-            desc.push(<>{trait}</>);
+        const desc = [];
+        [pros, cons].forEach((issueList) => {
+            const sentence = [<>
+                I am {issueList === cons && 'not '}
+                satisfied with the candidate&apos;s stance on&nbsp;
+            </>];
+            issueList.forEach((issue, i) => {
+                let trait = issue.toLowerCase();
+                if (i === issueList.length - 1) {
+                    trait += '.';
+                } else if (i === issueList.length - 2) {
+                    trait += ' and ';
+                } else {
+                    trait += ', ';
+                }
+                sentence.push(<>{trait}</>);
+            });
+            desc.push(<div>{sentence}</div>);
+            desc.push(<br/>);
         });
         return desc;
     };
@@ -528,9 +575,8 @@ export class CampaignView extends React.Component {
 
         const {
             clickedProvince,
+            populationData,
             countryName,
-            sampleSize,
-            results,
         } = this.state;
 
         const aggregateResult = this.countTotalSupport();
@@ -538,12 +584,12 @@ export class CampaignView extends React.Component {
             return (
                 <div>
                     <p className={'resultHeader'}>
-                        Final Results for {this.state.countryName}
+                        Final Results for {countryName}
                     </p>
                     <Results
-                        provinceData={this.state.populationData}
+                        provinceData={populationData}
                         countryData={aggregateResult}
-                        countryName={this.state.countryName}
+                        countryName={countryName}
                         mapData={this.state.mapData}
                         generateDescription={this.generateDescription}
                     />
@@ -561,35 +607,6 @@ export class CampaignView extends React.Component {
             );
         }
 
-        let citizenReactions;
-        if (results) {
-            let sample = [];
-            if (clickedProvince) {
-                sample = results[clickedProvince]['citizens'].slice(0, sampleSize);
-            } else {
-                Object.values(results).forEach((province) => {
-                    const citizens = province['citizens'];
-                    sample.push(...citizens.slice(0, Math.round(citizens.length * 0.1)));
-                });
-            }
-            citizenReactions = sample.map((citizen, k) => (
-                <Citizen
-                    key={k}
-                    data={citizen}
-                    title={`Citizen of ${citizen['province']}`}
-                    generateDescription={this.generateDescription}
-                />
-            ));
-        }
-        const sampleDescription = (<div>
-            {!clickedProvince
-                && (<>Click on a province to change the sample population<br/></>)}
-            <strong>
-                Round {this.state.round - 1} results for &nbsp;
-                {clickedProvince !== null ? clickedProvince : countryName}
-            </strong>
-        </div>);
-
         return (
             <>
                 <h1>Campaign Game</h1><hr/>
@@ -605,25 +622,33 @@ export class CampaignView extends React.Component {
                     <em>You will lose your progress when you switch countries</em>
                 </div>
                 <div className={'campaign-container'}>
-                    <div className={'speech-maker'}>
-                        Currently on round {this.state.round} / 3
-                        <Speech
-                            population={this.state.populationData}
-                            countryName={this.state.countryName}
-                            updatePopulation={this.updatePopulation}
-                            submitPriorities={this.submitPriorities}
-                            speechProposal={this.state.speechProposal}
-                            topicNames={this.state.topicNames}
+                    {this.state.view === 'feedback'
+                        ? <Feedback
+                            clickedProvince={clickedProvince}
+                            round={this.state.round}
+                            generateDescription={this.generateDescription}
+                            results={populationData}
+                            nextRound={() => this.setState({ view: '' })}
                         />
-                    </div>
+                        : <div className={'speech-maker'}>
+                        Currently on round {this.state.round} / 3
+                            <Speech
+                                population={populationData}
+                                countryName={countryName}
+                                updatePopulation={this.updatePopulation}
+                                submitPriorities={this.submitPriorities}
+                                speechProposal={this.state.speechProposal}
+                                topicNames={this.state.topicNames}
+                            />
+                        </div>}
                     <div className={'map-div'}>
                         <div className={'campaign-map'}>
-                            {this.state.clickedProvince
+                            {clickedProvince
                                 ? <div className={'province-info-text'}>
-                                    <b>{this.state.clickedProvince}</b>
+                                    <b>{clickedProvince}</b>
                                 </div>
                                 : <div className={'province-info-text'}>
-                                    <b>{this.state.countryName}</b>
+                                    <b>{countryName}</b>
                                 </div>
                             }
                             <svg
@@ -649,12 +674,6 @@ export class CampaignView extends React.Component {
                                     />;
                                 })}
                             </svg>
-                            {this.state.round > 1
-                                && <div>
-                                    {sampleDescription}
-                                    {citizenReactions}
-                                </div>
-                            }
                         </div>
                     </div>
                 </div>
