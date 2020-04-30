@@ -344,7 +344,7 @@ export class CampaignView extends React.Component {
             mapData: null,
             clickedProvince: null,
             countryName: 'South Africa',
-            view: '',
+            view: 'intro',
             round: 1,
             speechProposal: null,
             topicNames: [],
@@ -506,13 +506,6 @@ export class CampaignView extends React.Component {
         if (!(this.state.populationData && this.state.mapData)) {
             return (<div>Loading!</div>);
         }
-        const {
-            clickedProvince,
-            countryName,
-            sampleSize,
-            results,
-        } = this.state;
-        const aggregateResult = this.countTotalSupport();
 
         if (this.state.view === 'intro') {
             const description = 'Welcome to the Campaign Game. The goal of this game is to'
@@ -532,6 +525,15 @@ export class CampaignView extends React.Component {
                 />
             );
         }
+
+        const {
+            clickedProvince,
+            countryName,
+            sampleSize,
+            results,
+        } = this.state;
+
+        const aggregateResult = this.countTotalSupport();
         if (this.state.view === 'submitted') {
             return (
                 <div>
@@ -636,7 +638,7 @@ export class CampaignView extends React.Component {
                                     return <MapPath
                                         key={i}
                                         path={country.svg_path}
-                                        id={country.postal}
+                                        id={country.postalintro}
                                         fill={countryFill}
                                         stroke='black'
                                         strokeWidth='1'
