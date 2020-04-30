@@ -454,15 +454,11 @@ export class CampaignView extends React.Component {
     }
 
     changeCountry(e) {
-        const confirmText = 'You will lose your progress if you switch countries. Are you sure'
-            + ' you want to switch?';
-        if (window.confirm(confirmText)) {
-            this.setState({ countryName: e.target.value, clickedProvince: '', round: 1 },
-                () => {
-                    this.fetchPopulation();
-                    this.fetchCountryMap();
-                });
-        }
+        this.setState({ countryName: e.target.value, clickedProvince: '', round: 1 },
+            () => {
+                this.fetchPopulation();
+                this.fetchCountryMap();
+            });
     }
 
     submitPriorities = () => {
@@ -584,12 +580,12 @@ export class CampaignView extends React.Component {
             ));
         }
         const sampleDescription = (<div>
-                {!clickedProvince
-                    && (<>Click on a province to change the sample population<br/></>)}
-                <strong>
-                    Round {this.state.round - 1} results for &nbsp;
-                    {clickedProvince !== null ? clickedProvince : countryName}
-                </strong>
+            {!clickedProvince
+                && (<>Click on a province to change the sample population<br/></>)}
+            <strong>
+                Round {this.state.round - 1} results for &nbsp;
+                {clickedProvince !== null ? clickedProvince : countryName}
+            </strong>
         </div>);
 
         return (
@@ -603,7 +599,8 @@ export class CampaignView extends React.Component {
                                 {country}
                             </option>
                         ))}
-                    </select>
+                    </select><br/>
+                    <em>You will lose your progress when you switch countrys</em>
                 </div>
                 <div className={'campaign-container'}>
                     <div className={'speech-maker'}>

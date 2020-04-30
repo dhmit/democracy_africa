@@ -212,11 +212,11 @@ class Budget extends React.Component {
 
         const sample = this.props.population.slice(0, this.state.sampleSize);
         const reactions = sample.map((citizen, key) => <Citizen
-                key={key}
-                data={citizen}
-                title={`About citizen ${citizen.name}`}
-                generateDescription={this.generateDescription}
-            />);
+            key={key}
+            data={citizen}
+            title={`About citizen ${citizen.name}`}
+            generateDescription={this.generateDescription}
+        />);
 
         return (
             <>
