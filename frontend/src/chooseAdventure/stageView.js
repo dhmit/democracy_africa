@@ -138,11 +138,11 @@ const STAGE_2_1C = {
 
 const STAGE_2A_INT = {
     'text': <div>
-        <p>Aha. Maybe those in the government will listen. This sounds like a better opportunity
-            to have an impact; you want to join this march. (Plus you feel kind of terrible that
-            your friends got arrested.)</p>
+        <p>Aha. Maybe Blade Nzimande, Minister of Higher Education, will listen. This sounds like a
+            better opportunity to have an impact; you want to join this march. (Plus you feel kind
+            of terrible that your friends got arrested.)</p>
         <p>Just as you are wrapping up, some people in the crowd agitate the police by throwing a
-            flaming “coffin” Blade Nzimande at them, and violence breaks out.</p>
+            flaming “coffin” for Blade Nzimande at them, and violence breaks out.</p>
     </div>,
     'options': [{
         'text': <div>Next</div>,
