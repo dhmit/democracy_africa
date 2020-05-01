@@ -457,7 +457,7 @@ export class CampaignView extends React.Component {
             mapData: null,
             clickedProvince: null,
             countryName: 'South Africa',
-            view: '',
+            view: 'intro',
             round: 1,
             speechProposal: null,
             topicNames: [],
