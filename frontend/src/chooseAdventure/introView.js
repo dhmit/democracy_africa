@@ -28,7 +28,7 @@ class IntroView extends React.Component {
                         className= 'col-6 intro-img'
                         src={this.props.imgFile}
                         alt={this.props.altText}
-                        height='600'
+                        height='400'
                     />
                 </div>
             </div>

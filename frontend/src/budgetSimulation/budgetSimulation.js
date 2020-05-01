@@ -2,9 +2,8 @@ import React from 'react';
 import * as PropTypes from 'prop-types';
 
 import Popover from 'react-bootstrap/Popover';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import PopoverContent from 'react-bootstrap/PopoverContent';
-
+import { Citizen } from '../campaign/campaignView.js';
 import { getCookie } from '../common';
 
 
@@ -17,77 +16,6 @@ const resources = [
     'education',
 ];
 
-/**
- * Component for displaying citizen information
- *
- * The fill indicates the citizen's stance on the budget,
- * and hovering over the component displays the citizen's traits
- */
-
-class Citizen extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            show: false,
-        };
-    }
-
-    generateDescription() {
-        const traits = Object.keys(this.props.data.traits).map((trait, i) => {
-            const hasTrait = this.props.data.traits[trait];
-            const numTraits = Object.keys(this.props.data.traits).length;
-            let prose = trait.split('_').join(' ');
-            if (!hasTrait) {
-                prose = prose
-                    .replace('has', 'does not have')
-                    .replace('is', 'is not');
-            }
-            if (i === numTraits - 2) {
-                prose += ', and';
-            } else if (i === numTraits - 1) {
-                prose += '.';
-            } else {
-                prose += ', ';
-            }
-
-            return (<span key={i}> {prose} </span>);
-        });
-        return (
-            <div>
-                Citizen {this.props.data.name}
-                {traits}
-            </div>
-        );
-    }
-
-    render() {
-        const statistic = (
-            <Popover id='popover-basic'>
-                <Popover.Content>
-                    {this.generateDescription()}
-                </Popover.Content>
-            </Popover>
-        );
-        return (
-            <OverlayTrigger
-                overlay={statistic}
-                placement={'right'}
-            >
-                <svg className={'budget-reaction-citizen'} height='20' width='20'>
-                    <circle
-                        cx='10'
-                        cy='10'
-                        r='10'
-                        fill={this.props.data['will_support'] ? 'green' : '#c0c0c0'}
-                    />
-                </svg>
-            </OverlayTrigger>
-        );
-    }
-}
-Citizen.propTypes = {
-    data: PropTypes.object,
-};
 
 /**
  * Main component for the simulation.
@@ -231,6 +159,34 @@ class Budget extends React.Component {
         }
     }
 
+    generateDescription(data) {
+        const traits = Object.keys(data.traits).map((trait, i) => {
+            const hasTrait = data.traits[trait];
+            const numTraits = Object.keys(data.traits).length;
+            let prose = trait.split('_').join(' ');
+            if (!hasTrait) {
+                prose = prose
+                    .replace('has', 'does not have')
+                    .replace('is', 'is not');
+            }
+            if (i === numTraits - 2) {
+                prose += ', and';
+            } else if (i === numTraits - 1) {
+                prose += '.';
+            } else {
+                prose += ', ';
+            }
+
+            return (<span key={i}> {prose} </span>);
+        });
+        return (
+            <div>
+                Citizen {data.name}
+                {traits}
+            </div>
+        );
+    }
+
     render() {
         const budgetOptions = Object.keys(this.state.budgetProposal).map((resource, key) => (
             <div key={key} className='individual_slider_containers'>
@@ -255,7 +211,12 @@ class Budget extends React.Component {
              + 'people support your budget';
 
         const sample = this.props.population.slice(0, this.state.sampleSize);
-        const reactions = sample.map((citizen, key) => <Citizen key={key} data={citizen}/>);
+        const reactions = sample.map((citizen, key) => <Citizen
+            key={key}
+            data={citizen}
+            title={`About citizen ${citizen.name}`}
+            generateDescription={this.generateDescription}
+        />);
 
         return (
             <>
