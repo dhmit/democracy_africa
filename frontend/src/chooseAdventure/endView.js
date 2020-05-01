@@ -30,7 +30,7 @@ class EndView extends React.Component {
         ));
         return (
             <div>
-                <div>On October 23, 2015, President Zuma announced that there would be no tuition
+                <div>On 23 October, 2015, President Zuma announced that there would be no tuition
                     increases in 2016. Protestors hailed this as a victory, but this announcement
                     did not spell the end of the Fallist movement. In 2016, similar rumors
                     about tuition increases started circulating, leading to the start of
