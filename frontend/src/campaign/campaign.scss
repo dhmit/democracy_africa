@@ -1,6 +1,53 @@
-.province-info-text {
-    font-size: 20px;
-    text-align: center;
+$edx-border-color: #c8c8c8;
+$edx-button-color: #e7e7e7;
+
+.speech-context {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1em;
+
+    &_points {
+        font-size: 20px;
+        text-align: center;
+    }
+    &_count {
+        margin-bottom: 0;
+    }
+}
+
+.speech-options {
+    display: flex;
+    flex-basis: 0;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+
+    .speech-option {
+        width: 100%;
+        display: flex;
+
+        &_label {
+            padding: 0.5em;
+            width: 40%;
+            font-weight: 700;
+        }
+
+        &_btns {
+            width: 60%;
+            padding: 0.5em;
+            display: flex;
+            //flex-basis: 0;
+            justify-content: space-between;
+        }
+
+    }
+}
+
+.speech-option-desc {
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
 }
 
 .campaign-map {
@@ -21,10 +68,6 @@
     text-align: center;
 }
 
-.country-selector{
-    text-align: center;
-}
-
 .campaign-container{
     display: flex;
     flex-basis: 0;
@@ -35,6 +78,119 @@
     width: 58%
 }
 
+.feedback,
 .speech-maker{
     width: 42%
+}
+
+.resultTable{
+    border: 1px $edx-border-color solid;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 5px;
+
+    td,
+    th {
+        padding: 0.5em 1em;
+    }
+
+}
+
+.resultHeader{
+    padding: 0;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.countryResult{
+    border: 3px $edx-border-color solid;
+}
+
+
+.campaign-result_graphics {
+    display: flex;
+    flex-basis: 0;
+    align-items: center;
+
+    .result-map,
+    .result-population {
+        width: 50%;
+    }
+
+    .result-population {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        &_header {
+            font-weight: 600;
+            margin-bottom: 1em;
+        }
+    }
+}
+
+.country-selector {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    width: 30rem;
+    height: 15rem;
+    background-color: white;
+    text-align: center;
+    padding: 1.5em;
+    transform: translate(-50%, -50%);
+    border: 1px solid $edx-border-color; // from edX
+    z-index: 10;
+
+    option {
+        background-color: white;
+        padding: 0.5em;
+    }
+    .country-selector_btns {
+        justify-content: center;
+    }
+
+}
+
+.campaign-btn {
+    background-color: white !important;
+    border: 1px solid $edx-border-color;
+    padding: 0.75em 1em;
+    border-radius: 0.25em;
+    transition: 0.2s ease-in;
+
+    &:hover {
+        background-color: #f7f7f7 !important;
+    }
+    &:focus {
+        outline: none;
+    }
+}
+
+.speech-btn {
+    width: 100px;
+    margin: 0 0.5rem;
+}
+
+.campaign-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.feedback {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    &-results {
+        margin-bottom: 1em;
+    }
 }

@@ -13,7 +13,6 @@ export class ChooseAdventureView extends React.Component {
         this.state = {
             view: 'intro',
             history: [],
-            successTotal: 1,
         };
     }
 
@@ -31,52 +30,36 @@ export class ChooseAdventureView extends React.Component {
         }));
     };
 
-    updateSuccess = (successFactor) => {
-        this.setState((prevState) => ({
-            successTotal: prevState.successTotal * successFactor,
-        }));
-    };
-
     resetProgress = () => {
         this.setState({
-            successTotal: 1,
             history: [],
         });
     };
 
 
     render() {
-        const desc = 'example paragraph: Paragraphs are the building blocks of papers. Many '
-            + 'students '
-            + 'define paragraphs in terms of length: a paragraph is a group of at least five '
-            + 'sentences, '
-            + 'a paragraph is half a page long, etc. In reality, though, the unity and coherence '
-            + 'of '
-            + 'ideas among sentences is what constitutes a paragraph. A paragraph is defined as '
-            + '“a '
-            + 'group of sentences or a single sentence that forms a unit” (Lunsford and Connors '
-            + '116). '
-            + 'Length and appearance do not determine whether a section in a paper is a paragraph. '
-            + 'For instance, in some styles of writing, particularly journalistic styles, a '
-            + 'paragraph '
-            + 'can be just one sentence long. Ultimately, a paragraph is a sentence or group of '
-            + 'sentences that support one main idea. In this handout, we will refer to this as the '
-            + '“controlling idea,” because it controls what happens in the rest of the paragraph.';
-        console.log('rerendering');
+        const desc = <div>You are a sophomore at Rhodes University. Reports of tuition increases
+            of up to 10.5% have come out from multiple South African universities, including
+            Rhodes. Students at the University of Witwatersrand and the University of Cape Town
+            have already begun protesting, and there are rumors floating around social media
+            about a student-led total shutdown of the Rhodes Campus. Many students are worried
+            that these higher fees will shut poorer students out of education. However,
+            other students are worried that the disruption caused by a protest will be more
+                harmful to the ability to learn.</div>;
         return (
             <div>
                 {this.state.view === 'intro' && <IntroView
                     desc={desc}
                     setView={this.setView}
                     imgFile={'/static/img/sample.jpg'}
+                    altText={'sample image'}
                 />}
                 {this.state.view === 'stage' && <StageView
                     setView={this.setView}
-                    pdateSuccess={this.updateSuccess}
                     updateHistory={this.updateHistory}
+                    imgFile={'/static/img/sample.jpg'}
                 />}
                 {this.state.view === 'end' && <EndView
-                    successTotal={this.state.successTotal}
                     history={this.state.history}
                     setView={this.setView}
                     resetProgress={this.resetProgress}
