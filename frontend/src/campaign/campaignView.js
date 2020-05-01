@@ -131,12 +131,11 @@ class Speech extends React.Component {
                 </div>
                 <div className='speech-option_btns'>
                     {[...Array(5).keys()].map((score, j) => (
-                        <div className='form-check form-check-inline score-button' key={j}>
-                            <input className='form-check-input' type='radio' name={topic}
-                                id={'inlineRadio' + score + 1} value={score + 1}
-                                checked={this.state.speechProposal[topic] === score + 1}
-                                onChange={(e) => this.handleButtonOnChange(e, topic)}/>
-                        </div>
+                        <input className='speech-radio' type='radio' name={topic} key={j}
+                            id={'inlineRadio' + score + 1} value={score + 1}
+                            checked={this.state.speechProposal[topic] === score + 1}
+                            onChange={(e) => this.handleButtonOnChange(e, topic)}/>
+                        // </div>
                     ))}
                 </div>
             </div>
@@ -153,6 +152,10 @@ class Speech extends React.Component {
                     </div>
                 </div>
                 <div className='speech-options'>
+                    <div className='speech-option-desc'>
+                        <span>Low priority</span>
+                        <span>High priority</span>
+                    </div>
                     {topics}
                 </div>
                 <div className='reset_button'>
@@ -212,9 +215,9 @@ class Feedback extends React.Component {
             <div className='feedback'>
                 <div className='feedback-results'>
                     {description}
-                    {citizenReactions}
+                    <div className='feedback-pop'>{citizenReactions}</div>
                 </div>
-                <button className='feedback-btn' onClick={this.props.nextRound}>
+                <button className='campaign-btn' onClick={this.props.nextRound}>
                     Next Round
                 </button>
             </div>
@@ -660,7 +663,9 @@ export class CampaignView extends React.Component {
                         mapData={this.state.mapData}
                         generateDescription={this.generateDescription}
                     />
-                    <button onClick={() => {
+                    <button
+                        className='campaign-btn'
+                        onClick={() => {
                         this.setState({
                             view: 'stage',
                             round: 1,

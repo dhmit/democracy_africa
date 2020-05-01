@@ -21,6 +21,7 @@ $edx-button-color: #e7e7e7;
     display: flex;
     flex-basis: 0;
     flex-wrap: wrap;
+    justify-content: flex-end;
 
     .speech-option {
         width: 100%;
@@ -28,16 +29,25 @@ $edx-button-color: #e7e7e7;
 
         &_label {
             padding: 0.5em;
-            width: 30%;
+            width: 40%;
             font-weight: 700;
         }
 
         &_btns {
-            width: 70%;
+            width: 60%;
             padding: 0.5em;
+            display: flex;
+            //flex-basis: 0;
+            justify-content: space-between;
         }
 
     }
+}
+
+.speech-option-desc {
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
 }
 
 .campaign-map {
@@ -74,10 +84,16 @@ $edx-button-color: #e7e7e7;
 }
 
 .resultTable{
-    border: 1px black solid;
+    border: 1px $edx-border-color solid;
     text-align: center;
     width: 100%;
     margin-bottom: 5px;
+
+    td,
+    th {
+        padding: 0.5em 1em;
+    }
+
 }
 
 .resultHeader{
@@ -88,7 +104,7 @@ $edx-button-color: #e7e7e7;
 }
 
 .countryResult{
-    border: 3px black solid;
+    border: 3px $edx-border-color solid;
 }
 
 
@@ -167,4 +183,14 @@ $edx-button-color: #e7e7e7;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.feedback {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    &-results {
+        margin-bottom: 1em;
+    }
 }
