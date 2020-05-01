@@ -671,14 +671,14 @@ export class CampaignView extends React.Component {
                         mapData={this.state.mapData}
                         generateDescription={this.generateDescription}
                     />
-                    <button 
-                      className='campaign-btn'
-                      onClick={() => {
-                        this.changeCountry('South Africa');
-                        this.setState({
-                            view: 'stage',
-                        });
-                    }}
+                    <button
+                        className='campaign-btn'
+                        onClick={() => {
+                            this.changeCountry('South Africa');
+                            this.setState({
+                                view: 'stage',
+                            });
+                        }}
                     >
                         Go Back
                     </button>
