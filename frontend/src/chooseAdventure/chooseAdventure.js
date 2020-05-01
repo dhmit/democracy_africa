@@ -38,14 +38,14 @@ export class ChooseAdventureView extends React.Component {
 
 
     render() {
-        const desc = <div>You are a sophomore at Rhodes University. Reports of tuition increases
-            of up to 10.5% have come out from multiple South African universities, including
-            Rhodes. Students at the University of Witwatersrand and the University of Cape Town
-            have already begun protesting, and there are rumors floating around social media
-            about a student-led total shutdown of the Rhodes Campus. Many students are worried
-            that these higher fees will shut poorer students out of education. However,
-            other students are worried that the disruption caused by a protest will be more
-                harmful to the ability to learn.</div>;
+        const desc = <div>You are a second year student at Rhodes University. Reports of tuition
+            increases of up to 10.5% have come out from multiple South African universities,
+            including Rhodes. Students at the University of Witwatersrand and the University of
+            Cape Town have already begun protesting, and there are rumors floating around social
+            media about a student-led sit-in at the Rhodes Campus. Many students are concerned that
+            these increased fees will shut poor students out of an education. However, other
+            students worry that the disruption caused by a protest will be harmful to their
+            ability to learn.</div>;
         return (
             <div>
                 {this.state.view === 'intro' && <IntroView
