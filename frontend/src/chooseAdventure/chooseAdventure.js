@@ -46,22 +46,14 @@ export class ChooseAdventureView extends React.Component {
 
 
     render() {
-        const desc = 'Paragraphs are the building blocks of papers. Many '
-            + 'students '
-            + 'define paragraphs in terms of length: a paragraph is a group of at least five '
-            + 'sentences, '
-            + 'a paragraph is half a page long, etc. In reality, though, the unity and coherence '
-            + 'of '
-            + 'ideas among sentences is what constitutes a paragraph. A paragraph is defined as '
-            + '“a '
-            + 'group of sentences or a single sentence that forms a unit” (Lunsford and Connors '
-            + '116). '
-            + 'Length and appearance do not determine whether a section in a paper is a paragraph. '
-            + 'For instance, in some styles of writing, particularly journalistic styles, a '
-            + 'paragraph '
-            + 'can be just one sentence long. Ultimately, a paragraph is a sentence or group of '
-            + 'sentences that support one main idea. In this handout, we will refer to this as the '
-            + '“controlling idea,” because it controls what happens in the rest of the paragraph.';
+        const desc = 'You are a second year student at Rhodes University. Reports of tuition'
+            + ' increases of up to 10.5% have come out from multiple South African universities,'
+            + ' including Rhodes. Students at the University of Witwatersrand and the University of'
+            + ' Cape Town have already begun protesting, and there are rumors floating around'
+            + ' social media about a student-led sit-in at the Rhodes Campus. Many students are'
+            + ' concerned that these increased fees will shut poor students out of an education.'
+            + ' However, other students worry that the disruption caused by a protest will'
+            + ' be harmful to their ability to learn.';
         return (
             <div>
                 {this.state.view === 'intro' && <IntroView
