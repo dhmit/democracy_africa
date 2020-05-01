@@ -1,25 +1,25 @@
 {
     "South Africa": {
         "hints": [
-            "South Africa Hint 1",
-            "South Africa Hint 2",
-            "South Africa Hint 3"
+            "Poverty is a big issue.",
+            "Increasing priority on categories that aren’t highly valued can decrease support.",
+            "It can be better to be less extreme on issues to appeal to more voters and gain more support.",
+            "Although increasing priority for a topic can increase overall votes, you can lose a province."
         ]
     },
 
     "Kenya": {
         "hints": [
-            "Kenya Hint 1",
-            "Kenya Hint 2",
-            "Kenya Hint 3"
+            "Increasing priority on categories that aren’t highly valued can decrease support.",
+            "Increasing priority on categories that aren’t highly valued can decrease support."
         ]
     },
 
     "Botswana": {
         "hints": [
-            "Botswana Hint 1",
-            "Botswana Hint 2",
-            "Botswana Hint 3"
+            "Increasing priority on categories that aren’t highly valued can decrease support.",
+            "Lower priority may be more favored like improving living standards for the poor.",
+            "It can be better to be less extreme on issues to appeal to more voters and gain more support like corruption."
         ]
     }
 }
