@@ -1,8 +1,14 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
+
+// eslint-disable-next-line no-unused-vars
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import PopoverTitle from 'react-bootstrap/PopoverTitle';
+// eslint-disable-next-line no-unused-vars
+import PopoverContent from 'react-bootstrap/PopoverContent';
 import { project_features_and_create_svg_paths } from '../common';
+
 import { MapPath } from '../UILibrary/components';
 import './campaign.scss';
 
@@ -182,10 +188,6 @@ class Speech extends React.Component {
                     {topics}
                 </div>
                 <div className='reset_button'>
-                    <button
-                        className='campaign-btn speech-btn'
-                        onClick={this.resetSpeech}
-                    > Reset </button>
                     <button
                         className='campaign-btn speech-btn'
                         onClick={this.props.submitPriorities}
@@ -432,7 +434,7 @@ class Popup extends React.Component {
     confirmCountry = () => {
         this.props.changeCountry(this.state.selectedCountry);
         this.props.closePopup();
-    }
+    };
 
     render() {
         return (
@@ -467,6 +469,7 @@ export class CampaignView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+
             populationData: null,
             mapData: null,
             clickedProvince: null,
@@ -483,6 +486,121 @@ export class CampaignView extends React.Component {
         this.updatePopulation = this.updatePopulation.bind(this);
     }
 
+    calculate_averages() {
+        const population = this.state.populationData;
+        console.log(this.state);
+        Object.keys(population).forEach((province) => {
+            Object.keys(population[province]['citizens']).forEach((citizen_name) => {
+                // eslint-disable-next-line max-len
+                const citizen = population[province]['citizens'][citizen_name];
+                Object.keys(citizen['traits']).forEach((trait) => {
+                    if (population[province]['averages'] === undefined) {
+                        population[province]['averages'] = {
+                            [trait]: citizen['traits'][trait],
+                        };
+                    } else if (population[province]['averages'][trait] === undefined) {
+                        population[province]['averages'][trait] = citizen['traits'][trait];
+                    } else {
+                        population[province]['averages'][trait] += citizen['traits'][trait];
+                    }
+                });
+            });
+            Object.keys(population[province]['averages']).forEach((trait) => {
+                const citizen_list = population[province]['citizens'];
+                population[province]['averages'][trait] /= Object.keys(citizen_list).length;
+            });
+        });
+        this.setState({
+            populationData: population,
+        });
+    }
+
+    determine_overlay_content(selected_province) {
+        const high_value = [];
+        const low_value = [];
+        if (this.state.populationData[selected_province] === undefined) {
+            return '';
+        }
+        const averages = this.state.populationData[selected_province]['averages'];
+        console.log(averages);
+        if (selected_province !== '' && selected_province !== null) {
+            Object.keys(averages).forEach((trait) => {
+                if (averages[trait] <= 2) {
+                    low_value.push(trait);
+                } else if (averages[trait] >= 4) {
+                    high_value.push(trait);
+                }
+            });
+            console.log(low_value);
+            console.log(high_value);
+            if (high_value.length === 0 && low_value.length === 0) {
+                return 'Citizens of this province feel that neutral stance on all of the'
+                    + ' issues is the best approach';
+            }
+            if (high_value.length === 0) {
+                let return_text_low = 'Citizens of this province have a low priority for ';
+                for (let i = 0; i < low_value.length; i++) {
+                    return_text_low += low_value[i];
+                    if (low_value.length === 1) {
+                        return_text_low += '.';
+                    } else if (i === 0 && low_value.length === 2) {
+                        return_text_low += ' and ';
+                    } else if (i < low_value.length - 1 && low_value.length > 2) {
+                        return_text_low += ', ';
+                    } else {
+                        return_text_low += '.';
+                    }
+                }
+                return return_text_low;
+            }
+            if (low_value.length === 0) {
+                let return_text_high = 'Citizens of this province have a high priority for ';
+                for (let i = 0; i < high_value.length; i++) {
+                    return_text_high += high_value[i];
+                    if (high_value.length === 1) {
+                        return_text_high += '.';
+                    } else if (i === 0 && high_value.length === 2) {
+                        return_text_high += ' and ';
+                    } else if (i < high_value.length - 1 && high_value.length > 2) {
+                        return_text_high += ', ';
+                    } else {
+                        return_text_high += '.';
+                    }
+                }
+                return return_text_high;
+            }
+            let return_text_high = 'Citizens of this province have a high priority for ';
+            for (let i = 0; i < high_value.length; i++) {
+                return_text_high += high_value[i];
+                if (high_value.length === 1) {
+                    return_text_high += '.';
+                } else if (i === 0 && high_value.length === 2) {
+                    return_text_high += ' and ';
+                } else if (i < high_value.length - 1 && high_value.length > 2) {
+                    return_text_high += ', ';
+                } else {
+                    return_text_high += '.';
+                }
+            }
+
+            let return_text_low = 'Citizens of this province have a low priority for ';
+            for (let i = 0; i < low_value.length; i++) {
+                return_text_low += low_value[i];
+                if (low_value.length === 1) {
+                    return_text_low += '.';
+                } else if (i === 0 && low_value.length === 2) {
+                    return_text_low += ' and ';
+                } else if (i < low_value.length - 1 && low_value.length > 2) {
+                    return_text_low += ', ';
+                } else {
+                    return_text_low += '.';
+                }
+            }
+            return return_text_high + ' ' + return_text_low;
+        }
+        return '';
+    }
+
     async fetchPopulation() {
         try {
             const data = {
@@ -495,6 +613,7 @@ export class CampaignView extends React.Component {
                     'Content-type': 'application/json',
                 },
             });
+
             const populationData = await res.json();
             // restructure population data
             const population = {};
@@ -509,18 +628,21 @@ export class CampaignView extends React.Component {
                     };
                 }
             });
+            console.log(population);
+
             const topicNames = Object
                 .keys(Object.values(population)[0]['citizens'][0]['traits']);
             this.setState({
                 populationData: population,
                 speechProposal: get_default_proposal(topicNames),
                 topicNames: topicNames,
+            }, () => {
+                this.calculate_averages();
             });
         } catch (e) {
             console.log(e);
         }
     }
-
 
     async fetchCountryMap() {
         try {
@@ -670,7 +792,6 @@ export class CampaignView extends React.Component {
                 </>
             );
         }
-
         const {
             clickedProvince,
             populationData,
@@ -678,6 +799,24 @@ export class CampaignView extends React.Component {
         } = this.state;
 
         const aggregateResult = this.countTotalSupport();
+        const overlay_title = clickedProvince === null || clickedProvince === '' ? 'No province'
+            + ' selected' : clickedProvince;
+        // if (clickedProvince !== null && clickedProvince !== '') {
+        //
+        // }
+        const overlay_content = this.determine_overlay_content(clickedProvince);
+        const province_info_overlay = (
+            <Popover id="popover-basic">
+                <PopoverTitle as="h3">{overlay_title}</PopoverTitle>
+                <PopoverContent>
+                    {overlay_content}
+                </PopoverContent>
+            </Popover>
+        );
+        console.log(this.state.populationData);
+
+
+
         if (this.state.view === 'submitted') {
             return (
                 <div>
@@ -741,28 +880,45 @@ export class CampaignView extends React.Component {
                                     <b>{countryName}</b>
                                 </div>
                             }
-                            <svg
-                                height={this.map_height}
-                                width={this.map_width}
-                                id='content'
-                                onClick={(e) => this.handleProvinceMapClick(e, '')}
-                            >
-                                {this.state.mapData.map((country, i) => {
-                                    const countryFill = '#F6F4D2';
-                                    return <MapPath
-                                        key={i}
-                                        path={country.svg_path}
-                                        id={country.postalintro}
-                                        fill={countryFill}
-                                        stroke='black'
-                                        strokeWidth='1'
-                                        handle_country_click={
-                                            (e) => this.handleProvinceMapClick(e, country.name)
+
+                            {/* eslint-disable-next-line max-len */}
+                            <OverlayTrigger trigger="hover" placement="right"
+                                overlay={province_info_overlay}>
+                                <svg
+                                    height={this.map_height}
+                                    width={this.map_width}
+                                    id='content'
+                                    onClick={(e) => this.handleProvinceMapClick(e, '')}
+                                >
+                                    {this.state.mapData.map((country, i) => {
+                                        let countryFill = '#F6F4D2';
+                                        let width = '1';
+                                        if (this.state.populationData[country.name]) {
+                                            const data = this.state.populationData[country.name];
+                                            countryFill = data['totalSupporters']
+                                            / data['citizens'].length > 0.5 ? '#B8E39B'
+                                                : '#F19C79';
                                         }
-                                        useColorTransition={false}
-                                    />;
-                                })}
-                            </svg>
+
+                                        if (clickedProvince === country.name) {
+                                            width = '3';
+                                        }
+
+                                        return <MapPath
+                                            key={i}
+                                            path={country.svg_path}
+                                            id={country.postal}
+                                            fill={countryFill}
+                                            stroke='black'
+                                            strokeWidth={width}
+                                            handle_country_click={
+                                                (e) => this.handleProvinceMapClick(e, country.name)
+                                            }
+                                            useColorTransition={false}
+                                        />;
+                                    })}
+                                </svg>
+                            </OverlayTrigger>
                         </div>
                     </div>
                 </div>
