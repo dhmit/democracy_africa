@@ -241,6 +241,35 @@ export class CampaignView extends React.Component {
         // this.updateProvinceInfo = this.updateProvinceInfo.bind(this);
     }
 
+    calculate_averages() {
+        const population = this.state.populationData;
+        console.log(population);
+        Object.keys(population).forEach((province) => {
+            Object.keys(population[province]['citizens']).forEach((citizen_name) => {
+                // eslint-disable-next-line max-len
+                const citizen = population[province]['citizens'][citizen_name];
+                Object.keys(citizen['traits']).forEach((trait) => {
+                    if (population[province]['averages'] === undefined) {
+                        population[province]['averages'] = {
+                            [trait]: citizen['traits'][trait],
+                        };
+                    } else if (population[province]['averages'][trait] === undefined) {
+                        population[province]['averages'][trait] = citizen['traits'][trait];
+                    } else {
+                        population[province]['averages'][trait] += citizen['traits'][trait];
+                    }
+                });
+            });
+            Object.keys(population[province]['averages']).forEach((trait) => {
+                const citizen_list = population[province]['citizens'];
+                population[province]['averages'][trait] /= Object.keys(citizen_list).length;
+            });
+        });
+        this.setState({
+            populationData: population,
+        });
+    }
+
     async fetchPopulation() {
         try {
             const data = {
@@ -268,15 +297,17 @@ export class CampaignView extends React.Component {
                     };
                 }
             });
+            console.log(population);
 
             this.setState({
                 populationData: population,
+            }, () => {
+                this.calculate_averages();
             });
         } catch (e) {
             console.log(e);
         }
     }
-
 
     async fetchCountryMap() {
         try {
@@ -374,6 +405,9 @@ export class CampaignView extends React.Component {
         const aggregateResult = this.countTotalSupport();
         const overlay_title = clickedProvince === null || clickedProvince === '' ? 'No province'
             + ' selected' : clickedProvince;
+        // if (clickedProvince !== null && clickedProvince !== '') {
+        //
+        // }
         const overlay_content = 'Health Services:';
         const province_info_overlay = (
             <Popover id="popover-basic">
