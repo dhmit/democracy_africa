@@ -21,6 +21,11 @@ class EndView extends React.Component {
     };
 
     render() {
+        const desc = 'On October 23, 2015, President Zuma announced that there would be no'
+            + ' tuition increases in 2016. Protestors hailed this as a victory, but this'
+            + ' announcement did not lead to the end of the Fallist movement. In 2016, similar'
+            + ' rumors about tuition increases started '
+            + 'circulating, leading to the start of #FeesMustFall2016.';
         const choices = this.props.history.map((option, k) => (
             <div className={'end-option'} key={k}>
                 <strong>{option.text}</strong>
@@ -33,6 +38,7 @@ class EndView extends React.Component {
         ));
         return (
             <div>
+                <div>{desc}</div>
                 <div>You had a {this.formatAsPercentage(this.props.successTotal)}%
                     chance of succeeding.</div>
                 <div>Your choices:</div>
