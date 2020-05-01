@@ -62,6 +62,18 @@ class Speech extends React.Component {
         }
     }
 
+    generateStory() {
+        if (this.props.round === 1) {
+            return 'You just started your campaign and we want you to set out'
+                    + 'your policies so that we can poll the people to get the'
+                    + 'initial reaction.';
+        }
+        if (this.props.round === 2) {
+            return 'We can do two more polls before elections.';
+        }
+        return 'This is the final policies that people will see in the election';
+    }
+
 
     componentDidUpdate(prevProps) {
         if (prevProps.countryName !== this.props.countryName) {
@@ -149,7 +161,7 @@ class Speech extends React.Component {
             <>
                 <div className='speech-context'>
                     <p className='speech-context_count'>
-                        Currently on round {this.props.round} out of 3
+                        {this.generateStory()}
                     </p>
                     <div className='speech-context_points'>
                         You have {this.max_priority_points - this.state.total} priority points left.
@@ -411,7 +423,6 @@ class Popup extends React.Component {
     }
 
     confirmCountry = () => {
-        console.log('hi');
         this.props.changeCountry(this.state.selectedCountry);
         this.props.closePopup();
     }
@@ -420,8 +431,7 @@ class Popup extends React.Component {
         return (
             <div className='country-selector'>
                 <div className='country-selector_body'>
-                    You will lose your progress when you switch countries
-                    Country:&nbsp;
+                    Select a country:&nbsp;
                     <select onChange={(e) => this.setState({ selectedCountry: e.target.value })}>
                         {COUNTRIES.map((country, key) => (
                             <option key={key}>
@@ -431,9 +441,6 @@ class Popup extends React.Component {
                     </select>
                 </div>
                 <div className='country-selector_btns edx-sequence-nav'>
-                    <button onClick={this.props.closePopup}>
-                        Cancel
-                    </button>
                     <button onClick={this.confirmCountry}>
                         Select
                     </button>
@@ -642,12 +649,18 @@ export class CampaignView extends React.Component {
                 + ' supporters.';
             const altText = 'Nelson Mandela voting in the 1994 South African general election.';
             return (
-                <IntroView
-                    desc={description}
-                    setView={(view) => { this.setState({ view: view }); }}
-                    imgFile={'/static/img/mandela_voting_in_1994.jpg'}
-                    altText={altText}
-                />
+                <>
+                    {this.state.showWarning
+                        && <Popup
+                            changeCountry={this.changeCountry}
+                            closePopup={() => this.setState({ showWarning: false, view: '' })}/>}
+                    <IntroView
+                        desc={description}
+                        setView={(view) => { this.setState({ showWarning: true }); }}
+                        imgFile={'/static/img/mandela_voting_in_1994.jpg'}
+                        altText={altText}
+                    />
+                </>
             );
         }
 
@@ -690,17 +703,7 @@ export class CampaignView extends React.Component {
             <>
                 <div className='campaign-header'>
                     <h1 className='campaign-title'>Campaign Game</h1>
-                    <button
-                        className='campaign-btn'
-                        onClick={() => this.setState({ showWarning: true })}
-                    >
-                        Change country
-                    </button>
                 </div>
-                {this.state.showWarning
-                    && <Popup
-                        changeCountry={this.changeCountry}
-                        closePopup={() => this.setState({ showWarning: false })}/>}
                 <div className={'campaign-container'}>
                     {this.state.view === 'feedback'
                         ? <Feedback
