@@ -663,7 +663,7 @@ export class CampaignView extends React.Component {
                             closePopup={() => this.setState({ showWarning: false, view: '' })}/>}
                     <IntroView
                         desc={description}
-                        setView={(view) => { this.setState({ showWarning: true }); }}
+                        setView={() => { this.setState({ showWarning: true }); }}
                         imgFile={'/static/img/mandela_voting_in_1994.jpg'}
                         altText={altText}
                     />
