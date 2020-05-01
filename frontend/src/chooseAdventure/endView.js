@@ -45,8 +45,9 @@ class EndView extends React.Component {
                         The Guardian, Guardian News and Media, 23 Oct. 2015.
                 </a></div>
                 <div><a href=
-                    {'https://pdfs.semanticscholar.org/'
-                     + 'a737/29548c3d259e6e42c9366ddc6f11f5d30284.pdf'}>
+                    {'https://scholarlycommons.law.case.edu/swb/vol11/iss1/10/'
+                    + '?utm_source=scholarlycommons.law.case.edu%2Fswb%2Fvol11%2Fiss1%2F10&'
+                    + 'utm_medium=PDF&utm_campaign=PDFCoverPages'}>
                         Peterson, Lindsey, Kentse Radebe & Somya Mohanty. 2016. &quot;Democracy,
                         Education, and Free Speech: The Importance of #FeesMustFall for
                         Transnational Activism.&quot; Societies Without Borders 11 (1)
