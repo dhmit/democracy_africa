@@ -11,13 +11,15 @@ const STAGE_1 = {
         'showOnEnd': true,
     },
     {
-        'text': <div>Agree to participate in the sit-in, but you’re a little skeptical: want to learn more</div>,
+        'text': <div>Agree to participate in the sit-in, but you’re a little skeptical: want to
+            learn more</div>,
         'stageName': 'STAGE_1B_INT',
         'detail': '',
         'showOnEnd': true,
     },
     {
-        'text': <div>Disagree: you’re really not comfortable being part of the sit-in right now</div>,
+        'text': <div>Disagree: you’re really not comfortable being part of the sit-in right
+            now</div>,
         'stageName': 'STAGE_1C_INT',
         'detail': '',
         'showOnEnd': true,
