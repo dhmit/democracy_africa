@@ -695,7 +695,7 @@ export class CampaignView extends React.Component {
                         className='campaign-btn'
                         onClick={() => this.setState({ showWarning: true })}
                     >
-                        Change country
+                        Try Again With A Different Country
                     </button>
                     {this.state.showWarning
                     && <Popup
