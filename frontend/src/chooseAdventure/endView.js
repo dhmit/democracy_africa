@@ -41,7 +41,15 @@ class EndView extends React.Component {
                 <div><a href=
                     {'https://www.theguardian.com/world/2015/oct/23/'
                        + 'south-african-students-protest-pretoria-tuition-fees-rise'}>
-                        The Guardian
+                        Allison, Simon. “South African Students Score Tuition Fee Protest Victory.”
+                        The Guardian, Guardian News and Media, 23 Oct. 2015.
+                </a></div>
+                <div><a href=
+                    {'https://pdfs.semanticscholar.org/'
+                     + 'a737/29548c3d259e6e42c9366ddc6f11f5d30284.pdf'}>
+                        Peterson, Lindsey, Kentse Radebe & Somya Mohanty. 2016. &quot;Democracy,
+                        Education, and Free Speech: The Importance of #FeesMustFall for
+                        Transnational Activism.&quot; Societies Without Borders 11 (1)
                 </a></div>
                 <br />
 
