@@ -35,7 +35,9 @@ class Speech extends React.Component {
         this.state = {
             speechProposal: this.props.speechProposal,
             result: 0,
-            total: 30,
+            total: Object.keys(this.props.speechProposal).reduce((acc, topic) => {
+                return acc + this.props.speechProposal[topic];
+            }, 0),
         };
         this.difference_threshold = THRESHOLDS[this.props.countryName];
         this.max_priority_points = 33;
@@ -55,7 +57,9 @@ class Speech extends React.Component {
     };
 
     componentDidMount() {
-        this.countSupporters(); // in the case that user changed nothing
+        if (this.props.canReset) {
+            this.countSupporters(); // in the case that user changed nothing
+        }
     }
 
 
@@ -79,7 +83,7 @@ class Speech extends React.Component {
      */
     handleButtonOnChange = (e, topic) => {
         const newVal = parseInt(e.target.value);
-        const newProposal = this.state.speechProposal;
+        const newProposal = this.props.speechProposal;
         const oldVal = newProposal[topic];
         if (this.state.total + newVal - oldVal <= this.max_priority_points) {
             newProposal[topic] = newVal;
@@ -181,6 +185,7 @@ Speech.propTypes = {
     submitPriorities: PropTypes.func,
     speechProposal: PropTypes.object,
     topicNames: PropTypes.array,
+    canReset: PropTypes.bool,
     round: PropTypes.number,
 };
 
@@ -562,17 +567,20 @@ export class CampaignView extends React.Component {
     }
 
     changeCountry = (name) => {
+        const { populationData } = this.state;
+        const topicNames = Object.keys(Object.values(populationData)[0]['citizens'][0]['traits']);
         this.setState({
             countryName: name,
             clickedProvince: '',
             round: 1,
             view: '',
+            speechProposal: get_default_proposal(topicNames),
         },
         () => {
             this.fetchPopulation();
             this.fetchCountryMap();
         });
-    }
+    };
 
     submitPriorities = () => {
         if (this.state.round < 3) {
@@ -663,13 +671,12 @@ export class CampaignView extends React.Component {
                         mapData={this.state.mapData}
                         generateDescription={this.generateDescription}
                     />
-                    <button
-                        className='campaign-btn'
-                        onClick={() => {
+                    <button 
+                      className='campaign-btn'
+                      onClick={() => {
+                        this.changeCountry('South Africa');
                         this.setState({
                             view: 'stage',
-                            round: 1,
-                            countryName: 'South Africa',
                         });
                     }}
                     >
@@ -711,6 +718,7 @@ export class CampaignView extends React.Component {
                                 submitPriorities={this.submitPriorities}
                                 speechProposal={this.state.speechProposal}
                                 topicNames={this.state.topicNames}
+                                canReset={this.state.round === 1}
                                 round={this.state.round}
                             />
                         </div>}
