@@ -686,15 +686,14 @@ export class CampaignView extends React.Component {
                     />
                     <button
                         className='campaign-btn'
-                        onClick={() => {
-                            this.changeCountry('South Africa');
-                            this.setState({
-                                view: 'stage',
-                            });
-                        }}
+                        onClick={() => this.setState({ showWarning: true })}
                     >
-                        Go Back
+                        Change country
                     </button>
+                    {this.state.showWarning
+                    && <Popup
+                        changeCountry={this.changeCountry}
+                        closePopup={() => this.setState({ showWarning: false })}/>}
                 </div>
             );
         }
