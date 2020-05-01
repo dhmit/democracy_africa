@@ -64,8 +64,8 @@ class Speech extends React.Component {
 
     generateStory() {
         if (this.props.round === 1) {
-            return 'You just started your campaign and we want you to set out'
-                    + 'your policies so that we can poll the people to get the'
+            return 'You just started your campaign and we want you to set out '
+                    + 'your policies so that we can poll the people to get the '
                     + 'initial reaction.';
         }
         if (this.props.round === 2) {
