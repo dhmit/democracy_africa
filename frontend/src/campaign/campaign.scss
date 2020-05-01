@@ -1,9 +1,43 @@
 $edx-border-color: #c8c8c8;
 $edx-button-color: #e7e7e7;
 
-.province-info-text {
-    font-size: 20px;
-    text-align: center;
+.speech-context {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1em;
+
+    &_points {
+        font-size: 20px;
+        text-align: center;
+    }
+    &_count {
+        margin-bottom: 0;
+    }
+}
+
+.speech-options {
+    display: flex;
+    flex-basis: 0;
+    flex-wrap: wrap;
+
+    .speech-option {
+        width: 100%;
+        display: flex;
+
+        &_label {
+            padding: 0.5em;
+            width: 30%;
+            font-weight: 700;
+        }
+
+        &_btns {
+            width: 70%;
+            padding: 0.5em;
+        }
+
+    }
 }
 
 .campaign-map {
@@ -21,10 +55,6 @@ $edx-button-color: #e7e7e7;
 
 .topics{
     margin: 0;
-    text-align: center;
-}
-
-.country-selector{
     text-align: center;
 }
 
@@ -96,6 +126,7 @@ $edx-button-color: #e7e7e7;
     width: 30rem;
     height: 15rem;
     background-color: white;
+    text-align: center;
     padding: 1.5em;
     transform: translate(-50%, -50%);
     border: 1px solid $edx-border-color; // from edX
@@ -116,7 +147,7 @@ $edx-button-color: #e7e7e7;
     border: 1px solid $edx-border-color;
     padding: 0.75em 1em;
     border-radius: 0.25em;
-    transition: 0.25s ease-in;
+    transition: 0.2s ease-in;
 
     &:hover {
         background-color: #f7f7f7 !important;
@@ -129,4 +160,11 @@ $edx-button-color: #e7e7e7;
 .speech-btn {
     width: 100px;
     margin: 0 0.5rem;
+}
+
+.campaign-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

@@ -125,33 +125,34 @@ class Speech extends React.Component {
 
     render() {
         const topics = this.props.topicNames.map((topic, key) => (
-            <div key={key} className='button-containers'>
-                <p className='topics'>
-                    <strong>{topic}</strong>
-                </p>
-                {[...Array(5).keys()].map((score, j) => (
-                    <div className='form-check form-check-inline score-button' key={j}>
-                        <input className='form-check-input' type='radio' name={topic}
-                            id={'inlineRadio' + score + 1} value={score + 1}
-                            checked={this.state.speechProposal[topic] === score + 1}
-                            onChange={(e) => this.handleButtonOnChange(e, topic)}/>
-                        <label
-                            className='form-check-label'
-                            htmlFor='inlineRadio1'
-                        >{score + 1}
-                        </label>
-                    </div>
-                ))}
+            <div key={key} className='speech-option'>
+                <div className='speech-option_label'>
+                    {topic}
+                </div>
+                <div className='speech-option_btns'>
+                    {[...Array(5).keys()].map((score, j) => (
+                        <div className='form-check form-check-inline score-button' key={j}>
+                            <input className='form-check-input' type='radio' name={topic}
+                                id={'inlineRadio' + score + 1} value={score + 1}
+                                checked={this.state.speechProposal[topic] === score + 1}
+                                onChange={(e) => this.handleButtonOnChange(e, topic)}/>
+                        </div>
+                    ))}
+                </div>
             </div>
         ));
 
         return (
             <>
-                <div className={'province-info-text'}>
-                    You have {this.max_priority_points - this.state.total} priority points left.
+                <div className='speech-context'>
+                    <p className='speech-context_count'>
+                        Currently on round {this.props.round} out of 3
+                    </p>
+                    <div className='speech-context_points'>
+                        You have {this.max_priority_points - this.state.total} priority points left.
+                    </div>
                 </div>
-                <br/>
-                <div>
+                <div className='speech-options'>
                     {topics}
                 </div>
                 <div className='reset_button'>
@@ -177,6 +178,7 @@ Speech.propTypes = {
     submitPriorities: PropTypes.func,
     speechProposal: PropTypes.object,
     topicNames: PropTypes.array,
+    round: PropTypes.number,
 };
 
 class Feedback extends React.Component {
@@ -674,13 +676,15 @@ export class CampaignView extends React.Component {
 
         return (
             <>
-                <h1 className='campaign-title'>Campaign Game</h1>
-                <button
-                    className='campaign-btn'
-                    onClick={() => this.setState({ showWarning: true })}
-                >
-                    Change country
-                </button>
+                <div className='campaign-header'>
+                    <h1 className='campaign-title'>Campaign Game</h1>
+                    <button
+                        className='campaign-btn'
+                        onClick={() => this.setState({ showWarning: true })}
+                    >
+                        Change country
+                    </button>
+                </div>
                 {this.state.showWarning
                     && <Popup
                         changeCountry={this.changeCountry}
@@ -695,7 +699,6 @@ export class CampaignView extends React.Component {
                             nextRound={() => this.setState({ view: '' })}
                         />
                         : <div className={'speech-maker'}>
-                        Currently on round {this.state.round} / 3
                             <Speech
                                 population={populationData}
                                 countryName={countryName}
@@ -703,6 +706,7 @@ export class CampaignView extends React.Component {
                                 submitPriorities={this.submitPriorities}
                                 speechProposal={this.state.speechProposal}
                                 topicNames={this.state.topicNames}
+                                round={this.state.round}
                             />
                         </div>}
                     <div className={'map-div'}>
@@ -723,7 +727,6 @@ export class CampaignView extends React.Component {
                             >
                                 {this.state.mapData.map((country, i) => {
                                     const countryFill = '#F6F4D2';
-
                                     return <MapPath
                                         key={i}
                                         path={country.svg_path}
