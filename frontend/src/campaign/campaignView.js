@@ -171,10 +171,6 @@ class Speech extends React.Component {
                 <div className='reset_button'>
                     <button
                         className='campaign-btn speech-btn'
-                        onClick={this.resetSpeech}
-                    > Reset </button>
-                    <button
-                        className='campaign-btn speech-btn'
                         onClick={this.props.submitPriorities}
                     >
                         Submit
