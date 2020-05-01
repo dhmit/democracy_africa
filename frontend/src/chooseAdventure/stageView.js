@@ -11,13 +11,13 @@ const STAGE_1 = {
         'showOnEnd': true,
     },
     {
-        'text': <div>Agree, but you’re a little skeptical: want to learn more</div>,
+        'text': <div>Agree to participate in the sit-in, but you’re a little skeptical: want to learn more</div>,
         'stageName': 'STAGE_1B_INT',
         'detail': '',
         'showOnEnd': true,
     },
     {
-        'text': <div>Disagree: you’re really not comfortable being part of this right now</div>,
+        'text': <div>Disagree: you’re really not comfortable being part of the sit-in right now</div>,
         'stageName': 'STAGE_1C_INT',
         'detail': '',
         'showOnEnd': true,
@@ -74,6 +74,17 @@ const STAGE_1B_INT = {
 
 const STAGE_1C_INT = {
     'text': <div>
+        <p>You’re really not comfortable being part of this right now.</p>
+        <p>As you are revising for exams in the university library, groups of students come in and
+            intimidate you for not being part of the cause. Some of them carry weapons, making you
+            a bit uncomfortable. On Twitter, student groups accuse you for sympathizing with the
+            government and not caring about the consequences of the fee increase for other students.
+            In the meantime, you begin to see more and more police surrounding your campus. But you
+            also start to hear about your university starting to negotiate with student
+            activists.</p>
+        <p>A few days later, your university closes indefinitely. You start to feel a bit bad that
+            you spent those last days on campus preparing for exams rather than actively
+            protesting. </p>
         <p>In the meantime, the university closes anyway.</p>
         <p>On 19 October, the University agrees to new negotiations.</p>
     </div>,
