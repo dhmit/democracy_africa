@@ -139,6 +139,13 @@ class Speech extends React.Component {
         return count;
     };
 
+    priorityPoint() {
+        if (this.max_priority_points - this.state.total > 0) {
+            return 'You can prioritize more things.';
+        }
+        return 'You need to de-prioritize others first';
+    }
+
     render() {
         const topics = this.props.topicNames.map((topic, key) => (
             <div key={key} className='speech-option'>
@@ -164,7 +171,7 @@ class Speech extends React.Component {
                         {this.generateStory()}
                     </p>
                     <div className='speech-context_points'>
-                        You have {this.max_priority_points - this.state.total} priority points left.
+                        {this.priorityPoint()}
                     </div>
                 </div>
                 <div className='speech-options'>
