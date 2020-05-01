@@ -5,7 +5,7 @@ const STAGE_1 = {
     'text': <div>A friend texts you about a sit-in at the administrative offices. What is your
         initial reaction?</div>,
     'options': [{
-        'text': <div>Agree; you want to participate!</div>,
+        'text': <div>Agree; you want to participate in the sit-in!</div>,
         'stageName': 'STAGE_1A',
         'detail': '',
         'showOnEnd': true,
@@ -159,6 +159,18 @@ const STAGE_2B_INT = {
         <p>You inform other people of the march on parliament and it turns out that as many as 5000
             people showed up to protest. You feel a mixed sense of relief and horror as you hear
             about that chaos towards the end of the march.</p>
+        <p>From October 13th through November 10th 2015 over 1,270,738 Twitter tweets used this
+            hashtag to show support of the protest, and if you used this hashtag, you were one of
+            them!</p>
+        <p>Many activist groups and students united on this topic on Twitter as it is one of the
+            most prevalent issues currently. It was so much that this hashtag began trending
+            worldwide on Twitter. Due to the pressure of the protests and the global pressure of
+            the usage of this hashtag, many school officials sought ways to increase censorship and
+            prevent protests on school and social media platforms. This was so extreme that the
+            University of Cape Town even received a verdict from the High Court of South Africa to
+            do so. This hashtag gave voice to many students that didn’t have any and gave these
+            students the power to question the government. If there’s a way to learn about this
+            from a student’s perspective, Twitter is the way to go!</p>
     </div>,
     'options': [{
         'text': <div>Next</div>,
