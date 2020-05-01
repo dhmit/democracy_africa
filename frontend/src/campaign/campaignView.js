@@ -156,9 +156,11 @@ class Speech extends React.Component {
                 </div>
                 <div className='reset_button'>
                     <button
+                        className='campaign-btn speech-btn'
                         onClick={this.resetSpeech}
                     > Reset </button>
                     <button
+                        className='campaign-btn speech-btn'
                         onClick={this.props.submitPriorities}
                     >
                         Submit
@@ -390,6 +392,52 @@ Citizen.propTypes = {
     generateDescription: PropTypes.func,
 };
 
+class Popup extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            selectedCountry: '',
+        };
+    }
+
+    confirmCountry = () => {
+        console.log('hi');
+        this.props.changeCountry(this.state.selectedCountry);
+        this.props.closePopup();
+    }
+
+    render() {
+        return (
+            <div className='country-selector'>
+                <div className='country-selector_body'>
+                    You will lose your progress when you switch countries
+                    Country:&nbsp;
+                    <select onChange={(e) => this.setState({ selectedCountry: e.target.value })}>
+                        {COUNTRIES.map((country, key) => (
+                            <option key={key}>
+                                {country}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div className='country-selector_btns edx-sequence-nav'>
+                    <button onClick={this.props.closePopup}>
+                        Cancel
+                    </button>
+                    <button onClick={this.confirmCountry}>
+                        Select
+                    </button>
+                </div>
+
+            </div>
+        );
+    }
+}
+Popup.propTypes = {
+    changeCountry: PropTypes.func,
+    closePopup: PropTypes.func,
+};
+
 
 export class CampaignView extends React.Component {
     constructor(props) {
@@ -404,6 +452,7 @@ export class CampaignView extends React.Component {
             speechProposal: null,
             topicNames: [],
             sampleSize: 75,
+            showWarning: false,
         };
         this.map_height = 500;
         this.map_width = 500;
@@ -507,12 +556,17 @@ export class CampaignView extends React.Component {
         }
     }
 
-    changeCountry(e) {
-        this.setState({ countryName: e.target.value, clickedProvince: '', round: 1 },
-            () => {
-                this.fetchPopulation();
-                this.fetchCountryMap();
-            });
+    changeCountry = (name) => {
+        this.setState({
+            countryName: name,
+            clickedProvince: '',
+            round: 1,
+            view: '',
+        },
+        () => {
+            this.fetchPopulation();
+            this.fetchCountryMap();
+        });
     }
 
     submitPriorities = () => {
@@ -588,7 +642,6 @@ export class CampaignView extends React.Component {
             clickedProvince,
             populationData,
             countryName,
-            topicNames,
         } = this.state;
 
         const aggregateResult = this.countTotalSupport();
@@ -621,21 +674,17 @@ export class CampaignView extends React.Component {
 
         return (
             <>
-                <h1>Campaign Game</h1><hr/>
-                <div className='country-selector'>
-                    Select a Country:&nbsp;
-                    <select onChange={(e) => {
-                        this.changeCountry(e);
-                        this.setState({ view: '' });
-                    }}>
-                        {COUNTRIES.map((country, key) => (
-                            <option key={key}>
-                                {country}
-                            </option>
-                        ))}
-                    </select><br/>
-                    <em>You will lose your progress when you switch countries</em>
-                </div>
+                <h1 className='campaign-title'>Campaign Game</h1>
+                <button
+                    className='campaign-btn'
+                    onClick={() => this.setState({ showWarning: true })}
+                >
+                    Change country
+                </button>
+                {this.state.showWarning
+                    && <Popup
+                        changeCountry={this.changeCountry}
+                        closePopup={() => this.setState({ showWarning: false })}/>}
                 <div className={'campaign-container'}>
                     {this.state.view === 'feedback'
                         ? <Feedback
