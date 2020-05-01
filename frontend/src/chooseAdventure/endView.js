@@ -36,12 +36,15 @@ class EndView extends React.Component {
                     similar rumors about tuition increases started circulating, leading to the
                     start of #FeesMustFall2016. Overall, the protests cost about 800 million Rand
                     or 42 million US dollars in damage.</div>
+                <br />
                 <div>More Information:</div>
-                <a href=
+                <div><a href=
                     {'https://www.theguardian.com/world/2015/oct/23/'
                        + 'south-african-students-protest-pretoria-tuition-fees-rise'}>
                         The Guardian
-                </a>
+                </a></div>
+                <br />
+
                 <div>Your choices:</div>
                 {choices}
                 <div className='cyoa-button end-button'
