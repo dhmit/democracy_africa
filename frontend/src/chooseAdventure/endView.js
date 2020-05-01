@@ -30,11 +30,18 @@ class EndView extends React.Component {
         ));
         return (
             <div>
-                <div>On 23 October, 2015, President Zuma announced that there would be no tuition
-                    increases in 2016. Protestors hailed this as a victory, but this announcement
-                    did not spell the end of the Fallist movement. In 2016, similar rumors
-                    about tuition increases started circulating, leading to the start of
-                    #FeesMustFall2016.</div>
+                <div>On 23 October, 2015, South African President Zuma announced that there would
+                    be no tuition increases in 2016. Protestors hailed this as a victory, but
+                    this announcement did not spell the end of the Fallist movement. In 2016,
+                    similar rumors about tuition increases started circulating, leading to the
+                    start of #FeesMustFall2016. Overall, the protests cost about 800 million Rand
+                    or 42 million US dollars in damage.</div>
+                <div>More Information:</div>
+                <a href=
+                    {'https://www.theguardian.com/world/2015/oct/23/'
+                       + 'south-african-students-protest-pretoria-tuition-fees-rise'}>
+                        The Guardian
+                </a>
                 <div>Your choices:</div>
                 {choices}
                 <div className='cyoa-button end-button'
