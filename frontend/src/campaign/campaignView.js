@@ -14,11 +14,7 @@ import './campaign.scss';
 
 import IntroView from '../chooseAdventure/introView';
 
-const THRESHOLDS = {
-    'South Africa': 14,
-    'Kenya': 7,
-    'Botswana': 6,
-};
+
 
 const get_default_proposal = (topic_names) => {
     const proposal = {};
@@ -28,12 +24,79 @@ const get_default_proposal = (topic_names) => {
     return proposal;
 };
 
-const COUNTRIES = ['South Africa', 'Kenya', 'Botswana'];
-const COUNTRY_TO_ISO = {
-    'South Africa': 'ZAF',
-    'Kenya': 'KEN',
-    'Botswana': 'BWA',
-};
+// const all_topics = [
+//     'Health services',
+//     'Education',
+//     'Water and sanitation',
+//     'Roads and bridges',
+//     'Electricity',
+//     'Equal rights for women',
+//     'Improving living standards for the poor',
+//     'Creating jobs',
+//     'Fighting corruption',
+//     'Reducing violent community conflict',
+// ];
+
+const COUNTRIES = [
+    {
+        name: 'Botswana',
+        ISO: 'BWA',
+        population: '2.254 million',
+        difficulty: 'Easy',
+        topicNames: [
+            'Education',
+            'Equal rights for women',
+            'Fighting corruption',
+        ],
+        supportThreshold: 0.4,
+        max_priority_points: 12,
+    },
+    {
+        name: 'Kenya',
+        ISO: 'KEN',
+        population: '51.39 million',
+        difficulty: 'Medium',
+        topicNames: [
+            'Health services',
+            'Education',
+            'Water and sanitation',
+            'Equal rights for women',
+            'Creating jobs',
+            'Fighting corruption',
+        ],
+        supportThreshold: 5,
+        max_priority_points: 10,
+    },
+    {
+        name: 'South Africa',
+        ISO: 'ZAF',
+        population: '57.78 million',
+        difficulty: 'Hard',
+        topicNames: [
+            'Health services',
+            'Education',
+            'Water and sanitation',
+            'Roads and bridges',
+            'Electricity',
+            'Equal rights for women',
+            'Improving living standards for the poor',
+            'Creating jobs',
+            'Fighting corruption',
+            'Reducing violent community conflict',
+        ],
+        supportThreshold: 10,
+        max_priority_points: 10,
+    },
+];
+
+function get_country_prop(country_name, prop_name) {
+    // Each country has its own set of topicNames
+    const country = COUNTRIES.filter((obj) => {
+        return obj.name === country_name;
+    })[0];
+    return country[prop_name];
+}
+
 
 class Speech extends React.Component {
     constructor(props) {
@@ -45,8 +108,8 @@ class Speech extends React.Component {
                 return acc + this.props.speechProposal[topic];
             }, 0),
         };
-        this.difference_threshold = THRESHOLDS[this.props.countryName];
-        this.max_priority_points = 33;
+        this.difference_threshold = get_country_prop(this.props.countryName, 'supportThreshold');
+        this.max_priority_points = get_country_prop(this.props.countryName, 'max_priority_points');
     }
 
     /**
@@ -423,43 +486,47 @@ Citizen.propTypes = {
     generateDescription: PropTypes.func,
 };
 
-class Popup extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            selectedCountry: '',
-        };
-    }
-
-    confirmCountry = () => {
-        this.props.changeCountry(this.state.selectedCountry);
+class CountrySelectorPopup extends React.Component {
+    selectCountryClosePopup = (country) => {
+        this.props.changeCountry(country);
         this.props.closePopup();
     };
 
     render() {
         return (
             <div className='country-selector'>
-                <div className='country-selector_body'>
-                    Select a country:&nbsp;
-                    <select onChange={(e) => this.setState({ selectedCountry: e.target.value })}>
-                        {COUNTRIES.map((country, key) => (
-                            <option key={key}>
-                                {country}
-                            </option>
-                        ))}
-                    </select>
+                <h3>Select a country</h3>
+                <div className='row w-100'>
+                    {COUNTRIES.map((country, key) => (
+                        <div key={key} className='col-4'>
+                            <div className='card' >
+                                <div className='card-header'>
+                                    <h5>{country.name}</h5>
+                                </div>
+                                <div className='card-body'>
+                                    <table className='table'><tbody>
+                                        <tr>
+                                            <td>Population</td>
+                                            <td>{country.population}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Difficulty</td>
+                                            <td>{country.difficulty}</td>
+                                        </tr>
+                                    </tbody></table>
+                                </div>
+                                <button
+                                    onClick={() => this.selectCountryClosePopup(country.name)}
+                                >Start</button>
+                            </div>
+                        </div>
+                    ))}
                 </div>
-                <div className='country-selector_btns edx-sequence-nav'>
-                    <button onClick={this.confirmCountry}>
-                        Select
-                    </button>
-                </div>
-
             </div>
         );
     }
 }
-Popup.propTypes = {
+CountrySelectorPopup.propTypes = {
     changeCountry: PropTypes.func,
     closePopup: PropTypes.func,
 };
@@ -469,11 +536,10 @@ export class CampaignView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
             populationData: null,
             mapData: null,
             clickedProvince: null,
-            countryName: 'South Africa',
+            countryName: null,
             view: 'intro',
             round: 1,
             speechProposal: null,
@@ -630,12 +696,12 @@ export class CampaignView extends React.Component {
             });
             console.log(population);
 
-            const topicNames = Object
-                .keys(Object.values(population)[0]['citizens'][0]['traits']);
+            const topicNames = get_country_prop(this.state.countryName, 'topicNames');
+
             this.setState({
                 populationData: population,
-                speechProposal: get_default_proposal(topicNames),
                 topicNames: topicNames,
+                speechProposal: get_default_proposal(topicNames),
             }, () => {
                 this.calculate_averages();
             });
@@ -647,7 +713,7 @@ export class CampaignView extends React.Component {
     async fetchCountryMap() {
         try {
             const map = await fetch('/api/state_map_geojson/'
-                + COUNTRY_TO_ISO[this.state.countryName] + '/',
+                + get_country_prop(this.state.countryName, 'ISO') + '/',
             {
                 method: 'GET',
                 headers: {
@@ -666,14 +732,6 @@ export class CampaignView extends React.Component {
         } catch (e) {
             console.log(e);
         }
-    }
-
-    /**
-     * When this component is mounted to the DOM, get democracy score data from the server
-     */
-    async componentDidMount() {
-        this.fetchPopulation();
-        this.fetchCountryMap();
     }
 
     updatePopulation(newPopulation) {
@@ -703,14 +761,11 @@ export class CampaignView extends React.Component {
     }
 
     changeCountry = (name) => {
-        const { populationData } = this.state;
-        const topicNames = Object.keys(Object.values(populationData)[0]['citizens'][0]['traits']);
         this.setState({
             countryName: name,
             clickedProvince: '',
             round: 1,
             view: '',
-            speechProposal: get_default_proposal(topicNames),
         },
         () => {
             this.fetchPopulation();
@@ -731,9 +786,13 @@ export class CampaignView extends React.Component {
 
     generateDescription = (data) => {
         const traits = data['traits'];
+        const topicNames = get_country_prop(this.state.countryName, 'topicNames');
         const pros = [];
         const cons = [];
         Object.keys(traits).forEach((trait) => {
+            if (!topicNames.includes(trait)) {
+                return;
+            }
             if (traits[trait] > this.state.speechProposal[trait]) {
                 cons.push(trait);
             } else {
@@ -741,46 +800,40 @@ export class CampaignView extends React.Component {
             }
         });
         const desc = [];
-        [pros, cons].forEach((issueList) => {
-            const sentence = [<>
-                I am {issueList === cons && 'not '}
-                satisfied with the candidate&apos;s stance on&nbsp;
-            </>];
-            issueList.forEach((issue, i) => {
+        [pros, cons].forEach((issueList, i) => {
+            let sentence = 'I am '
+                + (issueList === cons ? 'not ' : '')
+                + 'satisfied with the candidate\'s stance on ';
+            issueList.forEach((issue, j) => {
                 let trait = issue.toLowerCase();
-                if (i === issueList.length - 1) {
+                if (j === issueList.length - 1) {
                     trait += '.';
-                } else if (i === issueList.length - 2) {
+                } else if (j === issueList.length - 2) {
                     trait += ' and ';
                 } else {
                     trait += ', ';
                 }
-                sentence.push(<>{trait}</>);
+                sentence += trait;
             });
-            desc.push(<div>{sentence}</div>);
+            desc.push(<div key={i}>{sentence}</div>);
             desc.push(<br/>);
         });
         return desc;
     };
 
     render() {
-        if (!(this.state.populationData && this.state.mapData)) {
-            return (<div>Loading!</div>);
-        }
-
         if (this.state.view === 'intro') {
-            const description = 'Welcome to the Campaign Game. The goal of this game is to'
-                + ' create a campaign that will appeal to the most people in a country. You do'
-                + ' this by allocating your priority points towards different services. If your'
-                + ' priorities align with those of a given citizen, that citizen will support'
-                + ' you. Citizens from different provinces will tend to favor some services more'
-                + ' than others, so you can play with the assignments until you gain a majority of'
-                + ' supporters.';
+            const description = '<p>Welcome to the Campaign Game!</p>'
+                + '<p>In this game, you will create a political campaign and try to '
+                + 'appeal to the most people in a country.</p>'
+                + '<p>You will have two rounds to set your campaign\'s priorities and gather '
+                + 'survey data from citizens, and then one final chance to set your priorities '
+                + 'and see how you do in an election.</p>';
             const altText = 'Nelson Mandela voting in the 1994 South African general election.';
             return (
                 <>
                     {this.state.showWarning
-                        && <Popup
+                        && <CountrySelectorPopup
                             changeCountry={this.changeCountry}
                             closePopup={() => this.setState({ showWarning: false, view: '' })}/>}
                     <IntroView
@@ -791,6 +844,12 @@ export class CampaignView extends React.Component {
                     />
                 </>
             );
+        }
+
+
+
+        if (!(this.state.populationData && this.state.mapData)) {
+            return (<div>Loading!</div>);
         }
         const {
             clickedProvince,
@@ -813,8 +872,6 @@ export class CampaignView extends React.Component {
                 </PopoverContent>
             </Popover>
         );
-        console.log(this.state.populationData);
-
 
 
         if (this.state.view === 'submitted') {
@@ -837,7 +894,7 @@ export class CampaignView extends React.Component {
                         Try Again With A Different Country
                     </button>
                     {this.state.showWarning
-                    && <Popup
+                    && <CountrySelectorPopup
                         changeCountry={this.changeCountry}
                         closePopup={() => this.setState({ showWarning: false })}/>}
                 </div>
@@ -846,9 +903,6 @@ export class CampaignView extends React.Component {
 
         return (
             <>
-                <div className='campaign-header'>
-                    <h1 className='campaign-title'>Campaign Game</h1>
-                </div>
                 <div className={'campaign-container'}>
                     {this.state.view === 'feedback'
                         ? <Feedback
