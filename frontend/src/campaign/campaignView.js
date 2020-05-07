@@ -88,8 +88,8 @@ const COUNTRIES = [
             'Fighting corruption',
             'Reducing violent community conflict',
         ],
-        supportThreshold: 10,
-        max_priority_points: 33,
+        supportThreshold: 12,
+        max_priority_points: 35,
     },
 ];
 
