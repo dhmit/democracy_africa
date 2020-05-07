@@ -68,8 +68,8 @@ const COUNTRIES = [
             'Creating jobs',
             'Fighting corruption',
         ],
-        supportThreshold: 5,
-        max_priority_points: 23,
+        supportThreshold: 2,
+        max_priority_points: 22,
     },
     {
         name: 'South Africa',
