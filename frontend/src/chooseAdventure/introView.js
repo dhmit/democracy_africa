@@ -11,12 +11,17 @@ class IntroView extends React.Component {
         super(props);
     }
 
+
     render() {
+        // Allow us to render any HTML in a description string
+        // See: https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml
+        const desc_as_markup = () => { return { __html: this.props.desc }; };
+
         return (
             <div>
                 <div className='row'>
-                    <div className={'col-6'}>
-                        {this.props.desc}
+                    <div className='col-8'>
+                        <div dangerouslySetInnerHTML={desc_as_markup()} />
                         <div className='intro-btn-container'>
                             <div className='cyoa-button start-button'
                                 onClick={() => this.props.setView('stage')}>
@@ -25,10 +30,9 @@ class IntroView extends React.Component {
                         </div>
                     </div>
                     <img
-                        className= 'col-6 intro-img'
+                        className= 'col-4 intro-img img-fluid'
                         src={this.props.imgFile}
                         alt={this.props.altText}
-                        height='400'
                     />
                 </div>
             </div>
