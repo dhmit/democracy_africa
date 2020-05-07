@@ -35,12 +35,14 @@
         "no-restricted-syntax": ["off"],
         "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
         "no-useless-constructor": ["off"],
+        "object-curly-spacing": ["warn"],
         "object-shorthand": ["off"],
         "operator-linebreak": ["warn"],
         "prefer-destructuring": ["off"],
         "prefer-template": ["off"],
         "quote-props": ["error", "consistent"],
         "radix": ["off"],
+        "react/no-unescaped-entities": [ "error", { "forbid": [">", "}"] }],
         "semi": ["error", "always"]
     },
 

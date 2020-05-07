@@ -11,7 +11,6 @@ class IntroView extends React.Component {
         super(props);
     }
 
-
     render() {
         // Allow us to render any HTML in a description string
         // See: https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml
