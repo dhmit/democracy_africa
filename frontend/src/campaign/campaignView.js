@@ -65,7 +65,7 @@ const COUNTRIES = [
             'Fighting corruption',
         ],
         supportThreshold: 5,
-        max_priority_points: 10,
+        max_priority_points: 23,
     },
     {
         name: 'South Africa',
@@ -85,7 +85,7 @@ const COUNTRIES = [
             'Reducing violent community conflict',
         ],
         supportThreshold: 10,
-        max_priority_points: 10,
+        max_priority_points: 33,
     },
 ];
 
