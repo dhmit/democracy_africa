@@ -25,19 +25,6 @@ const get_default_proposal = (topic_names) => {
     return proposal;
 };
 
-// const all_topics = [
-//     'Health services',
-//     'Education',
-//     'Water and sanitation',
-//     'Roads and bridges',
-//     'Electricity',
-//     'Equal rights for women',
-//     'Improving living standards for the poor',
-//     'Creating jobs',
-//     'Fighting corruption',
-//     'Reducing violent community conflict',
-// ];
-
 const COUNTRIES = [
     {
         name: 'Botswana',
@@ -226,7 +213,6 @@ class Speech extends React.Component {
                             id={'inlineRadio' + score + 1} value={score + 1}
                             checked={this.state.speechProposal[topic] === score + 1}
                             onChange={(e) => this.handleButtonOnChange(e, topic)}/>
-                        // </div>
                     ))}
                 </div>
             </div>
