@@ -592,76 +592,46 @@ export class CampaignView extends React.Component {
         if (selected_province !== '' && selected_province !== null) {
             Object.keys(averages).forEach((trait) => {
                 if (averages[trait] <= 2.5) {
-                    low_value.push(trait);
+                    low_value.push(trait.toLowerCase());
                 } else if (averages[trait] >= 3.5) {
-                    high_value.push(trait);
+                    high_value.push(trait.toLowerCase());
                 }
             });
             if (high_value.length === 0 && low_value.length === 0) {
                 return 'Citizens of this province are equally concerned about all of the issues.';
             }
+            const low_priority_description = this.generate_overlay_description_text('low',
+                low_value);
+            const high_priority_description = this.generate_overlay_description_text('high',
+                high_value);
             if (high_value.length === 0) {
-                let return_text_low = 'Citizens of this province have a low priority for ';
-                for (let i = 0; i < low_value.length; i++) {
-                    return_text_low += low_value[i];
-                    if (low_value.length === 1) {
-                        return_text_low += '.';
-                    } else if (i === 0 && low_value.length === 2) {
-                        return_text_low += ' and ';
-                    } else if (i < low_value.length - 1 && low_value.length > 2) {
-                        return_text_low += ', ';
-                    } else {
-                        return_text_low += '.';
-                    }
-                }
-                return return_text_low;
+                return low_priority_description;
             }
             if (low_value.length === 0) {
-                let return_text_high = 'Citizens of this province have a high priority for ';
-                for (let i = 0; i < high_value.length; i++) {
-                    return_text_high += high_value[i];
-                    if (high_value.length === 1) {
-                        return_text_high += '.';
-                    } else if (i === 0 && high_value.length === 2) {
-                        return_text_high += ' and ';
-                    } else if (i < high_value.length - 1 && high_value.length > 2) {
-                        return_text_high += ', ';
-                    } else {
-                        return_text_high += '.';
-                    }
-                }
-                return return_text_high;
+                return high_priority_description;
             }
-            let return_text_high = 'Citizens of this province have a high priority for ';
-            for (let i = 0; i < high_value.length; i++) {
-                return_text_high += high_value[i];
-                if (high_value.length === 1) {
-                    return_text_high += '.';
-                } else if (i === 0 && high_value.length === 2) {
-                    return_text_high += ' and ';
-                } else if (i < high_value.length - 1 && high_value.length > 2) {
-                    return_text_high += ', ';
-                } else {
-                    return_text_high += '.';
-                }
-            }
-
-            let return_text_low = 'Citizens of this province have a low priority for ';
-            for (let i = 0; i < low_value.length; i++) {
-                return_text_low += low_value[i];
-                if (low_value.length === 1) {
-                    return_text_low += '.';
-                } else if (i === 0 && low_value.length === 2) {
-                    return_text_low += ' and ';
-                } else if (i < low_value.length - 1 && low_value.length > 2) {
-                    return_text_low += ', ';
-                } else {
-                    return_text_low += '.';
-                }
-            }
-            return return_text_high + ' ' + return_text_low;
+            return high_priority_description + ' ' + low_priority_description;
         }
         return '';
+    }
+
+    generate_overlay_description_text(high_or_low, values) {
+        let return_text = 'Citizens of this province (on average) have a ' + high_or_low
+            + ' priority for ';
+        for (let i = 0; i < values.length; i++) {
+            return_text += values[i];
+            if (i === values.length - 1) {
+                return_text += '.';
+            } else if (i === values.length - 2) {
+                if (values.length !== 2) {
+                    return_text += ',';
+                }
+                return_text += ' and ';
+            } else {
+                return_text += ', ';
+            }
+        }
+        return return_text;
     }
 
     async fetchPopulation() {
@@ -936,8 +906,12 @@ export class CampaignView extends React.Component {
                 </div>
                 <div className='col'>
                     <p>
-                        Click on each province to learn what your initial polling has revealed
-                        about the needs of its inhabitants.
+                        Your campaign team was able to do some initial polling, but unfortunately
+                        the results only give you a general idea of what people in each province
+                        want. As you submit your proposed campaign ideas, your team will be able to
+                        get more accurate data on how citizens are responding to your campaign's
+                        platform. <b>Click on each province </b> to learn what your initial polling
+                        has revealed about the needs of its inhabitants.
                     </p>
                     <p>
                         You will be asked to prioritize the following issues:
