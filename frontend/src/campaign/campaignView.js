@@ -1,11 +1,9 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
 
-// eslint-disable-next-line no-unused-vars
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import PopoverTitle from 'react-bootstrap/PopoverTitle';
-// eslint-disable-next-line no-unused-vars
 import PopoverContent from 'react-bootstrap/PopoverContent';
 import { project_features_and_create_svg_paths } from '../common';
 
@@ -17,7 +15,6 @@ import IntroView from '../chooseAdventure/introView';
 // NOTE(ra): this is a person icon path that I just bounced out of Illustrator and am hardcoding
 // here for expediency. We should really put this in an SVG file and get it into the project
 // in a more reasonable way!
-// eslint-disable-next-line max-len
 const PERSON_ICON_PATH = 'M437.02,330.98c-27.883-27.882-61.071-48.523-97.281-61.018C378.521,243.251,404,198.548,404,148 C404,66.393,337.607,0,256,0S108,66.393,108,148c0,50.548,25.479,95.251,64.262,121.962 c-36.21,12.495-69.398,33.136-97.281,61.018C26.629,379.333,0,443.62,0,512h40c0-119.103,96.897-216,216-216s216,96.897,216,216 h40C512,443.62,485.371,379.333,437.02,330.98z M256,256c-59.551,0-108-48.448-108-108S196.449,40,256,40 c59.551,0,108,48.448,108,108S315.551,256,256,256z';
 
 const get_default_proposal = (topic_names) => {
@@ -558,10 +555,8 @@ export class CampaignView extends React.Component {
 
     calculate_averages() {
         const population = this.state.populationData;
-        console.log(this.state);
         Object.keys(population).forEach((province) => {
             Object.keys(population[province]['citizens']).forEach((citizen_name) => {
-                // eslint-disable-next-line max-len
                 const citizen = population[province]['citizens'][citizen_name];
                 const topicNames = get_country_prop(this.state.countryName, 'topicNames');
                 Object.keys(citizen['traits']).forEach((trait) => {
@@ -594,7 +589,6 @@ export class CampaignView extends React.Component {
             return '';
         }
         const averages = this.state.populationData[selected_province]['averages'];
-        console.log(averages);
         if (selected_province !== '' && selected_province !== null) {
             Object.keys(averages).forEach((trait) => {
                 if (averages[trait] <= 2.5) {
@@ -603,8 +597,6 @@ export class CampaignView extends React.Component {
                     high_value.push(trait);
                 }
             });
-            console.log(low_value);
-            console.log(high_value);
             if (high_value.length === 0 && low_value.length === 0) {
                 return 'Citizens of this province are equally concerned about all of the issues.';
             }
@@ -699,7 +691,6 @@ export class CampaignView extends React.Component {
                     };
                 }
             });
-            console.log(population);
 
             const topicNames = get_country_prop(this.state.countryName, 'topicNames');
 
@@ -893,7 +884,6 @@ export class CampaignView extends React.Component {
                     if (this.state.round > 0
                         && this.state.populationData[country.name]) {
                         const data = this.state.populationData[country.name];
-                        /* eslint-disable-next-line max-len */
                         const supports = data['totalSupporters'] / data['citizens'].length > 0.5;
                         countryFill = supports ? '#B8E39B' : '#F19C79';
                     }
@@ -917,7 +907,6 @@ export class CampaignView extends React.Component {
                 })}
             </svg>
         );
-
         const campaign_map = (
             <div className='campaign-map'>
                 {clickedProvince
@@ -931,7 +920,7 @@ export class CampaignView extends React.Component {
                 {this.state.view === 'countryInfo'
                     ? <OverlayTrigger
                         trigger="hover"
-                        placement="right"
+                        placement="bottom"
                         overlay={province_info_overlay}
                     >{map_svg}
                     </OverlayTrigger>
