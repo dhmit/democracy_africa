@@ -18,20 +18,20 @@ export class IndexView extends React.Component {
                 </h1>
 
                 <div className="row">
-                    <div className="col-12 col-sm-6 d-flex align-items-stretch">
-                        <IndexCard
-                            url='/campaign_game/'
-                            title='Campaign Game'
-                            description='Make a speech to try and get people to vote for you.'
-                        />
-                    </div>
-                    <div className="col-12 col-sm-6 d-flex align-items-stretch">
+                    <div className="col-12 col-sm-6">
                         <IndexCard
                             url='/adventure/'
                             title='#FeesMustFall'
                             description='
                                 Take the role of a student during the 2015-16
                                 #FeelsMustFall movement in South Africa.'
+                        />
+                    </div>
+                    <div className="col-12 col-sm-6">
+                        <IndexCard
+                            url='/campaign_game/'
+                            title='Campaign Game'
+                            description='Make a speech to try and get people to vote for you.'
                         />
                     </div>
                 </div>
