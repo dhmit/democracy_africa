@@ -33,7 +33,6 @@ class Speech extends React.Component {
         };
         this.difference_threshold = 14;
         this.max_priority_points = 30;
-        // this.hints_count = 0;
     }
 
     /**
@@ -48,13 +47,6 @@ class Speech extends React.Component {
             this.setState({ result: this.countSupporters() });
         });
     };
-
-    // displayHint = () => {
-    //     this.setState({
-    //         hints_count: this.hints_count + 1,
-    //     });
-    //     alert('Hint');
-    // };
 
     componentDidMount() {
         // For a given list of options set each value to 1
@@ -177,7 +169,6 @@ export class CampaignView extends React.Component {
         this.map_width = 500;
         this.updatePopulation = this.updatePopulation.bind(this);
         this.updateProvinceInfo = this.updateProvinceInfo.bind(this);
-        // this.updateHints = this.updateHints.bind(this);
     }
 
     async fetchPopulation() {
@@ -350,7 +341,6 @@ export class CampaignView extends React.Component {
                                 type={'button'}
                                 onClick={this.displayHint}
                             > Hint </button>
-                            {/* {this.hints[this.countryName]['hints'][this.hints_count]} */}
                         </div>
                     </div>
                     <div className={'map-div'}>
