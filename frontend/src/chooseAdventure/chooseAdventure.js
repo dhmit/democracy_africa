@@ -38,21 +38,39 @@ export class ChooseAdventureView extends React.Component {
 
 
     render() {
-        const desc = <div>You are a sophomore at Rhodes University. Reports of tuition increases
-            of up to 10.5% have come out from multiple South African universities, including
-            Rhodes. Students at the University of Witwatersrand and the University of Cape Town
-            have already begun protesting, and there are rumors floating around social media
-            about a student-led total shutdown of the Rhodes Campus. Many students are worried
-            that these higher fees will shut poorer students out of education. However,
-            other students are worried that the disruption caused by a protest will be more
-                harmful to the ability to learn.</div>;
+        const desc = <>
+            <h5>
+            You are a sophomore at Rhodes University, in Grahamstown, South Africa.
+            </h5>
+            <p>
+            Reports of tuition increases of up to 10.5% have come out from multiple South African
+            universities, including Rhodes. Students at the University of Witwatersrand and the
+            University of Cape Town have already begun protesting, and there are rumors floating
+            around social media about a student-led total shutdown of the Rhodes Campus.
+            </p>
+            <p>
+            Many students are worried that these higher fees will shut poorer students out of
+            education. However, other students are worried that the disruption caused by a protest
+            will be more harmful to the ability to learn.
+            </p>
+        </>;
+        const imgFilename = 'FMF_intro.png';
+        const imgCaption = (<>
+            Photo credit:&nbsp;
+            <a href="https://commons.wikimedia.org/wiki/File:FMF_-_FeesMustFall.png" title="via Wikimedia Commons">
+            David.ritchie.05
+            </a> / <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA</a>
+        </>);
+        const imgAlt = 'A student protester holding a #FeesMustFall sign';
+
         return (
             <div>
                 {this.state.view === 'intro' && <IntroView
                     desc={desc}
                     setView={this.setView}
-                    imgFile={'/static/img/sample.jpg'}
-                    altText={'sample image'}
+                    imgFile={imgFilename}
+                    imgCaption={imgCaption}
+                    altText={imgAlt}
                 />}
                 {this.state.view === 'stage' && <StageView
                     setView={this.setView}

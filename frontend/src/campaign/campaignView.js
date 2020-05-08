@@ -52,7 +52,7 @@ const COUNTRIES = [
             'Creating jobs',
             'Fighting corruption',
         ],
-        supportThreshold: 0.4,
+        supportThreshold: 0.5,
         max_priority_points: 12,
     },
     {
@@ -825,12 +825,14 @@ export class CampaignView extends React.Component {
 
     render() {
         if (this.state.view === 'intro') {
-            const description = '<p>Welcome to the Campaign Game!</p>'
-                + '<p>In this game, you will create a political campaign and try to '
-                + 'appeal to the most people in a country.</p>'
-                + '<p>You will have two rounds to set your campaign\'s priorities and gather '
-                + 'survey data from citizens, and then one final chance to set your priorities '
-                + 'and see how you do in an election.</p>';
+            const description = <>
+                <p>Welcome to the Campaign Game!</p>
+                <p>In this game, you will create a political campaign and try to
+                appeal to the most people in a country.</p>
+                <p>You will have two rounds to set your campaign's priorities and gather
+                survey data from citizens, and then one final chance to set your priorities
+                and see how you do in an election.</p>
+            </>;
             const altText = 'Nelson Mandela voting in the 1994 South African general election.';
             return (
                 <>
@@ -845,8 +847,9 @@ export class CampaignView extends React.Component {
                     <IntroView
                         desc={description}
                         setView={() => { this.setState({ showCountrySelector: true }); }}
-                        imgFile={'/static/img/mandela_voting_in_1994.jpg'}
+                        imgFile={'mandela_voting_in_1994.jpg'}
                         altText={altText}
+                        imgCaption={altText}
                     />
                 </>
             );
@@ -954,8 +957,6 @@ export class CampaignView extends React.Component {
                         {this.state.topicNames.map((topic, i) => <li key={i}>{topic}</li>)}
                     </ul>
 
-
-
                     <button onClick={() => this.setState({ view: 'speechMaker', round: 1 })}>
                     I am ready to set my campaign's priorities!
                     </button>
@@ -980,7 +981,7 @@ export class CampaignView extends React.Component {
                         className='campaign-btn'
                         onClick={() => this.setState({ showCountrySelector: true })}
                     >
-                        Try Again With A Different Country
+                        Try again or switch countries
                     </button>
                     {this.state.showCountrySelector
                         && <CountrySelectorPopup

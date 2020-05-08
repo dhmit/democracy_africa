@@ -1,6 +1,8 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
 
+import { CaptionedImage } from '../UILibrary/components';
+
 
 /**
  * Component for displaying choose your own adventure skeleton
@@ -12,15 +14,13 @@ class IntroView extends React.Component {
     }
 
     render() {
-        // Allow us to render any HTML in a description string
-        // See: https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml
-        const desc_as_markup = () => { return { __html: this.props.desc }; };
-
         return (
             <div>
                 <div className='row'>
                     <div className='col-8'>
-                        <div dangerouslySetInnerHTML={desc_as_markup()} />
+                        <div>
+                            {this.props.desc}
+                        </div>
                         <div className='intro-btn-container'>
                             <div className='cyoa-button start-button'
                                 onClick={() => this.props.setView('stage')}>
@@ -28,22 +28,26 @@ class IntroView extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <img
-                        className= 'col-4 intro-img img-fluid'
-                        src={this.props.imgFile}
-                        alt={this.props.altText}
-                    />
+                    <div className='col-4'>
+                        <CaptionedImage
+                            filename={this.props.imgFile}
+                            alt={this.props.altText}
+                            caption={this.props.imgCaption}
+                        />
+                    </div>
                 </div>
             </div>
         );
     }
 }
-
 IntroView.propTypes = {
-    desc: PropTypes.string,
+    desc: PropTypes.object,
     setView: PropTypes.func,
     imgFile: PropTypes.string,
+    imgCaption: PropTypes.object,
     altText: PropTypes.string,
 };
 
 export default IntroView;
+
+

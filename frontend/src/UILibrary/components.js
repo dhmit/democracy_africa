@@ -81,11 +81,29 @@ MapPath.propTypes = {
 };
 
 
+export class CaptionedImage extends React.Component {
+    render() {
+        return (
+            <figure className="figure">
+                <img
+                    className='figure-img img-fluid'
+                    src={'/static/img/' + this.props.filename}
+                    alt={this.props.alt}
+                />
+                <figcaption className="figure-caption">{this.props.caption}</figcaption>
+            </figure>
 
-/**
- * TODO: create a border, navbar, etc. that emulates how these are going to look in
- *       the actual EdX environment
- */
+        );
+    }
+}
+CaptionedImage.propTypes = {
+    filename: PropTypes.string,
+    caption: PropTypes.object,
+    alt: PropTypes.string,
+};
+
+
+
 export class EdXView extends React.Component {
     render() {
         return (
@@ -114,7 +132,9 @@ export class EdXView extends React.Component {
                         </nav>
                     </div>
                     {this.props.app}
-                    <div className='text-center'>
+                    <div className='text-center mt-4'>
+                        {/* get the bottom nav buttons out of the way for now... */}
+                        <br/> <br/> <br/> <br/> <br/> <br/> <br/>
                         <nav className='edx-sequence-nav'>
                             <button className='ml-auto'>
                                 <FontAwesomeIcon icon={faChevronLeft} /> Previous

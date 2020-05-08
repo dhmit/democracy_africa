@@ -44,6 +44,7 @@
 }
 
 .end-button {
-    width: 200px;
+    @extend .btn-block;
+    @extend .btn;
 }
 

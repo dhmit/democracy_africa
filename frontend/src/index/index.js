@@ -13,7 +13,62 @@ export class IndexView extends React.Component {
     render() {
         return (
             <>
-                <h1>Gamifying Democracy and Development: Perspectives from Africa</h1>
+                <h1 className="mb-4">
+                    Gamifying Democracy and Development:<br/> Perspectives from Africa
+                </h1>
+
+                <div className="row">
+                    <div className="col-12 col-sm-6 d-flex align-items-stretch">
+                        <IndexCard
+                            url='/campaign_game/'
+                            title='Campaign Game'
+                            description='Make a speech to try and get people to vote for you.'
+                        />
+                    </div>
+                    <div className="col-12 col-sm-6 d-flex align-items-stretch">
+                        <IndexCard
+                            url='/adventure/'
+                            title='#FeesMustFall'
+                            description='
+                                Take the role of a student during the 2015-16
+                                #FeelsMustFall movement in South Africa.'
+                        />
+                    </div>
+                </div>
+
+                <h3>Prototypes</h3>
+                <div className="row">
+                    <div className="col-12 col-sm-4 d-flex align-items-stretch">
+                        <IndexCard
+                            url='/map_quiz/'
+                            title='Africa Map Quiz'
+                            description='
+                                        Learn the names of all the countries in Africa.
+                                        Put your score up on the board.
+                                    '
+                        />
+                    </div>
+                    <div className="col-12 col-sm-4 d-flex align-items-stretch">
+                        <IndexCard
+                            url='/heat_map/'
+                            title='Electoral Democracy Scores'
+                            description='
+                        Learn how indices measuring electoral democracy in Africa change over time.
+                    '
+                        />
+                    </div>
+
+                    <div className="col-12 col-sm-4 d-flex align-items-stretch">
+                        <IndexCard
+                            url='/budget_voting_simulation/'
+                            title='Budget Simulator'
+                            description='
+                                Try to make a budget that meets the needs of the most citizens.
+                            '
+                        />
+                    </div>
+                </div>
+
                 <h3>Quick links</h3>
                 <ul>
                     <li>
@@ -29,65 +84,17 @@ export class IndexView extends React.Component {
                     </li>
 
                     <li>
+                        <a href="https://docs.google.com/document/d/1k5J-yIODumamCIt0DdmvV-ISXFxIVRvQpVubuP0KPqU/edit">
+                            Brainstorming Doc
+                        </a>
+                    </li>
+
+                    <li>
                         <a href="https://drive.google.com/drive/folders/1EfQKscfSVw9GlMRiJ1N3B66COrKMo6e1?usp=sharing">
                             Google Drive folder
                         </a>
                     </li>
                 </ul>
-
-                <IndexCard
-                    url='/map_quiz/'
-                    title='Africa Map Quiz'
-                    description='
-                        Learn the names of all the countries in Africa.
-                        Put your score up on the board.
-                    '
-                />
-
-                <IndexCard
-                    url='/budget_voting_simulation/'
-                    title='Budget Simulator'
-                    description='
-                        Try to make a budget that meets the needs of the most citizens.
-                    '
-                />
-
-                <IndexCard
-                    url='/heat_map/'
-                    title='Electoral Democracy Scores'
-                    description='
-                        Learn how indices measuring electoral democracy in Africa change over time.
-                    '
-                />
-
-                <IndexCard
-                    url='/campaign_game/'
-                    title='Campaign Game'
-                    description='
-                        Make a speech to try and get people to vote for you.
-                    '
-                />
-
-                <IndexCard
-                    url='/adventure/'
-                    title='Choose Your Own Adventure'
-                    description="
-                        Make a speech to try and get people to vote for you.
-                        Here's a link to our
-                        <a href='https://docs.google.com/document/d/1gTZ_Sk_Wz4dYxiKfTVKSn9aZV6cKTnHBRUZGYimwpr8/edit'>
-                        draft Google Doc</a>.
-                    "
-                />
-
-                <IndexCard
-                    url='/all_view/'
-                    title='All View'
-                    description='
-                        A view that renders all of our apps -- for use in establishing
-                        design consistency across the project.
-                    '
-                />
-
 
             </>
         );

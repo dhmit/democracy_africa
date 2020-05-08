@@ -1,29 +1,80 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
+import { CaptionedImage } from '../UILibrary/components';
+
+
+const rhodes_campus_img_props = {
+    'imgFilename': 'FMF_0_rhodes.jpg',
+    'imgAlt': 'Rhodes University Campus',
+    'imgCaption': (<>
+        Rhodes University Campus
+        <br/>Photo credit:&nbsp;
+        <a href="https://de.wikipedia.org/wiki/Datei:Rhodes_university_campus_7.jpg">
+            Lysippos
+        </a> / <a href="https://creativecommons.org/licenses/by-sa/2.0/">
+        CC-by-sa 2.0
+        </a>
+    </>),
+};
+
+const jail_img_props = {
+    'imgFilename': 'FMF_jail.png',
+    'imgAlt': 'Student protesters in a holding cell during the #FeesMustFall movement',
+    'imgCaption': (<>
+        <a href="https://twitter.com/Icyboyaya/status/656895466060300288">Twitter</a>
+    </>),
+};
+
+const demonstration_img_props = {
+    'imgFilename': 'FMF_demonstration.jpg',
+    'imgAlt': '#FeesMustFall protesters in a demonstration in Praetoria',
+    'imgCaption': (<>
+        Photo credit:&nbsp;
+        <a href="https://search.creativecommons.org/photos/dc2c05b2-773f-410c-8273-c24fd5a4b521">
+            Paul Saad
+        </a> / <a href="https://creativecommons.org/licenses/by-nc-nd/2.0/">
+        CC BY-NC-ND 2.0
+        </a>
+    </>),
+};
+
+const violence_img_props = {
+    'imgFilename': 'FMF_violence.jpg',
+    'imgAlt': '#FeesMustFall protesters holding up their hands to signal they come in peace.',
+    'imgCaption': (<>
+        Photo credit:&nbsp;
+        <a href="https://en.wikipedia.org/wiki/File:%27Do_not_shoot%27_a_group_of_students_shout.JPG">
+            Myolisi
+        </a> / <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA</a>
+    </>),
+};
 
 const STAGE_1 = {
     'text': <div>A friend texts you about a sit-in at the administrative offices. What is your
         initial reaction?</div>,
-    'options': [{
-        'text': <div>Agree; you want to participate in the sit-in!</div>,
-        'stageName': 'STAGE_1A',
-        'detail': '',
-        'showOnEnd': true,
-    },
-    {
-        'text': <div>Agree to participate in the sit-in, but you’re a little skeptical: want to
-            learn more</div>,
-        'stageName': 'STAGE_1B_INT',
-        'detail': '',
-        'showOnEnd': true,
-    },
-    {
-        'text': <div>Disagree: you’re really not comfortable being part of the sit-in right
-            now</div>,
-        'stageName': 'STAGE_1C_INT',
-        'detail': '',
-        'showOnEnd': true,
-    }],
+    ...rhodes_campus_img_props,
+    'options': [
+        {
+            'text': <div>Agree; you want to participate in the sit-in!</div>,
+            'stageName': 'STAGE_1A',
+            'endDetail': '',
+            'showOnEnd': true,
+        },
+        {
+            'text': <div>Agree to participate in the sit-in, but you’re a little skeptical: want to
+                learn more</div>,
+            'stageName': 'STAGE_1B_INT',
+            'endDetail': '',
+            'showOnEnd': true,
+        },
+        {
+            'text': <div>Disagree: you’re really not comfortable being part of the sit-in right
+                now</div>,
+            'stageName': 'STAGE_1C_INT',
+            'endDetail': '',
+            'showOnEnd': true,
+        },
+    ],
 };
 
 const STAGE_1A = {
@@ -35,7 +86,7 @@ const STAGE_1A = {
              started blockading road access, and you decide to sneak out before things
              get worse.</div>,
         'stageName': 'STAGE_2',
-        'detail': '',
+        'endDetail': '',
         'showOnEnd': true,
     },
     {
@@ -43,7 +94,7 @@ const STAGE_1A = {
              the sit in. The protesters occupy the admin building and things escalate! You try to
              escape, but get caught by the riot police.</div>,
         'stageName': 'STAGE_1AB_INT',
-        'detail': '',
+        'endDetail': '',
         'showOnEnd': true,
     }],
 };
@@ -51,10 +102,11 @@ const STAGE_1A = {
 const STAGE_1AB_INT = {
     'text': <div>That night, students hold an all night vigil outside the police station, calling
         for your and your peers’ release. Thankfully, they let you go.</div>,
+    ...jail_img_props,
     'options': [{
         'text': <div>Next</div>,
         'stageName': 'STAGE_2',
-        'detail': '',
+        'endDetail': '',
         'showOnEnd': false,
     }],
 };
@@ -69,7 +121,7 @@ const STAGE_1B_INT = {
     'options': [{
         'text': <div>Next</div>,
         'stageName': 'STAGE_2',
-        'detail': '',
+        'endDetail': '',
         'showOnEnd': false,
     }],
 };
@@ -93,17 +145,18 @@ const STAGE_1C_INT = {
     'options': [{
         'text': <div>Next</div>,
         'stageName': 'STAGE_2_1C',
-        'detail': '',
+        'endDetail': '',
         'showOnEnd': false,
     }],
 };
 
 const STAGE_2 = {
     'text': <div>On 21 October, you hear about the potential march on Parliament.</div>,
+    ...demonstration_img_props,
     'options': [{
         'text': <div>Join the march</div>,
         'stageName': 'STAGE_2A_INT',
-        'detail': <div>WITS university administration announces that no disciplinary action
+        'endDetail': <div>WITS university administration announces that no disciplinary action
             will be taken against students and staff members who participated in the
             protests.</div>,
         'showOnEnd': true,
@@ -111,23 +164,24 @@ const STAGE_2 = {
     {
         'text': <div>Participate by social media</div>,
         'stageName': 'STAGE_2B_INT',
-        'detail': '',
+        'endDetail': '',
         'showOnEnd': true,
     },
     {
         'text': <div>Do nothing</div>,
         'stageName': 'STAGE_2C_INT',
-        'detail': '',
+        'endDetail': '',
         'showOnEnd': true,
     }],
 };
 
 const STAGE_2_1C = {
     'text': <div>On 21 October, you hear about the potential march on Parliament.</div>,
+    ...demonstration_img_props,
     'options': [{
         'text': <div>Join the march</div>,
         'stageName': 'STAGE_2A_INT',
-        'detail': <div>WITS university administration announces that no disciplinary action
+        'endDetail': <div>WITS university administration announces that no disciplinary action
             will be taken against students and staff members who participated in the
             protests.</div>,
         'showOnEnd': true,
@@ -135,13 +189,13 @@ const STAGE_2_1C = {
     {
         'text': <div>Participate by social media</div>,
         'stageName': 'STAGE_2B_INT',
-        'detail': '',
+        'endDetail': '',
         'showOnEnd': true,
     },
     {
         'text': <div>Still, you’re not comfortable; you again do nothing</div>,
         'stageName': 'STAGE_2C_INT',
-        'detail': <div>You’ve remained outside the action the whole time. But you feel
+        'endDetail': <div>You’ve remained outside the action the whole time. But you feel
             terrible that your friends have suffered. As they are released, you try to contact them,
             separately and together, but you receive no response. Perhaps you’ve been affected after
             all. </div>,
@@ -157,10 +211,11 @@ const STAGE_2A_INT = {
         <p>Just as you are wrapping up, some people in the crowd agitate the police by throwing a
             flaming “coffin” Blade Nzimande at them, and violence breaks out.</p>
     </div>,
+    ...violence_img_props,
     'options': [{
         'text': <div>Next</div>,
         'stageName': null,
-        'detail': '',
+        'endDetail': '',
         'showOnEnd': false,
     }],
 };
@@ -188,7 +243,7 @@ const STAGE_2B_INT = {
     'options': [{
         'text': <div>Next</div>,
         'stageName': null,
-        'detail': '',
+        'endDetail': '',
         'showOnEnd': false,
     }],
 };
@@ -202,7 +257,7 @@ const STAGE_2C_INT = {
     'options': [{
         'text': 'Next',
         'stageName': null,
-        'detail': '',
+        'endDetail': '',
         'showOnEnd': false,
     }],
 };
@@ -220,17 +275,9 @@ const NAME_TO_STAGE = {
     'STAGE_2C_INT': STAGE_2C_INT,
 };
 
-const getStageFromName = (stageName) => {
-    return NAME_TO_STAGE[stageName];
-};
-
 class Option extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
-        const stage = getStageFromName(this.props.option.stageName);
+        const stage = NAME_TO_STAGE[this.props.option.stageName];
         const { option } = this.props;
         return (
             <div className='cyoa-button' onClick={() => this.props.setStage(stage, option)}>
@@ -253,14 +300,14 @@ class StageView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            stage: getStageFromName('STAGE_1'),
+            stage: NAME_TO_STAGE['STAGE_1'],
         };
     }
 
     setStage = (stage, option) => {
         this.props.updateHistory(option);
         if (option.stageName) {
-            this.setState({ stage: getStageFromName(option.stageName) });
+            this.setState({ stage: NAME_TO_STAGE[option.stageName] });
         } else {
             this.props.setView('end');
         }
@@ -268,9 +315,12 @@ class StageView extends React.Component {
     };
 
     render() {
+        const stage = this.state.stage;
+        console.log(stage);
+
         let optionComponents = <div>Loading...</div>;
-        if (this.state.stage.options) {
-            optionComponents = this.state.stage.options.map((option, k) => {
+        if (stage.options) {
+            optionComponents = stage.options.map((option, k) => {
                 return (
                     <Option
                         key={k} option={option} setStage={this.setStage}
@@ -278,18 +328,28 @@ class StageView extends React.Component {
                 );
             });
         }
+        console.log(stage);
+        console.log(stage.imgFile);
+
         return (
-            <div className={'wrapper'}>
+            <div className='wrapper'>
                 <div className='row'>
-                    <div className={'col-6'}>
-                        <p>{this.state.stage.text}</p>
+                    <div className='col-6'>
+                        <div>{stage.text}</div>
                         <div className="option-selectors-list">
                             {optionComponents}
                         </div>
                     </div>
-                    <img className='col-6 stage-img' src={this.props.imgFile} alt="Sample" />
+                    <div className='col-6'>
+                        {stage.imgFilename
+                            && <CaptionedImage
+                                alt={stage.imgAlt}
+                                caption={stage.imgCaption}
+                                filename={stage.imgFilename}
+                            />
+                        }
+                    </div>
                 </div>
-
             </div>
         );
     }
@@ -298,7 +358,6 @@ StageView.propTypes = {
     stageName: PropTypes.string,
     updateHistory: PropTypes.func,
     setView: PropTypes.func,
-    imgFile: PropTypes.string,
 };
 
 export default StageView;
