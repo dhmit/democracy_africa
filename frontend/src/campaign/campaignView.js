@@ -18,9 +18,9 @@ import IntroView from '../chooseAdventure/introView';
 // here for expediency. We should really put this in an SVG file and get it into the project
 // in a more reasonable way!
 // eslint-disable-next-line max-len
-const PERSON_ICON_PATH = 'M0 458 c1 -59 84 -171 137 -184 l22 -6 -26 -34 c-51 -67 -40 -151 27\n' +
-    '-208 38 -31 115 -36 160 -9 72 42 89 148 37 217 l-26 34 22 6 c26 6 93 69 112\n' +
-    '105 7 14 17 43 23 64 l10 37 -249 0 -249 0 0 -22z';
+const PERSON_ICON_PATH = 'M0 458 c1 -59 84 -171 137 -184 l22 -6 -26 -34 c-51 -67 -40 -151 27\n'
+    + '-208 38 -31 115 -36 160 -9 72 42 89 148 37 217 l-26 34 22 6 c26 6 93 69 112\n'
+    + '105 7 14 17 43 23 64 l10 37 -249 0 -249 0 0 -22z';
 
 const get_default_proposal = (topic_names) => {
     const proposal = {};
