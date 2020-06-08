@@ -11,6 +11,7 @@ class CountrySelectorPopup extends React.Component {
     render() {
         return (
             <div className='country-selector'>
+                <span className="close-button">&times;</span>
                 <h3>Select a country</h3>
                 <div className='row w-100'>
                     {COUNTRIES.map((country, key) => (

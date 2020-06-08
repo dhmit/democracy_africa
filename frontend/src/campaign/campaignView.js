@@ -446,9 +446,6 @@ export class CampaignView extends React.Component {
         if (this.state.view === 'submitted') {
             return (
                 <div>
-                    <p className={'resultHeader'}>
-                        Final Results for {countryName}
-                    </p>
                     <Results
                         provinceData={populationData}
                         countryData={aggregateResult}

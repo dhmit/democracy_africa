@@ -34,8 +34,13 @@ class Results extends React.Component {
         const countryPercent = Math.round((this.props.countryData.totalSupport
                                                 / this.props.countryData.totalPopulation) * 100);
 
+        const winText = `Congratulations! You won! You got ${countryPercent}% of the vote.`;
+        const loseText = `Sadly, you lost. You only got ${countryPercent}% of the vote.`;
         return (
             <div>
+                <p className={'resultHeader'}>
+                    {countryPercent >= 50 ? winText : loseText}
+                </p>
                 <table border='1' className={'resultTable'}>
                     <tbody>
                         <tr>
