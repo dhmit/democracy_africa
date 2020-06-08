@@ -78,13 +78,12 @@ const STAGE_1 = {
 };
 
 const STAGE_1A = {
-    'text': <div>A friend texts you about a sit-in at the administrative offices.
-        What is your initial reaction?</div>,
+    'text': <div>You get there, but feel the tension of the situation. What do you want to do?
+    </div>,
     'options': [{
-        'text': <div>You get there, but feel the tension of the situation and are worried that the
+        'text': <div> You decide to sneak out before things get worse and are worried that the
              sit-in might escalate from a purely peaceful protest because students
-             started blockading road access, and you decide to sneak out before things
-             get worse.</div>,
+             started blockading road access.</div>,
         'stageName': 'STAGE_2',
         'endDetail': '',
         'showOnEnd': true,
