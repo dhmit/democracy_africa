@@ -321,9 +321,17 @@ export class CampaignView extends React.Component {
                     {this.state.showCountrySelector
                         && <CountrySelectorPopup
                             changeCountry={this.changeCountry}
-                            closePopup={() => this.setState(
-                                { showCountrySelector: false, view: 'countryInfo' },
-                            )}
+                            closePopup={(startGame) => {
+                                if (startGame) {
+                                    this.setState(
+                                        { showCountrySelector: false, view: 'countryInfo' },
+                                    );
+                                } else {
+                                    this.setState(
+                                        { showCountrySelector: false },
+                                    );
+                                }
+                            }}
                         />
                     }
                     <IntroView
@@ -462,9 +470,17 @@ export class CampaignView extends React.Component {
                     {this.state.showCountrySelector
                         && <CountrySelectorPopup
                             changeCountry={this.changeCountry}
-                            closePopup={() => this.setState(
-                                { showCountrySelector: false, view: 'countryInfo' },
-                            )}
+                            closePopup={(startGame) => {
+                                if (startGame) {
+                                    this.setState(
+                                        { showCountrySelector: false, view: 'countryInfo' },
+                                    );
+                                } else {
+                                    this.setState(
+                                        { showCountrySelector: false },
+                                    );
+                                }
+                            }}
                         />
                     }
                 </div>
