@@ -31,6 +31,9 @@ class Results extends React.Component {
             />
         ));
 
+        const countryPercent = Math.round((this.props.countryData.totalSupport
+                                                / this.props.countryData.totalPopulation) * 100);
+
         return (
             <div>
                 <table border='1' className={'resultTable'}>
@@ -41,21 +44,30 @@ class Results extends React.Component {
                             <th>Number of People</th>
                             <th>Percentage of Votes</th>
                         </tr>
-                        {Object.keys(resultsData).map((province, k) => (
-                            (
-                                province !== 'countryTotal'
+                        {Object.keys(resultsData).map((province, k) => {
+                            if (province !== 'countryTotal'
                                 && province !== 'countrySupporters'
-                                && province !== 'countryName'
-                            )
-                            && <tr key={k}>
-                                <td>{province}</td>
-                                <td>{resultsData[province].totalSupporters}</td>
-                                <td>{resultsData[province].citizens.length}</td>
-                                <td>{Math.round((resultsData[province].totalSupporters
-                                    / resultsData[province].citizens.length) * 100)}%</td>
-                            </tr>
-                        ))}
-                        <tr className={'countryResult'}>
+                                && province !== 'countryName') {
+                                const supporters = resultsData[province].totalSupporters;
+                                const total = resultsData[province].citizens.length;
+                                const percentage = Math.round((supporters / total) * 100);
+                                return (
+                                    <tr
+                                        className={percentage >= 50 ? 'support' : 'unsupport'}
+                                        key={k}
+                                    >
+                                        <td>{province}</td>
+                                        <td>{supporters}</td>
+                                        <td>{total}</td>
+                                        <td>{percentage}%</td>
+                                    </tr>
+                                );
+                            }
+                            return (<></>);
+                        })}
+                        <tr className={`countryResult ${countryPercent >= 50
+                            ? 'support'
+                            : 'unsupport'}`}>
                             <th>{this.props.countryName}</th>
                             <th>{this.props.countryData.totalSupport}</th>
                             <th>{this.props.countryData.totalPopulation}</th>
