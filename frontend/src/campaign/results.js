@@ -1,7 +1,7 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
 import { MapPath } from '../UILibrary/components';
-import Citizen from './Citizen';
+import Citizen from './citizen';
 
 class Results extends React.Component {
     constructor(props) {

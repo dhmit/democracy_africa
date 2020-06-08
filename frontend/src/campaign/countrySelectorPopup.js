@@ -1,6 +1,6 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
-import { COUNTRIES } from './Speech';
+import { COUNTRIES } from './speech';
 
 class CountrySelectorPopup extends React.Component {
     selectCountryClosePopup = (country) => {

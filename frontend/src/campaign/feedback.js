@@ -1,6 +1,6 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
-import Citizen from './Citizen';
+import Citizen from './citizen';
 
 class Feedback extends React.Component {
     constructor(props) {

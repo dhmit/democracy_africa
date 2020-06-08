@@ -11,10 +11,10 @@ import { project_features_and_create_svg_paths } from '../common';
 import { MapPath } from '../UILibrary/components';
 import './campaign.scss';
 
-import { Speech, get_country_prop, get_default_proposal } from './Speech';
-import Feedback from './Feedback';
-import Results from './Results';
-import CountrySelectorPopup from './CountrySelectorPopup';
+import { Speech, get_country_prop, get_default_proposal } from './speech';
+import Feedback from './feedback';
+import Results from './results';
+import CountrySelectorPopup from './countrySelectorPopup';
 import IntroView from '../chooseAdventure/introView';
 
 export class CampaignView extends React.Component {
