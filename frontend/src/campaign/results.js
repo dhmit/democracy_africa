@@ -1,6 +1,5 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
-import { MapPath } from '../UILibrary/components';
 import Citizen from './citizen';
 
 class Results extends React.Component {
@@ -83,33 +82,7 @@ class Results extends React.Component {
                     </tbody>
                 </table>
                 <div className='campaign-result_graphics'>
-                    <svg
-                        height={this.map_height}
-                        width={this.map_width}
-                        id='content'
-                        className='result-map'
-                    >
-                        {this.props.mapData.map((province, i) => {
-                            let countryFill;
-                            if (province.name) {
-                                countryFill = resultsData[province.name].totalSupporters
-                                / resultsData[province.name].citizens.length > 0.5
-                                    ? '#5abf5a' : '#db5653';
-                            } else {
-                                countryFill = '#F6F4D2';
-                            }
-
-                            return <MapPath
-                                key={i}
-                                path={province.svg_path}
-                                id={province.postal}
-                                fill={countryFill}
-                                stroke='black'
-                                strokeWidth='1'
-                                useColorTransition={false}
-                            />;
-                        })}
-                    </svg>
+                    {this.props.map}
                     <div className='result-population'>
                         <div className='result-population_header'>
                             Results for sample population of size {sample.length}
@@ -130,6 +103,7 @@ Results.propTypes = {
     countryName: PropTypes.string,
     mapData: PropTypes.array,
     generateDescription: PropTypes.func,
+    map: PropTypes.object,
 };
 
 export default Results;
