@@ -150,7 +150,8 @@ const STAGE_1C_INT = {
 };
 
 const STAGE_2 = {
-    'text': <div>On 21 October, you hear about the potential march on Parliament.</div>,
+    'text': <div>After the recent sit-in, you hear about a potential march on Parliament on the
+        21st of October. What do you want to do this time?</div>,
     ...demonstration_img_props,
     'options': [{
         'text': <div>Join the march</div>,
@@ -175,7 +176,8 @@ const STAGE_2 = {
 };
 
 const STAGE_2_1C = {
-    'text': <div>On 21 October, you hear about the potential march on Parliament.</div>,
+    'text': <div>After the recent sit-in, you hear about a potential march on Parliament on the
+        21st of October. What do you want to do this time?</div>,
     ...demonstration_img_props,
     'options': [{
         'text': <div>Join the march</div>,
