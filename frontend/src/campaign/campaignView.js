@@ -370,7 +370,8 @@ export class CampaignView extends React.Component {
                     let countryFill = '#F6F4D2';
                     let width = '1';
                     if (this.state.round > 0
-                        && this.state.populationData[country.name]) {
+                        && this.state.populationData[country.name]
+                        && this.state.view !== 'speechMaker') {
                         const data = this.state.populationData[country.name];
                         /* eslint-disable-next-line max-len */
                         const supports = data['totalSupporters'] / data['citizens'].length > 0.5;
@@ -407,7 +408,7 @@ export class CampaignView extends React.Component {
                         <b>{countryName}</b>
                     </div>
                 }
-                {this.state.view === 'countryInfo'
+                {['countryInfo', 'feedback', 'speechMaker'].includes(this.state.view)
                     ? <OverlayTrigger
                         trigger="hover"
                         placement="right"
@@ -501,6 +502,7 @@ export class CampaignView extends React.Component {
                         topicNames={this.state.topicNames}
                         canReset={this.state.round === 1}
                         round={this.state.round}
+                        campaign_map={campaign_map}
                     />
                 </div>
             );
