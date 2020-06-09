@@ -246,5 +246,5 @@ Speech.propTypes = {
     topicNames: PropTypes.array,
     canReset: PropTypes.bool,
     round: PropTypes.number,
-    campaign_map: PropTypes.object
+    campaign_map: PropTypes.object,
 };

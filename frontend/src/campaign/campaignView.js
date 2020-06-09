@@ -274,7 +274,6 @@ export class CampaignView extends React.Component {
         const topicNames = get_country_prop(this.state.countryName, 'topicNames');
         const pros = [];
         const cons = [];
-        console.log('DATA', data);
         Object.keys(traits).forEach((trait) => {
             if (!topicNames.includes(trait)) { return; }
             if (traits[trait] > this.state.speechProposal[trait]) {
@@ -283,39 +282,40 @@ export class CampaignView extends React.Component {
                 pros.push(trait);
             }
         });
-        const desc = [];
-        // This is for when the citizen is completely one sided about all issues
-        if (pros.length === 0) {
-            desc.push(<div key={1}>
-                I am dissatisfied with the candidate's stance on everything.
-            </div>);
-            return desc;
-        }
-        if (cons.length === 0) {
-            desc.push(<div key={1}>
-                I am completely satisfied with the candidate's stance on everything.
-            </div>);
-            return desc;
-        }
-        const proSentence = 'I am satisfied with the candidate\'s stance on ';
-        const conSentence = 'I believe that the candidate does not give enough priority to ';
-        [pros, cons].forEach((issueList, i) => {
-            let sentence = issueList === cons ? conSentence : proSentence;
-            issueList.forEach((issue, j) => {
-                let trait = issue.toLowerCase();
-                if (j === issueList.length - 1) {
-                    trait += '.';
-                } else if (j === issueList.length - 2) {
-                    trait += ' and ';
-                } else {
-                    trait += ', ';
-                }
-                sentence += trait;
-            });
-            desc.push(<div key={i}>{sentence}</div>);
-            desc.push(<br key={i}/>);
-        });
-        return desc;
+        return [pros, cons];
+        // const desc = [];
+        // // This is for when the citizen is completely one sided about all issues
+        // if (pros.length === 0) {
+        //     desc.push(<div key={1}>
+        //         I am dissatisfied with the candidate's stance on everything.
+        //     </div>);
+        //     return desc;
+        // }
+        // if (cons.length === 0) {
+        //     desc.push(<div key={1}>
+        //         I am completely satisfied with the candidate's stance on everything.
+        //     </div>);
+        //     return desc;
+        // }
+        // const proSentence = 'I am satisfied with the candidate\'s stance on ';
+        // const conSentence = 'I believe that the candidate does not give enough priority to ';
+        // [pros, cons].forEach((issueList, i) => {
+        //     let sentence = issueList === cons ? conSentence : proSentence;
+        //     issueList.forEach((issue, j) => {
+        //         let trait = issue.toLowerCase();
+        //         if (j === issueList.length - 1) {
+        //             trait += '.';
+        //         } else if (j === issueList.length - 2) {
+        //             trait += ' and ';
+        //         } else {
+        //             trait += ', ';
+        //         }
+        //         sentence += trait;
+        //     });
+        //     desc.push(<div key={i}>{sentence}</div>);
+        //     desc.push(<br key={i}/>);
+        // });
+        // return desc;
     };
 
     render() {

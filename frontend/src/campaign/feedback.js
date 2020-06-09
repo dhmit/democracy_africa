@@ -1,6 +1,5 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
-import Citizen from './citizen';
 
 class Feedback extends React.Component {
     constructor(props) {
@@ -9,17 +8,17 @@ class Feedback extends React.Component {
 
     render() {
         const { results, clickedProvince } = this.props;
-        let citizenReactions;
+        let sample = [];
         if (clickedProvince) {
-            const sample = results[clickedProvince]['citizens'].slice(0, 100);
-            citizenReactions = sample.map((citizen, k) => (
-                <Citizen
-                    key={k}
-                    data={citizen}
-                    title={`Citizen of ${citizen['province']}`}
-                    generateDescription={this.props.generateDescription}
-                />
-            ));
+            sample = results[clickedProvince]['citizens'].slice(0, 25);
+            // citizenReactions = sample.map((citizen, k) => (
+            //     <Citizen
+            //         key={k}
+            //         data={citizen}
+            //         title={`Citizen of ${citizen['province']}`}
+            //         generateDescription={this.props.generateDescription}
+            //     />
+            // ));
         }
         const description = (<div>
             {clickedProvince
@@ -38,7 +37,38 @@ class Feedback extends React.Component {
                     </p>
 
                     {description}
-                    <div className='feedback-pop'>{citizenReactions}</div>
+                    <div className='feedback-pop'>
+                        {clickedProvince
+                            && <table border="1" className={'feedback-table'}>
+                                <tbody>
+                                    <tr>
+                                        <th>Citizen Number</th>
+                                        <th>Satisfied With Your Stance On</th>
+                                        <th>Wants You to Give More Priority To</th>
+                                    </tr>
+                                    {sample.map((citizen, k) => {
+                                        const reaction = this.props.generateDescription(citizen);
+                                        return (
+                                            <tr key={k}>
+                                                <td>{citizen.name}</td>
+                                                <td>
+                                                    {reaction[0].map((topic, j) => (
+                                                        <span key={j}>{topic}<br/></span>
+                                                    ))}
+                                                </td>
+                                                <td>
+                                                    {reaction[1].map((topic, j) => (
+                                                        <span key={j}>{topic}<br/></span>
+                                                    ))}
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+                        }
+
+                    </div>
                 </div>
                 <button className='campaign-btn' onClick={this.props.nextRound}>
                     Next Round
