@@ -1,11 +1,9 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
 
-// eslint-disable-next-line no-unused-vars
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import PopoverTitle from 'react-bootstrap/PopoverTitle';
-// eslint-disable-next-line no-unused-vars
 import PopoverContent from 'react-bootstrap/PopoverContent';
 import { project_features_and_create_svg_paths } from '../common';
 
@@ -17,6 +15,7 @@ import IntroView from '../chooseAdventure/introView';
 // NOTE(ra): this is a person icon path that I just bounced out of Illustrator and am hardcoding
 // here for expediency. We should really put this in an SVG file and get it into the project
 // in a more reasonable way!
+
 // eslint-disable-next-line max-len
 const PERSON_ICON_PATH = 'M0 458 c1 -59 84 -171 137 -184 l22 -6 -26 -34 c-51 -67 -40 -151 27\n'
     + '-208 38 -31 115 -36 160 -9 72 42 89 148 37 217 l-26 34 22 6 c26 6 93 69 112\n'
@@ -29,19 +28,6 @@ const get_default_proposal = (topic_names) => {
     });
     return proposal;
 };
-
-// const all_topics = [
-//     'Health services',
-//     'Education',
-//     'Water and sanitation',
-//     'Roads and bridges',
-//     'Electricity',
-//     'Equal rights for women',
-//     'Improving living standards for the poor',
-//     'Creating jobs',
-//     'Fighting corruption',
-//     'Reducing violent community conflict',
-// ];
 
 const COUNTRIES = [
     {
@@ -231,7 +217,6 @@ class Speech extends React.Component {
                             id={'inlineRadio' + score + 1} value={score + 1}
                             checked={this.state.speechProposal[topic] === score + 1}
                             onChange={(e) => this.handleButtonOnChange(e, topic)}/>
-                        // </div>
                     ))}
                 </div>
             </div>
@@ -560,10 +545,8 @@ export class CampaignView extends React.Component {
 
     calculate_averages() {
         const population = this.state.populationData;
-        console.log(this.state);
         Object.keys(population).forEach((province) => {
             Object.keys(population[province]['citizens']).forEach((citizen_name) => {
-                // eslint-disable-next-line max-len
                 const citizen = population[province]['citizens'][citizen_name];
                 const topicNames = get_country_prop(this.state.countryName, 'topicNames');
                 Object.keys(citizen['traits']).forEach((trait) => {
@@ -596,82 +579,49 @@ export class CampaignView extends React.Component {
             return '';
         }
         const averages = this.state.populationData[selected_province]['averages'];
-        console.log(averages);
         if (selected_province !== '' && selected_province !== null) {
             Object.keys(averages).forEach((trait) => {
                 if (averages[trait] <= 2.5) {
-                    low_value.push(trait);
+                    low_value.push(trait.toLowerCase());
                 } else if (averages[trait] >= 3.5) {
-                    high_value.push(trait);
+                    high_value.push(trait.toLowerCase());
                 }
             });
-            console.log(low_value);
-            console.log(high_value);
             if (high_value.length === 0 && low_value.length === 0) {
                 return 'Citizens of this province are equally concerned about all of the issues.';
             }
+            const low_priority_description = this.generate_overlay_description_text('low',
+                low_value);
+            const high_priority_description = this.generate_overlay_description_text('high',
+                high_value);
             if (high_value.length === 0) {
-                let return_text_low = 'Citizens of this province have a low priority for ';
-                for (let i = 0; i < low_value.length; i++) {
-                    return_text_low += low_value[i];
-                    if (low_value.length === 1) {
-                        return_text_low += '.';
-                    } else if (i === 0 && low_value.length === 2) {
-                        return_text_low += ' and ';
-                    } else if (i < low_value.length - 1 && low_value.length > 2) {
-                        return_text_low += ', ';
-                    } else {
-                        return_text_low += '.';
-                    }
-                }
-                return return_text_low;
+                return low_priority_description;
             }
             if (low_value.length === 0) {
-                let return_text_high = 'Citizens of this province have a high priority for ';
-                for (let i = 0; i < high_value.length; i++) {
-                    return_text_high += high_value[i];
-                    if (high_value.length === 1) {
-                        return_text_high += '.';
-                    } else if (i === 0 && high_value.length === 2) {
-                        return_text_high += ' and ';
-                    } else if (i < high_value.length - 1 && high_value.length > 2) {
-                        return_text_high += ', ';
-                    } else {
-                        return_text_high += '.';
-                    }
-                }
-                return return_text_high;
+                return high_priority_description;
             }
-            let return_text_high = 'Citizens of this province have a high priority for ';
-            for (let i = 0; i < high_value.length; i++) {
-                return_text_high += high_value[i];
-                if (high_value.length === 1) {
-                    return_text_high += '.';
-                } else if (i === 0 && high_value.length === 2) {
-                    return_text_high += ' and ';
-                } else if (i < high_value.length - 1 && high_value.length > 2) {
-                    return_text_high += ', ';
-                } else {
-                    return_text_high += '.';
-                }
-            }
-
-            let return_text_low = 'Citizens of this province have a low priority for ';
-            for (let i = 0; i < low_value.length; i++) {
-                return_text_low += low_value[i];
-                if (low_value.length === 1) {
-                    return_text_low += '.';
-                } else if (i === 0 && low_value.length === 2) {
-                    return_text_low += ' and ';
-                } else if (i < low_value.length - 1 && low_value.length > 2) {
-                    return_text_low += ', ';
-                } else {
-                    return_text_low += '.';
-                }
-            }
-            return return_text_high + ' ' + return_text_low;
+            return high_priority_description + ' ' + low_priority_description;
         }
         return '';
+    }
+
+    generate_overlay_description_text(high_or_low, values) {
+        let return_text = 'Citizens of this province (on average) have a ' + high_or_low
+            + ' priority for ';
+        for (let i = 0; i < values.length; i++) {
+            return_text += values[i];
+            if (i === values.length - 1) {
+                return_text += '.';
+            } else if (i === values.length - 2) {
+                if (values.length !== 2) {
+                    return_text += ',';
+                }
+                return_text += ' and ';
+            } else {
+                return_text += ', ';
+            }
+        }
+        return return_text;
     }
 
     async fetchPopulation() {
@@ -701,7 +651,6 @@ export class CampaignView extends React.Component {
                     };
                 }
             });
-            console.log(population);
 
             const topicNames = get_country_prop(this.state.countryName, 'topicNames');
 
@@ -895,7 +844,6 @@ export class CampaignView extends React.Component {
                     if (this.state.round > 0
                         && this.state.populationData[country.name]) {
                         const data = this.state.populationData[country.name];
-                        /* eslint-disable-next-line max-len */
                         const supports = data['totalSupporters'] / data['citizens'].length > 0.5;
                         countryFill = supports ? '#B8E39B' : '#F19C79';
                     }
@@ -919,7 +867,6 @@ export class CampaignView extends React.Component {
                 })}
             </svg>
         );
-
         const campaign_map = (
             <div className='campaign-map'>
                 {clickedProvince
@@ -933,7 +880,7 @@ export class CampaignView extends React.Component {
                 {this.state.view === 'countryInfo'
                     ? <OverlayTrigger
                         trigger="hover"
-                        placement="right"
+                        placement="bottom"
                         overlay={province_info_overlay}
                     >{map_svg}
                     </OverlayTrigger>
@@ -949,8 +896,12 @@ export class CampaignView extends React.Component {
                 </div>
                 <div className='col'>
                     <p>
-                        Click on each province to learn what your initial polling has revealed
-                        about the needs of its inhabitants.
+                        Your campaign team was able to do some initial polling, but unfortunately
+                        the results only give you a general idea of what people in each province
+                        want. As you submit your proposed campaign ideas, your team will be able to
+                        get more accurate data on how citizens are responding to your campaign's
+                        platform. <b>Click on each province </b> to learn what your initial polling
+                        has revealed about the needs of its inhabitants.
                     </p>
                     <p>
                         You will be asked to prioritize the following issues:
