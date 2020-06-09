@@ -5,8 +5,6 @@ import Citizen from './citizen';
 class Results extends React.Component {
     constructor(props) {
         super(props);
-        this.map_height = 500;
-        this.map_width = 500;
     }
 
     render() {
@@ -17,9 +15,12 @@ class Results extends React.Component {
 
         // TODO: possibly refactor this further since it is similar to CampaignView
         const sample = [];
-        Object.values(this.props.provinceData).forEach((province) => {
-            const citizens = province['citizens'];
-            sample.push(...citizens.slice(0, Math.round(citizens.length * 0.25)));
+        Object.keys(this.props.provinceData).forEach((province) => {
+            const provinceData = this.props.provinceData[province];
+            if (province === this.props.clickedProvince || this.props.clickedProvince === '') {
+                const citizens = provinceData['citizens'];
+                sample.push(...citizens.slice(0, Math.round(citizens.length * 0.25)));
+            }
         });
         const citizens = sample.map((citizen, k) => (
             <Citizen
@@ -104,6 +105,7 @@ Results.propTypes = {
     mapData: PropTypes.array,
     generateDescription: PropTypes.func,
     map: PropTypes.object,
+    clickedProvince: PropTypes.string,
 };
 
 export default Results;

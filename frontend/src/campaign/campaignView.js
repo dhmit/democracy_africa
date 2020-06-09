@@ -460,6 +460,7 @@ export class CampaignView extends React.Component {
                         mapData={this.state.mapData}
                         generateDescription={this.generateDescription}
                         map={campaign_map}
+                        clickedProvince={this.state.clickedProvince}
                     />
                     <button
                         className='campaign-btn'
