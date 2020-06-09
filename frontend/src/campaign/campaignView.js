@@ -166,7 +166,7 @@ class Speech extends React.Component {
      * @param e The event that is triggered, use e.target.value to get the value of the slider
      * @param topic Tells which topic the slider belongs to so that it updates the speech
      */
-    handleButtonOnChange = (e, topic) => {
+    handleSliderOnChange = (e, topic) => {
         const newVal = parseInt(e.target.value);
         const newProposal = this.props.speechProposal;
         const oldVal = newProposal[topic];
@@ -178,6 +178,19 @@ class Speech extends React.Component {
                 result: this.countSupporters(),
             });
         }
+    };
+
+    setAllTopicsToZero = () => {
+        const newProposal = this.props.speechProposal;
+        for (const topic of Object.keys(this.state.speechProposal)) {
+            if (this.state.speechProposal[topic] !== 0) {
+                newProposal[topic] = 0;
+            }
+        }
+        this.setState({
+            speechProposal: newProposal,
+            total: 0
+        });
     };
 
     /**
@@ -213,27 +226,28 @@ class Speech extends React.Component {
     };
 
     priorityPoint() {
-        if (this.max_priority_points - this.state.total > 0) {
-            return 'You can prioritize more things.';
+        const remainingPoints = this.max_priority_points - this.state.total;
+        if (remainingPoints === 1) {
+            return 'You have ' + remainingPoints + ' resource point left.';
         }
-        return 'You need to de-prioritize others first';
+        return 'You have ' + remainingPoints + ' resource points left.';
     }
 
     render() {
         const topics = this.props.topicNames.map((topic, key) => (
-            <div key={key} className='speech-option'>
-                <div className='speech-option_label'>
-                    {topic}
-                </div>
-                <div className='speech-option_btns'>
-                    {[...Array(5).keys()].map((score, j) => (
-                        <input className='speech-radio' type='radio' name={topic} key={j}
-                            id={'inlineRadio' + score + 1} value={score + 1}
-                            checked={this.state.speechProposal[topic] === score + 1}
-                            onChange={(e) => this.handleButtonOnChange(e, topic)}/>
-                        // </div>
-                    ))}
-                </div>
+            <div key={key} className='individual_slider_containers'>
+                <p className='slider_descriptor'>
+                    {this.state.speechProposal[topic]} resource points are dedicated to <strong> {topic} </strong>
+                </p>
+                <input
+                    className='slider'
+                    type='range'
+                    min='0'
+                    max={this.max_priority_points}
+                    step='1'
+                    value={this.state.speechProposal[topic]}
+                    onChange={(e) => this.handleSliderOnChange(e, topic)}
+                />
             </div>
         ));
 
@@ -247,12 +261,16 @@ class Speech extends React.Component {
                         {this.priorityPoint()}
                     </div>
                 </div>
-                <div className='speech-options'>
-                    <div className='speech-option-desc'>
-                        <span>Low priority</span>
-                        <span>High priority</span>
-                    </div>
+                <div>
                     {topics}
+                </div>
+                <div className='set_zero_button'>
+                    <button
+                        className='campaign-btn'
+                        onClick={() => this.setAllTopicsToZero()}
+                    >
+                        Set all to zero
+                    </button>
                 </div>
                 <div className='reset_button'>
                     <button

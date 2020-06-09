@@ -195,3 +195,22 @@ $edx-button-color: #e7e7e7;
         margin-bottom: 1em;
     }
 }
+
+.slider_descriptor {
+    text-align: left;
+    margin: 5px;
+}
+
+.slider {
+    width: 100%;
+    border: 1px solid $edx-border-color;
+}
+
+.individual_slider_containers {
+    margin: 20px 0px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  background-color: #0075B4;
+}
+
