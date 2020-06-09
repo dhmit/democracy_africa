@@ -317,7 +317,6 @@ class StageView extends React.Component {
 
     render() {
         const stage = this.state.stage;
-        console.log(stage);
 
         let optionComponents = <div>Loading...</div>;
         if (stage.options) {
@@ -329,8 +328,6 @@ class StageView extends React.Component {
                 );
             });
         }
-        console.log(stage);
-        console.log(stage.imgFile);
 
         return (
             <div className='wrapper'>
