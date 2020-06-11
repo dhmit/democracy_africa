@@ -136,16 +136,15 @@ $edx-button-color: #e7e7e7;
 .country-selector {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
     align-items: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 50rem;
+    position: fixed;
+    left: 10%;
+    width: 80%;
+    height: 50%;
+    overflow-y: scroll;
     background-color: white;
     text-align: center;
     padding: 1.5em;
-    transform: translate(-50%, -50%);
     border: 1px solid $edx-border-color; // from edX
     z-index: 10;
 
