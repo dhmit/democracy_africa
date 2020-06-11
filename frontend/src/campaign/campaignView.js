@@ -421,10 +421,10 @@ export class CampaignView extends React.Component {
 
         if (this.state.view === 'countryInfo') {
             return (<div className="row">
-                <div className='map-div col'>
+                <div className='map-div col-md-12 col-lg-6'>
                     {campaign_map}
                 </div>
-                <div className='col'>
+                <div className='col-md-12 col-lg-6'>
                     <p>
                         Click on each province to learn what your initial polling has revealed
                         about the needs of its inhabitants.
@@ -477,14 +477,21 @@ export class CampaignView extends React.Component {
         if (this.state.view === 'feedback') {
             return (
                 <div className={'campaign-container'}>
-                    <Feedback
-                        clickedProvince={clickedProvince}
-                        round={this.state.round}
-                        generateDescription={this.generateDescription}
-                        results={populationData}
-                        nextRound={() => this.setState({ view: 'speechMaker' })}
-                    />
-                    {campaign_map}
+                    <div className="row">
+                        <div className="col-lg-6 col-md-12 order-md-2 order-lg-1">
+                            <Feedback
+                                clickedProvince={clickedProvince}
+                                round={this.state.round}
+                                generateDescription={this.generateDescription}
+                                results={populationData}
+                                nextRound={() => this.setState({ view: 'speechMaker' })}
+                            />
+                        </div>
+                        <div className="col-lg-6 col-md-12 order-md-1 order-lg-2">
+                            {campaign_map}
+                        </div>
+                    </div>
+
                 </div>
             );
         }

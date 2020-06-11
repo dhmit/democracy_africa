@@ -80,11 +80,6 @@ $edx-button-color: #e7e7e7;
     width: 58%
 }
 
-.feedback,
-.speech-maker{
-    width: 42%
-}
-
 .resultTable{
     border: 1px $edx-border-color solid;
     text-align: center;
@@ -139,9 +134,10 @@ $edx-button-color: #e7e7e7;
     align-items: center;
     position: fixed;
     left: 10%;
+    top: 25%;
     width: 80%;
     height: 50%;
-    overflow-y: scroll;
+    overflow-y: auto;
     background-color: white;
     text-align: center;
     padding: 1.5em;
