@@ -498,6 +498,8 @@ export class CampaignView extends React.Component {
                         generateDescription={this.generateDescription}
                         results={populationData}
                         nextRound={() => this.setState({ view: 'speechMaker' })}
+                        topicNames={this.state.topicNames}
+                        speechProposal={this.state.speechProposal}
                     />
                     {campaign_map}
                 </div>
@@ -505,6 +507,7 @@ export class CampaignView extends React.Component {
         }
 
         if (this.state.view === 'speechMaker') {
+            console.log(this.state.topicNames);
             return (
                 <div className='speech-maker'>
                     <Speech

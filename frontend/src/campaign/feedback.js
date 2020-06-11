@@ -10,7 +10,7 @@ class Feedback extends React.Component {
         const { results, clickedProvince } = this.props;
         let sample = [];
         if (clickedProvince) {
-            sample = results[clickedProvince]['citizens'].slice(0, 25);
+            sample = results[clickedProvince]['citizens'].slice(0, 100);
             // citizenReactions = sample.map((citizen, k) => (
             //     <Citizen
             //         key={k}
@@ -42,32 +42,31 @@ class Feedback extends React.Component {
                             && <table border="1" className={'feedback-table'}>
                                 <tbody>
                                     <tr>
-                                        <th>Citizen Number</th>
-                                        <th>Satisfied With Your Stance On</th>
-                                        <th>Wants You to Give More Priority To</th>
+                                        <th>Topic</th>
+                                        <th>Percentage of Sample Satisfied</th>
+                                        <th>Percentage of Sample Dissatisfied</th>
                                     </tr>
-                                    {sample.map((citizen, k) => {
-                                        const reaction = this.props.generateDescription(citizen);
+                                    {this.props.topicNames.map((topic, k) => {
+                                        const numSatisfied = sample.reduce((acc, citizen) => {
+                                            if (citizen.traits[topic]
+                                                <= this.props.speechProposal[topic]) {
+                                                return acc + 1;
+                                            }
+                                            return acc;
+                                        }, 0);
+                                        const pctSatisfied = Math.round((numSatisfied
+                                            / sample.length) * 100);
                                         return (
                                             <tr key={k}>
-                                                <td>{citizen.name}</td>
-                                                <td>
-                                                    {reaction[0].map((topic, j) => (
-                                                        <span key={j}>{topic}<br/></span>
-                                                    ))}
-                                                </td>
-                                                <td>
-                                                    {reaction[1].map((topic, j) => (
-                                                        <span key={j}>{topic}<br/></span>
-                                                    ))}
-                                                </td>
+                                                <td>{topic}</td>
+                                                <td>{pctSatisfied}%</td>
+                                                <td>{100 - pctSatisfied}%</td>
                                             </tr>
                                         );
                                     })}
                                 </tbody>
                             </table>
                         }
-
                     </div>
                 </div>
                 <button className='campaign-btn' onClick={this.props.nextRound}>
@@ -83,6 +82,8 @@ Feedback.propTypes = {
     results: PropTypes.object,
     round: PropTypes.number,
     nextRound: PropTypes.func,
+    topicNames: PropTypes.array,
+    speechProposal: PropTypes.object,
 };
 
 export default Feedback;
