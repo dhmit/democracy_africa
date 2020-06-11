@@ -65,43 +65,44 @@ class Results extends React.Component {
                         </tr>
                     </tbody>
                 </table>
-                <div className='campaign-result_graphics'>
-                    <svg
-                        height={this.map_height}
-                        width={this.map_width}
-                        id='content'
-                        className='result-map'
-                    >
-                        {this.props.mapData.map((province, i) => {
-                            let countryFill;
-                            if (province.name) {
-                                countryFill = resultsData[province.name].totalSupporters
-                                / resultsData[province.name].citizens.length > 0.5
-                                    ? '#5abf5a' : '#db5653';
-                            } else {
-                                countryFill = '#F6F4D2';
-                            }
+                <div className="container">
+                    <div className="row">
+                        <svg
+                            height={this.map_height}
+                            width={this.map_width}
+                            id='content'
+                            className='result-map col-md-12 col-lg-6'
+                        >
+                            {this.props.mapData.map((province, i) => {
+                                let countryFill;
+                                if (province.name) {
+                                    countryFill = resultsData[province.name].totalSupporters
+                                    / resultsData[province.name].citizens.length > 0.5
+                                        ? '#5abf5a' : '#db5653';
+                                } else {
+                                    countryFill = '#F6F4D2';
+                                }
 
-                            return <MapPath
-                                key={i}
-                                path={province.svg_path}
-                                id={province.postal}
-                                fill={countryFill}
-                                stroke='black'
-                                strokeWidth='1'
-                                useColorTransition={false}
-                            />;
-                        })}
-                    </svg>
-                    <div className='result-population'>
-                        <div className='result-population_header'>
-                            Results for sample population of size {sample.length}
-                        </div>
-                        <div className='result-population_svg'>
-                            {citizens}
+                                return <MapPath
+                                    key={i}
+                                    path={province.svg_path}
+                                    id={province.postal}
+                                    fill={countryFill}
+                                    stroke='black'
+                                    strokeWidth='1'
+                                    useColorTransition={false}
+                                />;
+                            })}
+                        </svg>
+                        <div className='result-population col-lg-6 col-md-12'>
+                            <div className='result-population_header'>
+                                Results for sample population of size {sample.length}
+                            </div>
+                            <div className='result-population_svg'>
+                                {citizens}
+                            </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         );
