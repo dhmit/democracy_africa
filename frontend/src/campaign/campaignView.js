@@ -421,10 +421,10 @@ export class CampaignView extends React.Component {
 
         if (this.state.view === 'countryInfo') {
             return (<div className="row">
-                <div className='map-div col-md-12 col-lg-6'>
+                <div className='map-div col-md-12 col-lg-7'>
                     {campaign_map}
                 </div>
-                <div className='col-md-12 col-lg-6'>
+                <div className='col-md-12 col-lg-5'>
                     <p>
                         Click on each province to learn what your initial polling has revealed
                         about the needs of its inhabitants.
@@ -456,12 +456,14 @@ export class CampaignView extends React.Component {
                         mapData={this.state.mapData}
                         generateDescription={this.generateDescription}
                     />
-                    <button
-                        className='campaign-btn'
-                        onClick={() => this.setState({ showCountrySelector: true })}
-                    >
-                        Try again or switch countries
-                    </button>
+                    <div className="retry-button">
+                        <button
+                            className='campaign-btn'
+                            onClick={() => this.setState({ showCountrySelector: true })}
+                        >
+                            Try again or switch countries
+                        </button>
+                    </div>
                     {this.state.showCountrySelector
                         && <CountrySelectorPopup
                             changeCountry={this.changeCountry}
