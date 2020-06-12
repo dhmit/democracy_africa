@@ -89,9 +89,10 @@ const STAGE_1A = {
         'showOnEnd': true,
     },
     {
-        'text': <div>You stay with the movement and help block the roads. After, you join them at
-             the sit in. The protesters occupy the admin building and things escalate! You try to
-             escape, but get caught by the riot police.</div>,
+        'text': <div>You stay with the movement and help block the roads with burning tires.
+             Afterwards, you join the other protesters at the sit in and occupy the admin building,
+             but that was when things started to escalate! You try to
+             escape, but you get caught by the riot police.</div>,
         'stageName': 'STAGE_1AB_INT',
         'endDetail': '',
         'showOnEnd': true,
@@ -204,8 +205,9 @@ const STAGE_2_1C = {
 
 const STAGE_2A_INT = {
     'text': <div>
-        <p>Aha. Maybe those in the government will listen. This sounds like a better opportunity
-            to have an impact; you want to join this march. (Plus you feel kind of terrible that
+        <p>Aha. Maybe the Minister of Education and the members of the Parliament will finally
+            listen. This sounds like a better opportunity to have an impact; you want to join
+            this march. (Plus you feel kind of terrible that
             your friends got arrested.)</p>
         <p>Just as you are wrapping up, some people in the crowd agitate the police by throwing a
             flaming “coffin” Blade Nzimande at them, and violence breaks out.</p>
