@@ -16,7 +16,6 @@ import Feedback from './feedback';
 import Results from './results';
 import CountrySelectorPopup from './countrySelectorPopup';
 import IntroView from '../chooseAdventure/introView';
-import { Flexboard, Flexcard, getDragAfterElement } from './dragndrop'
 
 export class CampaignView extends React.Component {
     constructor(props) {

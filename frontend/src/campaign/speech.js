@@ -1,6 +1,6 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
-import { Flexboard, Flexcard, getDragAfterElement } from './dragndrop'
+import { Flexboard, Flexcard } from './dragndrop';
 
 export const COUNTRIES = [
     {
