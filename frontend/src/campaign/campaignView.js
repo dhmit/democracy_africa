@@ -361,9 +361,9 @@ export class CampaignView extends React.Component {
 
         const map_svg = (
             <svg
-                height={this.map_height}
-                width={this.map_width}
+                viewBox="0 0 550 550"
                 id='content'
+                className="svg-map"
                 onClick={(e) => this.handleProvinceMapClick(e, '')}
             >
                 {this.state.mapData.map((country, i) => {
@@ -421,7 +421,7 @@ export class CampaignView extends React.Component {
 
         if (this.state.view === 'countryInfo') {
             return (<div className="row">
-                <div className='map-div col-md-12 col-lg-7'>
+                <div className='col-md-12 col-lg-7'>
                     {campaign_map}
                 </div>
                 <div className='col-md-12 col-lg-5'>
@@ -479,8 +479,13 @@ export class CampaignView extends React.Component {
         if (this.state.view === 'feedback') {
             return (
                 <div className={'campaign-container'}>
-                    <div className="row">
-                        <div className="col-lg-6 col-md-12 order-md-2 order-lg-1">
+                    <div className="row" style={{ width: '100%' }}>
+                        <div className="col-lg-6 col-md-12 order-md-1
+                         order-lg-2">
+                            {campaign_map}
+                        </div>
+                        <div className="col-lg-6 col-md-12 order-md-2
+                         order-lg-1">
                             <Feedback
                                 clickedProvince={clickedProvince}
                                 round={this.state.round}
@@ -488,9 +493,6 @@ export class CampaignView extends React.Component {
                                 results={populationData}
                                 nextRound={() => this.setState({ view: 'speechMaker' })}
                             />
-                        </div>
-                        <div className="col-lg-6 col-md-12 order-md-1 order-lg-2">
-                            {campaign_map}
                         </div>
                     </div>
 

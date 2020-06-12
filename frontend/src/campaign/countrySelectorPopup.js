@@ -15,7 +15,7 @@ class CountrySelectorPopup extends React.Component {
                 <div className='row w-100'>
                     {COUNTRIES.map((country, key) => (
                         <div key={key} className='col-lg-4 col-md-12'>
-                            <div className='card' style={{marginBottom: '10px'}}>
+                            <div className='card' style={{ marginBottom: '10px' }}>
                                 <div className='card-header'>
                                     <h5>{country.name}</h5>
                                 </div>
