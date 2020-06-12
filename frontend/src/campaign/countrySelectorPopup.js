@@ -5,16 +5,24 @@ import { COUNTRIES } from './speech';
 class CountrySelectorPopup extends React.Component {
     selectCountryClosePopup = (country) => {
         this.props.changeCountry(country);
-        this.props.closePopup();
+        this.props.closePopup(true);
     };
 
     render() {
         return (
             <div className='country-selector'>
-                <h3>Select a country</h3>
+                <div className="modal-header country-header">
+                    <h3 className="country-title">Select a country</h3>
+                    <span
+                        className="close close-button"
+                        onClick={() => this.props.closePopup(false)}
+                    >
+                        &times;
+                    </span>
+                </div>
                 <div className='row w-100'>
                     {COUNTRIES.map((country, key) => (
-                        <div key={key} className='col-4'>
+                        <div key={key} className='col-sm-12 col-md-4'>
                             <div className='card' >
                                 <div className='card-header'>
                                     <h5>{country.name}</h5>
