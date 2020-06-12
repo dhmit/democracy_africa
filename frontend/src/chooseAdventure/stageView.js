@@ -221,25 +221,101 @@ const STAGE_2A_INT = {
     }],
 };
 
+// Not sure if we should use this because Evan mentioned how Twitter was more for the elite
+// while most students used Facebook or Whatsapp
+// <p>Many activist groups and students united on this topic on Twitter as it is one of the
+//     most prevalent issues currently. It was so much that this hashtag began trending
+//     worldwide on Twitter. Due to the pressure of the protests and the global pressure of
+//     the usage of this hashtag, many school officials sought ways to increase censorship and
+//     prevent protests on school and social media platforms. This was so extreme that the
+//     University of Cape Town even received a verdict from the High Court of South Africa to
+//     do so. This hashtag gave voice to many students that didn’t have any and gave these
+//     students the power to question the government. If there’s a way to learn about this
+//     from a student’s perspective, Twitter is the way to go!</p>
+
 const STAGE_2B_INT = {
     'text': <div>
-        <p>This sounds like something others should know about! You choose to use social
-        media to share what’s happening.</p>
-        <p>You inform other people of the march on parliament and it turns out that as many as 5000
-            people showed up to protest. You feel a mixed sense of relief and horror as you hear
-            about that chaos towards the end of the march.</p>
-        <p>From October 13th through November 10th 2015 over 1,270,738 Twitter tweets used this
-            hashtag to show support of the protest, and if you used this hashtag, you were one of
-            them!</p>
-        <p>Many activist groups and students united on this topic on Twitter as it is one of the
-            most prevalent issues currently. It was so much that this hashtag began trending
-            worldwide on Twitter. Due to the pressure of the protests and the global pressure of
-            the usage of this hashtag, many school officials sought ways to increase censorship and
-            prevent protests on school and social media platforms. This was so extreme that the
-            University of Cape Town even received a verdict from the High Court of South Africa to
-            do so. This hashtag gave voice to many students that didn’t have any and gave these
-            students the power to question the government. If there’s a way to learn about this
-            from a student’s perspective, Twitter is the way to go!</p>
+        <p>This sounds like something others should know about! You want to spread awareness through
+            social media. Which platform do you want to use?</p>
+    </div>,
+    'options': [{
+        'text': <div>Use Twitter</div>,
+        'stageName': 'STAGE_2BA_INT',
+        'endDetail': 'Although you did contribute to the movement through Twitter, many of your'
+            + ' retweets were not able to reach your peers who use other social media platforms.'
+            + ' In South Africa, it was mostly the elites who used Twitter.\n',
+        'showOnEnd': true,
+    },
+    {
+        'text': <div>Use WhatsApp</div>,
+        'stageName': 'STAGE_2BB_INT',
+        'endDetail': 'It turns out that as many as 5000 people showed up to protest at the'
+            + ' Parliament. Thanks to your help with actively getting your friends to join the'
+            + 'WhatsApp group chat, you were able to increase the number of people at the march'
+            + ' and make a big statement to the education officials.',
+        'showOnEnd': true,
+    },
+    {
+        'text': <div>Use Facebook</div>,
+        'stageName': 'STAGE_2BC_INT',
+        'endDetail': '',
+        'showOnEnd': true,
+    }],
+};
+
+const STAGE_2BA_INT = {
+    'text': <div>
+        <p>
+            You retweet some of the tweets by the student organizers of the #FeesMustFall movement,
+            hoping that the logistics regarding the demonstrations at your school is spread to
+            students who are willing and able to participate in the protests.
+        </p>
+        <p>
+            After the day of the march, you feel a mixed sense of relief and horror as you hear
+            about that chaos towards the end of the march.
+        </p>
+        <p>
+            From October 13th through November 10th 2015 over 1,270,738 Twitter tweets used this
+            hashtag to show support of the protest, and since you spread this hashtag, you were one
+            of the many people who helped support this movement!
+        </p>
+    </div>,
+    'options': [{
+        'text': <div>Next</div>,
+        'stageName': null,
+        'endDetail': '',
+        'showOnEnd': false,
+    }],
+};
+
+const STAGE_2BB_INT = {
+    'text': <div>
+        <p>Your friend, who is one of the student organizers of the #FeesMustFall movement at
+            your school, adds you to a group chat on WhatsApp, where the organizers post
+            information relevant to the protests. They ask you to add other people you know
+            to the group chat.
+        </p>
+        <p>
+            Through this platform, the organizers are able to inform thousands of students
+            about the march at the Parliament.
+        </p>
+
+    </div>,
+    'options': [{
+        'text': <div>Next</div>,
+        'stageName': null,
+        'endDetail': '',
+        'showOnEnd': false,
+    }],
+};
+
+const STAGE_2BC_INT = {
+    'text': <div>
+        <p>You message some of your old friends from high school; some of them are attending
+            other universities where the movement has not started yet. You encourage them to
+            gather other students from their universities and organize a group to demonstrate
+            solidarity with the #FeesMustFall movement.</p>
+
     </div>,
     'options': [{
         'text': <div>Next</div>,
@@ -263,6 +339,8 @@ const STAGE_2C_INT = {
     }],
 };
 
+
+
 const NAME_TO_STAGE = {
     'STAGE_1': STAGE_1,
     'STAGE_1A': STAGE_1A,
@@ -274,6 +352,9 @@ const NAME_TO_STAGE = {
     'STAGE_2A_INT': STAGE_2A_INT,
     'STAGE_2B_INT': STAGE_2B_INT,
     'STAGE_2C_INT': STAGE_2C_INT,
+    'STAGE_2BA_INT': STAGE_2BA_INT,
+    'STAGE_2BB_INT': STAGE_2BB_INT,
+    'STAGE_2BC_INT': STAGE_2BC_INT,
 };
 
 class Option extends React.Component {
