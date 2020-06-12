@@ -332,13 +332,13 @@ class StageView extends React.Component {
         return (
             <div className='wrapper'>
                 <div className='row'>
-                    <div className='col-6'>
+                    <div className='col-sm-12 col-md-6' style={{ marginBottom: '10px' }}>
                         <div>{stage.text}</div>
                         <div className="option-selectors-list">
                             {optionComponents}
                         </div>
                     </div>
-                    <div className='col-6'>
+                    <div className='col-sm-12 col-md-6'>
                         {stage.imgFilename
                             && <CaptionedImage
                                 alt={stage.imgAlt}
