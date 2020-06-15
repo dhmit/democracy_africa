@@ -507,7 +507,6 @@ export class CampaignView extends React.Component {
         }
 
         if (this.state.view === 'speechMaker') {
-            console.log(this.state.topicNames);
             return (
                 <div className='speech-maker'>
                     <Speech
