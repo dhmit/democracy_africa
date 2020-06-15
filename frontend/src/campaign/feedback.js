@@ -23,7 +23,7 @@ class Feedback extends React.Component {
         const description = (<div>
             {clickedProvince
                 ? (<strong>
-                    Round {this.props.round - 1} results for {clickedProvince}
+                    Round {this.props.round - 1} Polling Results For {clickedProvince}
                 </strong>)
                 : (<></>)}
         </div>);
@@ -32,14 +32,14 @@ class Feedback extends React.Component {
             <div className='feedback'>
                 <div className='feedback-results'>
                     <p>
-                    Click on a province, and then mouse over citizens to see their reactions to your
-                    proposal.
+                        Click on a province to see what our polling found out about how satisfied
+                        a sample of citizens from that province were with your priorities.
                     </p>
 
                     {description}
                     <div className='feedback-pop'>
                         {clickedProvince
-                            && <table border="1" className={'feedback-table'}>
+                            && <table border="1" className={'resultTable'}>
                                 <tbody>
                                     <tr>
                                         <th>Topic</th>
