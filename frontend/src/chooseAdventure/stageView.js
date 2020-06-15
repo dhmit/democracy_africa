@@ -1,11 +1,10 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
 import { CaptionedImage } from '../UILibrary/components';
-import { FEES_MUST_FALL_NAME_TO_STAGE as NAME_TO_STAGE } from './adventures/FeesMustFall';
 
 class Option extends React.Component {
     render() {
-        const stage = NAME_TO_STAGE[this.props.option.stageName];
+        const stage = this.props.NAME_TO_STAGE[this.props.option.stageName];
         const { option } = this.props;
         return (
             <div className='cyoa-button' onClick={() => this.props.setStage(stage, option)}>
@@ -15,6 +14,7 @@ class Option extends React.Component {
     }
 }
 Option.propTypes = {
+    NAME_TO_STAGE: PropTypes.object,
     option: PropTypes.object,
     setStage: PropTypes.func,
     img_url: PropTypes.string,
@@ -28,14 +28,14 @@ class StageView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            stage: NAME_TO_STAGE['STAGE_1'],
+            stage: this.props.NAME_TO_STAGE['STAGE_1'],
         };
     }
 
     setStage = (stage, option) => {
         this.props.updateHistory(option);
         if (option.stageName) {
-            this.setState({ stage: NAME_TO_STAGE[option.stageName] });
+            this.setState({ stage: this.props.NAME_TO_STAGE[option.stageName] });
         } else {
             this.props.setView('end');
         }
@@ -44,20 +44,20 @@ class StageView extends React.Component {
 
     render() {
         const stage = this.state.stage;
-        console.log(stage);
 
         let optionComponents = <div>Loading...</div>;
         if (stage.options) {
             optionComponents = stage.options.map((option, k) => {
                 return (
                     <Option
-                        key={k} option={option} setStage={this.setStage}
+                        key={k}
+                        option={option}
+                        setStage={this.setStage}
+                        NAME_TO_STAGE={this.props.NAME_TO_STAGE}
                     />
                 );
             });
         }
-        console.log(stage);
-        console.log(stage.imgFile);
 
         return (
             <div className='wrapper'>
@@ -83,7 +83,7 @@ class StageView extends React.Component {
     }
 }
 StageView.propTypes = {
-    stageName: PropTypes.string,
+    NAME_TO_STAGE: PropTypes.object,
     updateHistory: PropTypes.func,
     setView: PropTypes.func,
 };

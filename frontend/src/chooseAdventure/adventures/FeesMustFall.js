@@ -258,7 +258,7 @@ const STAGE_2C_INT = {
     }],
 };
 
-export const FEES_MUST_FALL_NAME_TO_STAGE = {
+const NAME_TO_STAGE = {
     'STAGE_1': STAGE_1,
     'STAGE_1A': STAGE_1A,
     'STAGE_1AB_INT': STAGE_1AB_INT,
@@ -270,3 +270,78 @@ export const FEES_MUST_FALL_NAME_TO_STAGE = {
     'STAGE_2B_INT': STAGE_2B_INT,
     'STAGE_2C_INT': STAGE_2C_INT,
 };
+
+const introDesc = (
+    <>
+        <h5>
+        You are a sophomore at Rhodes University, in Grahamstown, South Africa.
+        </h5>
+        <p>
+        Reports of tuition increases of up to 10.5% have come out from multiple South African
+        universities, including Rhodes. Students at the University of Witwatersrand and the
+        University of Cape Town have already begun protesting, and there are rumors floating
+        around social media about a student-led total shutdown of the Rhodes Campus.
+        </p>
+        <p>
+        Many students are worried that these higher fees will shut poorer students out of
+        education. However, other students are worried that the disruption caused by a protest
+        will be more harmful to the ability to learn.
+        </p>
+    </>
+);
+
+const endDesc = (
+    <>
+        <p>
+            On 23 October, 2015, South African President Zuma announced that there would
+            be no tuition increases in 2016.
+        </p>
+        <p>
+            Protesters hailed this as a victory, but this announcement did not spell
+            the end of the Fallist movement.
+        </p>
+        <p>
+            In 2016, similar rumors about tuition increases started circulating,
+            leading to the start of #FeesMustFall2016. Overall, the protests cost
+            about 800 million South African rand (42 million <small>USD</small>)
+            in damage.
+        </p>
+    </>
+);
+
+const endImg = {
+    imgFilename: 'FMF_demonstration_1.jpg',
+    imgCaption: (
+        <>
+            Photo credit:&nbsp;
+            <a href="https://search.creativecommons.org/photos/62c80a30-6066-40e7-badc-a6a637099d05" title="via Wikimedia Commons">
+                tony4carr
+            </a> / <a href="https://creativecommons.org/licenses/by-nc/2.0">CC BY-NC</a>
+        </>
+    ),
+    imgAlt: 'Student protesters during the #FeesMustFall movement',
+};
+
+const introImg = {
+    imgFilename: 'FMF_intro.png',
+    imgCaption: (
+        <>
+            Photo credit:&nbsp;
+            <a
+                href="https://commons.wikimedia.org/wiki/File:FMF_-_FeesMustFall.png"
+                title="via Wikimedia Commons"
+            >David.ritchie.05</a>
+            /
+            <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA</a>
+        </>
+    ),
+    imgAlt: 'A student protester holding a #FeesMustFall sign',
+};
+
+export const feesMustFallAdventure = {
+    NAME_TO_STAGE: NAME_TO_STAGE,
+    intro: { desc: introDesc, img: introImg },
+    end: { desc: endDesc, img: endImg },
+};
+
+
