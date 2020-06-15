@@ -13,7 +13,7 @@ export const COUNTRIES = [
             'Fighting corruption',
         ],
         supportThreshold: 0.5,
-        max_priority_points: 12,
+        max_priority_points: 13,
     },
     {
         name: 'Kenya',
@@ -48,7 +48,7 @@ export const COUNTRIES = [
             'Fighting corruption',
             'Reducing violent community conflict',
         ],
-        supportThreshold: 12,
+        supportThreshold: 14,
         max_priority_points: 35,
     },
 ];
@@ -180,9 +180,9 @@ export class Speech extends React.Component {
 
     priorityPoint() {
         if (this.max_priority_points - this.state.total > 0) {
-            return 'You can prioritize more things.';
+            return 'You can prioritize more things.' + (this.max_priority_points - this.state.total);
         }
-        return 'You need to de-prioritize others first';
+        return 'You need to de-prioritize others first' + (this.max_priority_points - this.state.total);
     }
 
     render() {
@@ -192,10 +192,10 @@ export class Speech extends React.Component {
                     {topic}
                 </div>
                 <div className='speech-option_btns'>
-                    {[...Array(5).keys()].map((score, j) => (
+                    {[...Array(3).keys()].map((score, j) => (
                         <input className='speech-radio' type='radio' name={topic} key={j}
-                            id={'inlineRadio' + score + 1} value={score + 1}
-                            checked={this.state.speechProposal[topic] === score + 1}
+                            id={'inlineRadio' + (2 * score + 1)} value={2 * score + 1}
+                            checked={this.state.speechProposal[topic] === (2 * score + 1)}
                             onChange={(e) => this.handleButtonOnChange(e, topic)}/>
                         // </div>
                     ))}
