@@ -235,23 +235,25 @@ const STAGE_2A_INT = {
 
 const STAGE_2B_INT = {
     'text': <div>
-        <p>This sounds like something others should know about! You want to spread awareness through
-            social media. Which platform do you want to use?</p>
+        <p>This march sounds like something others should know about! To spread awareness about
+            this event, you are going to use social media. Which social media platform do
+            you want to use?</p>
     </div>,
     'options': [{
         'text': <div>Use Twitter</div>,
         'stageName': 'STAGE_2BA_INT',
-        'endDetail': 'Although you did contribute to the movement through Twitter, many of your'
-            + ' retweets were not able to reach your peers who use other social media platforms.'
-            + ' In South Africa, it was mostly the elites who used Twitter.\n',
+        'endDetail': 'Through Twitter, you spread awareness of the movement and the march.'
+            + ' However, your retweets were not able to reach your peers who use other social'
+            + ' media platforms. In fact, in South Africa, it was mostly the elites who used'
+            + ' Twitter.\n',
         'showOnEnd': true,
     },
     {
         'text': <div>Use WhatsApp</div>,
         'stageName': 'STAGE_2BB_INT',
         'endDetail': 'It turns out that as many as 5000 people showed up to protest at the'
-            + ' Parliament. Thanks to your help with actively getting your friends to join the'
-            + 'WhatsApp group chat, you were able to increase the number of people at the march'
+            + ' Parliament. Thanks to your help with actively inviting your friends to join the'
+            + ' WhatsApp group chat, you were able to increase the number of people at the march'
             + ' and make a big statement to the education officials.',
         'showOnEnd': true,
     },
@@ -266,9 +268,9 @@ const STAGE_2B_INT = {
 const STAGE_2BA_INT = {
     'text': <div>
         <p>
-            You retweet some of the tweets by the student organizers of the #FeesMustFall movement,
-            hoping that the logistics regarding the demonstrations at your school is spread to
-            students who are willing and able to participate in the protests.
+            You go on Twitter and retweet some of the tweets by the student organizers of the
+            #FeesMustFall movement, hoping that the logistics regarding the march at Parliament is
+            spread to students who are willing and able to participate in the protests.
         </p>
         <p>
             After the day of the march, you feel a mixed sense of relief and horror as you hear
@@ -276,7 +278,7 @@ const STAGE_2BA_INT = {
         </p>
         <p>
             From October 13th through November 10th 2015 over 1,270,738 Twitter tweets used this
-            hashtag to show support of the protest, and since you spread this hashtag, you were one
+            hashtag to show support of the protest, and since you used this hashtag, you were one
             of the many people who helped support this movement!
         </p>
     </div>,
