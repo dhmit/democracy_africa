@@ -138,7 +138,7 @@ $edx-button-color: #e7e7e7;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     width: 50rem;
@@ -196,6 +196,27 @@ $edx-button-color: #e7e7e7;
     }
 }
 
+
 .feedback-table {
     text-align: center;
+}
+
+.support {
+    color: #5abf5a;
+}
+
+.unsupport {
+    color: #db5653;
+}
+
+.country-header {
+    width: 100%;
+}
+
+.country-title {
+    margin-left: 36%;
+}
+
+.close-button {
+    cursor: pointer;
 }

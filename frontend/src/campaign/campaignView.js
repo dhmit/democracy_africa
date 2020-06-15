@@ -39,7 +39,6 @@ export class CampaignView extends React.Component {
 
     calculate_averages() {
         const population = this.state.populationData;
-        console.log(this.state);
         Object.keys(population).forEach((province) => {
             Object.keys(population[province]['citizens']).forEach((citizen_name) => {
                 // eslint-disable-next-line max-len
@@ -75,7 +74,6 @@ export class CampaignView extends React.Component {
             return '';
         }
         const averages = this.state.populationData[selected_province]['averages'];
-        console.log(averages);
         if (selected_province !== '' && selected_province !== null) {
             Object.keys(averages).forEach((trait) => {
                 if (averages[trait] <= 2.5) {
@@ -84,8 +82,6 @@ export class CampaignView extends React.Component {
                     high_value.push(trait);
                 }
             });
-            console.log(low_value);
-            console.log(high_value);
             if (high_value.length === 0 && low_value.length === 0) {
                 return 'Citizens of this province are equally concerned about all of the issues.';
             }
@@ -180,7 +176,6 @@ export class CampaignView extends React.Component {
                     };
                 }
             });
-            console.log(population);
 
             const topicNames = get_country_prop(this.state.countryName, 'topicNames');
 
@@ -335,9 +330,17 @@ export class CampaignView extends React.Component {
                     {this.state.showCountrySelector
                         && <CountrySelectorPopup
                             changeCountry={this.changeCountry}
-                            closePopup={() => this.setState(
-                                { showCountrySelector: false, view: 'countryInfo' },
-                            )}
+                            closePopup={(startGame) => {
+                                if (startGame) {
+                                    this.setState(
+                                        { showCountrySelector: false, view: 'countryInfo' },
+                                    );
+                                } else {
+                                    this.setState(
+                                        { showCountrySelector: false },
+                                    );
+                                }
+                            }}
                         />
                     }
                     <IntroView
@@ -387,7 +390,6 @@ export class CampaignView extends React.Component {
                         && this.state.populationData[country.name]
                         && this.state.view !== 'speechMaker') {
                         const data = this.state.populationData[country.name];
-                        /* eslint-disable-next-line max-len */
                         const supports = data['totalSupporters'] / data['citizens'].length > 0.5;
                         countryFill = supports ? '#B8E39B' : '#F19C79';
                     }
@@ -461,15 +463,14 @@ export class CampaignView extends React.Component {
         if (this.state.view === 'submitted') {
             return (
                 <div>
-                    <p className={'resultHeader'}>
-                        Final Results for {countryName}
-                    </p>
                     <Results
                         provinceData={populationData}
                         countryData={aggregateResult}
                         countryName={countryName}
                         mapData={this.state.mapData}
                         generateDescription={this.generateDescription}
+                        map={campaign_map}
+                        clickedProvince={this.state.clickedProvince}
                     />
                     <button
                         className='campaign-btn'
@@ -480,9 +481,17 @@ export class CampaignView extends React.Component {
                     {this.state.showCountrySelector
                         && <CountrySelectorPopup
                             changeCountry={this.changeCountry}
-                            closePopup={() => this.setState(
-                                { showCountrySelector: false, view: 'countryInfo' },
-                            )}
+                            closePopup={(startGame) => {
+                                if (startGame) {
+                                    this.setState(
+                                        { showCountrySelector: false, view: 'countryInfo' },
+                                    );
+                                } else {
+                                    this.setState(
+                                        { showCountrySelector: false },
+                                    );
+                                }
+                            }}
                         />
                     }
                 </div>
