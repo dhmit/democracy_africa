@@ -13,7 +13,7 @@ export const COUNTRIES = [
             'Fighting corruption',
         ],
         supportThreshold: 0.5,
-        max_priority_points: { 'low': 3, 'medium': 3, 'high': 2 },
+        max_priority_points: 13,
     },
     {
         name: 'Kenya',
@@ -29,7 +29,7 @@ export const COUNTRIES = [
             'Fighting corruption',
         ],
         supportThreshold: 2,
-        max_priority_points: { 'low': 6, 'medium': 6, 'high': 3 },
+        max_priority_points: 22,
     },
     {
         name: 'South Africa',
@@ -49,7 +49,7 @@ export const COUNTRIES = [
             'Reducing violent community conflict',
         ],
         supportThreshold: 14,
-        max_priority_points: { 'low': 10, 'medium': 10, 'high': 5 },
+        max_priority_points: 35,
     },
 ];
 
@@ -126,53 +126,23 @@ export class Speech extends React.Component {
         }
     }
 
-    makeProposalDict(speech) {
-        const dict = {
-            'low': 0, 'medium': 0, 'high': 0,
-        };
-        for (const topic of Object.keys(speech)) {
-            if (speech[topic] === 1) {
-                dict['low'] += 1;
-            } else if (speech[topic] === 3) {
-                dict['medium'] += 1;
-            } else if (speech[topic] === 5) {
-                dict['high'] += 1;
-            }
-        }
-        return dict;
-    }
-
-    noProblem(dict) {
-        let acceptable = true;
-        for (const priority of Object.keys(this.max_priority_points)) {
-            if (dict[priority] > this.max_priority_points[priority]) {
-                acceptable = false;
-            }
-        }
-        return acceptable;
-    }
-
     /**
      * Handles when the slider changes by changing the state of what the maximum values should
      * be for each category and updates the number of supporters
      * @param e The event that is triggered, use e.target.value to get the value of the slider
      * @param topic Tells which topic the slider belongs to so that it updates the speech
      */
-
     handleButtonOnChange = (e, topic) => {
         const newVal = parseInt(e.target.value);
         const newProposal = this.props.speechProposal;
         const oldVal = newProposal[topic];
-        newProposal[topic] = newVal;
-        if (this.noProblem(this.makeProposalDict(newProposal))) {
+        if (this.state.total + newVal - oldVal <= this.max_priority_points) {
             newProposal[topic] = newVal;
             this.setState({
                 speechProposal: newProposal,
                 total: this.state.total + newVal - oldVal,
                 result: this.countSupporters(),
             });
-        } else {
-            newProposal[topic] = oldVal;
         }
     };
 
@@ -209,10 +179,10 @@ export class Speech extends React.Component {
     };
 
     priorityPoint() {
-        if (this.noProblem(this.makeProposalDict(this.props.speechProposal))) {
-            return 'You can prioritize more things.';
+        if (this.max_priority_points - this.state.total > 0) {
+            return 'You can prioritize more things.' + (this.max_priority_points - this.state.total);
         }
-        return 'You need to de-prioritize others first';
+        return 'You need to de-prioritize others first' + (this.max_priority_points - this.state.total);
     }
 
     render() {
