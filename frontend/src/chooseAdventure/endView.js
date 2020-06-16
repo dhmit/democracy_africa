@@ -55,7 +55,8 @@ class EndView extends React.Component {
                 <div className="col-6">
                     <p>
                         On 23 October, 2015, South African President Zuma announced that there would
-                        be no tuition increases in 2016.
+                        be <a href="https://www.bbc.com/news/world-africa-34618724">
+                        no tuition increases</a> in 2016.
                     </p>
                     <p>
                         Protesters hailed this as a victory, but this announcement did not spell
@@ -66,6 +67,13 @@ class EndView extends React.Component {
                         leading to the start of #FeesMustFall2016. Overall, the protests cost
                         about 800 million South African rand (42 million <small>USD</small>)
                         in damage.
+                    </p>
+                    <p>
+                        Here is additional information about the&nbsp;
+                        <a href="https://en.wikipedia.org/wiki/FeesMustFall">
+                            #FeesMustFall
+                        </a>
+                        &nbsp;movement.
                     </p>
                 </div>
                 <div className="col-6">
