@@ -73,16 +73,15 @@ export const get_default_proposal = (topic_names) => {
 export class Speech extends React.Component {
     constructor(props) {
         super(props);
-        this.max_priority_points = get_country_prop(this.props.countryName, 'max_priority_points');
         this.state = {
             speechProposal: this.props.speechProposal,
             result: 0,
             total: Object.keys(this.props.speechProposal).reduce((acc, topic) => {
                 return acc + this.props.speechProposal[topic];
             }, 0),
-            atMaxStatement: this.noProblem(this.makeProposalDict(this.props.speechProposal))[1],
         };
         this.difference_threshold = get_country_prop(this.props.countryName, 'supportThreshold');
+        this.max_priority_points = get_country_prop(this.props.countryName, 'max_priority_points');
     }
 
     /**
@@ -145,16 +144,12 @@ export class Speech extends React.Component {
 
     noProblem(dict) {
         let acceptable = true;
-        let atMaxStatement = '';
         for (const priority of Object.keys(this.max_priority_points)) {
             if (dict[priority] > this.max_priority_points[priority]) {
                 acceptable = false;
-            } else {
-                atMaxStatement += 'You can have ' + (this.max_priority_points[priority]
-                    - dict[priority]) + ' more sectors at ' + priority + ' priority.\n';
             }
         }
-        return [acceptable, atMaxStatement];
+        return acceptable;
     }
 
     /**
@@ -169,16 +164,12 @@ export class Speech extends React.Component {
         const newProposal = this.props.speechProposal;
         const oldVal = newProposal[topic];
         newProposal[topic] = newVal;
-        const updateData = this.noProblem(this.makeProposalDict(newProposal));
-        const acceptableConfiguration = updateData[0];
-        const newAtMaxStatement = updateData[1];
-        if (acceptableConfiguration) {
+        if (this.noProblem(this.makeProposalDict(newProposal))) {
             newProposal[topic] = newVal;
             this.setState({
                 speechProposal: newProposal,
                 total: this.state.total + newVal - oldVal,
                 result: this.countSupporters(),
-                atMaxStatement: newAtMaxStatement
             });
         } else {
             newProposal[topic] = oldVal;
@@ -218,7 +209,10 @@ export class Speech extends React.Component {
     };
 
     priorityPoint() {
-        return this.state.atMaxStatement;
+        if (this.noProblem(this.makeProposalDict(this.props.speechProposal))) {
+            return 'You can prioritize more things.';
+        }
+        return 'You need to de-prioritize others first';
     }
 
     render() {
