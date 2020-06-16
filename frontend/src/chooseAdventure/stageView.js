@@ -61,8 +61,8 @@ const STAGE_1 = {
             'showOnEnd': true,
         },
         {
-            'text': <div>Agree to participate in the sit-in, but you’re a little skeptical: want to
-                learn more</div>,
+            'text': <div>Agree; however, you’re a little skeptical about how the sit-in will be
+                effective. You want to learn more about the movement.</div>,
             'stageName': 'STAGE_1B_INT',
             'endDetail': '',
             'showOnEnd': true,
@@ -112,14 +112,90 @@ const STAGE_1AB_INT = {
 
 const STAGE_1B_INT = {
     'text': <div>
-        <p>After you’ve had a while to ponder, you decide you want to participate, but you’d prefer
-            a less confrontational route.</p>
-        <p>In the meantime, the university closes anyway.</p>
-        <p>On 19 October, the University agrees to new negotiations.</p>
+        <p>You decide that you want to gain a better understanding about the current events
+            surrounding the movement. How would you like to learn more?</p>
+    </div>,
+    'options': [{
+        'text': <div>Read articles and social media posts on the Internet.</div>,
+        'stageName': 'STAGE_1BA_INT',
+        'endDetail': '',
+        'showOnEnd': true,
+    },
+    {
+        'text': <div>Ask your parents.</div>,
+        'stageName': 'STAGE_1BB_INT',
+        'endDetail': '',
+        'showOnEnd': true,
+    },
+    {
+        'text': <div>Talk to your friends and other students.</div>,
+        'stageName': 'STAGE_1BC_INT',
+        'endDetail': '',
+        'showOnEnd': true,
+    }],
+};
+
+const STAGE_1BA_INT = {
+    'text': <div>
+        <p>You decide to spend some time to educate yourself about the #FeesMustFall movement.
+            After some research, you became even more aware of the large extent to which your
+            country's higher education system is, structurally and financially, still effected
+            by legacies of the apartheid eras.
+        </p>
+        <p>
+            With this new knowledge, you understand that the time to address these issues is
+            now and so you decide to go to the sit-in.
+        </p>
+    </div>,
+    'options': [{
+        'text': <div>Next</div>,
+        'stageName': 'STAGE_1A',
+        'endDetail': '',
+        'showOnEnd': false,
+    }],
+};
+
+const STAGE_1BB_INT = {
+    'text': <div>
+        <p>After mentioning student demonstrations like the sit-in to your family members, they
+            give you some warnings about the risk of getting expelled by your school or having any
+            disciplinary and criminal records that might make it more difficult for you to
+            find jobs in the future.
+        </p>
+        <p>
+            Ultimately, you decide that you will support the movement but in a less
+            confrontational way.
+        </p>
+        <p>
+            In the meantime, the university closes anyway and on the 19th of October,
+            the University agrees to begin new negotiations with the students.
+        </p>
     </div>,
     'options': [{
         'text': <div>Next</div>,
         'stageName': 'STAGE_2',
+        'endDetail': '',
+        'showOnEnd': false,
+    }],
+};
+
+const STAGE_1BC_INT = {
+    'text': <div>
+        <p>As you leave your final class of the day, you ask your friends whether they are going
+            to the sit-in. Most of them are going to oppose the increase in fees. One of the
+            students mentions how their family is already having a hard time paying for tuition.
+        </p>
+        <p>
+            After being moved by the anecdotes of your peers, you also think about how difficult it
+            was for your family to gather enough money to pay for your own tuition. Allowing a
+            further increase in tuition will devastate your education and your family. You decide
+            to go to the sit-in to support the cause.
+        </p>
+
+    </div>,
+    'options': [{
+        'text': <div>Next</div>,
+        'stageName': 'STAGE_1A',
         'endDetail': '',
         'showOnEnd': false,
     }],
@@ -340,6 +416,9 @@ const NAME_TO_STAGE = {
     'STAGE_1AB_INT': STAGE_1AB_INT,
     'STAGE_1B_INT': STAGE_1B_INT,
     'STAGE_1C_INT': STAGE_1C_INT,
+    'STAGE_1BA_INT': STAGE_1BA_INT,
+    'STAGE_1BB_INT': STAGE_1BB_INT,
+    'STAGE_1BC_INT': STAGE_1BC_INT,
     'STAGE_2': STAGE_2,
     'STAGE_2_1C': STAGE_2_1C,
     'STAGE_2A_INT': STAGE_2A_INT,
