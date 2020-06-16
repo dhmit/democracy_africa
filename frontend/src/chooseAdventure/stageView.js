@@ -49,6 +49,17 @@ const violence_img_props = {
     </>),
 };
 
+const library_img_props = {
+    'imgFilename': 'FMF_library.jpg',
+    'imgAlt': 'A student studying at the library',
+    'imgCaption': (<>
+        Photo credit:&nbsp;
+        <a href="https://www.flickr.com/photos/70105586@N00/115691311">
+            Shaine Mata
+        </a> / <a href="https://creativecommons.org/licenses/by-nc/2.0/">CC BY-NC 2.0</a>
+    </>),
+};
+
 const STAGE_1 = {
     'text': <div>A friend texts you about a sit-in at the administrative offices. What is your
         initial reaction?</div>,
@@ -141,6 +152,7 @@ const STAGE_1C_INT = {
         <p>In the meantime, the university closes anyway.</p>
         <p>On 19 October, the University agrees to new negotiations.</p>
     </div>,
+    ...library_img_props,
     'options': [{
         'text': <div>Next</div>,
         'stageName': 'STAGE_2_1C',
