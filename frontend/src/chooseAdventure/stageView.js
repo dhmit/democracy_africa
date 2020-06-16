@@ -60,6 +60,28 @@ const library_img_props = {
     </>),
 };
 
+const blockade_img_props = {
+    'imgFilename': 'FMF_blockade.jpg',
+    'imgAlt': '#FeesMustFall protesters blockade a road with a burning tire.',
+    'imgCaption': (<>
+        Photo credit:&nbsp;
+        <a href="https://www.flickr.com/photos/70105586@N00/115691311">
+            Ian Barbour
+        </a> / <a href="https://creativecommons.org/licenses/by-nc-sa/2.0/">CC BY-NC-SA 2.0</a>
+    </>),
+};
+
+const social_media_img_props = {
+    'imgFilename': 'FMF_social_media.jpg',
+    'imgAlt': 'A phone with various social media apps like Facebook, Twitter, and Whatsapp.',
+    'imgCaption': (<>
+        Photo credit:&nbsp;
+        <a href="https://pxhere.com/en/photo/1063277">
+            Unknown
+        </a> / <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC BY-CC0 1.0</a>
+    </>),
+};
+
 const STAGE_1 = {
     'text': <div>A friend texts you about a sit-in at the administrative offices. What is your
         initial reaction?</div>,
@@ -91,6 +113,7 @@ const STAGE_1 = {
 const STAGE_1A = {
     'text': <div>You get there, but feel the tension of the situation. What do you want to do?
     </div>,
+    ...blockade_img_props,
     'options': [{
         'text': <div> You decide to sneak out before things get worse and are worried that the
              sit-in might escalate from a purely peaceful protest because students
@@ -100,9 +123,9 @@ const STAGE_1A = {
         'showOnEnd': true,
     },
     {
-        'text': <div>You stay with the movement and help block the roads. After, you join them at
-             the sit in. The protesters occupy the admin building and things escalate! You try to
-             escape, but get caught by the riot police.</div>,
+        'text': <div>You stay with the movement and help block the roads with burning tires. After,
+            you join them at the sit in. The protesters occupy the admin building and things
+            escalate! You try to escape, but get caught by the riot police.</div>,
         'stageName': 'STAGE_1AB_INT',
         'endDetail': '',
         'showOnEnd': true,
@@ -251,6 +274,7 @@ const STAGE_2B_INT = {
             students the power to question the government. If there’s a way to learn about this
             from a student’s perspective, Twitter is the way to go!</p>
     </div>,
+    ...social_media_img_props,
     'options': [{
         'text': <div>Next</div>,
         'stageName': null,
