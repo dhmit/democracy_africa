@@ -227,8 +227,6 @@ const STAGE_1C_INT = {
         <p>A few days later, your university closes indefinitely. You start to feel a bit bad that
             you spent those last days on campus preparing for exams rather than actively
             protesting. </p>
-        <p>In the meantime, the university closes anyway.</p>
-        <p>On 19 October, the University agrees to new negotiations.</p>
     </div>,
     'options': [{
         'text': <div>Next</div>,
