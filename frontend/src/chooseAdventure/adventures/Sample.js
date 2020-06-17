@@ -15,39 +15,33 @@ const sample_img_props = {
 };
 
 const STAGE_1 = {
-    'text': <div>What kind of pet do you want?</div>,
+    'text': <div>Sample Question 1?</div>,
     ...sample_img_props,
     'options': [
         {
-            'text': <div>Dog</div>,
+            'text': <div>Option A</div>,
             'stageName': 'STAGE_1A',
-            'endDetail': 'You are now less lonely because you have a dog, one of your favorite'
-                + ' animals. You spend the rest of your summer feeding the dog and teaching it'
-                + ' tricks.',
+            'endDetail': <div>Chose option A</div>,
             'showOnEnd': true,
         },
         {
-            'text': <div>Cat</div>,
-            'stageName': 'STAGE_1B_INT',
-            'endDetail': 'Your neighbor is not happy about your cat because she is allergic to'
-                + ' cats. At least you are not lonely. This summer, you made many fond memories'
-                + ' with your cat.',
+            'text': <div>Option B</div>,
+            'stageName': 'STAGE_1B',
+            'endDetail': <div>Chose option B</div>,
             'showOnEnd': true,
         },
         {
-            'text': <div>Snake</div>,
-            'stageName': 'STAGE_1C_INT',
-            'endDetail': 'The snake does not seem to like its new home, but it does seem fun to'
-                + ' watch it slither around. One day, the snake bites you and you cry. Maybe you'
-                + ' should have gotten another pet.',
+            'text': <div>Option C</div>,
+            'stageName': 'STAGE_1C',
+            'endDetail': <div>Chose option C</div>,
             'showOnEnd': true,
         },
     ],
 };
 
 const STAGE_1A = {
-    'text': <div>You decide to get a dog. When you go to the adoption center, you see a beautiful
-    corgi. You decide to adopt that dog and give it a home.</div>,
+    'text': <div>This is sample text for Option A. It has an image. </div>,
+    ...sample_img_props,
     'options': [{
         'text': <div>Next</div>,
         'stageName': null,
@@ -56,11 +50,8 @@ const STAGE_1A = {
     }],
 };
 
-const STAGE_1B_INT = {
-    'text': <div>
-        You decide to get a cat. Upon arriving at the adoption center, a black and white cat
-        stands out from the rest of the animals. You decide to adopt that cat.
-    </div>,
+const STAGE_1B = {
+    'text': <div>This is sample text for Option B. It does not have an image.</div>,
     'options': [{
         'text': <div>Next</div>,
         'stageName': null,
@@ -69,11 +60,9 @@ const STAGE_1B_INT = {
     }],
 };
 
-const STAGE_1C_INT = {
-    'text': <div>
-        You went with your parents to the pet store, but couldn't find a snake. Luckily, on your way
-        home, you found a snake on the sidewalk and decide to take it home.
-    </div>,
+const STAGE_1C = {
+    'text': <div>This is sample text for Option C. It has an image.</div>,
+    ...sample_img_props,
     'options': [{
         'text': <div>Next</div>,
         'stageName': null,
@@ -85,25 +74,24 @@ const STAGE_1C_INT = {
 const NAME_TO_STAGE = {
     'STAGE_1': STAGE_1,
     'STAGE_1A': STAGE_1A,
-    'STAGE_1B_INT': STAGE_1B_INT,
-    'STAGE_1C_INT': STAGE_1C_INT,
+    'STAGE_1B': STAGE_1B,
+    'STAGE_1C': STAGE_1C,
 };
 
 const introDesc = (
     <>
         <h5>
-        You are a child and today you want a pet.
+            You are going to go on a sample adventure.
         </h5>
         <p>
-            Now that it is summertime, you feel alone at home when your parents go out to work. To
-            keep you company, your parents decided that they will get you a pet.
+            This is sample text for the introduction.
         </p>
     </>
 );
 
 const endDesc = (
     <>
-        What a great summer! You now have a friend to experience the joys of the summer together.
+        This is sample text for the end.
     </>
 );
 
