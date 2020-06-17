@@ -218,16 +218,26 @@ const STAGE_1BC_INT = {
 const STAGE_1C_INT = {
     'text': <div>
         <p>You’re really not comfortable being part of this right now.</p>
-        <p>As you are revising for exams in the university library, groups of students come in and
-            intimidate you for not being part of the cause. Some of them carry weapons, making you
-            a bit uncomfortable. On Twitter, student groups accuse you for sympathizing with the
-            government and not caring about the consequences of the fee increase for other students.
-            In the meantime, you begin to see more and more police surrounding your campus. But you
-            also start to hear about your university starting to negotiate with student
-            activists.</p>
-        <p>A few days later, your university closes indefinitely. You start to feel a bit bad that
-            you spent those last days on campus preparing for exams rather than actively
-            protesting. </p>
+        <p>
+            You are the first in your family to attend university. Over the past school year, you
+            have been focused on getting good marks. You hope to graduate and ultimately secure a
+            job. Because you have a lot of upcoming exams, you have been spending a lot of time
+            reviewing in the university library. When groups of students start coming into the
+            library with weapons to protest, you feel a bit intimidated. On Facebook as well
+            as other social media platforms, other students accuse you for sympathizing with
+            the government; they say that you don’t care enough about the consequences of the
+            fee increase for other students.
+        </p>
+        <p>
+            In the meantime, you begin to see more and more police on and surrounding your campus.
+            However, you also start to hear about your university starting to negotiate with
+            student activists.
+        </p>
+        <p>
+            A few days later, your university closes indefinitely. You start to feel a bit bad
+            that you spent those last days on campus preparing for exams rather than actively
+            protesting. You feel guilty and a bit selfish too.
+        </p>
     </div>,
     'options': [{
         'text': <div>Next</div>,
@@ -284,10 +294,11 @@ const STAGE_2_1C = {
     {
         'text': <div>Still, you’re not comfortable; you again do nothing</div>,
         'stageName': 'STAGE_2C_INT',
-        'endDetail': <div>You’ve remained outside the action the whole time. But you feel
-            terrible that your friends have suffered. As they are released, you try to contact them,
-            separately and together, but you receive no response. Perhaps you’ve been affected after
-            all. </div>,
+        'endDetail': <div>
+            You’ve remained outside the action the whole time; you feel terrible that your friends
+            have suffered. When they get released, you try to contact them, separately and
+            together. No one replies to you, though. Perhaps, you’ve been affected after all.
+        </div>,
         'showOnEnd': true,
     }],
 };
