@@ -104,14 +104,38 @@ export class Speech extends React.Component {
     }
 
     generateStory() {
+        const previousRoundSupport = Math.round(
+            (this.props.roundAggregateData[this.props.round - 1].totalSupport
+                / this.props.roundAggregateData[this.props.round - 1].totalPopulation) * 100
+        );
+        let advice = '';
         if (this.props.round === 1) {
-            return 'You just started your campaign and we want you to set out '
-                    + 'your policies so that we can conduct polls to gauge the initial reaction.';
+            advice += 'You just started your campaign and we want you to set out '
+                    + 'your policies so that we can conduct polls to gauge the initial reaction.\n';
+        } else if (this.props.round === 2) {
+            advice += 'We can do two more polls before elections.\n';
+        } else if (this.props.round === 3) {
+            advice += 'This is the final policy that people will see in the election.\n';
         }
-        if (this.props.round === 2) {
-            return 'We can do two more polls before elections.';
+        if (!(this.props.round === 1)) {
+            if (previousRoundSupport >= 60) {
+                advice += 'Based on the results from last round, people seem to respond very well to'
+                + ' the current policy. This policy is probably what you want to use in the election.';
+            } else if (previousRoundSupport >= 50 && previousRoundSupport < 60) {
+                advice += 'Most people seem to respond well to this policy. You may still want to'
+                + ' to make some other adjustments and see if that will improve your support.';
+            } else if (previousRoundSupport >= 30 && previousRoundSupport < 50) {
+                advice += 'Most people do not seem to respond well to this policy. You should make'
+                + ' some adjustments before you submit your final policy.';
+            } else if (previousRoundSupport > 0 && previousRoundSupport < 30) {
+                advice += 'Almost no one supports your current policy. You should make'
+                + ' some adjustments before you submit your final policy.';
+            } else if (previousRoundSupport === 0) {
+                advice += 'No one supports your policy. You should make'
+                + ' some adjustments before you submit your final policy.';
+            }
         }
-        return 'This is the final policies that people will see in the election';
+        return advice;
     }
 
     componentDidUpdate(prevProps) {
@@ -241,4 +265,5 @@ Speech.propTypes = {
     topicNames: PropTypes.array,
     canReset: PropTypes.bool,
     round: PropTypes.number,
+    roundAggregateData: PropTypes.object,
 };
