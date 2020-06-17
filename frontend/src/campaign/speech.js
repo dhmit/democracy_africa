@@ -29,7 +29,7 @@ export const COUNTRIES = [
             'Fighting corruption',
         ],
         supportThreshold: 2,
-        max_priority_points: { 'low': 6, 'medium': 6, 'high': 3 },
+        max_priority_points: { 'low': 6, 'medium': 4, 'high': 3 },
     },
     {
         name: 'South Africa',
@@ -49,7 +49,7 @@ export const COUNTRIES = [
             'Reducing violent community conflict',
         ],
         supportThreshold: 14,
-        max_priority_points: { 'low': 10, 'medium': 10, 'high': 5 },
+        max_priority_points: { 'low': 10, 'medium': 8, 'high': 3 },
     },
 ];
 
@@ -64,7 +64,7 @@ export function get_country_prop(country_name, prop_name) {
 export const get_default_proposal = (topic_names) => {
     const proposal = {};
     topic_names.forEach((topic) => {
-        proposal[topic] = 3;
+        proposal[topic] = 1;
     });
     return proposal;
 };
