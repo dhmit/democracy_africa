@@ -81,7 +81,7 @@ const STAGE_1A = {
     'text': <div>You get there, but feel the tension of the situation. What do you want to do?
     </div>,
     'options': [{
-        'text': <div> You decide to sneak out before things get worse and are worried that the
+        'text': <div> Sneak out before things get worse and are worried that the
              sit-in might escalate from a purely peaceful protest because students
              started blockading road access.</div>,
         'stageName': 'STAGE_2',
@@ -89,7 +89,7 @@ const STAGE_1A = {
         'showOnEnd': true,
     },
     {
-        'text': <div>You stay with the movement and help block the roads. After, you join them at
+        'text': <div> Stay with the movement and help block the roads. After, you join them at
              the sit in. The protesters occupy the admin building and things escalate! You try to
              escape, but get caught by the riot police.</div>,
         'stageName': 'STAGE_1AB_INT',
@@ -112,8 +112,8 @@ const STAGE_1AB_INT = {
 
 const STAGE_1B_INT = {
     'text': <div>
-        <p>You decide that you want to gain a better understanding about the current events
-            surrounding the movement. How would you like to learn more?</p>
+        <p>You decide that you want to gain a better understanding about the movement.
+            How would you like to learn more?</p>
     </div>,
     'options': [{
         'text': <div>Read articles and social media posts on the Internet.</div>,
@@ -158,7 +158,8 @@ const STAGE_1BA_INT = {
 const STAGE_1BB_INT = {
     'text': <div>
         <p>After mentioning student demonstrations like the sit-in to your family members, they
-            give you some warnings about the risk of getting expelled by your school or having any
+            give you some warnings. Even if they had to pay more next year, they didn't think it was
+            worth the risk of getting expelled by your school or having any
             disciplinary and criminal records that might make it more difficult for you to
             find jobs in the future.
         </p>
@@ -181,9 +182,11 @@ const STAGE_1BB_INT = {
 
 const STAGE_1BC_INT = {
     'text': <div>
-        <p>As you leave your final class of the day, you ask your friends whether they are going
-            to the sit-in. Most of them are going to oppose the increase in fees. One of the
-            students mentions how their family is already having a hard time paying for tuition.
+        <p>
+            As you leave your final class of the day, you ask your friends whether they are going
+            to the sit-in. Most of them are going to oppose the increase in fees and another
+            student starts to talk about how their family is already having a hard time paying for
+            tuition.
         </p>
         <p>
             After being moved by the anecdotes of your peers, you also think about how difficult it
