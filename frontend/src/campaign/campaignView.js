@@ -316,9 +316,17 @@ export class CampaignView extends React.Component {
                     {this.state.showCountrySelector
                         && <CountrySelectorPopup
                             changeCountry={this.changeCountry}
-                            closePopup={() => this.setState(
-                                { showCountrySelector: false, view: 'countryInfo' },
-                            )}
+                            closePopup={(startGame) => {
+                                if (startGame) {
+                                    this.setState(
+                                        { showCountrySelector: false, view: 'countryInfo' },
+                                    );
+                                } else {
+                                    this.setState(
+                                        { showCountrySelector: false },
+                                    );
+                                }
+                            }}
                         />
                     }
                     <IntroView
@@ -366,7 +374,6 @@ export class CampaignView extends React.Component {
                     if (this.state.round > 0
                         && this.state.populationData[country.name]) {
                         const data = this.state.populationData[country.name];
-                        /* eslint-disable-next-line max-len */
                         const supports = data['totalSupporters'] / data['citizens'].length > 0.5;
                         countryFill = supports ? '#B8E39B' : '#F19C79';
                     }
@@ -401,7 +408,7 @@ export class CampaignView extends React.Component {
                         <b>{countryName}</b>
                     </div>
                 }
-                {this.state.view === 'countryInfo'
+                {this.state.view === 'countryInfo' || this.state.view === 'feedback'
                     ? <OverlayTrigger
                         trigger="hover"
                         placement="right"
@@ -440,15 +447,14 @@ export class CampaignView extends React.Component {
         if (this.state.view === 'submitted') {
             return (
                 <div>
-                    <p className={'resultHeader'}>
-                        Final Results for {countryName}
-                    </p>
                     <Results
                         provinceData={populationData}
                         countryData={aggregateResult}
                         countryName={countryName}
                         mapData={this.state.mapData}
                         generateDescription={this.generateDescription}
+                        map={campaign_map}
+                        clickedProvince={this.state.clickedProvince}
                     />
                     <div className="retry-button">
                         <button
@@ -461,9 +467,17 @@ export class CampaignView extends React.Component {
                     {this.state.showCountrySelector
                         && <CountrySelectorPopup
                             changeCountry={this.changeCountry}
-                            closePopup={() => this.setState(
-                                { showCountrySelector: false, view: 'countryInfo' },
-                            )}
+                            closePopup={(startGame) => {
+                                if (startGame) {
+                                    this.setState(
+                                        { showCountrySelector: false, view: 'countryInfo' },
+                                    );
+                                } else {
+                                    this.setState(
+                                        { showCountrySelector: false },
+                                    );
+                                }
+                            }}
                         />
                     }
                 </div>

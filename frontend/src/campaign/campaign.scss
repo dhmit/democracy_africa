@@ -100,27 +100,15 @@ $edx-button-color: #e7e7e7;
     border: 3px $edx-border-color solid;
 }
 
-
-.campaign-result_graphics {
+.result-population {
     display: flex;
-    flex-basis: 0;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
 
-    .result-map,
-    .result-population {
-        width: 50%;
-    }
-
-    .result-population {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
-        &_header {
-            font-weight: 600;
-            margin-bottom: 1em;
-        }
+    &_header {
+        font-weight: 600;
+        margin-bottom: 1em;
     }
 }
 
@@ -191,3 +179,24 @@ $edx-button-color: #e7e7e7;
     display: flex;
     justify-content: center;
 }
+
+.support {
+    color: #5abf5a;
+}
+
+.unsupport {
+    color: #db5653;
+}
+
+.country-header {
+    width: 100%;
+}
+
+.country-title {
+    margin-left: 36%;
+}
+
+.close-button {
+    cursor: pointer;
+}
+
