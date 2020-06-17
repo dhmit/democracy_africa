@@ -41,7 +41,7 @@ class Results extends React.Component {
                 <p className={'resultHeader'}>
                     {countryPercent >= 50 ? winText : loseText}
                 </p>
-                <table border='1' className={'resultTable'}>
+                <table border="1" className={'resultTable'}>
                     <tbody>
                         <tr>
                             <th>Province Name</th>
@@ -61,7 +61,7 @@ class Results extends React.Component {
                                         className={percentage >= 50 ? 'support' : 'unsupport'}
                                         key={k}
                                     >
-                                        <td>{province}</td>
+                                        <td className="table-provinces">{province}</td>
                                         <td>{supporters}</td>
                                         <td>{total}</td>
                                         <td>{percentage}%</td>

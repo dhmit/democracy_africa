@@ -9,7 +9,6 @@ import PopoverContent from 'react-bootstrap/PopoverContent';
 import { project_features_and_create_svg_paths } from '../common';
 
 import { MapPath } from '../UILibrary/components';
-import './campaign.scss';
 
 import { Speech, get_country_prop, get_default_proposal } from './speech';
 import Feedback from './feedback';
@@ -35,6 +34,14 @@ export class CampaignView extends React.Component {
         this.map_height = 500;
         this.map_width = 500;
         this.updatePopulation = this.updatePopulation.bind(this);
+    }
+
+    componentDidUpdate() {
+        if (this.state.showCountrySelector) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
     }
 
     calculate_averages() {
