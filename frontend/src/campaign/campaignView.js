@@ -265,6 +265,9 @@ export class CampaignView extends React.Component {
                 }
                 sentence += trait;
             });
+            if (issueList.length === 0) {
+                sentence = ' ';
+            }
             desc.push(<div key={i}>{sentence}</div>);
             desc.push(<br key={i}/>);
         });
