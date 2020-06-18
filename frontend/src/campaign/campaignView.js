@@ -378,7 +378,7 @@ export class CampaignView extends React.Component {
                     if (this.state.round > 0
                         && this.state.populationData[country.name]) {
                         const data = this.state.populationData[country.name];
-                        const supports = data['totalSupporters'] / data['citizens'].length > 0.5;
+                        const supports = data['totalSupporters'] / data['citizens'].length >= 0.5;
                         countryFill = supports ? '#B8E39B' : '#F19C79';
                     }
 
