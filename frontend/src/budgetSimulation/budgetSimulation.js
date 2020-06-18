@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types';
 
 import Popover from 'react-bootstrap/Popover';
 import PopoverContent from 'react-bootstrap/PopoverContent';
-import { Citizen } from '../campaign/campaignView.js';
+import Citizen from '../campaign/citizen';
 import { getCookie } from '../common';
 
 
