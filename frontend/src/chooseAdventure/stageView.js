@@ -93,6 +93,17 @@ const research_img_props = {
     </>),
 };
 
+const whatsapp_img_props = {
+    'imgFilename': 'FMF_whatsapp.jpg',
+    'imgAlt': 'A phone with the WhatsApp app on it.',
+    'imgCaption': (<>
+        Photo credit:&nbsp;
+        <a href="https://www.pexels.com/photo/person-holding-black-iphone-5-4132538/">
+            Anton
+        </a> / <a href="https://www.pexels.com/license/">Pexels License</a>
+    </>),
+};
+
 const friends_img_props = {
     'imgFilename': 'FMF_friends.jpg',
     'imgAlt': 'A group of friends talking with each other.',
@@ -486,8 +497,8 @@ const STAGE_2BB_INT = {
             Through this platform, the organizers are able to inform thousands of students both
             from your university and from other universities about the movement and events.
         </p>
-
     </div>,
+    ...whatsapp_img_props,
     'options': [{
         'text': <div>Next</div>,
         'stageName': null,
