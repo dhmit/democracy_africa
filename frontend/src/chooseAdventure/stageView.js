@@ -62,7 +62,7 @@ const STAGE_1 = {
         },
         {
             'text': <div>Agree; however, you’re a little skeptical about how the sit-in will be
-                effective. You want to learn more about the movement.</div>,
+                effective. You want to learn more about the movement</div>,
             'stageName': 'STAGE_1B_INT',
             'endDetail': '',
             'showOnEnd': true,
@@ -117,19 +117,19 @@ const STAGE_1B_INT = {
             How would you like to learn more?</p>
     </div>,
     'options': [{
-        'text': <div>Read articles and social media posts on the Internet.</div>,
+        'text': <div>Read articles and social media posts on the Internet</div>,
         'stageName': 'STAGE_1BA_INT',
         'endDetail': '',
         'showOnEnd': true,
     },
     {
-        'text': <div>Ask your family.</div>,
+        'text': <div>Ask your family</div>,
         'stageName': 'STAGE_1BB_INT',
         'endDetail': '',
         'showOnEnd': true,
     },
     {
-        'text': <div>Talk to your friends and other students.</div>,
+        'text': <div>Talk to your friends and other students</div>,
         'stageName': 'STAGE_1BC_INT',
         'endDetail': '',
         'showOnEnd': true,
@@ -309,8 +309,11 @@ const STAGE_2A_INT = {
             listen. This sounds like a better opportunity to have an impact; you want to join
             this march. (Plus you feel kind of terrible that
             your friends got arrested.)</p>
-        <p>Just as you are wrapping up, some people in the crowd agitate the police by throwing a
-            flaming “coffin” Blade Nzimande at them, and violence breaks out.</p>
+        <p>
+            Just as you are wrapping up, some people in the crowd decided to further agitate the
+            police. They threw a flaming cardboard “coffin” with the name of South Africa’s
+            minister of higher education, Blade Nzimande. As a result, violence breaks out.
+        </p>
     </div>,
     ...violence_img_props,
     'options': [{
