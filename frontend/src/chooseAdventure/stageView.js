@@ -81,27 +81,52 @@ const STAGE_1A = {
     'text': <div>You get there, but feel the tension of the situation. What do you want to do?
     </div>,
     'options': [{
-        'text': <div> Sneak out before things get worse and are worried that the
+        'text': <div> Sneak out before things get worse. You are worried that the
              sit-in might escalate from a purely peaceful protest because students
-             started blockading road access.</div>,
-        'stageName': 'STAGE_2',
+             are starting to blockade road access.</div>,
+        'stageName': 'STAGE_1AA_INT',
         'endDetail': '',
         'showOnEnd': true,
     },
     {
-        'text': <div>Stay with the movement and help block the roads with burning tires.
-             Afterwards, you join the other protesters at the sit in and occupy the admin building,
-             but that was when things started to escalate! You try to
-             escape, but you get caught by the riot police.</div>,
+        'text': <div>Stay with the movement and help block the roads with burning tires</div>,
         'stageName': 'STAGE_1AB_INT',
         'endDetail': '',
         'showOnEnd': true,
     }],
 };
 
+const STAGE_1AA_INT = {
+    'text': <div>
+        <p>
+            When you arrived home, you hear about how the sit-in had escalated, resulting in the
+            arrest of many protesters. You feel a sense of relief that you were not taken to jail.
+        </p>
+        <p>
+            In the meantime, the university closes and on the 19th of October,
+            the University agrees to begin new negotiations with the students.
+        </p>
+    </div>,
+    'options': [{
+        'text': <div>Next</div>,
+        'stageName': 'STAGE_2',
+        'endDetail': '',
+        'showOnEnd': false,
+    }],
+};
+
 const STAGE_1AB_INT = {
-    'text': <div>That night, students hold an all night vigil outside the police station, calling
-        for your and your peers’ release. Thankfully, they let you go.</div>,
+    'text': <div>
+        <p>
+            After blocking the roads, you join the other protesters at the sit in and occupy
+            the admin building, but that was when things started to escalate! You try to
+            escape, but you get caught by the riot police.
+        </p>
+        <p>
+            That night, students hold an all night vigil outside the police station, calling
+            for the release of you and your peers. Thankfully, the police let you all go.
+        </p>
+    </div>,
     ...jail_img_props,
     'options': [{
         'text': <div>Next</div>,
@@ -305,14 +330,16 @@ const STAGE_2_1C = {
 
 const STAGE_2A_INT = {
     'text': <div>
-        <p>Aha. Maybe the Minister of Education and the members of the Parliament will finally
-            listen. This sounds like a better opportunity to have an impact; you want to join
-            this march. (Plus you feel kind of terrible that
-            your friends got arrested.)</p>
         <p>
-            Just as you are wrapping up, some people in the crowd decided to further agitate the
-            police. They threw a flaming cardboard “coffin” with the name of South Africa’s
-            minister of higher education, Blade Nzimande. As a result, violence breaks out.
+            Aha. Maybe the Minister of Education and the members of the Parliament will finally
+            listen. This sounds like a better opportunity to have an impact; you want to join
+            this march.
+        </p>
+        <p>
+            Just as you are wrapping up, some people in the crowd decide to further agitate the
+            police. They throw a flaming cardboard “coffin” with the name of South Africa’s
+            minister of higher education, Blade Nzimande, at the police. As a result,
+            violence breaks out.
         </p>
     </div>,
     ...violence_img_props,
@@ -440,6 +467,7 @@ const STAGE_2C_INT = {
 const NAME_TO_STAGE = {
     'STAGE_1': STAGE_1,
     'STAGE_1A': STAGE_1A,
+    'STAGE_1AA_INT': STAGE_1AA_INT,
     'STAGE_1AB_INT': STAGE_1AB_INT,
     'STAGE_1B_INT': STAGE_1B_INT,
     'STAGE_1C_INT': STAGE_1C_INT,
