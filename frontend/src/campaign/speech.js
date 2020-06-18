@@ -28,8 +28,8 @@ export const COUNTRIES = [
             'Creating jobs',
             'Fighting corruption',
         ],
-        supportThreshold: 2,
-        max_priority_points: { 'low': 6, 'medium': 4, 'high': 3 },
+        supportThreshold: 6,
+        max_priority_points: { 'low': 6, 'medium': 3, 'high': 2 },
     },
     {
         name: 'South Africa',
@@ -48,8 +48,8 @@ export const COUNTRIES = [
             'Fighting corruption',
             'Reducing violent community conflict',
         ],
-        supportThreshold: 14,
-        max_priority_points: { 'low': 10, 'medium': 8, 'high': 3 },
+        supportThreshold: 25,
+        max_priority_points: { 'low': 10, 'medium': 5, 'high': 3 },
     },
 ];
 
