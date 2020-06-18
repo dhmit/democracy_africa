@@ -82,6 +82,40 @@ const social_media_img_props = {
     </>),
 };
 
+const research_img_props = {
+    'imgFilename': 'FMF_research.jpg',
+    'imgAlt': 'A laptop used to research about the #FeesMustFall movement.',
+    'imgCaption': (<>
+        Photo credit:&nbsp;
+        <a href="https://pixabay.com/photos/home-office-workstation-office-336373/">
+            Unknown
+        </a> / <a href="https://pixabay.com/service/license/">Pixabay License</a>
+    </>),
+};
+
+const friends_img_props = {
+    'imgFilename': 'FMF_friends.jpg',
+    'imgAlt': 'A group of friends talking with each other.',
+    'imgCaption': (<>
+        Photo credit:&nbsp;
+        <a href="https://www.pexels.com/photo/photo-of-women-sitting-while-talking-3811108/">
+            Retha Ferguson
+        </a> / <a href="https://www.pexels.com/license/">Pexels License</a>
+    </>),
+};
+
+const twitter_img_props = {
+    'imgFilename': 'FMF_twitter.png',
+    'imgAlt': 'A tweet with a picture of the increases calling out the Department of Higher'
+        + ' Education and Training for being silent.',
+    'imgCaption': (<>
+        Photo credit:&nbsp;
+        <a href="https://twitter.com/Bhut_BanoThando/status/656047187122638848">
+            Twitter
+        </a>
+    </>),
+};
+
 const STAGE_1 = {
     'text': <div>A friend texts you about a sit-in at the administrative offices. What is your
         initial reaction?</div>,
@@ -210,6 +244,7 @@ const STAGE_1BA_INT = {
             the University agrees to begin new negotiations with the students.
         </p>
     </div>,
+    ...research_img_props,
     'options': [{
         'text': <div>Next</div>,
         'stageName': 'STAGE_2',
@@ -264,8 +299,8 @@ const STAGE_1BC_INT = {
             In the meantime, the university closes anyway and on the 19th of October,
             the University agrees to begin new negotiations with the students.
         </p>
-
     </div>,
+    ...friends_img_props,
     'options': [{
         'text': <div>Next</div>,
         'stageName': 'STAGE_2',
@@ -437,6 +472,7 @@ const STAGE_2BA_INT = {
             of the many people who helped support this movement!
         </p>
     </div>,
+    ...twitter_img_props,
     'options': [{
         'text': <div>Next</div>,
         'stageName': null,
