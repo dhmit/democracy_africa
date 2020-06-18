@@ -172,7 +172,7 @@ const STAGE_1AA_INT = {
         </p>
         <p>
             In the meantime, the university closes and on the 19th of October,
-            the University agrees to begin new negotiations with the students.
+            the university agrees to begin new negotiations with the students.
         </p>
     </div>,
     'options': [{
@@ -232,16 +232,16 @@ const STAGE_1B_INT = {
 const STAGE_1BA_INT = {
     'text': <div>
         <p>
-            You decide to spend some time to educating yourself about the #FeesMustFall movement
-            instead of going to the sit-in. After some research, you become even more aware of the
-            large extent to which your country's higher education system, structurally and
-            financially, is still effected by legacies of the apartheid eras. With this new
-            knowledge, you understand the sentiment of the students and how frustrating it must
-            feel to have a system that works against you.
+            You decide to spend some time educate yourself about the #FeesMustFall movement
+            instead of going to the sit-in. After some research, you become even more aware of
+            the large extent to which your country's higher education system is, structurally
+            and financially, still affected by the legacies of the apartheid era. With this new
+            knowledge, you gain a better understanding of the sentiment of the students and how
+            frustrating it must feel to have a system that works against you.
         </p>
         <p>
-            In the meantime, the university closes anyway and on the 19th of October,
-            the University agrees to begin new negotiations with the students.
+            In the meantime, the university closes anyway and on the 19th of October, the
+            university agrees to begin new negotiations with the students.
         </p>
     </div>,
     ...research_img_props,
@@ -256,22 +256,18 @@ const STAGE_1BA_INT = {
 const STAGE_1BB_INT = {
     'text': <div>
         <p>
-            After mentioning student demonstrations like the sit-in to your family members, they
-            give you some warnings. Even if they had to pay more next year, they didn't think it
-            was worth the risk of getting expelled by your school or having any disciplinary and
-            criminal records that might make it more difficult for you to find jobs in the future.
+            After mentioning the student demonstrations like the sit-in to your family members, they
+            give you some warnings. They didn't think it was worth the risk of getting expelled by
+            your school or having any disciplinary and criminal records that might make it more
+            difficult for you to find jobs in the future.
         </p>
         <p>
             Ultimately, you decide that you will support the movement but in a less confrontational
             way.
         </p>
         <p>
-            In the meantime, the university closes anyway and on the 19th of October,
-            the University agrees to begin new negotiations with the students.
-        </p>
-        <p>
-            In the meantime, the university closes anyway and on the 19th of October,
-            the University agrees to begin new negotiations with the students.
+            In the meantime, the university closes anyway and on the 19th of October, the
+            university agrees to begin new negotiations with the students.
         </p>
     </div>,
     'options': [{
@@ -285,19 +281,16 @@ const STAGE_1BB_INT = {
 const STAGE_1BC_INT = {
     'text': <div>
         <p>
-           As you leave your final class of the day, you ask your friends whether they are going to
-            the sit-in. Some of them are going to oppose the increase in fees. One student starts
-            to talk about how their family is already having a hard time paying for tuition and how
-            they won’t be able to pay for tuition after the increase in cost. Another student,
-            however, mentions the sacrifices that their parents have made to get them to this
-            point. According to them, going to the sit-in will damage your chances of having a
-            future.
+            As you leave your final class of the day, you ask your peers whether they are going to
+            the sit-in. There are mixed responses between them. They acknowledge the importance of
+            speaking out against the government when they enact unfair policies, but also see the
+            danger that comes from being in the front lines of the protests, where police can
+            physically harm you. After hearing the arguments made by your peers, you decide that
+            you will look for other ways to support this movement.
         </p>
         <p>
-            After hearing the arguments made by your peers, you decide that you will look for other
-            ways to support this movement.
-            In the meantime, the university closes anyway and on the 19th of October,
-            the University agrees to begin new negotiations with the students.
+            In the meantime, the university closes anyway and on the 19th of October, the university
+            agrees to begin new negotiations with the students.
         </p>
     </div>,
     ...friends_img_props,
