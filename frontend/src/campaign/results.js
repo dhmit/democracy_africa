@@ -34,8 +34,8 @@ class Results extends React.Component {
         const countryPercent = Math.round((this.props.countryData.totalSupport
                                                 / this.props.countryData.totalPopulation) * 100);
 
-        const winText = `Congratulations! You won! You got ${countryPercent}% of the vote.`;
-        const loseText = `Sadly, you lost. You only got ${countryPercent}% of the vote.`;
+        const winText = 'Congratulations! You got a majority of the electorate.';
+        const loseText = 'Sadly, you were unable to get a majority of the electorate.';
         return (
             <div>
                 <p className={'resultHeader'}>
