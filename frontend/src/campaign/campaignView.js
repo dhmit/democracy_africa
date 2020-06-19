@@ -204,11 +204,13 @@ export class CampaignView extends React.Component {
     }
 
     handleProvinceMapClick(e, province) {
-        const tagname = e.target.tagName;
-        if (tagname === 'svg' || (tagname === 'path' && province)) {
+        const tagName = e.target.tagName;
+        if (tagName === 'svg' || (tagName === 'path' && province)) {
             this.setState({
                 clickedProvince: province,
-                sampleSize: Math.min(this.state.populationData[province]['citizens'].length, 75),
+                sampleSize: province
+                    ? Math.min(this.state.populationData[province]['citizens'].length, 75)
+                    : 0,
             });
         }
     }
@@ -249,40 +251,60 @@ export class CampaignView extends React.Component {
                 pros.push(trait);
             }
         });
-        const desc = [];
-        [pros, cons].forEach((issueList, i) => {
-            let sentence = 'I am '
-                + (issueList === cons ? 'not ' : '')
-                + 'satisfied with the candidate\'s stance on ';
-            issueList.forEach((issue, j) => {
-                let trait = issue.toLowerCase();
-                if (j === issueList.length - 1) {
-                    trait += '.';
-                } else if (j === issueList.length - 2) {
-                    trait += ' and ';
-                } else {
-                    trait += ', ';
-                }
-                sentence += trait;
-            });
-            desc.push(<div key={i}>{sentence}</div>);
-            desc.push(<br key={i}/>);
-        });
-        return desc;
+        return [pros, cons];
+        // const desc = [];
+        // // This is for when the citizen is completely one sided about all issues
+        // if (pros.length === 0) {
+        //     desc.push(<div key={1}>
+        //         I am dissatisfied with the candidate's stance on everything.
+        //     </div>);
+        //     return desc;
+        // }
+        // if (cons.length === 0) {
+        //     desc.push(<div key={1}>
+        //         I am completely satisfied with the candidate's stance on everything.
+        //     </div>);
+        //     return desc;
+        // }
+        // const proSentence = 'I am satisfied with the candidate\'s stance on ';
+        // const conSentence = 'I believe that the candidate does not give enough priority to ';
+        // [pros, cons].forEach((issueList, i) => {
+        //     let sentence = issueList === cons ? conSentence : proSentence;
+        //     issueList.forEach((issue, j) => {
+        //         let trait = issue.toLowerCase();
+        //         if (j === issueList.length - 1) {
+        //             trait += '.';
+        //         } else if (j === issueList.length - 2) {
+        //             trait += ' and ';
+        //         } else {
+        //             trait += ', ';
+        //         }
+        //         sentence += trait;
+        //     });
+        //     desc.push(<div key={i}>{sentence}</div>);
+        //     desc.push(<br key={i}/>);
+        // });
+        // return desc;
     };
 
     render() {
         if (this.state.view === 'intro') {
-            const description = <>
-                <p>Welcome to the Campaign Game!</p>
-                <p>In this game, you will create a political campaign and try to
-                appeal to the most people in a country.</p>
-                <p>You will have two rounds to set your campaign's priorities and gather
-                survey data from citizens, and then one final chance to set your priorities
-                and see how you do in an election.</p>
-            </>;
             const altText = 'Nelson Mandela voting in the 1994 South African general election.';
-            const caption = (<>{altText}</>);
+            const campaignIntroDesc = {
+                desc: (<>
+                    <p>Welcome to the Campaign Game!</p>
+                    <p>In this game, you will create a political campaign and try to
+                    appeal to the most people in a country.</p>
+                    <p>You will have two rounds to set your campaign's priorities and gather
+                    survey data from citizens, and then one final chance to set your priorities
+                    and see how you do in an election.</p>
+                </>),
+                img: {
+                    imgFilename: 'mandela_voting_in_1994.jpg',
+                    imgAlt: altText,
+                    imgCaption: (<>{altText}</>),
+                },
+            };
             return (
                 <>
                     {this.state.showCountrySelector
@@ -302,11 +324,8 @@ export class CampaignView extends React.Component {
                         />
                     }
                     <IntroView
-                        desc={description}
                         setView={() => { this.setState({ showCountrySelector: true }); }}
-                        imgFile={'mandela_voting_in_1994.jpg'}
-                        altText={altText}
-                        imgCaption={caption}
+                        introDescriptions={campaignIntroDesc}
                     />
                 </>
             );
@@ -346,9 +365,10 @@ export class CampaignView extends React.Component {
                     let countryFill = '#F6F4D2';
                     let width = '1';
                     if (this.state.round > 0
-                        && this.state.populationData[country.name]) {
+                        && this.state.populationData[country.name]
+                        && this.state.view !== 'speechMaker') {
                         const data = this.state.populationData[country.name];
-                        const supports = data['totalSupporters'] / data['citizens'].length > 0.5;
+                        const supports = data['totalSupporters'] / data['citizens'].length >= 0.5;
                         countryFill = supports ? '#B8E39B' : '#F19C79';
                     }
 
@@ -382,7 +402,7 @@ export class CampaignView extends React.Component {
                         <b>{countryName}</b>
                     </div>
                 }
-                {this.state.view === 'countryInfo' || this.state.view === 'feedback'
+                {['countryInfo', 'feedback', 'speechMaker'].includes(this.state.view)
                     ? <OverlayTrigger
                         trigger="hover"
                         placement="right"
@@ -411,7 +431,13 @@ export class CampaignView extends React.Component {
                         {this.state.topicNames.map((topic, i) => <li key={i}>{topic}</li>)}
                     </ul>
 
-                    <button onClick={() => this.setState({ view: 'speechMaker', round: 1 })}>
+                    <button onClick={() => this.setState({
+                        view: 'speechMaker',
+                        round: 1,
+                        clickedProvince: this.state.clickedProvince
+                            ? this.state.clickedProvince
+                            : Object.keys(populationData)[0],
+                    })}>
                     I am ready to set my campaign's priorities!
                     </button>
                 </div>
@@ -465,6 +491,8 @@ export class CampaignView extends React.Component {
                         generateDescription={this.generateDescription}
                         results={populationData}
                         nextRound={() => this.setState({ view: 'speechMaker' })}
+                        topicNames={this.state.topicNames}
+                        speechProposal={this.state.speechProposal}
                     />
                     {campaign_map}
                 </div>
@@ -483,6 +511,7 @@ export class CampaignView extends React.Component {
                         topicNames={this.state.topicNames}
                         canReset={this.state.round === 1}
                         round={this.state.round}
+                        campaign_map={campaign_map}
                         roundAggregateData={roundAggregateData}
                     />
                 </div>

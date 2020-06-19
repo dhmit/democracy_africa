@@ -28,8 +28,8 @@ export const COUNTRIES = [
             'Creating jobs',
             'Fighting corruption',
         ],
-        supportThreshold: 2,
-        max_priority_points: 22,
+        supportThreshold: 6,
+        max_priority_points: { 'low': 6, 'medium': 3, 'high': 2 },
     },
     {
         name: 'South Africa',
@@ -48,8 +48,8 @@ export const COUNTRIES = [
             'Fighting corruption',
             'Reducing violent community conflict',
         ],
-        supportThreshold: 12,
-        max_priority_points: 35,
+        supportThreshold: 25,
+        max_priority_points: { 'low': 10, 'medium': 5, 'high': 3 },
     },
 ];
 
@@ -150,6 +150,38 @@ export class Speech extends React.Component {
         }
     }
 
+    makeProposalDict(speech) {
+        const dict = {
+            'low': 0, 'medium': 0, 'high': 0,
+        };
+        for (const topic of Object.keys(speech)) {
+            if (speech[topic] === 1) {
+                dict['low'] += 1;
+            } else if (speech[topic] === 3) {
+                dict['medium'] += 1;
+            } else if (speech[topic] === 5) {
+                dict['high'] += 1;
+            }
+        }
+        return dict;
+    }
+
+    noProblem(dict) {
+        let acceptable = true;
+        let atMaxStatement = '';
+        for (const priority of Object.keys(this.max_priority_points)) {
+            if (dict[priority] > this.max_priority_points[priority]) {
+                acceptable = false;
+            } else {
+                const priority_points_left = this.max_priority_points[priority] - dict[priority];
+                atMaxStatement += (
+                    `You can have ${priority_points_left} more sectors at ${priority} priority.\n`
+                );
+            }
+        }
+        return [acceptable, atMaxStatement];
+    }
+
     /**
      * Handles when the slider changes by changing the state of what the maximum values should
      * be for each category and updates the number of supporters
@@ -166,6 +198,7 @@ export class Speech extends React.Component {
                 speechProposal: newProposal,
                 total: this.state.total + newVal - oldVal,
                 result: this.countSupporters(),
+                atMaxStatement: newAtMaxStatement,
             });
         }
     };
@@ -202,57 +235,64 @@ export class Speech extends React.Component {
         return count;
     };
 
-    priorityPoint() {
-        if (this.max_priority_points - this.state.total > 0) {
-            return 'You can prioritize more things.';
-        }
-        return 'You need to de-prioritize others first';
-    }
-
     render() {
-        const topics = this.props.topicNames.map((topic, key) => (
-            <div key={key} className='speech-option'>
-                <div className='speech-option_label'>
-                    {topic}
+        const topics = this.props.topicNames.map((topic, key) => {
+            const inputs = [];
+            for (let i = 0; i < 3; i++) {
+                inputs.push(<input
+                    key={i}
+                    className='speech-radio'
+                    type='radio'
+                    name={topic}
+                    id={'inlineRadio' + (2 * i + 1)}
+                    value={2 * i + 1}
+                    checked={this.state.speechProposal[topic] === (2 * i + 1)}
+                    onChange={(e) => this.handleButtonOnChange(e, topic)}
+                />);
+            }
+            return (
+                <div key={key} className='speech-option'>
+                    <div className='speech-option_label'>
+                        {topic}
+                    </div>
+                    <div className='speech-option_btns'>
+                        {inputs}
+                    </div>
                 </div>
-                <div className='speech-option_btns'>
-                    {[...Array(5).keys()].map((score, j) => (
-                        <input className='speech-radio' type='radio' name={topic} key={j}
-                            id={'inlineRadio' + score + 1} value={score + 1}
-                            checked={this.state.speechProposal[topic] === score + 1}
-                            onChange={(e) => this.handleButtonOnChange(e, topic)}/>
-                        // </div>
-                    ))}
-                </div>
-            </div>
-        ));
+            );
+        });
 
         return (
-            <div className="row w-100"><div className='col'>
-                <div className='speech-context'>
-                    <p className='speech-context_count'>
-                        {this.generateStory()}
-                    </p>
-                    <div className='speech-context_points'>
-                        {this.priorityPoint()}
+            <div className="row w-100">
+                <div className='col-sm-6'>
+                    <div className='speech-context'>
+                        <p className='speech-context_count'>
+                            {this.generateStory()}
+                        </p>
+                        <div className='speech-context_points'>
+                            {this.state.atMaxStatement}
+                        </div>
+                    </div>
+                    <div className='speech-options'>
+                        <div className='speech-option-desc'>
+                            <span>Low priority</span>
+                            <span>High priority</span>
+                        </div>
+                        {topics}
+                    </div>
+                    <div className='reset_button'>
+                        <button
+                            className='campaign-btn speech-btn'
+                            onClick={this.props.submitPriorities}
+                        >
+                            Submit
+                        </button>
                     </div>
                 </div>
-                <div className='speech-options'>
-                    <div className='speech-option-desc'>
-                        <span>Low priority</span>
-                        <span>High priority</span>
-                    </div>
-                    {topics}
+                <div className="col-sm-6">
+                    {this.props.campaign_map}
                 </div>
-                <div className='reset_button'>
-                    <button
-                        className='campaign-btn speech-btn'
-                        onClick={this.props.submitPriorities}
-                    >
-                        Submit
-                    </button>
-                </div>
-            </div></div>
+            </div>
         );
     }
 }
@@ -265,5 +305,6 @@ Speech.propTypes = {
     topicNames: PropTypes.array,
     canReset: PropTypes.bool,
     round: PropTypes.number,
+    campaign_map: PropTypes.object,
     roundAggregateData: PropTypes.object,
 };
