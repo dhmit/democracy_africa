@@ -304,16 +304,22 @@ export class CampaignView extends React.Component {
 
     render() {
         if (this.state.view === 'intro') {
-            const description = <>
-                <p>Welcome to the Campaign Game!</p>
-                <p>In this game, you will create a political campaign and try to
-                appeal to the most people in a country.</p>
-                <p>You will have two rounds to set your campaign's priorities and gather
-                survey data from citizens, and then one final chance to set your priorities
-                and see how you do in an election.</p>
-            </>;
             const altText = 'Nelson Mandela voting in the 1994 South African general election.';
-            const caption = (<>{altText}</>);
+            const campaignIntroDesc = {
+                desc: (<>
+                    <p>Welcome to the Campaign Game!</p>
+                    <p>In this game, you will create a political campaign and try to
+                    appeal to the most people in a country.</p>
+                    <p>You will have two rounds to set your campaign's priorities and gather
+                    survey data from citizens, and then one final chance to set your priorities
+                    and see how you do in an election.</p>
+                </>),
+                img: {
+                    imgFilename: 'mandela_voting_in_1994.jpg',
+                    imgAlt: altText,
+                    imgCaption: (<>{altText}</>),
+                },
+            };
             return (
                 <>
                     {this.state.showCountrySelector
@@ -333,11 +339,8 @@ export class CampaignView extends React.Component {
                         />
                     }
                     <IntroView
-                        desc={description}
                         setView={() => { this.setState({ showCountrySelector: true }); }}
-                        imgFile={'mandela_voting_in_1994.jpg'}
-                        altText={altText}
-                        imgCaption={caption}
+                        introDescriptions={campaignIntroDesc}
                     />
                 </>
             );
