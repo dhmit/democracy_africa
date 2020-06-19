@@ -27,6 +27,10 @@
     text-decoration: none;
 }
 
+.cyoa-button:focus {
+    outline: none;
+}
+
 .intro-img, .stage-img {
     margin-bottom: 20px;
 }
@@ -48,3 +52,6 @@
     @extend .btn;
 }
 
+.adventure-selector {
+    text-align: center;
+}
