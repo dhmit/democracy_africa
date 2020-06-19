@@ -144,7 +144,7 @@ export class CampaignView extends React.Component {
                     return_text_low += '.';
                 }
             }
-            return return_text_high + ' ' + return_text_low;
+            return (<div>{return_text_high}<br/><br/>{return_text_low}</div>);
         }
         return '';
     }
@@ -453,7 +453,13 @@ export class CampaignView extends React.Component {
                         {this.state.topicNames.map((topic, i) => <li key={i}>{topic}</li>)}
                     </ul>
 
-                    <button onClick={() => this.setState({ view: 'speechMaker', round: 1 })}>
+                    <button onClick={() => this.setState({
+                        view: 'speechMaker',
+                        round: 1,
+                        clickedProvince: this.state.clickedProvince
+                            ? this.state.clickedProvince
+                            : Object.keys(populationData)[0],
+                    })}>
                     I am ready to set my campaign's priorities!
                     </button>
                 </div>
