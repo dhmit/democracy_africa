@@ -526,22 +526,16 @@ export class CampaignView extends React.Component {
         if (this.state.view === 'feedback') {
             return (
                 <div className={'campaign-container'}>
-                    <div className="row" style={{ width: '100%' }}>
-                        <div className="col-lg-6 col-md-12 order-md-1
-                         order-lg-2">
-                            {campaign_map}
-                        </div>
-                        <div className="col-lg-6 col-md-12 order-md-2
-                         order-lg-1">
-                            <Feedback
-                                clickedProvince={clickedProvince}
-                                round={this.state.round}
-                                generateDescription={this.generateDescription}
-                                results={populationData}
-                                nextRound={() => this.changeView({ view: 'speechMaker' })}
-                            />
-                        </div>
-                    </div>
+                    <Feedback
+                        clickedProvince={clickedProvince}
+                        round={this.state.round}
+                        generateDescription={this.generateDescription}
+                        results={populationData}
+                        nextRound={() => this.changeView({ view: 'speechMaker' })}
+                        topicNames={this.state.topicNames}
+                        speechProposal={this.state.speechProposal}
+                        campaignMap={campaign_map}
+                    />
                 </div>
             );
         }
