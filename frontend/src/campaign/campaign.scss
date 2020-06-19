@@ -82,7 +82,7 @@ $edx-button-color: #e7e7e7;
 
 .feedback,
 .speech-maker{
-    width: 42%
+    width: 100%
 }
 
 .resultTable{
@@ -196,6 +196,10 @@ $edx-button-color: #e7e7e7;
     }
 }
 
+#content {
+    cursor: pointer;
+}
+
 .support {
     color: #5abf5a;
 }
@@ -215,4 +219,3 @@ $edx-button-color: #e7e7e7;
 .close-button {
     cursor: pointer;
 }
-
