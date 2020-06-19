@@ -14,12 +14,14 @@ class IntroView extends React.Component {
     }
 
     render() {
+        const { desc, img } = this.props.introDescriptions;
+        const { imgFilename, imgAlt, imgCaption } = img;
         return (
             <div>
                 <div className='row'>
                     <div className='col-8'>
                         <div>
-                            {this.props.desc}
+                            {desc}
                         </div>
                         <div className='intro-btn-container'>
                             <div className='cyoa-button start-button'
@@ -29,11 +31,13 @@ class IntroView extends React.Component {
                         </div>
                     </div>
                     <div className='col-4'>
-                        <CaptionedImage
-                            filename={this.props.imgFile}
-                            alt={this.props.altText}
-                            caption={this.props.imgCaption}
-                        />
+                        {imgFilename
+                            && <CaptionedImage
+                                filename={imgFilename}
+                                alt={imgAlt}
+                                caption={imgCaption}
+                            />
+                        }
                     </div>
                 </div>
             </div>
@@ -41,11 +45,8 @@ class IntroView extends React.Component {
     }
 }
 IntroView.propTypes = {
-    desc: PropTypes.object,
+    introDescriptions: PropTypes.object,
     setView: PropTypes.func,
-    imgFile: PropTypes.string,
-    imgCaption: PropTypes.object,
-    altText: PropTypes.string,
 };
 
 export default IntroView;
