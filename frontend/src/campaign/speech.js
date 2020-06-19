@@ -151,7 +151,9 @@ export class Speech extends React.Component {
                 acceptable = false;
             } else {
                 const priority_points_left = this.max_priority_points[priority] - dict[priority];
-                atMaxStatement += `You can have ${priority_points_left} more sectors at ${priority} priority.\n`;
+                atMaxStatement += (
+                    `You can have ${priority_points_left} more sectors at ${priority} priority.\n`
+                );
             }
         }
         return [acceptable, atMaxStatement];
@@ -218,22 +220,31 @@ export class Speech extends React.Component {
     };
 
     render() {
-        const topics = this.props.topicNames.map((topic, key) => (
-            <div key={key} className='speech-option'>
-                <div className='speech-option_label'>
-                    {topic}
+        const topics = this.props.topicNames.map((topic, key) => {
+            const inputs = [];
+            for (let i = 0; i < 3; i++) {
+                inputs.push(<input
+                    key={i}
+                    className='speech-radio'
+                    type='radio'
+                    name={topic}
+                    id={'inlineRadio' + (2 * i + 1)}
+                    value={2 * i + 1}
+                    checked={this.state.speechProposal[topic] === (2 * i + 1)}
+                    onChange={(e) => this.handleButtonOnChange(e, topic)}
+                />);
+            }
+            return (
+                <div key={key} className='speech-option'>
+                    <div className='speech-option_label'>
+                        {topic}
+                    </div>
+                    <div className='speech-option_btns'>
+                        {inputs}
+                    </div>
                 </div>
-                <div className='speech-option_btns'>
-                    {[...Array(3).keys()].map((score, j) => (
-                        <input className='speech-radio' type='radio' name={topic} key={j}
-                            id={'inlineRadio' + (2 * score + 1)} value={2 * score + 1}
-                            checked={this.state.speechProposal[topic] === (2 * score + 1)}
-                            onChange={(e) => this.handleButtonOnChange(e, topic)}/>
-                        // </div>
-                    ))}
-                </div>
-            </div>
-        ));
+            );
+        });
 
         return (
             <div className="row w-100"><div className='col'>
