@@ -117,7 +117,7 @@ export class Speech extends React.Component {
         } else if (this.props.round === 3) {
             advice += 'This is the final policy that people will see in the election.\n';
         }
-        if (!(this.props.round === 1)) {
+        if (this.props.round !== 1) {
             if (previousRoundSupport >= 60) {
                 advice += 'Based on the results from last round, people seem to respond very well to'
                 + ' the current policy. This policy is probably what you want to use in the election.';
