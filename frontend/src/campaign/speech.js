@@ -247,31 +247,36 @@ export class Speech extends React.Component {
         });
 
         return (
-            <div className="row w-100"><div className='col'>
-                <div className='speech-context'>
-                    <p className='speech-context_count'>
-                        {this.generateStory()}
-                    </p>
-                    <div className='speech-context_points'>
-                        {this.state.atMaxStatement}
+            <div className="row w-100">
+                <div className='col-sm-6'>
+                    <div className='speech-context'>
+                        <p className='speech-context_count'>
+                            {this.generateStory()}
+                        </p>
+                        <div className='speech-context_points'>
+                            {this.state.atMaxStatement}
+                        </div>
+                    </div>
+                    <div className='speech-options'>
+                        <div className='speech-option-desc'>
+                            <span>Low priority</span>
+                            <span>High priority</span>
+                        </div>
+                        {topics}
+                    </div>
+                    <div className='reset_button'>
+                        <button
+                            className='campaign-btn speech-btn'
+                            onClick={this.props.submitPriorities}
+                        >
+                            Submit
+                        </button>
                     </div>
                 </div>
-                <div className='speech-options'>
-                    <div className='speech-option-desc'>
-                        <span>Low priority</span>
-                        <span>High priority</span>
-                    </div>
-                    {topics}
+                <div className="col-sm-6">
+                    {this.props.campaign_map}
                 </div>
-                <div className='reset_button'>
-                    <button
-                        className='campaign-btn speech-btn'
-                        onClick={this.props.submitPriorities}
-                    >
-                        Submit
-                    </button>
-                </div>
-            </div></div>
+            </div>
         );
     }
 }
@@ -284,4 +289,5 @@ Speech.propTypes = {
     topicNames: PropTypes.array,
     canReset: PropTypes.bool,
     round: PropTypes.number,
+    campaign_map: PropTypes.object,
 };

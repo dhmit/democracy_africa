@@ -58,8 +58,8 @@ const STAGE_1 = {
             'showOnEnd': true,
         },
         {
-            'text': <div>Agree to participate in the sit-in, but you’re a little skeptical: want to
-                learn more</div>,
+            'text': <div>Agree; however, you’re a little skeptical about how the sit-in will be
+                effective. You want to learn more about the movement</div>,
             'stageName': 'STAGE_1B_INT',
             'endDetail': '',
             'showOnEnd': true,
@@ -78,26 +78,52 @@ const STAGE_1A = {
     'text': <div>You get there, but feel the tension of the situation. What do you want to do?
     </div>,
     'options': [{
-        'text': <div> You decide to sneak out before things get worse and are worried that the
+        'text': <div> Sneak out before things get worse. You are worried that the
              sit-in might escalate from a purely peaceful protest because students
-             started blockading road access.</div>,
-        'stageName': 'STAGE_2',
+             are starting to blockade road access.</div>,
+        'stageName': 'STAGE_1AA_INT',
         'endDetail': '',
         'showOnEnd': true,
     },
     {
-        'text': <div>You stay with the movement and help block the roads. After, you join them at
-             the sit in. The protesters occupy the admin building and things escalate! You try to
-             escape, but get caught by the riot police.</div>,
+        'text': <div>Stay with the movement and help block the roads with burning tires</div>,
         'stageName': 'STAGE_1AB_INT',
         'endDetail': '',
         'showOnEnd': true,
     }],
 };
 
+const STAGE_1AA_INT = {
+    'text': <div>
+        <p>
+            When you arrived home, you hear about how the sit-in had escalated, resulting in the
+            arrest of many protesters. You feel a sense of relief that you were not taken to jail.
+        </p>
+        <p>
+            In the meantime, the university closes and on the 19th of October,
+            the university agrees to begin new negotiations with the students.
+        </p>
+    </div>,
+    'options': [{
+        'text': <div>Next</div>,
+        'stageName': 'STAGE_2',
+        'endDetail': '',
+        'showOnEnd': false,
+    }],
+};
+
 const STAGE_1AB_INT = {
-    'text': <div>That night, students hold an all night vigil outside the police station, calling
-        for your and your peers’ release. Thankfully, they let you go.</div>,
+    'text': <div>
+        <p>
+            After blocking the roads, you join the other protesters at the sit in and occupy
+            the admin building, but that was when things started to escalate! You try to
+            escape, but you get caught by the riot police.
+        </p>
+        <p>
+            That night, students hold an all night vigil outside the police station, calling
+            for the release of you and your peers. Thankfully, the police let you all go.
+        </p>
+    </div>,
     ...jail_img_props,
     'options': [{
         'text': <div>Next</div>,
@@ -109,10 +135,92 @@ const STAGE_1AB_INT = {
 
 const STAGE_1B_INT = {
     'text': <div>
-        <p>After you’ve had a while to ponder, you decide you want to participate, but you’d prefer
-            a less confrontational route.</p>
-        <p>In the meantime, the university closes anyway.</p>
-        <p>On 19 October, the University agrees to new negotiations.</p>
+        <p>You decide that you want to gain a better understanding about the movement.
+            How would you like to learn more?</p>
+    </div>,
+    'options': [{
+        'text': <div>Read articles and social media posts on the Internet</div>,
+        'stageName': 'STAGE_1BA_INT',
+        'endDetail': '',
+        'showOnEnd': true,
+    },
+    {
+        'text': <div>Ask your family</div>,
+        'stageName': 'STAGE_1BB_INT',
+        'endDetail': '',
+        'showOnEnd': true,
+    },
+    {
+        'text': <div>Talk to your friends and other students</div>,
+        'stageName': 'STAGE_1BC_INT',
+        'endDetail': '',
+        'showOnEnd': true,
+    }],
+};
+
+const STAGE_1BA_INT = {
+    'text': <div>
+        <p>
+            You decide to spend some time educate yourself about the #FeesMustFall movement
+            instead of going to the sit-in. After some research, you become even more aware of
+            the large extent to which your country's higher education system is, structurally
+            and financially, still affected by the legacies of the apartheid era. With this new
+            knowledge, you gain a better understanding of the sentiment of the students and how
+            frustrating it must feel to have a system that works against you.
+        </p>
+        <p>
+            In the meantime, the university closes anyway and on the 19th of October, the
+            university agrees to begin new negotiations with the students.
+        </p>
+    </div>,
+    'options': [{
+        'text': <div>Next</div>,
+        'stageName': 'STAGE_2',
+        'endDetail': '',
+        'showOnEnd': false,
+    }],
+};
+
+const STAGE_1BB_INT = {
+    'text': <div>
+        <p>
+            After mentioning the student demonstrations like the sit-in to your family members, they
+            give you some warnings. They didn't think it was worth the risk of getting expelled by
+            your school or having any disciplinary and criminal records that might make it more
+            difficult for you to find jobs in the future.
+        </p>
+        <p>
+            Ultimately, you decide that you will support the movement but in a less confrontational
+            way.
+        </p>
+        <p>
+            In the meantime, the university closes anyway and on the 19th of October, the
+            university agrees to begin new negotiations with the students.
+        </p>
+    </div>,
+    'options': [{
+        'text': <div>Next</div>,
+        'stageName': 'STAGE_2',
+        'endDetail': '',
+        'showOnEnd': false,
+    }],
+};
+
+const STAGE_1BC_INT = {
+    'text': <div>
+        <p>
+            As you leave your final class of the day, you ask your peers whether they are going to
+            the sit-in. There are mixed responses between them. They acknowledge the importance of
+            speaking out against the government when they enact unfair policies, but also see the
+            danger that comes from being in the front lines of the protests, where police can
+            physically harm you. After hearing the arguments made by your peers, you decide that
+            you will look for other ways to support this movement.
+        </p>
+        <p>
+            In the meantime, the university closes anyway and on the 19th of October, the university
+            agrees to begin new negotiations with the students.
+        </p>
+
     </div>,
     'options': [{
         'text': <div>Next</div>,
@@ -125,18 +233,26 @@ const STAGE_1B_INT = {
 const STAGE_1C_INT = {
     'text': <div>
         <p>You’re really not comfortable being part of this right now.</p>
-        <p>As you are revising for exams in the university library, groups of students come in and
-            intimidate you for not being part of the cause. Some of them carry weapons, making you
-            a bit uncomfortable. On Twitter, student groups accuse you for sympathizing with the
-            government and not caring about the consequences of the fee increase for other students.
-            In the meantime, you begin to see more and more police surrounding your campus. But you
-            also start to hear about your university starting to negotiate with student
-            activists.</p>
-        <p>A few days later, your university closes indefinitely. You start to feel a bit bad that
-            you spent those last days on campus preparing for exams rather than actively
-            protesting. </p>
-        <p>In the meantime, the university closes anyway.</p>
-        <p>On 19 October, the University agrees to new negotiations.</p>
+        <p>
+            You are the first in your family to attend university. Over the past school year, you
+            have been focused on getting good marks. You hope to graduate and ultimately secure a
+            job. Because you have a lot of upcoming exams, you have been spending a lot of time
+            reviewing in the university library. When groups of students start coming into the
+            library with weapons to protest, you feel a bit intimidated. On Facebook as well
+            as other social media platforms, other students accuse you for sympathizing with
+            the government; they say that you don’t care enough about the consequences of the
+            fee increase for other students.
+        </p>
+        <p>
+            In the meantime, you begin to see more and more police on and surrounding your campus.
+            However, you also start to hear about your university starting to negotiate with
+            student activists.
+        </p>
+        <p>
+            A few days later, your university closes indefinitely. You start to feel a bit bad
+            that you spent those last days on campus preparing for exams rather than actively
+            protesting. You feel guilty and a bit selfish too.
+        </p>
     </div>,
     'options': [{
         'text': <div>Next</div>,
@@ -147,7 +263,8 @@ const STAGE_1C_INT = {
 };
 
 const STAGE_2 = {
-    'text': <div>On 21 October, you hear about the potential march on Parliament.</div>,
+    'text': <div>After the recent sit-in, you hear about a potential march on Parliament on the
+        21st of October. What do you want to do this time?</div>,
     ...demonstration_img_props,
     'options': [{
         'text': <div>Join the march</div>,
@@ -172,7 +289,8 @@ const STAGE_2 = {
 };
 
 const STAGE_2_1C = {
-    'text': <div>On 21 October, you hear about the potential march on Parliament.</div>,
+    'text': <div>After the recent sit-in, you hear about a potential march on Parliament on the
+        21st of October. What do you want to do this time?</div>,
     ...demonstration_img_props,
     'options': [{
         'text': <div>Join the march</div>,
@@ -191,21 +309,28 @@ const STAGE_2_1C = {
     {
         'text': <div>Still, you’re not comfortable; you again do nothing</div>,
         'stageName': 'STAGE_2C_INT',
-        'endDetail': <div>You’ve remained outside the action the whole time. But you feel
-            terrible that your friends have suffered. As they are released, you try to contact them,
-            separately and together, but you receive no response. Perhaps you’ve been affected after
-            all. </div>,
+        'endDetail': <div>
+            You’ve remained outside the action the whole time; you feel terrible that your friends
+            have suffered. When they get released, you try to contact them, separately and
+            together. No one replies to you, though. Perhaps, you’ve been affected after all.
+        </div>,
         'showOnEnd': true,
     }],
 };
 
 const STAGE_2A_INT = {
     'text': <div>
-        <p>Aha. Maybe those in the government will listen. This sounds like a better opportunity
-            to have an impact; you want to join this march. (Plus you feel kind of terrible that
-            your friends got arrested.)</p>
-        <p>Just as you are wrapping up, some people in the crowd agitate the police by throwing a
-            flaming “coffin” Blade Nzimande at them, and violence breaks out.</p>
+        <p>
+            Aha. Maybe the Minister of Education and the members of the Parliament will finally
+            listen. This sounds like a better opportunity to have an impact; you want to join
+            this march.
+        </p>
+        <p>
+            Just as you are wrapping up, some people in the crowd decide to further agitate the
+            police. They throw a flaming cardboard “coffin” with the name of South Africa’s
+            minister of higher education, Blade Nzimande, at the police. As a result,
+            violence breaks out.
+        </p>
     </div>,
     ...violence_img_props,
     'options': [{
@@ -216,25 +341,94 @@ const STAGE_2A_INT = {
     }],
 };
 
+
 const STAGE_2B_INT = {
     'text': <div>
-        <p>This sounds like something others should know about! You choose to use social
-        media to share what’s happening.</p>
-        <p>You inform other people of the march on parliament and it turns out that as many as 5000
-            people showed up to protest. You feel a mixed sense of relief and horror as you hear
-            about that chaos towards the end of the march.</p>
-        <p>From October 13th through November 10th 2015 over 1,270,738 Twitter tweets used this
-            hashtag to show support of the protest, and if you used this hashtag, you were one of
-            them!</p>
-        <p>Many activist groups and students united on this topic on Twitter as it is one of the
-            most prevalent issues currently. It was so much that this hashtag began trending
-            worldwide on Twitter. Due to the pressure of the protests and the global pressure of
-            the usage of this hashtag, many school officials sought ways to increase censorship and
-            prevent protests on school and social media platforms. This was so extreme that the
-            University of Cape Town even received a verdict from the High Court of South Africa to
-            do so. This hashtag gave voice to many students that didn’t have any and gave these
-            students the power to question the government. If there’s a way to learn about this
-            from a student’s perspective, Twitter is the way to go!</p>
+        <p>This march sounds like something others should know about! To spread awareness about
+            this event, you are going to use social media. Which social media platform do
+            you want to use?</p>
+    </div>,
+    'options': [{
+        'text': <div>Use Twitter</div>,
+        'stageName': 'STAGE_2BA_INT',
+        'endDetail': <div>Through Twitter, you spread awareness of the movement and the march.
+            However, your retweets were not able to reach many of your peers who use other social
+            media platforms. In fact, in South Africa, it was mostly the elites who used Twitter.
+        </div>,
+        'showOnEnd': true,
+    },
+    {
+        'text': <div>Use WhatsApp</div>,
+        'stageName': 'STAGE_2BB_INT',
+        'endDetail': <div>It turns out that as many as 5000 people showed up to protest at the
+            Parliament. Thanks to your help with actively inviting your friends to join the
+            WhatsApp group chat, you were able to increase the number of people at the march and
+            make a big statement to the education officials.
+        </div>,
+        'showOnEnd': true,
+    },
+    {
+        'text': <div>Use Facebook</div>,
+        'stageName': 'STAGE_2BC_INT',
+        'endDetail': '',
+        'showOnEnd': true,
+    }],
+};
+
+const STAGE_2BA_INT = {
+    'text': <div>
+        <p>
+            You go on Twitter and retweet some of the tweets by the student organizers of the
+            #FeesMustFall movement, hoping that the logistics regarding the march at Parliament is
+            spread to students who are willing and able to participate in the protests.
+        </p>
+        <p>
+            After the day of the march, you feel a mixed sense of relief and horror as you hear
+            about that chaos towards the end of the march.
+        </p>
+        <p>
+            From October 13th through November 10th 2015 over 1,270,738 Twitter tweets used this
+            hashtag to show support of the protest, and since you used this hashtag, you were one
+            of the many people who helped support this movement!
+        </p>
+    </div>,
+    'options': [{
+        'text': <div>Next</div>,
+        'stageName': null,
+        'endDetail': '',
+        'showOnEnd': false,
+    }],
+};
+
+const STAGE_2BB_INT = {
+    'text': <div>
+        <p>
+            You join the WhatsApp group chat for the #FeesMustFall movement. The student organizers
+            of the group chat regularly post information relevant to the protests. You start adding
+            other people you know to the group chat in order to spread information about the march
+            at Parliament.
+        </p>
+        <p>
+            Through this platform, the organizers are able to inform thousands of students both
+            from your university and from other universities about the movement and events.
+        </p>
+
+    </div>,
+    'options': [{
+        'text': <div>Next</div>,
+        'stageName': null,
+        'endDetail': '',
+        'showOnEnd': false,
+    }],
+};
+
+const STAGE_2BC_INT = {
+    'text': <div>
+        <p>You message some of your old friends from high school; some of them are attending
+            other universities where the movement has not started yet. You encourage them to
+            gather other students from their universities and organize a group to demonstrate
+            solidarity with the #FeesMustFall movement.</p>
+
     </div>,
     'options': [{
         'text': <div>Next</div>,
@@ -258,18 +452,27 @@ const STAGE_2C_INT = {
     }],
 };
 
+
 const NAME_TO_STAGE = {
     'STAGE_1': STAGE_1,
     'STAGE_1A': STAGE_1A,
+    'STAGE_1AA_INT': STAGE_1AA_INT,
     'STAGE_1AB_INT': STAGE_1AB_INT,
     'STAGE_1B_INT': STAGE_1B_INT,
     'STAGE_1C_INT': STAGE_1C_INT,
+    'STAGE_1BA_INT': STAGE_1BA_INT,
+    'STAGE_1BB_INT': STAGE_1BB_INT,
+    'STAGE_1BC_INT': STAGE_1BC_INT,
     'STAGE_2': STAGE_2,
     'STAGE_2_1C': STAGE_2_1C,
     'STAGE_2A_INT': STAGE_2A_INT,
     'STAGE_2B_INT': STAGE_2B_INT,
     'STAGE_2C_INT': STAGE_2C_INT,
+    'STAGE_2BA_INT': STAGE_2BA_INT,
+    'STAGE_2BB_INT': STAGE_2BB_INT,
+    'STAGE_2BC_INT': STAGE_2BC_INT,
 };
+
 
 const introDesc = (
     <>
