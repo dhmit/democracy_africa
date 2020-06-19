@@ -150,8 +150,8 @@ export class Speech extends React.Component {
             if (dict[priority] > this.max_priority_points[priority]) {
                 acceptable = false;
             } else {
-                atMaxStatement += 'You can have ' + (this.max_priority_points[priority]
-                    - dict[priority]) + ' more sectors at ' + priority + ' priority.\n';
+                const priority_points_left = this.max_priority_points[priority] - dict[priority];
+                atMaxStatement += `You can have ${priority_points_left} more sectors at ${priority} priority.\n`;
             }
         }
         return [acceptable, atMaxStatement];
@@ -217,10 +217,6 @@ export class Speech extends React.Component {
         return count;
     };
 
-    priorityPoint() {
-        return this.state.atMaxStatement;
-    }
-
     render() {
         const topics = this.props.topicNames.map((topic, key) => (
             <div key={key} className='speech-option'>
@@ -246,7 +242,7 @@ export class Speech extends React.Component {
                         {this.generateStory()}
                     </p>
                     <div className='speech-context_points'>
-                        {this.priorityPoint()}
+                        {this.state.atMaxStatement}
                     </div>
                 </div>
                 <div className='speech-options'>
