@@ -44,6 +44,12 @@ export class CampaignView extends React.Component {
         }
     }
 
+    changeView = (newState) => {
+        this.setState({
+            ...newState,
+        }, () => { window.scrollTo(0, 0); });
+    };
+
     calculate_averages() {
         const population = this.state.populationData;
         Object.keys(population).forEach((province) => {
@@ -262,12 +268,12 @@ export class CampaignView extends React.Component {
 
     submitPriorities = () => {
         if (this.state.round < 3) {
-            this.setState({
+            this.changeView({
                 round: this.state.round + 1,
                 view: 'feedback',
             });
         } else {
-            this.setState({ view: 'submitted' });
+            this.changeView({ view: 'submitted' });
         }
     };
 
@@ -325,9 +331,10 @@ export class CampaignView extends React.Component {
                             changeCountry={this.changeCountry}
                             closePopup={(startGame) => {
                                 if (startGame) {
-                                    this.setState(
-                                        { showCountrySelector: false, view: 'countryInfo' },
-                                    );
+                                    this.changeView({
+                                        showCountrySelector: false,
+                                        view: 'countryInfo',
+                                    });
                                 } else {
                                     this.setState(
                                         { showCountrySelector: false },
@@ -444,7 +451,7 @@ export class CampaignView extends React.Component {
                         {this.state.topicNames.map((topic, i) => <li key={i}>{topic}</li>)}
                     </ul>
 
-                    <button onClick={() => this.setState({ view: 'speechMaker', round: 1 })}>
+                    <button onClick={() => this.changeView({ view: 'speechMaker', round: 1 })}>
                     I am ready to set my campaign's priorities!
                     </button>
                 </div>
@@ -476,7 +483,7 @@ export class CampaignView extends React.Component {
                             changeCountry={this.changeCountry}
                             closePopup={(startGame) => {
                                 if (startGame) {
-                                    this.setState(
+                                    this.changeView(
                                         { showCountrySelector: false, view: 'countryInfo' },
                                     );
                                 } else {
@@ -506,7 +513,7 @@ export class CampaignView extends React.Component {
                                 round={this.state.round}
                                 generateDescription={this.generateDescription}
                                 results={populationData}
-                                nextRound={() => this.setState({ view: 'speechMaker' })}
+                                nextRound={() => this.changeView({ view: 'speechMaker' })}
                             />
                         </div>
                     </div>
