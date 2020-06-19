@@ -178,7 +178,7 @@ export class Speech extends React.Component {
                 speechProposal: newProposal,
                 total: this.state.total + newVal - oldVal,
                 result: this.countSupporters(),
-                atMaxStatement: newAtMaxStatement
+                atMaxStatement: newAtMaxStatement,
             });
         } else {
             newProposal[topic] = oldVal;
