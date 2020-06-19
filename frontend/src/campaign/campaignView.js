@@ -232,11 +232,13 @@ export class CampaignView extends React.Component {
     }
 
     handleProvinceMapClick(e, province) {
-        const tagname = e.target.tagName;
-        if (tagname === 'svg' || (tagname === 'path' && province)) {
+        const tagName = e.target.tagName;
+        if (tagName === 'svg' || (tagName === 'path' && province)) {
             this.setState({
                 clickedProvince: province,
-                sampleSize: Math.min(this.state.populationData[province]['citizens'].length, 75),
+                sampleSize: province
+                    ? Math.min(this.state.populationData[province]['citizens'].length, 75)
+                    : 0,
             });
         }
     }
