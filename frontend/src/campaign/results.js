@@ -58,25 +58,27 @@ class Results extends React.Component {
                                 const percentage = Math.round((supporters / total) * 100);
                                 return (
                                     <tr
-                                        className={percentage >= 50 ? 'support' : 'unsupport'}
                                         key={k}
                                     >
                                         <td className="table-provinces">{province}</td>
                                         <td>{supporters}</td>
                                         <td>{total}</td>
-                                        <td>{percentage}%</td>
+                                        <td className={percentage >= 50 ? 'support' : 'unsupport'}
+                                        >{percentage}%</td>
                                     </tr>
                                 );
                             }
                             return (<></>);
                         })}
-                        <tr className={`countryResult ${countryPercent >= 50
-                            ? 'support'
-                            : 'unsupport'}`}>
+                        <tr className={'countryResult'}>
                             <th>{this.props.countryName}</th>
                             <th>{this.props.countryData.totalSupport}</th>
                             <th>{this.props.countryData.totalPopulation}</th>
-                            <th>{Math.round((this.props.countryData.totalSupport
+                            <th className={`${countryPercent >= 50
+                                ? 'support'
+                                : 'unsupport'}`}
+                            >
+                                {Math.round((this.props.countryData.totalSupport
                                                 / this.props.countryData.totalPopulation) * 100)}%
                             </th>
                         </tr>
