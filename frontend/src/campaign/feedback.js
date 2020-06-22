@@ -8,7 +8,6 @@ class Feedback extends React.Component {
     }
 
     render() {
-        console.log(this.props.topicNames);
         const { results, clickedProvince, campaignMap } = this.props;
         let sample = [];
         let citizenReactions = '';
@@ -37,6 +36,9 @@ class Feedback extends React.Component {
 
                     <div className="col-lg-6 col-md-12 order-md-1 order-lg-2">
                         {campaignMap}
+                        {clickedProvince
+                            && <strong>A Sample of the Citizens from { clickedProvince }</strong>}
+                        <br/>
                         {citizenReactions}
                     </div>
                     <div className="feedback-results col-lg-6 col-md-12 order-md-2 order-lg-1">
@@ -54,7 +56,6 @@ class Feedback extends React.Component {
                                         <tr>
                                             <th>Topic</th>
                                             <th>Percentage of Sample Satisfied</th>
-                                            <th>Percentage of Sample Dissatisfied</th>
                                         </tr>
                                         {this.props.topicNames.map((topic, k) => {
                                             const numSatisfied = sample.reduce((acc, citizen) => {
@@ -70,7 +71,6 @@ class Feedback extends React.Component {
                                                 <tr key={k}>
                                                     <td>{topic}</td>
                                                     <td>{pctSatisfied}%</td>
-                                                    <td>{100 - pctSatisfied}%</td>
                                                 </tr>
                                             );
                                         })}
