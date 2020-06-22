@@ -161,7 +161,7 @@ const STAGE_1B_INT = {
 const STAGE_1BA_INT = {
     'text': <div>
         <p>
-            You decide to spend some time educate yourself about the #FeesMustFall movement
+            You decide to spend some time educating yourself about the #FeesMustFall movement
             instead of going to the sit-in. After some research, you become even more aware of
             the large extent to which your country's higher education system is, structurally
             and financially, still affected by the legacies of the apartheid era. With this new
@@ -184,13 +184,13 @@ const STAGE_1BA_INT = {
 const STAGE_1BB_INT = {
     'text': <div>
         <p>
-            After mentioning the student demonstrations like the sit-in to your family members, they
-            give you some warnings. They didn't think it was worth the risk of getting expelled by
-            your school or having any disciplinary and criminal records that might make it more
-            difficult for you to find jobs in the future.
+            After mentioning the student demonstrations, such as the sit-in, to your family
+            members, they give you some warnings. They didn't think it was worth the risk of
+            getting expelled by your school or having any disciplinary and criminal records
+            that might make it more difficult for you to find jobs in the future.
         </p>
         <p>
-            Ultimately, you decide that you will support the movement but in a less confrontational
+            Ultimately, you decide that you will support the movement in a less confrontational
             way.
         </p>
         <p>
@@ -211,7 +211,7 @@ const STAGE_1BC_INT = {
         <p>
             As you leave your final class of the day, you ask your peers whether they are going to
             the sit-in. There are mixed responses between them. They acknowledge the importance of
-            speaking out against the government when they enact unfair policies, but also see the
+            calling out the government for enacting unfair policies, but also see the
             danger that comes from being in the front lines of the protests, where police can
             physically harm you. After hearing the arguments made by your peers, you decide that
             you will look for other ways to support this movement.
@@ -234,9 +234,9 @@ const STAGE_1C_INT = {
     'text': <div>
         <p>You’re really not comfortable being part of this right now.</p>
         <p>
-            You are the first in your family to attend university. Over the past school year, you
+            You are the first in your family to attend university and over the past school year, you
             have been focused on getting good marks. You hope to graduate and ultimately secure a
-            job. Because you have a lot of upcoming exams, you have been spending a lot of time
+            job. Because you have a lot of upcoming exams, you have been spending time
             reviewing in the university library. When groups of students start coming into the
             library with weapons to protest, you feel a bit intimidated. On Facebook as well
             as other social media platforms, other students accuse you for sympathizing with
