@@ -431,16 +431,17 @@ export class CampaignView extends React.Component {
             </svg>
         );
 
+        let provinceDesc;
+        if (this.state.view === 'speechMaker') {
+            provinceDesc = '';
+        } else if (clickedProvince) {
+            provinceDesc = clickedProvince;
+        } else {
+            provinceDesc = countryName;
+        }
         const campaign_map = (
             <div className='campaign-map'>
-                {clickedProvince
-                    ? <div className='province-info-text'>
-                        <b>{clickedProvince}</b>
-                    </div>
-                    : <div className='province-info-text'>
-                        <b>{countryName}</b>
-                    </div>
-                }
+                <b>{ provinceDesc }</b>
                 {['countryInfo', 'feedback', 'speechMaker'].includes(this.state.view)
                     ? <OverlayTrigger
                         trigger="hover"
@@ -524,7 +525,7 @@ export class CampaignView extends React.Component {
 
         if (this.state.view === 'feedback') {
             return (
-                <div className={'campaign-container'}>
+                <div>
                     <Feedback
                         clickedProvince={clickedProvince}
                         round={this.state.round}

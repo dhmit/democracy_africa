@@ -75,12 +75,6 @@ $edx-button-color: #e7e7e7;
     text-align: center;
 }
 
-.campaign-container{
-    display: flex;
-    flex-basis: 0;
-    justify-content: center;
-}
-
 .resultTable{
     border: 1px $edx-border-color solid;
     text-align: center;
@@ -234,4 +228,8 @@ $edx-button-color: #e7e7e7;
 .country-options {
     display: flex;
     margin: 0;
+}
+
+.map-col {
+    text-align: center;
 }

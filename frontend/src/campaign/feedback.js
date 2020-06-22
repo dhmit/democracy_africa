@@ -31,7 +31,7 @@ class Feedback extends React.Component {
         </div>);
 
         return (
-            <div className='feedback'>
+            <div className='feedback container'>
                 <div className="row" style={{ width: '100%' }}>
                     <div className="feedback-results col-lg-6 col-md-12">
                         <p>
@@ -74,10 +74,12 @@ class Feedback extends React.Component {
                             Next Round
                         </button>
                     </div>
-                    <div className="col-lg-6 col-md-12">
+                    <div className="col-lg-6 col-md-12 map-col">
                         {campaignMap}
                         {clickedProvince
-                            && <strong>A Sample of the Citizens from { clickedProvince }</strong>}
+                            && <strong>
+                                A Sample of the Citizens from { clickedProvince }
+                            </strong>}
                         <br/>
                         {citizenReactions}
                     </div>
