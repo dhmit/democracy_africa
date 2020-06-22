@@ -270,7 +270,7 @@ export class Speech extends React.Component {
 
         return (
             <div className="row w-100">
-                <div className='col-sm-6'>
+                <div className='col-sm-12 col-lg-6'>
                     <div className='speech-context'>
                         <p className='speech-context_count'>
                             {this.generateStory()}
@@ -295,7 +295,7 @@ export class Speech extends React.Component {
                         </button>
                     </div>
                 </div>
-                <div className="col-sm-6">
+                <div className="col-sm-12 col-lg-6">
                     {this.props.campaign_map}
                 </div>
             </div>
