@@ -13,7 +13,7 @@ export const COUNTRIES = [
             'Fighting corruption',
         ],
         supportThreshold: 0.5,
-        max_priority_points: 12,
+        max_priority_points: { 'low': 3, 'medium': 3, 'high': 2 },
     },
     {
         name: 'Kenya',
@@ -64,7 +64,7 @@ export function get_country_prop(country_name, prop_name) {
 export const get_default_proposal = (topic_names) => {
     const proposal = {};
     topic_names.forEach((topic) => {
-        proposal[topic] = 3;
+        proposal[topic] = 1;
     });
     return proposal;
 };
@@ -107,7 +107,7 @@ export class Speech extends React.Component {
         const previousRoundSupport = Math.round(
             (this.props.roundAggregateData[this.props.round - 1].totalSupport
                 / this.props.roundAggregateData[this.props.round - 1].totalPopulation) * 100
-        );
+         );
         let advice = '';
         if (this.props.round === 1) {
             advice += 'You just started your campaign and we want you to set out '
@@ -192,7 +192,11 @@ export class Speech extends React.Component {
         const newVal = parseInt(e.target.value);
         const newProposal = this.props.speechProposal;
         const oldVal = newProposal[topic];
-        if (this.state.total + newVal - oldVal <= this.max_priority_points) {
+        newProposal[topic] = newVal;
+        const updateData = this.noProblem(this.makeProposalDict(newProposal));
+        const acceptableConfiguration = updateData[0];
+        const newAtMaxStatement = updateData[1];
+        if (acceptableConfiguration) {
             newProposal[topic] = newVal;
             this.setState({
                 speechProposal: newProposal,
@@ -200,6 +204,8 @@ export class Speech extends React.Component {
                 result: this.countSupporters(),
                 atMaxStatement: newAtMaxStatement,
             });
+        } else {
+            newProposal[topic] = oldVal;
         }
     };
 

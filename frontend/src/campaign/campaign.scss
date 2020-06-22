@@ -220,3 +220,18 @@ $edx-button-color: #e7e7e7;
 .close-button {
     cursor: pointer;
 }
+
+.intro-campaign-btn {
+    background-color: white !important;
+    border: 1px solid $edx-border-color;
+    padding: 0.2em 1em;
+    border-radius: 0.25em;
+    transition: 0.2s ease-in;
+
+    &:hover {
+        background-color: #f7f7f7 !important;
+    }
+    &:focus {
+        outline: none;
+    }
+}

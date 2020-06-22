@@ -431,7 +431,7 @@ export class CampaignView extends React.Component {
                         {this.state.topicNames.map((topic, i) => <li key={i}>{topic}</li>)}
                     </ul>
 
-                    <button onClick={() => this.setState({
+                    <button className='intro-campaign-btn' onClick={() => this.setState({
                         view: 'speechMaker',
                         round: 1,
                         clickedProvince: this.state.clickedProvince
