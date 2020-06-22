@@ -233,3 +233,20 @@ $edx-button-color: #e7e7e7;
 .map-col {
     text-align: center;
 }
+
+.country-button {
+    background-color: white !important;
+    border: 1px solid $edx-border-color;
+    padding: 0.75em 1em;
+    border-radius: 0.25em;
+    margin: -10px 0 0;
+    width: 100%;
+    transition: 0.2s ease-in;
+
+    &:hover {
+        background-color: #f7f7f7 !important;
+    }
+    &:focus {
+        outline: none;
+    }
+}

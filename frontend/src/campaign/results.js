@@ -63,8 +63,14 @@ class Results extends React.Component {
                                         <td className="table-provinces">{province}</td>
                                         <td>{supporters}</td>
                                         <td>{total}</td>
-                                        <td className={percentage >= 50 ? 'support' : 'unsupport'}
-                                        >{percentage}%</td>
+                                        <td>
+                                            <span className={percentage >= 50
+                                                ? 'support'
+                                                : 'unsupport'}
+                                            >
+                                                {percentage}%
+                                            </span>
+                                        </td>
                                     </tr>
                                 );
                             }
@@ -74,12 +80,15 @@ class Results extends React.Component {
                             <th>{this.props.countryName}</th>
                             <th>{this.props.countryData.totalSupport}</th>
                             <th>{this.props.countryData.totalPopulation}</th>
-                            <th className={`${countryPercent >= 50
-                                ? 'support'
-                                : 'unsupport'}`}
-                            >
-                                {Math.round((this.props.countryData.totalSupport
+                            <th>
+                                <span
+                                    className={`${countryPercent >= 50
+                                        ? 'support'
+                                        : 'unsupport'}`}
+                                >
+                                    {Math.round((this.props.countryData.totalSupport
                                                 / this.props.countryData.totalPopulation) * 100)}%
+                                </span>
                             </th>
                         </tr>
                     </tbody>
