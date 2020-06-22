@@ -39,7 +39,14 @@ class Feedback extends React.Component {
                             satisfied a sample of citizens from that province were with
                             your priorities.
                         </p>
-
+                        { clickedProvince
+                            && <strong>
+                                A Sample of the Citizens from { clickedProvince }
+                            </strong>
+                        }
+                        <br/>
+                        {citizenReactions}
+                        <br/><br/>
                         {description}
                         <div className='feedback-pop'>
                             {clickedProvince
@@ -76,12 +83,6 @@ class Feedback extends React.Component {
                     </div>
                     <div className="col-lg-6 col-md-12 map-col">
                         {campaignMap}
-                        {clickedProvince
-                            && <strong>
-                                A Sample of the Citizens from { clickedProvince }
-                            </strong>}
-                        <br/>
-                        {citizenReactions}
                     </div>
                 </div>
             </div>
