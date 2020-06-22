@@ -332,7 +332,7 @@ export class CampaignView extends React.Component {
             const altText = 'Nelson Mandela voting in the 1994 South African general election.';
             const campaignIntroDesc = {
                 desc: (<>
-                    <p>Welcome to the Campaign Game!</p>
+                    <h5>Welcome to the Campaign Game!</h5>
                     <p>In this game, you will create a political campaign and try to
                     appeal to the most people in a country.</p>
                     <p>You will have two rounds to set your campaign's priorities and gather
