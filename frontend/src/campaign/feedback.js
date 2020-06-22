@@ -33,15 +33,7 @@ class Feedback extends React.Component {
         return (
             <div className='feedback'>
                 <div className="row" style={{ width: '100%' }}>
-
-                    <div className="col-lg-6 col-md-12 order-md-1 order-lg-2">
-                        {campaignMap}
-                        {clickedProvince
-                            && <strong>A Sample of the Citizens from { clickedProvince }</strong>}
-                        <br/>
-                        {citizenReactions}
-                    </div>
-                    <div className="feedback-results col-lg-6 col-md-12 order-md-2 order-lg-1">
+                    <div className="feedback-results col-lg-6 col-md-12">
                         <p>
                             Click on a province to see what our polling found out about how
                             satisfied a sample of citizens from that province were with
@@ -81,6 +73,13 @@ class Feedback extends React.Component {
                         <button className='campaign-btn' onClick={this.props.nextRound}>
                             Next Round
                         </button>
+                    </div>
+                    <div className="col-lg-6 col-md-12">
+                        {campaignMap}
+                        {clickedProvince
+                            && <strong>A Sample of the Citizens from { clickedProvince }</strong>}
+                        <br/>
+                        {citizenReactions}
                     </div>
                 </div>
             </div>

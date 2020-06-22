@@ -162,6 +162,7 @@ $edx-button-color: #e7e7e7;
     border: 1px solid $edx-border-color;
     padding: 0.75em 1em;
     border-radius: 0.25em;
+    margin: 0 auto;
     transition: 0.2s ease-in;
 
     &:hover {
@@ -191,6 +192,7 @@ $edx-button-color: #e7e7e7;
 
     &-results {
         margin-bottom: 1em;
+        text-align: center;
     }
 }
 
