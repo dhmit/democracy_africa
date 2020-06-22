@@ -395,7 +395,7 @@ export class CampaignView extends React.Component {
                         && this.state.populationData[country.name]
                         && this.state.view !== 'speechMaker') {
                         const data = this.state.populationData[country.name];
-                        const supports = data['totalSupporters'] / data['citizens'].length > 0.5;
+                        const supports = data['totalSupporters'] / data['citizens'].length >= 0.5;
                         countryFill = supports ? '#B8E39B' : '#F19C79';
                     }
 
