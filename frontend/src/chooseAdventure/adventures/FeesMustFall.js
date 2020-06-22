@@ -244,13 +244,13 @@ const STAGE_1C_INT = {
             fee increase for other students.
         </p>
         <p>
-            In the meantime, you begin to see more and more police on and surrounding your campus.
-            However, you also start to hear about your university starting to negotiate with
-            student activists.
+            In the meantime, you begin to see more police on your campus.
+            However, you also start to hear rumors that your university is starting to negotiate
+            with student activists.
         </p>
         <p>
             A few days later, your university closes indefinitely. You start to feel a bit bad
-            that you spent those last days on campus preparing for exams rather than actively
+            that you spent those last few days on campus preparing for exams rather than actively
             protesting. You feel guilty and a bit selfish too.
         </p>
     </div>,
@@ -307,7 +307,7 @@ const STAGE_2_1C = {
         'showOnEnd': true,
     },
     {
-        'text': <div>Still, you’re not comfortable; you again do nothing</div>,
+        'text': <div>Do nothing again because you are still uncomfortable about everything</div>,
         'stageName': 'STAGE_2C_INT',
         'endDetail': <div>
             You’ve remained outside the action the whole time; you feel terrible that your friends
@@ -353,7 +353,7 @@ const STAGE_2B_INT = {
         'stageName': 'STAGE_2BA_INT',
         'endDetail': <div>Through Twitter, you spread awareness of the movement and the march.
             However, your retweets were not able to reach many of your peers who use other social
-            media platforms. In fact, in South Africa, it was mostly the elites who used Twitter.
+            media platforms because in South Africa, it was mostly the elites who used Twitter.
         </div>,
         'showOnEnd': true,
     },
