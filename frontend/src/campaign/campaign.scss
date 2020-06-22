@@ -84,9 +84,9 @@ $edx-button-color: #e7e7e7;
 
     td,
     th {
+        border: 1px $edx-border-color solid;
         padding: 0.5em 0;
     }
-
 }
 
 .table-provinces{

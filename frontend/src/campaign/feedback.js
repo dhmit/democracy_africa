@@ -46,7 +46,7 @@ class Feedback extends React.Component {
                                 && <table border="1" className={'resultTable'}>
                                     <tbody>
                                         <tr>
-                                            <th>Topic</th>
+                                            <th>Service</th>
                                             <th>Percentage of Sample Satisfied</th>
                                         </tr>
                                         {this.props.topicNames.map((topic, k) => {

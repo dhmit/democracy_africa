@@ -41,7 +41,7 @@ class Results extends React.Component {
                 <p className={'resultHeader'}>
                     {countryPercent >= 50 ? winText : loseText}
                 </p>
-                <table border="1" className={'resultTable'}>
+                <table className={'resultTable'}>
                     <tbody>
                         <tr>
                             <th>Province Name</th>
