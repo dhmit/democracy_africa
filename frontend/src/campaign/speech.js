@@ -14,6 +14,7 @@ export const COUNTRIES = [
         ],
         supportThreshold: 0.5,
         max_priority_points: { 'low': 3, 'medium': 3, 'high': 2 },
+        election_date: ['October', '23rd'],
     },
     {
         name: 'Kenya',
@@ -30,6 +31,7 @@ export const COUNTRIES = [
         ],
         supportThreshold: 6,
         max_priority_points: { 'low': 6, 'medium': 3, 'high': 2 },
+        election_date: ['August', '8th'],
     },
     {
         name: 'South Africa',
@@ -50,6 +52,7 @@ export const COUNTRIES = [
         ],
         supportThreshold: 25,
         max_priority_points: { 'low': 10, 'medium': 5, 'high': 3 },
+        election_date: ['May', '8th'],
     },
 ];
 
@@ -79,9 +82,13 @@ export class Speech extends React.Component {
             total: Object.keys(this.props.speechProposal).reduce((acc, topic) => {
                 return acc + this.props.speechProposal[topic];
             }, 0),
+            roundDates: [null, null, null],
         };
         this.difference_threshold = get_country_prop(this.props.countryName, 'supportThreshold');
         this.max_priority_points = get_country_prop(this.props.countryName, 'max_priority_points');
+        const electionDate = get_country_prop(this.props.countryName, 'election_date');
+        this.electionDate = `${electionDate[0]} ${electionDate[1]}`;
+        this.electionMonth = electionDate[0];
     }
 
     /**
@@ -103,21 +110,106 @@ export class Speech extends React.Component {
         }
     }
 
+    getCurrentDate() {
+        if (this.state.roundDates[this.props.round] !== null) {
+            return this.state.roundDates[this.props.round];
+        }
+        const monthsArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+            'August', 'September', 'October', 'November', 'December'];
+        const newRoundDates = this.state.roundDates;
+        let currentMonth = '';
+        const currentDay = Math.round(Math.random() * 28);
+        if (this.props.round === 1) {
+            let monthIndex = Math.round(Math.random() *
+                (monthsArray.indexOf(this.electionMonth) - 5));
+            if (monthIndex < 0) {
+                monthIndex = 0;
+            }
+            currentMonth = monthsArray[monthIndex];
+        } else if (this.props.round === 2) {
+            currentMonth = monthsArray[monthsArray.indexOf(this.electionMonth) - 2];
+        }
+        const currentDate = `${currentMonth} ${currentDay}`;
+        newRoundDates[this.props.round] = currentDate;
+        this.setState({
+                roundDates: newRoundDates,
+            });
+        return currentDate;
+    }
+
     generateStory() {
         const previousRoundSupport = Math.round(
             (this.props.roundAggregateData[this.props.round - 1].totalSupport
                 / this.props.roundAggregateData[this.props.round - 1].totalPopulation) * 100
-         );
+        );
+        let introText = '';
+        let storyText = '';
         let advice = '';
+        let feedback = '';
+        const currentDate = this.getCurrentDate();
         if (this.props.round === 1) {
-            advice += 'You just started your campaign and we want you to set out '
-                    + 'your policies so that we can conduct polls to gauge the initial reaction.\n';
+            introText += `It is currently ${currentDate}. `
+                    + 'You just started your campaign and we want you to set out '
+                    + 'your policies so that we can conduct polls to gauge the initial reaction. ';
+            introText += (
+                'You anticipate being able to do three rounds of polls before election'
+                + ` day on ${this.electionDate}. `
+            );
         } else if (this.props.round === 2) {
-            advice += 'We can do two more polls before elections.\n';
+            // advice += 'You can do two more polls before elections.\n';
+            storyText += `It is currently ${currentDate} and you decide it`
+                        + ' is time for the next poll. ';
         } else if (this.props.round === 3) {
-            advice += 'This is the final policy that people will see in the election.\n';
+            // advice += 'This is the final policy that people will see in the election.\n';
+            storyText += 'It is one month before election day and you have enough time for one' +
+                ' more poll as predicted. ';
         }
-        if (this.props.round !== 1) {
+        let constantSupport = false;
+        if (this.props.round === 3) {
+            const roundOneSupport = Math.round(
+            (this.props.roundAggregateData[1].totalSupport
+                / this.props.roundAggregateData[1].totalPopulation) * 100
+            );
+            if (roundOneSupport < previousRoundSupport) {
+                feedback += 'Results show that overall, people think your policy has improved. ';
+                if (previousRoundSupport >= 60) {
+                    advice += 'Based on the results from last round, people seem to respond very well to'
+                    + ' the current policy. This policy is probably what you want to use in the election.';
+                } else if (previousRoundSupport >= 50 && previousRoundSupport < 60) {
+                    advice += 'Most people seem to respond well to this policy. You may still want to'
+                    + ' to make some other adjustments and see if that will improve your support.';
+                } else if (previousRoundSupport >= 30 && previousRoundSupport < 50) {
+                    advice += 'However, most people do not seem to respond well to this policy.'
+                        + ' You should make some policy adjustments before the election.';
+                } else if (previousRoundSupport > 0 && previousRoundSupport < 30) {
+                    advice += 'However, almost no one supports your current policy. You should make'
+                    + ' some adjustments before you submit your final policy.';
+                } else if (previousRoundSupport === 0) {
+                    advice += 'No one supports your policy. You should make'
+                    + ' some adjustments before you submit your final policy.';
+                }
+            } else if (roundOneSupport > previousRoundSupport) {
+                feedback += 'Results show that overall, people think your policy has declined. ';
+                if (previousRoundSupport >= 60) {
+                    advice += 'However, based on the results from last round, people still seem'
+                        + ' to respond very well to the current policy.';
+                } else if (previousRoundSupport >= 50 && previousRoundSupport < 60) {
+                    advice += 'However, most people still seem to respond well to this policy.';
+                } else if (previousRoundSupport >= 30 && previousRoundSupport < 50) {
+                    advice += 'Most people do not seem to respond well to this policy, so you' +
+                        ' should return to your previous or rethink your strategy.';
+                } else if (previousRoundSupport > 0 && previousRoundSupport < 30) {
+                    advice += 'Almost no one supports your current policy. You should return to'
+                        + ' your previous policy or rethink your strategy.';
+                } else if (previousRoundSupport === 0) {
+                    advice += 'No one supports this policy. You should return to your previous'
+                        + ' policy or rethink your strategy.';
+                }
+            } else {
+                constantSupport = true;
+            }
+        }
+        if (this.props.round === 2 || constantSupport) {
             if (previousRoundSupport >= 60) {
                 advice += 'Based on the results from last round, people seem to respond very well to'
                 + ' the current policy. This policy is probably what you want to use in the election.';
@@ -135,7 +227,7 @@ export class Speech extends React.Component {
                 + ' some adjustments before you submit your final policy.';
             }
         }
-        return advice;
+        return introText + storyText + feedback + advice;
     }
 
     componentDidUpdate(prevProps) {
