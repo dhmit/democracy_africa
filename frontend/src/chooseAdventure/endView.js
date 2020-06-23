@@ -40,10 +40,10 @@ class EndView extends React.Component {
                 </div>
             }
             <div className="row">
-                <div className="col-6">
+                <div className="col-md-12 col-lg-6">
                     {desc}
                 </div>
-                <div className="col-6">
+                <div className="col-md-12 col-lg-6">
                     <div>You chose to:</div>
                     {choices}
                 </div>
