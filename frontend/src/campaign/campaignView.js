@@ -445,7 +445,7 @@ export class CampaignView extends React.Component {
                 {['countryInfo', 'feedback', 'speechMaker'].includes(this.state.view)
                     ? <OverlayTrigger
                         trigger="hover"
-                        placement="right"
+                        placement="auto"
                         overlay={province_info_overlay}
                     >{map_svg}
                     </OverlayTrigger>
