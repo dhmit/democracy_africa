@@ -157,25 +157,20 @@ export class Speech extends React.Component {
             (this.props.roundAggregateData[this.props.round - 1].totalSupport
                 / this.props.roundAggregateData[this.props.round - 1].totalPopulation) * 100
         );
-        let introText = '';
         let storyText = '';
-        let advice = '';
-        let feedback = '';
         const currentDate = this.getCurrentDate();
         if (this.props.round === 1) {
-            introText += `It is currently ${currentDate}. `
-                    + 'You just started your campaign and we want you to set out '
-                    + 'your policies so that we can conduct polls to gauge the initial reaction. ';
-            introText += (
-                'You anticipate being able to do three rounds of polls before election'
-                + ` day on ${this.electionDate}. `
-            );
+            storyText += `It is currently ${currentDate}. `
+                + 'You just started your campaign and we want you to set out '
+                + 'your policies so that we can conduct polls to gauge the initial reaction. '
+                + 'You anticipate being able to do three rounds of polls before election '
+                + `day on ${this.electionDate}.`;
         } else if (this.props.round === 2) {
-            storyText += `It is currently ${currentDate} and you decide it`
-                        + ' is time for the next poll. ';
+            storyText += `It is currently ${currentDate} and you decide it `
+                + 'is time for the next poll. ';
         } else if (this.props.round === 3) {
-            storyText += 'It is one month before election day and you have enough time for one' +
-                ' more poll as predicted. ';
+            storyText += 'It is one month before election day and you have enough time for one '
+                + 'more poll as predicted. ';
         }
         let constantSupport = false;
         if (this.props.round === 3) {
@@ -184,39 +179,41 @@ export class Speech extends React.Component {
                 / this.props.roundAggregateData[1].totalPopulation) * 100
             );
             if (roundOneSupport < previousRoundSupport) {
-                feedback += 'Results show that overall, people think your policy has improved. ';
+                storyText += 'Results show that overall, people think your policy has improved. ';
                 if (previousRoundSupport >= 60) {
-                    advice += 'Based on the results from last round, people seem to respond very well to'
-                    + ' the current policy. This policy is probably what you want to use in the election.';
+                    storyText += 'Based on the results from last round, people seem to respond '
+                        + 'very well to the current policy. This policy is probably what you want '
+                        + 'to use in the election.';
                 } else if (previousRoundSupport >= 50 && previousRoundSupport < 60) {
-                    advice += 'Most people seem to respond well to this policy. You may still want to'
-                    + ' to make some other adjustments and see if that will improve your support.';
+                    storyText += 'Most people seem to respond well to this policy. You may '
+                        + 'still want to make some other adjustments and see if that will improve '
+                        + 'your support.';
                 } else if (previousRoundSupport >= 30 && previousRoundSupport < 50) {
-                    advice += 'However, most people do not seem to respond well to this policy.'
-                        + ' You should make some policy adjustments before the election.';
+                    storyText += 'However, most people do not seem to respond well to this policy. '
+                        + 'You should make some policy adjustments before the election.';
                 } else if (previousRoundSupport > 0 && previousRoundSupport < 30) {
-                    advice += 'However, almost no one supports your current policy. You should make'
-                    + ' some adjustments before you submit your final policy.';
+                    storyText += 'However, almost no one supports your current policy. You '
+                        +  'should make some adjustments before you submit your final policy.';
                 } else if (previousRoundSupport === 0) {
-                    advice += 'No one supports your policy. You should make'
-                    + ' some adjustments before you submit your final policy.';
+                    storyText += 'No one supports your policy. You should make'
+                        + ' some adjustments before you submit your final policy.';
                 }
             } else if (roundOneSupport > previousRoundSupport) {
-                feedback += 'Results show that overall, people think your policy has declined. ';
+                storyText += 'Results show that overall, people think your policy has declined. ';
                 if (previousRoundSupport >= 60) {
-                    advice += 'However, based on the results from last round, people still seem'
-                        + ' to respond very well to the current policy.';
+                    storyText += 'However, based on the results from last round, people still '
+                        + 'seem to respond very well to the current policy.';
                 } else if (previousRoundSupport >= 50 && previousRoundSupport < 60) {
-                    advice += 'However, most people still seem to respond well to this policy.';
+                    storyText += 'However, most people still seem to respond well to this policy.';
                 } else if (previousRoundSupport >= 30 && previousRoundSupport < 50) {
-                    advice += 'Most people do not seem to respond well to this policy, so you' +
-                        ' should return to your previous or rethink your strategy.';
+                    storyText += 'Most people do not seem to respond well to this policy. You '
+                        + 'should return to your previous policy or rethink your strategy.';
                 } else if (previousRoundSupport > 0 && previousRoundSupport < 30) {
-                    advice += 'Almost no one supports your current policy. You should return to'
-                        + ' your previous policy or rethink your strategy.';
+                    storyText += 'Almost no one supports your current policy. You should return '
+                        + 'to your previous policy or rethink your strategy.';
                 } else if (previousRoundSupport === 0) {
-                    advice += 'No one supports this policy. You should return to your previous'
-                        + ' policy or rethink your strategy.';
+                    storyText += 'No one supports this policy. You should return to your previous '
+                        + 'policy or rethink your strategy.';
                 }
             } else {
                 constantSupport = true;
@@ -224,23 +221,25 @@ export class Speech extends React.Component {
         }
         if (this.props.round === 2 || constantSupport) {
             if (previousRoundSupport >= 60) {
-                advice += 'Based on the results from last round, people seem to respond very well to'
-                + ' the current policy. This policy is probably what you want to use in the election.';
+                storyText += 'Based on the results from last round, people seem to respond '
+                    + 'very well to the current policy. This policy is probably what you want to '
+                    + 'use in the election.';
             } else if (previousRoundSupport >= 50 && previousRoundSupport < 60) {
-                advice += 'Most people seem to respond well to this policy. You may still want to'
-                + ' to make some other adjustments and see if that will improve your support.';
+                storyText += 'Most people seem to respond well to this policy. You may '
+                    + 'still want to make some other adjustments and see if that will improve '
+                    + 'your support.';
             } else if (previousRoundSupport >= 30 && previousRoundSupport < 50) {
-                advice += 'Most people do not seem to respond well to this policy. You should make'
-                + ' some adjustments before you submit your final policy.';
+                storyText += 'Most people do not seem to respond well to this policy. You should '
+                    + 'make some adjustments before you submit your final policy.';
             } else if (previousRoundSupport > 0 && previousRoundSupport < 30) {
-                advice += 'Almost no one supports your current policy. You should make'
-                + ' some adjustments before you submit your final policy.';
+                storyText += 'Almost no one supports your current policy. You should make '
+                    + 'some adjustments before you submit your final policy.';
             } else if (previousRoundSupport === 0) {
-                advice += 'No one supports your policy. You should make'
-                + ' some adjustments before you submit your final policy.';
+                storyText += 'No one supports your policy. You should make '
+                    + 'some adjustments before you submit your final policy.';
             }
         }
-        return introText + storyText + feedback + advice;
+        return storyText;
     }
 
     componentDidUpdate(prevProps) {
