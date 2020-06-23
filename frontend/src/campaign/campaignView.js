@@ -37,20 +37,17 @@ export class CampaignView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            populationData: null,
-            mapData: null,
             clickedProvince: null,
             countryName: null,
-            view: 'intro',
+            mapData: null,
+            populationData: null,
             round: 0,
-            speechProposal: null,
-            topicNames: [],
             sampleSize: 75,
             showCountrySelector: false,
+            speechProposal: null,
+            view: 'intro',
+            topicNames: [],
         };
-        this.map_height = 500;
-        this.map_width = 500;
-        this.updatePopulation = this.updatePopulation.bind(this);
     }
 
     componentDidUpdate() {
@@ -204,11 +201,11 @@ export class CampaignView extends React.Component {
         }
     }
 
-    updatePopulation(newPopulation) {
+    updatePopulation = (newPopulation) => {
         this.setState({
             populationData: newPopulation,
         });
-    }
+    };
 
     countTotalSupport() {
         let totalSupport = 0;

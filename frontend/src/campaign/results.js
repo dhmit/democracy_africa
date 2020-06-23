@@ -13,7 +13,6 @@ class Results extends React.Component {
             return (<></>);
         }
 
-        // TODO: possibly refactor this further since it is similar to CampaignView
         const sample = [];
         Object.keys(this.props.provinceData).forEach((province) => {
             const provinceData = this.props.provinceData[province];
