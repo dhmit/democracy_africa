@@ -246,7 +246,16 @@ $edx-button-color: #e7e7e7;
     &:hover {
         background-color: #f7f7f7 !important;
     }
+
     &:focus {
         outline: none;
     }
+}
+
+.citizen-reactions {
+    margin-bottom: 20px;
+}
+
+.citizen-text {
+    margin-bottom: 10px;
 }
