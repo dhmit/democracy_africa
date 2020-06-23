@@ -16,6 +16,23 @@ import Results from './results';
 import CountrySelectorPopup from './countrySelectorPopup';
 import IntroView from '../chooseAdventure/introView';
 
+const generateOverlayText = (services, prefixText) => {
+    let newText = prefixText;
+    for (let i = 0; i < services.length; i++) {
+        newText += services[i];
+        if (services.length === 1) {
+            newText += '.';
+        } else if (i === 0 && services.length === 2) {
+            newText += ' and ';
+        } else if (i < services.length - 1 && services.length > 2) {
+            newText += ', ';
+        } else {
+            newText += '.';
+        }
+    }
+    return newText;
+};
+
 export class CampaignView extends React.Component {
     constructor(props) {
         super(props);
@@ -98,66 +115,25 @@ export class CampaignView extends React.Component {
             if (high_value.length === 0 && low_value.length === 0) {
                 return 'Citizens of this province are equally concerned about all of the issues.';
             }
-            if (high_value.length === 0) {
-                let return_text_low = 'Citizens of this province have a low priority for ';
-                for (let i = 0; i < low_value.length; i++) {
-                    return_text_low += low_value[i];
-                    if (low_value.length === 1) {
-                        return_text_low += '.';
-                    } else if (i === 0 && low_value.length === 2) {
-                        return_text_low += ' and ';
-                    } else if (i < low_value.length - 1 && low_value.length > 2) {
-                        return_text_low += ', ';
-                    } else {
-                        return_text_low += '.';
-                    }
-                }
-                return return_text_low;
-            }
-            if (low_value.length === 0) {
-                let return_text_high = 'Citizens of this province have a high priority for ';
-                for (let i = 0; i < high_value.length; i++) {
-                    return_text_high += high_value[i];
-                    if (high_value.length === 1) {
-                        return_text_high += '.';
-                    } else if (i === 0 && high_value.length === 2) {
-                        return_text_high += ' and ';
-                    } else if (i < high_value.length - 1 && high_value.length > 2) {
-                        return_text_high += ', ';
-                    } else {
-                        return_text_high += '.';
-                    }
-                }
-                return return_text_high;
-            }
-            let return_text_high = 'Citizens of this province have a high priority for ';
-            for (let i = 0; i < high_value.length; i++) {
-                return_text_high += high_value[i];
-                if (high_value.length === 1) {
-                    return_text_high += '.';
-                } else if (i === 0 && high_value.length === 2) {
-                    return_text_high += ' and ';
-                } else if (i < high_value.length - 1 && high_value.length > 2) {
-                    return_text_high += ', ';
-                } else {
-                    return_text_high += '.';
-                }
+
+            let high_text;
+            if (high_value.length !== 0) {
+                high_text = generateOverlayText(
+                    high_value,
+                    'Citizens of this province have a high priority for ',
+                );
             }
 
-            let return_text_low = 'Citizens of this province have a low priority for ';
-            for (let i = 0; i < low_value.length; i++) {
-                return_text_low += low_value[i];
-                if (low_value.length === 1) {
-                    return_text_low += '.';
-                } else if (i === 0 && low_value.length === 2) {
-                    return_text_low += ' and ';
-                } else if (i < low_value.length - 1 && low_value.length > 2) {
-                    return_text_low += ', ';
-                } else {
-                    return_text_low += '.';
-                }
+            let low_text;
+            if (low_value.length !== 0) {
+                low_text = generateOverlayText(
+                    low_value,
+                    'Citizens of this province have a high priority for ',
+                );
             }
-            return (<div>{return_text_high}<br/><br/>{return_text_low}</div>);
+            return low_text
+                ? (<div>{high_text}<br/><br/>{low_text}</div>)
+                : (<div>{high_text}</div>);
         }
         return '';
     }
