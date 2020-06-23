@@ -396,7 +396,7 @@ export class CampaignView extends React.Component {
 
         const map_svg = (
             <svg
-                viewBox="0 0 550 550"
+                viewBox="-20 -20 550 550"
                 id='content'
                 onClick={(e) => this.handleProvinceMapClick(e, '')}
             >
@@ -432,7 +432,7 @@ export class CampaignView extends React.Component {
         );
 
         let provinceDesc;
-        if (this.state.view === 'speechMaker') {
+        if (['speechMaker', 'feedback'].includes(this.state.view)) {
             provinceDesc = '';
         } else if (clickedProvince) {
             provinceDesc = clickedProvince;

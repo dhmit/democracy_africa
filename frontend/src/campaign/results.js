@@ -60,7 +60,9 @@ class Results extends React.Component {
                                     <tr
                                         key={k}
                                     >
-                                        <td className="table-provinces">{province}</td>
+                                        <td className="table-provinces">
+                                            {province}
+                                        </td>
                                         <td>{supporters}</td>
                                         <td>{total}</td>
                                         <td>
@@ -121,6 +123,7 @@ Results.propTypes = {
     generateDescription: PropTypes.func,
     map: PropTypes.object,
     clickedProvince: PropTypes.string,
+    handleProvinceMapClick: PropTypes.func,
 };
 
 export default Results;

@@ -19,7 +19,7 @@ class IntroView extends React.Component {
         return (
             <div>
                 <div className='row'>
-                    <div className='col-lg-8 col-md-12' style={{marginBottom: '20px'}}>
+                    <div className='col-lg-8 col-md-12' style={ { marginBottom: '20px' } }>
                         <div>
                             {desc}
                         </div>
@@ -30,7 +30,7 @@ class IntroView extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div className='col-lg-4 col-md-12' style={{textAlign: 'center'}}>
+                    <div className='col-lg-4 col-md-12' style={ { textAlign: 'center' } }>
                         {imgFilename
                             && <CaptionedImage
                                 filename={imgFilename}

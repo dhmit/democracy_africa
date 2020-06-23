@@ -90,7 +90,7 @@ export class CaptionedImage extends React.Component {
                     src={'/static/img/' + this.props.filename}
                     alt={this.props.alt}
                 />
-                <figcaption className="figure-caption" style={{textAlign: 'left'}}>
+                <figcaption className="figure-caption" style={ { textAlign: 'left' } }>
                     {this.props.caption}
                 </figcaption>
             </figure>

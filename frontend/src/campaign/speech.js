@@ -248,7 +248,7 @@ export class Speech extends React.Component {
 
         return (
             <div className="row w-100">
-                <div className='col-sm-12 col-lg-6'>
+                <div className='col-sm-12 col-lg-6' style={ { marginBottom: '20px' } }>
                     <div className='speech-context'>
                         <p className='speech-context_count'>
                             {this.generateStory()}
