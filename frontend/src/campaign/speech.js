@@ -82,7 +82,7 @@ export class Speech extends React.Component {
             total: Object.keys(this.props.speechProposal).reduce((acc, topic) => {
                 return acc + this.props.speechProposal[topic];
             }, 0),
-            roundDates: [null, null, null],
+            roundDates: [null, null, null, null],
         };
         this.difference_threshold = get_country_prop(this.props.countryName, 'supportThreshold');
         this.max_priority_points = get_country_prop(this.props.countryName, 'max_priority_points');
@@ -110,6 +110,21 @@ export class Speech extends React.Component {
         }
     }
 
+    getOrdinalIndicator(day) {
+        let suffix = 'th';
+        const exceptions = [11, 12, 13];
+        if (!(exceptions.includes(day))) {
+            if (day % 10 === 1) {
+                suffix = 'st';
+            } else if (day % 10 === 2) {
+                suffix = 'nd';
+            } else if (day % 10 === 3) {
+                suffix = 'rd';
+            }
+        }
+        return suffix;
+    }
+
     getCurrentDate() {
         if (this.state.roundDates[this.props.round] !== null) {
             return this.state.roundDates[this.props.round];
@@ -129,7 +144,7 @@ export class Speech extends React.Component {
         } else if (this.props.round === 2) {
             currentMonth = monthsArray[monthsArray.indexOf(this.electionMonth) - 2];
         }
-        const currentDate = `${currentMonth} ${currentDay}`;
+        const currentDate = `${currentMonth} ${currentDay}${this.getOrdinalIndicator(currentDay)}`;
         newRoundDates[this.props.round] = currentDate;
         this.setState({
                 roundDates: newRoundDates,
@@ -156,11 +171,9 @@ export class Speech extends React.Component {
                 + ` day on ${this.electionDate}. `
             );
         } else if (this.props.round === 2) {
-            // advice += 'You can do two more polls before elections.\n';
             storyText += `It is currently ${currentDate} and you decide it`
                         + ' is time for the next poll. ';
         } else if (this.props.round === 3) {
-            // advice += 'This is the final policy that people will see in the election.\n';
             storyText += 'It is one month before election day and you have enough time for one' +
                 ' more poll as predicted. ';
         }
