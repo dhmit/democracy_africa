@@ -65,7 +65,7 @@ const STAGE_1 = {
             'showOnEnd': true,
         },
         {
-            'text': <div>Disagree: you’re really not comfortable being part of the sit-in right
+            'text': <div>Disagree; you’re really not comfortable being part of the sit-in right
                 now</div>,
             'stageName': 'STAGE_1C_INT',
             'endDetail': '',
@@ -78,7 +78,7 @@ const STAGE_1A = {
     'text': <div>You get there, but feel the tension of the situation. What do you want to do?
     </div>,
     'options': [{
-        'text': <div> Sneak out before things get worse. You are worried that the
+        'text': <div> Sneak out before things get worse; You are worried that the
              sit-in might escalate from a purely peaceful protest because students
              are starting to blockade road access.</div>,
         'stageName': 'STAGE_1AA_INT',
@@ -115,12 +115,12 @@ const STAGE_1AA_INT = {
 const STAGE_1AB_INT = {
     'text': <div>
         <p>
-            After blocking the roads, you join the other protesters at the sit in and occupy
+            After blocking the roads, you join the other protesters at the sit-in and occupy
             the admin building, but that was when things started to escalate! You try to
             escape, but you get caught by the riot police.
         </p>
         <p>
-            That night, students hold an all night vigil outside the police station, calling
+            That night, students hold an all-night vigil outside the police station, calling
             for the release of you and your peers. Thankfully, the police let you all go.
         </p>
     </div>,
@@ -135,7 +135,7 @@ const STAGE_1AB_INT = {
 
 const STAGE_1B_INT = {
     'text': <div>
-        <p>You decide that you want to gain a better understanding about the movement.
+        <p>You decide that you want to gain a better understanding of the movement.
             How would you like to learn more?</p>
     </div>,
     'options': [{
@@ -163,13 +163,13 @@ const STAGE_1BA_INT = {
         <p>
             You decide to spend some time educating yourself about the #FeesMustFall movement
             instead of going to the sit-in. After some research, you become even more aware of
-            the large extent to which your country's higher education system is, structurally
-            and financially, still affected by the legacies of the apartheid era. With this new
-            knowledge, you gain a better understanding of the sentiment of the students and how
+            the vast extent to which your country's higher education system is still, structurally
+            and financially, affected by the legacies of the apartheid era. With this new
+            knowledge, you gain a better understanding of the students' sentiment and how
             frustrating it must feel to have a system that works against you.
         </p>
         <p>
-            In the meantime, the university closes anyway and on the 19th of October, the
+            In the meantime, the university closes regardless and on the 19th of October, the
             university agrees to begin new negotiations with the students.
         </p>
     </div>,
@@ -235,17 +235,17 @@ const STAGE_1C_INT = {
         <p>You’re really not comfortable being part of this right now.</p>
         <p>
             You are the first in your family to attend university and over the past school year, you
-            have been focused on getting good marks. You hope to graduate and ultimately secure a
-            job. Because you have a lot of upcoming exams, you have been spending time
+            have focused on getting good marks. You hope to graduate and ultimately secure a
+            job. Because you have a lot of upcoming exams, you have spent time
             reviewing in the university library. When groups of students start coming into the
-            library with weapons to protest, you feel a bit intimidated. On Facebook as well
-            as other social media platforms, other students accuse you for sympathizing with
+            library with weapons to protest, you feel a bit intimidated. On Facebook and
+            other social media platforms, other students accuse you for sympathizing with
             the government; they say that you don’t care enough about the consequences of the
             fee increase for other students.
         </p>
         <p>
             In the meantime, you begin to see more police on your campus.
-            However, you also start to hear rumors that your university is starting to negotiate
+            However, you also start to hear rumors that your university is beginning to negotiate
             with student activists.
         </p>
         <p>
@@ -312,7 +312,7 @@ const STAGE_2_1C = {
         'endDetail': <div>
             You’ve remained outside the action the whole time; you feel terrible that your friends
             have suffered. When they get released, you try to contact them, separately and
-            together. No one replies to you, though. Perhaps, you’ve been affected after all.
+            together. However, no one replies to you. Perhaps, you’ve been affected after all.
         </div>,
         'showOnEnd': true,
     }],
@@ -326,8 +326,8 @@ const STAGE_2A_INT = {
             this march.
         </p>
         <p>
-            Just as you are wrapping up, some people in the crowd decide to further agitate the
-            police. They throw a flaming cardboard “coffin” with the name of South Africa’s
+            Just as you are wrapping up, some people in the crowd decide to agitate the police
+            further. They throw a flaming cardboard “coffin” with the name of South Africa’s
             minister of higher education, Blade Nzimande, at the police. As a result,
             violence breaks out.
         </p>
@@ -361,7 +361,7 @@ const STAGE_2B_INT = {
         'text': <div>Use WhatsApp</div>,
         'stageName': 'STAGE_2BB_INT',
         'endDetail': <div>It turns out that as many as 5000 people showed up to protest at the
-            Parliament. Thanks to your help with actively inviting your friends to join the
+            Parliament. Thanks to your help of actively inviting your friends to join the
             WhatsApp group chat, you were able to increase the number of people at the march and
             make a big statement to the education officials.
         </div>,
@@ -384,10 +384,10 @@ const STAGE_2BA_INT = {
         </p>
         <p>
             After the day of the march, you feel a mixed sense of relief and horror as you hear
-            about that chaos towards the end of the march.
+            about that chaos towards the end.
         </p>
         <p>
-            From October 13th through November 10th 2015 over 1,270,738 Twitter tweets used this
+            From October 13th through November 10th, 2015 over 1,270,738 Twitter tweets used this
             hashtag to show support of the protest, and since you used this hashtag, you were one
             of the many people who helped support this movement!
         </p>
@@ -405,12 +405,12 @@ const STAGE_2BB_INT = {
         <p>
             You join the WhatsApp group chat for the #FeesMustFall movement. The student organizers
             of the group chat regularly post information relevant to the protests. You start adding
-            other people you know to the group chat in order to spread information about the march
+            other people you know to the group chat to spread information about the march
             at Parliament.
         </p>
         <p>
             Through this platform, the organizers are able to inform thousands of students both
-            from your university and from other universities about the movement and events.
+            from your university and other universities about the movement and events.
         </p>
 
     </div>,
@@ -480,14 +480,14 @@ const introDesc = (
         You are a sophomore at Rhodes University, in Grahamstown, South Africa.
         </h5>
         <p>
-        Reports of tuition increases of up to 10.5% have come out from multiple South African
+        Reports of tuition increases of up to 10.5% have come from multiple South African
         universities, including Rhodes. Students at the University of Witwatersrand and the
         University of Cape Town have already begun protesting, and there are rumors floating
         around social media about a student-led total shutdown of the Rhodes Campus.
         </p>
         <p>
         Many students are worried that these higher fees will shut poorer students out of
-        education. However, other students are worried that the disruption caused by a protest
+        education. However, other students are concerned that the disruption caused by a protest
         will be more harmful to the ability to learn.
         </p>
     </>
@@ -496,7 +496,7 @@ const introDesc = (
 const endDesc = (
     <>
         <p>
-            On 23 October, 2015, South African President Zuma announced that there would
+            On 23 October 2015, South African President Zuma announced that there would
             be no tuition increases in 2016.
         </p>
         <p>
