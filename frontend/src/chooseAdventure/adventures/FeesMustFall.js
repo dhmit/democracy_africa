@@ -46,6 +46,84 @@ const violence_img_props = {
     </>),
 };
 
+const library_img_props = {
+    'imgFilename': 'FMF_library.jpg',
+    'imgAlt': 'A student studying at the library',
+    'imgCaption': (<>
+        Photo credit:&nbsp;
+        <a href="https://www.flickr.com/photos/70105586@N00/115691311">
+            Shaine Mata
+        </a> / <a href="https://creativecommons.org/licenses/by-nc/2.0/">CC BY-NC 2.0</a>
+    </>),
+};
+
+const blockade_img_props = {
+    'imgFilename': 'FMF_blockade.jpg',
+    'imgAlt': '#FeesMustFall protesters blockade a road with a burning tire.',
+    'imgCaption': (<>
+        Photo credit:&nbsp;
+        <a href="https://www.flickr.com/photos/70105586@N00/115691311">
+            Ian Barbour
+        </a> / <a href="https://creativecommons.org/licenses/by-nc-sa/2.0/">CC BY-NC-SA 2.0</a>
+    </>),
+};
+
+const social_media_img_props = {
+    'imgFilename': 'FMF_social_media.jpg',
+    'imgAlt': 'A phone with various social media apps like Facebook, Twitter, and Whatsapp.',
+    'imgCaption': (<>
+        Photo credit:&nbsp;
+        <a href="https://pxhere.com/en/photo/1063277">
+            Unknown
+        </a> / <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC BY-CC0 1.0</a>
+    </>),
+};
+
+const research_img_props = {
+    'imgFilename': 'FMF_research.jpg',
+    'imgAlt': 'A laptop used to research about the #FeesMustFall movement.',
+    'imgCaption': (<>
+        Photo credit:&nbsp;
+        <a href="https://pixabay.com/photos/home-office-workstation-office-336373/">
+            Unknown
+        </a> / <a href="https://pixabay.com/service/license/">Pixabay License</a>
+    </>),
+};
+
+const whatsapp_img_props = {
+    'imgFilename': 'FMF_whatsapp.jpg',
+    'imgAlt': 'A phone with the WhatsApp app on it.',
+    'imgCaption': (<>
+        Photo credit:&nbsp;
+        <a href="https://www.pexels.com/photo/person-holding-black-iphone-5-4132538/">
+            Anton
+        </a> / <a href="https://www.pexels.com/license/">Pexels License</a>
+    </>),
+};
+
+const friends_img_props = {
+    'imgFilename': 'FMF_friends.jpg',
+    'imgAlt': 'A group of friends talking with each other.',
+    'imgCaption': (<>
+        Photo credit:&nbsp;
+        <a href="https://www.pexels.com/photo/photo-of-women-sitting-while-talking-3811108/">
+            Retha Ferguson
+        </a> / <a href="https://www.pexels.com/license/">Pexels License</a>
+    </>),
+};
+
+const twitter_img_props = {
+    'imgFilename': 'FMF_twitter.png',
+    'imgAlt': 'A tweet with a picture of the increases calling out the Department of Higher'
+        + ' Education and Training for being silent.',
+    'imgCaption': (<>
+        Photo credit:&nbsp;
+        <a href="https://twitter.com/Bhut_BanoThando/status/656047187122638848">
+            Twitter
+        </a>
+    </>),
+};
+
 const STAGE_1 = {
     'text': <div>A friend texts you about a sit-in at the administrative offices. What is your
         initial reaction?</div>,
@@ -77,6 +155,7 @@ const STAGE_1 = {
 const STAGE_1A = {
     'text': <div>You get there, but feel the tension of the situation. What do you want to do?
     </div>,
+    ...blockade_img_props,
     'options': [{
         'text': <div> Sneak out before things get worse. You are worried that the
              sit-in might escalate from a purely peaceful protest because students
@@ -173,6 +252,7 @@ const STAGE_1BA_INT = {
             university agrees to begin new negotiations with the students.
         </p>
     </div>,
+    ...research_img_props,
     'options': [{
         'text': <div>Next</div>,
         'stageName': 'STAGE_2',
@@ -220,8 +300,8 @@ const STAGE_1BC_INT = {
             In the meantime, the university closes anyway and on the 19th of October, the university
             agrees to begin new negotiations with the students.
         </p>
-
     </div>,
+    ...friends_img_props,
     'options': [{
         'text': <div>Next</div>,
         'stageName': 'STAGE_2',
@@ -254,6 +334,7 @@ const STAGE_1C_INT = {
             protesting. You feel guilty and a bit selfish too.
         </p>
     </div>,
+    ...library_img_props,
     'options': [{
         'text': <div>Next</div>,
         'stageName': 'STAGE_2_1C',
@@ -348,6 +429,7 @@ const STAGE_2B_INT = {
             this event, you are going to use social media. Which social media platform do
             you want to use?</p>
     </div>,
+    ...social_media_img_props,
     'options': [{
         'text': <div>Use Twitter</div>,
         'stageName': 'STAGE_2BA_INT',
@@ -392,6 +474,7 @@ const STAGE_2BA_INT = {
             of the many people who helped support this movement!
         </p>
     </div>,
+    ...twitter_img_props,
     'options': [{
         'text': <div>Next</div>,
         'stageName': null,
@@ -412,8 +495,8 @@ const STAGE_2BB_INT = {
             Through this platform, the organizers are able to inform thousands of students both
             from your university and from other universities about the movement and events.
         </p>
-
     </div>,
+    ...whatsapp_img_props,
     'options': [{
         'text': <div>Next</div>,
         'stageName': null,
