@@ -39,7 +39,7 @@ class Citizen extends React.Component {
         return (
             <OverlayTrigger
                 overlay={description}
-                placement='right'
+                placement='bottom'
             >
                 <svg
                     className='citizen'
