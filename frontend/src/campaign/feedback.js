@@ -1,5 +1,6 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
+import Citizen from './citizen';
 
 class Feedback extends React.Component {
     constructor(props) {
@@ -7,18 +8,19 @@ class Feedback extends React.Component {
     }
 
     render() {
-        const { results, clickedProvince } = this.props;
+        const { results, clickedProvince, campaignMap } = this.props;
         let sample = [];
+        let citizenReactions = '';
         if (clickedProvince) {
             sample = results[clickedProvince]['citizens'].slice(0, 100);
-            // citizenReactions = sample.map((citizen, k) => (
-            //     <Citizen
-            //         key={k}
-            //         data={citizen}
-            //         title={`Citizen of ${citizen['province']}`}
-            //         generateDescription={this.props.generateDescription}
-            //     />
-            // ));
+            citizenReactions = sample.map((citizen, k) => (
+                <Citizen
+                    key={k}
+                    data={citizen}
+                    title={`Citizen of ${citizen['province']}`}
+                    generateDescription={this.props.generateDescription}
+                />
+            ));
         }
         const description = (<div>
             {clickedProvince
@@ -29,49 +31,60 @@ class Feedback extends React.Component {
         </div>);
 
         return (
-            <div className='feedback'>
-                <div className='feedback-results'>
-                    <p>
-                        Click on a province to see what our polling found out about how satisfied
-                        a sample of citizens from that province were with your priorities.
-                    </p>
-
-                    {description}
-                    <div className='feedback-pop'>
-                        {clickedProvince
-                            && <table border="1" className={'resultTable'}>
-                                <tbody>
-                                    <tr>
-                                        <th>Topic</th>
-                                        <th>Percentage of Sample Satisfied</th>
-                                        <th>Percentage of Sample Dissatisfied</th>
-                                    </tr>
-                                    {this.props.topicNames.map((topic, k) => {
-                                        const numSatisfied = sample.reduce((acc, citizen) => {
-                                            if (citizen.traits[topic]
-                                                <= this.props.speechProposal[topic]) {
-                                                return acc + 1;
-                                            }
-                                            return acc;
-                                        }, 0);
-                                        const pctSatisfied = Math.round((numSatisfied
-                                            / sample.length) * 100);
-                                        return (
-                                            <tr key={k}>
-                                                <td>{topic}</td>
-                                                <td>{pctSatisfied}%</td>
-                                                <td>{100 - pctSatisfied}%</td>
-                                            </tr>
-                                        );
-                                    })}
-                                </tbody>
-                            </table>
+            <div className='feedback container'>
+                <div className="row" style={{ width: '100%' }}>
+                    <div className="feedback-results col-lg-6 col-md-12">
+                        <p>
+                            Click on a province to see what our polling found out about how
+                            satisfied a sample of citizens from that province were with
+                            your priorities.
+                        </p>
+                        { clickedProvince
+                            && <strong className="citizen-text">
+                                A Sample of the Citizens from { clickedProvince }
+                            </strong>
                         }
+                        <div className="citizen-reactions">
+                            {citizenReactions}
+                        </div>
+                        {description}
+                        <div className='feedback-pop'>
+                            {clickedProvince
+                                && <table border="1" className={'resultTable'}>
+                                    <tbody>
+                                        <tr>
+                                            <th>Topic</th>
+                                            <th>Percentage of Sample Satisfied</th>
+                                        </tr>
+                                        {this.props.topicNames.map((topic, k) => {
+                                            const numSatisfied = sample.reduce((acc, citizen) => {
+                                                if (citizen.traits[topic]
+                                                    <= this.props.speechProposal[topic]) {
+                                                    return acc + 1;
+                                                }
+                                                return acc;
+                                            }, 0);
+                                            const pctSatisfied = Math.round((numSatisfied
+                                                / sample.length) * 100);
+                                            return (
+                                                <tr key={k}>
+                                                    <td>{topic}</td>
+                                                    <td>{pctSatisfied}%</td>
+                                                </tr>
+                                            );
+                                        })}
+                                    </tbody>
+                                </table>
+                            }
+                        </div>
+                        <button className='campaign-btn' onClick={this.props.nextRound}>
+                            Next Round
+                        </button>
+                    </div>
+                    <div className="col-lg-6 col-md-12 map-col">
+                        {campaignMap}
                     </div>
                 </div>
-                <button className='campaign-btn' onClick={this.props.nextRound}>
-                    Next Round
-                </button>
             </div>
         );
     }
@@ -84,6 +97,7 @@ Feedback.propTypes = {
     nextRound: PropTypes.func,
     topicNames: PropTypes.array,
     speechProposal: PropTypes.object,
+    campaignMap: PropTypes.object,
 };
 
 export default Feedback;

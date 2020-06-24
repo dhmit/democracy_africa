@@ -10,43 +10,46 @@ class CountrySelectorPopup extends React.Component {
 
     render() {
         return (
-            <div className='country-selector'>
-                <div className="modal-header country-header">
-                    <h3 className="country-title">Select a country</h3>
-                    <span
-                        className="close close-button"
-                        onClick={() => this.props.closePopup(false)}
-                    >
-                        &times;
-                    </span>
-                </div>
-                <div className='row w-100'>
-                    {COUNTRIES.map((country, key) => (
-                        <div key={key} className='col-sm-12 col-md-4'>
-                            <div className='card' >
-                                <div className='card-header'>
-                                    <h5>{country.name}</h5>
+            <div className="background">
+                <div className='country-selector'>
+                    <div className="country-header">
+                        <span className="country-title">Select a country</span>
+                        <span
+                            className="close close-button"
+                            onClick={() => this.props.closePopup(false)}
+                        >
+                            &times;
+                        </span>
+                    </div>
+                    <div className='row w-100 country-options'>
+                        {COUNTRIES.map((country, key) => (
+                            <div key={key} className='col-lg-4 col-md-12'>
+                                <div className='card' style={{ marginBottom: '15px' }}>
+                                    <div className='card-header'>
+                                        <h5>{country.name}</h5>
+                                    </div>
+                                    <div className='card-body'>
+                                        <table className='table'><tbody>
+                                            <tr>
+                                                <td>Population</td>
+                                                <td>{country.population}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Difficulty</td>
+                                                <td>{country.difficulty}</td>
+                                            </tr>
+                                        </tbody></table>
+                                    </div>
+                                    <button
+                                        onClick={() => this.selectCountryClosePopup(country.name)}
+                                    >Start</button>
                                 </div>
-                                <div className='card-body'>
-                                    <table className='table'><tbody>
-                                        <tr>
-                                            <td>Population</td>
-                                            <td>{country.population}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Difficulty</td>
-                                            <td>{country.difficulty}</td>
-                                        </tr>
-                                    </tbody></table>
-                                </div>
-                                <button
-                                    onClick={() => this.selectCountryClosePopup(country.name)}
-                                >Start</button>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
             </div>
+
         );
     }
 }

@@ -19,7 +19,7 @@ class IntroView extends React.Component {
         return (
             <div>
                 <div className='row'>
-                    <div className='col-8'>
+                    <div className='col-md-8 col-sm-12'>
                         <div>
                             {desc}
                         </div>
@@ -30,7 +30,7 @@ class IntroView extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div className='col-4'>
+                    <div className='col-md-4 col-sm-12'>
                         {imgFilename
                             && <CaptionedImage
                                 filename={imgFilename}
