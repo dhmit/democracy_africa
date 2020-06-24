@@ -9,7 +9,6 @@ import PopoverContent from 'react-bootstrap/PopoverContent';
 import { project_features_and_create_svg_paths } from '../common';
 
 import { MapPath } from '../UILibrary/components';
-import './campaign.scss';
 
 import { Speech, get_country_prop, get_default_proposal } from './speech';
 import Feedback from './feedback';
@@ -36,6 +35,20 @@ export class CampaignView extends React.Component {
         this.map_width = 500;
         this.updatePopulation = this.updatePopulation.bind(this);
     }
+
+    componentDidUpdate() {
+        if (this.state.showCountrySelector) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    }
+
+    changeView = (newState) => {
+        this.setState({
+            ...newState,
+        }, () => { window.scrollTo(0, 0); });
+    };
 
     calculate_averages() {
         const population = this.state.populationData;
@@ -257,12 +270,12 @@ export class CampaignView extends React.Component {
 
     submitPriorities = () => {
         if (this.state.round < 3) {
-            this.setState({
+            this.changeView({
                 round: this.state.round + 1,
                 view: 'feedback',
             });
         } else {
-            this.setState({ view: 'submitted' });
+            this.changeView({ view: 'submitted' });
         }
     };
 
@@ -279,40 +292,39 @@ export class CampaignView extends React.Component {
                 pros.push(trait);
             }
         });
-        return [pros, cons];
-        // const desc = [];
-        // // This is for when the citizen is completely one sided about all issues
-        // if (pros.length === 0) {
-        //     desc.push(<div key={1}>
-        //         I am dissatisfied with the candidate's stance on everything.
-        //     </div>);
-        //     return desc;
-        // }
-        // if (cons.length === 0) {
-        //     desc.push(<div key={1}>
-        //         I am completely satisfied with the candidate's stance on everything.
-        //     </div>);
-        //     return desc;
-        // }
-        // const proSentence = 'I am satisfied with the candidate\'s stance on ';
-        // const conSentence = 'I believe that the candidate does not give enough priority to ';
-        // [pros, cons].forEach((issueList, i) => {
-        //     let sentence = issueList === cons ? conSentence : proSentence;
-        //     issueList.forEach((issue, j) => {
-        //         let trait = issue.toLowerCase();
-        //         if (j === issueList.length - 1) {
-        //             trait += '.';
-        //         } else if (j === issueList.length - 2) {
-        //             trait += ' and ';
-        //         } else {
-        //             trait += ', ';
-        //         }
-        //         sentence += trait;
-        //     });
-        //     desc.push(<div key={i}>{sentence}</div>);
-        //     desc.push(<br key={i}/>);
-        // });
-        // return desc;
+        const desc = [];
+        // This is for when the citizen is completely one sided about all issues
+        if (pros.length === 0) {
+            desc.push(<div key={1}>
+                I am dissatisfied with the candidate's stance on everything.
+            </div>);
+            return desc;
+        }
+        if (cons.length === 0) {
+            desc.push(<div key={1}>
+                I am completely satisfied with the candidate's stance on everything.
+            </div>);
+            return desc;
+        }
+        const proSentence = 'I am satisfied with the candidate\'s stance on ';
+        const conSentence = 'I believe that the candidate does not give enough priority to ';
+        [pros, cons].forEach((issueList, i) => {
+            let sentence = issueList === cons ? conSentence : proSentence;
+            issueList.forEach((issue, j) => {
+                let trait = issue.toLowerCase();
+                if (j === issueList.length - 1) {
+                    trait += '.';
+                } else if (j === issueList.length - 2) {
+                    trait += ' and ';
+                } else {
+                    trait += ', ';
+                }
+                sentence += trait;
+            });
+            desc.push(<div key={i}>{sentence}</div>);
+            desc.push(<br key={i}/>);
+        });
+        return desc;
     };
 
     render() {
@@ -340,9 +352,10 @@ export class CampaignView extends React.Component {
                             changeCountry={this.changeCountry}
                             closePopup={(startGame) => {
                                 if (startGame) {
-                                    this.setState(
-                                        { showCountrySelector: false, view: 'countryInfo' },
-                                    );
+                                    this.changeView({
+                                        showCountrySelector: false,
+                                        view: 'countryInfo',
+                                    });
                                 } else {
                                     this.setState(
                                         { showCountrySelector: false },
@@ -383,8 +396,7 @@ export class CampaignView extends React.Component {
 
         const map_svg = (
             <svg
-                height={this.map_height}
-                width={this.map_width}
+                viewBox="0 0 550 550"
                 id='content'
                 onClick={(e) => this.handleProvinceMapClick(e, '')}
             >
@@ -419,16 +431,17 @@ export class CampaignView extends React.Component {
             </svg>
         );
 
+        let provinceDesc;
+        if (this.state.view === 'speechMaker') {
+            provinceDesc = '';
+        } else if (clickedProvince) {
+            provinceDesc = clickedProvince;
+        } else {
+            provinceDesc = countryName;
+        }
         const campaign_map = (
             <div className='campaign-map'>
-                {clickedProvince
-                    ? <div className='province-info-text'>
-                        <b>{clickedProvince}</b>
-                    </div>
-                    : <div className='province-info-text'>
-                        <b>{countryName}</b>
-                    </div>
-                }
+                <b>{ provinceDesc }</b>
                 {['countryInfo', 'feedback', 'speechMaker'].includes(this.state.view)
                     ? <OverlayTrigger
                         trigger="hover"
@@ -443,10 +456,10 @@ export class CampaignView extends React.Component {
 
         if (this.state.view === 'countryInfo') {
             return (<div className="row">
-                <div className='map-div col'>
+                <div className='col-md-12 col-lg-7'>
                     {campaign_map}
                 </div>
-                <div className='col'>
+                <div className='col-md-12 col-lg-5'>
                     <p>
                         Click on each province to learn what your initial polling has revealed
                         about the needs of its inhabitants.
@@ -457,7 +470,6 @@ export class CampaignView extends React.Component {
                     <ul>
                         {this.state.topicNames.map((topic, i) => <li key={i}>{topic}</li>)}
                     </ul>
-
                     <button onClick={() => this.setState({
                         view: 'speechMaker',
                         round: 1,
@@ -483,18 +495,20 @@ export class CampaignView extends React.Component {
                         map={campaign_map}
                         clickedProvince={this.state.clickedProvince}
                     />
-                    <button
-                        className='campaign-btn'
-                        onClick={() => this.setState({ showCountrySelector: true })}
-                    >
-                        Try again or switch countries
-                    </button>
+                    <div className="retry-button">
+                        <button
+                            className='campaign-btn'
+                            onClick={() => this.setState({ showCountrySelector: true })}
+                        >
+                            Try again or switch countries
+                        </button>
+                    </div>
                     {this.state.showCountrySelector
                         && <CountrySelectorPopup
                             changeCountry={this.changeCountry}
                             closePopup={(startGame) => {
                                 if (startGame) {
-                                    this.setState(
+                                    this.changeView(
                                         { showCountrySelector: false, view: 'countryInfo' },
                                     );
                                 } else {
@@ -511,17 +525,17 @@ export class CampaignView extends React.Component {
 
         if (this.state.view === 'feedback') {
             return (
-                <div className={'campaign-container'}>
+                <div>
                     <Feedback
                         clickedProvince={clickedProvince}
                         round={this.state.round}
                         generateDescription={this.generateDescription}
                         results={populationData}
-                        nextRound={() => this.setState({ view: 'speechMaker' })}
+                        nextRound={() => this.changeView({ view: 'speechMaker' })}
                         topicNames={this.state.topicNames}
                         speechProposal={this.state.speechProposal}
+                        campaignMap={campaign_map}
                     />
-                    {campaign_map}
                 </div>
             );
         }
