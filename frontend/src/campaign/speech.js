@@ -135,8 +135,8 @@ export class Speech extends React.Component {
         let currentMonth = '';
         const currentDay = Math.round(Math.random() * 28);
         if (this.props.round === 1) {
-            let monthIndex = Math.round(Math.random() *
-                (monthsArray.indexOf(this.electionMonth) - 5));
+            let monthIndex = Math.round(Math.random()
+                * (monthsArray.indexOf(this.electionMonth) - 5));
             if (monthIndex < 0) {
                 monthIndex = 0;
             }
@@ -147,15 +147,15 @@ export class Speech extends React.Component {
         const currentDate = `${currentMonth} ${currentDay}${this.getOrdinalIndicator(currentDay)}`;
         newRoundDates[this.props.round] = currentDate;
         this.setState({
-                roundDates: newRoundDates,
-            });
+            roundDates: newRoundDates,
+        });
         return currentDate;
     }
 
     generateStory() {
         const previousRoundSupport = Math.round(
             (this.props.roundAggregateData[this.props.round - 1].totalSupport
-                / this.props.roundAggregateData[this.props.round - 1].totalPopulation) * 100
+                / this.props.roundAggregateData[this.props.round - 1].totalPopulation) * 100,
         );
         let storyText = '';
         const currentDate = this.getCurrentDate();
@@ -175,8 +175,8 @@ export class Speech extends React.Component {
         let constantSupport = false;
         if (this.props.round === 3) {
             const roundOneSupport = Math.round(
-            (this.props.roundAggregateData[1].totalSupport
-                / this.props.roundAggregateData[1].totalPopulation) * 100
+                (this.props.roundAggregateData[1].totalSupport
+                    / this.props.roundAggregateData[1].totalPopulation) * 100,
             );
             if (roundOneSupport < previousRoundSupport) {
                 storyText += 'Results show that overall, people think your policy has improved. ';
@@ -193,7 +193,7 @@ export class Speech extends React.Component {
                         + 'You should make some policy adjustments before the election.';
                 } else if (previousRoundSupport > 0 && previousRoundSupport < 30) {
                     storyText += 'However, almost no one supports your current policy. You '
-                        +  'should make some adjustments before you submit your final policy.';
+                        + 'should make some adjustments before you submit your final policy.';
                 } else if (previousRoundSupport === 0) {
                     storyText += 'No one supports your policy. You should make'
                         + ' some adjustments before you submit your final policy.';
