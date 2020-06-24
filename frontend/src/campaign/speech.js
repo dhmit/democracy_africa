@@ -72,6 +72,30 @@ export const get_default_proposal = (topic_names) => {
     return proposal;
 };
 
+function getOrdinalIndicator(day) {
+    let suffix = 'th';
+    const exceptions = [11, 12, 13];
+    if (!(exceptions.includes(day))) {
+        if (day % 10 === 1) {
+            suffix = 'st';
+        } else if (day % 10 === 2) {
+            suffix = 'nd';
+        } else if (day % 10 === 3) {
+            suffix = 'rd';
+        }
+    }
+    return suffix;
+}
+
+function getMaxNumberOfDays(monthIndex) {
+    if (monthIndex === 1) {
+        return 28;
+    }
+    if ([3, 5, 8, 10].includes(monthIndex)) {
+        return 30;
+    }
+    return 31;
+}
 
 export class Speech extends React.Component {
     constructor(props) {
@@ -110,41 +134,28 @@ export class Speech extends React.Component {
         }
     }
 
-    getOrdinalIndicator(day) {
-        let suffix = 'th';
-        const exceptions = [11, 12, 13];
-        if (!(exceptions.includes(day))) {
-            if (day % 10 === 1) {
-                suffix = 'st';
-            } else if (day % 10 === 2) {
-                suffix = 'nd';
-            } else if (day % 10 === 3) {
-                suffix = 'rd';
-            }
-        }
-        return suffix;
-    }
-
     getCurrentDate() {
         if (this.state.roundDates[this.props.round] !== null) {
             return this.state.roundDates[this.props.round];
         }
         const monthsArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
             'August', 'September', 'October', 'November', 'December'];
+        const electionMonthIndex = monthsArray.indexOf(this.electionMonth);
+        const maxNumberOfDays = getMaxNumberOfDays(electionMonthIndex);
         const newRoundDates = this.state.roundDates;
+        const currentDay = Math.round(Math.random() * maxNumberOfDays - 1) + 1;
         let currentMonth = '';
-        const currentDay = Math.round(Math.random() * 27) + 1;
         if (this.props.round === 1) {
             let monthIndex = Math.round(Math.random()
-                * (monthsArray.indexOf(this.electionMonth) - 5));
+                * (electionMonthIndex - 5));
             if (monthIndex < 0) {
                 monthIndex = 0;
             }
             currentMonth = monthsArray[monthIndex];
         } else if (this.props.round === 2) {
-            currentMonth = monthsArray[monthsArray.indexOf(this.electionMonth) - 2];
+            currentMonth = monthsArray[electionMonthIndex - 2];
         }
-        const currentDate = `${currentMonth} ${currentDay}${this.getOrdinalIndicator(currentDay)}`;
+        const currentDate = `${currentMonth} ${currentDay}${getOrdinalIndicator(currentDay)}`;
         newRoundDates[this.props.round] = currentDate;
         this.setState({
             roundDates: newRoundDates,
