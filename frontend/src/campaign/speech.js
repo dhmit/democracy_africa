@@ -133,7 +133,7 @@ export class Speech extends React.Component {
             'August', 'September', 'October', 'November', 'December'];
         const newRoundDates = this.state.roundDates;
         let currentMonth = '';
-        const currentDay = Math.round(Math.random() * 28);
+        const currentDay = Math.round(Math.random() * 27) + 1;
         if (this.props.round === 1) {
             let monthIndex = Math.round(Math.random()
                 * (monthsArray.indexOf(this.electionMonth) - 5));
