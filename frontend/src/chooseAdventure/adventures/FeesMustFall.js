@@ -186,7 +186,7 @@ const STAGE_1BB_INT = {
         <p>
             After mentioning the student demonstrations, such as the sit-in, to your family
             members, they give you some warnings. They didn't think it was worth the risk of
-            getting expelled by your school or having any disciplinary and criminal records
+            getting expelled from school or having any disciplinary and criminal records
             that might make it more difficult for you to find jobs in the future.
         </p>
         <p>
