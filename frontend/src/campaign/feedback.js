@@ -40,13 +40,13 @@ class Feedback extends React.Component {
                             your priorities.
                         </p>
                         { clickedProvince
-                            && <strong>
+                            && <strong className="citizen-text">
                                 A Sample of the Citizens from { clickedProvince }
                             </strong>
                         }
-                        <br/>
-                        {citizenReactions}
-                        <br/><br/>
+                        <div className="citizen-reactions">
+                            {citizenReactions}
+                        </div>
                         {description}
                         <div className='feedback-pop'>
                             {clickedProvince
