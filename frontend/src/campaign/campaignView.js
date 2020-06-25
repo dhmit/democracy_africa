@@ -425,10 +425,11 @@ export class CampaignView extends React.Component {
         }
         const windowHeight = document.documentElement.clientHeight;
         const windowWidth = document.documentElement.clientWidth;
-        let campaign_map = (
+        const campaign_map = (
             <div className='campaign-map'>
                 <b>{ provinceDesc }</b>
-                {['countryInfo', 'feedback', 'speechMaker'].includes(this.state.view)
+                {(['countryInfo', 'feedback', 'speechMaker'].includes(this.state.view)
+                    && (windowHeight > 500 && windowWidth >= 500))
                     ? <OverlayTrigger
                         trigger="hover"
                         placement="auto"
@@ -439,9 +440,6 @@ export class CampaignView extends React.Component {
                 }
             </div>
         );
-        if (windowHeight < 500 || windowWidth < 500) {
-            campaign_map = map_svg;
-        }
 
         if (this.state.view === 'countryInfo') {
             const infoInstructions = 'Click on each province to learn what your initial polling'

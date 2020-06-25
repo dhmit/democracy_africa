@@ -39,7 +39,7 @@ class Citizen extends React.Component {
                 </Popover.Content>
             </Popover>
         );
-        if ((windowHeight < 500 || windowWidth < 500)) {
+        if (!(windowHeight < 500 || windowWidth < 500)) {
             return (
                 <OverlayTrigger
                     overlay={description}
