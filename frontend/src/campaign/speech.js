@@ -14,7 +14,7 @@ export const COUNTRIES = [
         ],
         supportThreshold: 0.5,
         max_priority_points: { 'low': 3, 'medium': 3, 'high': 2 },
-        election_date: ['October', '23rd'],
+        election_date: 'October 23rd',
     },
     {
         name: 'Kenya',
@@ -31,7 +31,7 @@ export const COUNTRIES = [
         ],
         supportThreshold: 6,
         max_priority_points: { 'low': 6, 'medium': 3, 'high': 2 },
-        election_date: ['August', '8th'],
+        election_date: 'August 8th',
     },
     {
         name: 'South Africa',
@@ -52,7 +52,7 @@ export const COUNTRIES = [
         ],
         supportThreshold: 25,
         max_priority_points: { 'low': 10, 'medium': 5, 'high': 3 },
-        election_date: ['May', '8th'],
+        election_date: 'May 8th',
     },
 ];
 
@@ -110,9 +110,7 @@ export class Speech extends React.Component {
         };
         this.difference_threshold = get_country_prop(this.props.countryName, 'supportThreshold');
         this.max_priority_points = get_country_prop(this.props.countryName, 'max_priority_points');
-        const electionDate = get_country_prop(this.props.countryName, 'election_date');
-        this.electionDate = `${electionDate[0]} ${electionDate[1]}`;
-        this.electionMonth = electionDate[0];
+        this.electionDate = get_country_prop(this.props.countryName, 'election_date');
     }
 
     /**
@@ -140,7 +138,8 @@ export class Speech extends React.Component {
         }
         const monthsArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
             'August', 'September', 'October', 'November', 'December'];
-        const electionMonthIndex = monthsArray.indexOf(this.electionMonth);
+        const electionMonth = this.electionDate.split(' ')[0];
+        const electionMonthIndex = monthsArray.indexOf(electionMonth);
         const maxNumberOfDays = getMaxNumberOfDays(electionMonthIndex);
         const newRoundDates = this.state.roundDates;
         const currentDay = Math.round(Math.random() * maxNumberOfDays - 1) + 1;
