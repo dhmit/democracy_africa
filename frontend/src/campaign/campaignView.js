@@ -423,7 +423,9 @@ export class CampaignView extends React.Component {
         } else {
             provinceDesc = countryName;
         }
-        const campaign_map = (
+        const windowHeight = document.documentElement.clientHeight;
+        const windowWidth = document.documentElement.clientWidth;
+        let campaign_map = (
             <div className='campaign-map'>
                 <b>{ provinceDesc }</b>
                 {['countryInfo', 'feedback', 'speechMaker'].includes(this.state.view)
@@ -437,18 +439,15 @@ export class CampaignView extends React.Component {
                 }
             </div>
         );
+        if (windowHeight < 500 || windowWidth < 500) {
+            campaign_map = map_svg;
+        }
 
         if (this.state.view === 'countryInfo') {
             const infoInstructions = 'Click on each province to learn what your initial polling'
                 + ' has revealed about the needs of its inhabitants.';
 
             return (<div className="row">
-                <div className='col-md-12 col-lg-7'>
-                    <p className="d-block d-lg-none">
-                        {infoInstructions}
-                    </p>
-                    {campaign_map}
-                </div>
                 <div className='col-md-12 col-lg-5'>
                     <p className="d-none d-lg-block">
                         {infoInstructions}
@@ -474,6 +473,12 @@ export class CampaignView extends React.Component {
                             I am ready to set my campaign's priorities!
                         </div>
                     </button>
+                </div>
+                <div className='col-md-12 col-lg-7'>
+                    <p className="d-block d-lg-none">
+                        {infoInstructions}
+                    </p>
+                    {campaign_map}
                 </div>
             </div>);
         }
