@@ -315,7 +315,7 @@ export class CampaignView extends React.Component {
             const altText = 'Nelson Mandela voting in the 1994 South African general election.';
             const campaignIntroDesc = {
                 desc: (<>
-                    <h5>Welcome to the Campaign Game!</h5>
+                    <h1>Welcome to the Campaign Game!</h1>
                     <p>In this game, you will create a political campaign and try to
                     appeal to the most people in a country.</p>
                     <p>You will have two rounds to set your campaign's priorities and gather
@@ -453,7 +453,7 @@ export class CampaignView extends React.Component {
                     <p>
                         You will be asked to prioritize the following issues:
                     </p>
-                    <ul>
+                    <ul style={{ marginBottom: '30px' }}>
                         {this.state.topicNames.map((topic, i) => <li key={i}>{topic}</li>)}
                     </ul>
                     <button

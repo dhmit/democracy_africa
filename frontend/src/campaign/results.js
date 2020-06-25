@@ -100,6 +100,7 @@ class Results extends React.Component {
                             {this.props.map}
                         </div>
 
+
                         <div className='result-population col-lg-6 col-md-12'>
                             <div className='result-population_header'>
                                 Results for sample population of size {sample.length}

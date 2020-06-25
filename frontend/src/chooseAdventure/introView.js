@@ -23,16 +23,16 @@ class IntroView extends React.Component {
                         className='col-lg-8 col-md-12 order-12 order-lg-1'
                         style={ { marginBottom: '20px' } }
                     >
-                        <div>
+                        <div style={ { marginBottom: '40px' } }>
                             {desc}
                         </div>
-                        <div className='intro-btn-container d-none d-lg-flex'>
+                        <div className='intro-btn-container d-none d-lg-block'>
                             <div className={`${this.props.buttonStyle} start-button`}
                                 onClick={() => this.props.setView('stage')}>
                                 Get started
                             </div>
                         </div>
-                        <div className='intro-btn-container d-flex d-lg-none'>
+                        <div className='intro-btn-container d-block d-lg-none'>
                             <div className={`${this.props.buttonStyle} start-button w-100`}
                                 onClick={() => this.props.setView('stage')}>
                                 Get started
