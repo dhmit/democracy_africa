@@ -412,7 +412,9 @@ export class CampaignView extends React.Component {
         } else {
             provinceDesc = countryName;
         }
-        const campaign_map = (
+        const windowHeight = document.documentElement.clientHeight;
+        const windowWidth = document.documentElement.clientWidth;
+        let campaign_map = (
             <div className='campaign-map'>
                 <b>{ provinceDesc }</b>
                 {['countryInfo', 'feedback', 'speechMaker'].includes(this.state.view)
@@ -426,6 +428,9 @@ export class CampaignView extends React.Component {
                 }
             </div>
         );
+        if (windowHeight < 500 || windowWidth < 500) {
+            campaign_map = map_svg;
+        }
 
         if (this.state.view === 'countryInfo') {
             return (<div className="row">
