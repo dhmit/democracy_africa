@@ -79,7 +79,16 @@ class Feedback extends React.Component {
                                 </table>
                             }
                         </div>
-                        <button className='campaign-btn' onClick={this.props.nextRound}>
+                        <button
+                            className='campaign-btn d-none d-lg-block'
+                            onClick={this.props.nextRound}
+                        >
+                            Next Round
+                        </button>
+                        <button
+                            className='campaign-btn d-block d-lg-none w-100'
+                            onClick={this.props.nextRound}
+                        >
                             Next Round
                         </button>
                     </div>

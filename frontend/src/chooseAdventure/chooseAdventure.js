@@ -59,6 +59,7 @@ export class ChooseAdventureView extends React.Component {
             return (<IntroView
                 introDescriptions={adventures[this.state.adventure].intro}
                 setView={this.setView}
+                buttonStyle='cyoa-button'
             />);
         case 'stage':
             return (<StageView
