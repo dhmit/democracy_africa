@@ -264,7 +264,7 @@ export class Speech extends React.Component {
                         </div>
                         {topics}
                     </div>
-                    <div className='reset_button'>
+                    <div className='reset_button d-none d-lg-flex'>
                         <button
                             className='campaign-btn speech-btn'
                             onClick={this.props.submitPriorities}
@@ -272,8 +272,16 @@ export class Speech extends React.Component {
                             Submit
                         </button>
                     </div>
+                    <div className='reset_button d-flex d-lg-none'>
+                        <button
+                            className='campaign-btn speech-btn w-100'
+                            onClick={this.props.submitPriorities}
+                        >
+                            Submit
+                        </button>
+                    </div>
                 </div>
-                <div className="col-sm-12 col-lg-6">
+                <div className="col-sm-12 col-lg-6 d-none d-lg-block">
                     {this.props.campaign_map}
                 </div>
             </div>

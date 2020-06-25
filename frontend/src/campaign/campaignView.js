@@ -300,6 +300,16 @@ export class CampaignView extends React.Component {
         return desc;
     };
 
+    startGame = () => {
+        this.setState({
+            view: 'speechMaker',
+            round: 1,
+            clickedProvince: this.state.clickedProvince
+                ? this.state.clickedProvince
+                : Object.keys(this.state.populationData)[0],
+        });
+    };
+
     render() {
         if (this.state.view === 'intro') {
             const altText = 'Nelson Mandela voting in the 1994 South African general election.';
@@ -340,6 +350,7 @@ export class CampaignView extends React.Component {
                     <IntroView
                         setView={() => { this.setState({ showCountrySelector: true }); }}
                         introDescriptions={campaignIntroDesc}
+                        buttonStyle='campaign-btn'
                     />
                 </>
             );
@@ -369,7 +380,7 @@ export class CampaignView extends React.Component {
 
         const map_svg = (
             <svg
-                viewBox="-20 -20 550 550"
+                viewBox="-20 -20 875 875"
                 id='content'
                 onClick={(e) => this.handleProvinceMapClick(e, '')}
             >
@@ -433,14 +444,19 @@ export class CampaignView extends React.Component {
         }
 
         if (this.state.view === 'countryInfo') {
+            const infoInstructions = 'Click on each province to learn what your initial polling'
+                + ' has revealed about the needs of its inhabitants.';
+
             return (<div className="row">
                 <div className='col-md-12 col-lg-7'>
+                    <p className="d-block d-lg-none">
+                        {infoInstructions}
+                    </p>
                     {campaign_map}
                 </div>
                 <div className='col-md-12 col-lg-5'>
-                    <p>
-                        Click on each province to learn what your initial polling has revealed
-                        about the needs of its inhabitants.
+                    <p className="d-none d-lg-block">
+                        {infoInstructions}
                     </p>
                     <p>
                         You will be asked to prioritize the following issues:
@@ -449,16 +465,19 @@ export class CampaignView extends React.Component {
                         {this.state.topicNames.map((topic, i) => <li key={i}>{topic}</li>)}
                     </ul>
                     <button
-                        className='campaign-btn'
-                        onClick={() => this.setState({
-                            view: 'speechMaker',
-                            round: 1,
-                            clickedProvince: this.state.clickedProvince
-                                ? this.state.clickedProvince
-                                : Object.keys(populationData)[0],
-                        })}
+                        className='campaign-btn d-none d-lg-block'
+                        onClick={this.startGame}
+                        style={{ textAlign: 'center' }}
                     >
-                    I am ready to set my campaign's priorities!
+                        I am ready to set my campaign's priorities!
+                    </button>
+                    <button
+                        className='campaign-btn d-block d-lg-none w-100'
+                        onClick={this.startGame}
+                    >
+                        <div style={{ textAlign: 'center' }}>
+                            I am ready to set my campaign's priorities!
+                        </div>
                     </button>
                 </div>
             </div>);
@@ -476,9 +495,17 @@ export class CampaignView extends React.Component {
                         map={campaign_map}
                         clickedProvince={this.state.clickedProvince}
                     />
-                    <div className="retry-button">
+                    <div className="retry-button d-none d-lg-flex">
                         <button
                             className='campaign-btn'
+                            onClick={() => this.setState({ showCountrySelector: true })}
+                        >
+                            Try again or switch countries
+                        </button>
+                    </div>
+                    <div className="retry-button d-flex d-lg-none">
+                        <button
+                            className='campaign-btn w-100'
                             onClick={() => this.setState({ showCountrySelector: true })}
                         >
                             Try again or switch countries
