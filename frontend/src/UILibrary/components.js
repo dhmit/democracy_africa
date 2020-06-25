@@ -84,9 +84,9 @@ MapPath.propTypes = {
 export class CaptionedImage extends React.Component {
     render() {
         return (
-            <figure className="figure">
+            <figure className="figure w-100">
                 <img
-                    className='figure-img img-fluid'
+                    className='figure-img img-fluid w-100'
                     src={'/static/img/' + this.props.filename}
                     alt={this.props.alt}
                 />
