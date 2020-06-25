@@ -369,7 +369,7 @@ export class CampaignView extends React.Component {
 
         const map_svg = (
             <svg
-                viewBox="-20 -20 900 900"
+                viewBox="-20 -20 875 875"
                 id='content'
                 onClick={(e) => this.handleProvinceMapClick(e, '')}
             >

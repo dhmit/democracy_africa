@@ -30,14 +30,16 @@ class Feedback extends React.Component {
                 : (<></>)}
         </div>);
 
+        const instruction = 'Click on a province to see what our polling found out about how'
+            + ' satisfied a sample of citizens from that province were with'
+            + ' your priorities.';
+
         return (
             <div className='feedback container'>
                 <div className="row" style={{ width: '100%' }}>
-                    <div className="feedback-results col-lg-6 col-md-12">
-                        <p>
-                            Click on a province to see what our polling found out about how
-                            satisfied a sample of citizens from that province were with
-                            your priorities.
+                    <div className="feedback-results col-lg-6 col-md-12 order-12 order-lg-1">
+                        <p className="feedback-instructions d-none d-lg-block">
+                            {instruction}
                         </p>
                         { clickedProvince
                             && <strong className="citizen-text">
@@ -81,7 +83,10 @@ class Feedback extends React.Component {
                             Next Round
                         </button>
                     </div>
-                    <div className="col-lg-6 col-md-12 map-col">
+                    <div className="col-lg-6 col-md-12 map-col order-1 order-lg-12">
+                        <p className="feedback-instructions d-block d-lg-none">
+                            {instruction}
+                        </p>
                         {campaignMap}
                     </div>
                 </div>
