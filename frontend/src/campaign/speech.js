@@ -100,16 +100,17 @@ function getMaxNumberOfDays(monthIndex) {
 export class Speech extends React.Component {
     constructor(props) {
         super(props);
+        this.max_priority_points = get_country_prop(this.props.countryName, 'max_priority_points');
         this.state = {
             speechProposal: this.props.speechProposal,
             result: 0,
             total: Object.keys(this.props.speechProposal).reduce((acc, topic) => {
                 return acc + this.props.speechProposal[topic];
             }, 0),
+            atMaxStatement: this.noProblem(this.makeProposalDict(this.props.speechProposal))[1],
             roundDates: [null, null, null, null],
         };
         this.difference_threshold = get_country_prop(this.props.countryName, 'supportThreshold');
-        this.max_priority_points = get_country_prop(this.props.countryName, 'max_priority_points');
         this.electionDate = get_country_prop(this.props.countryName, 'election_date');
     }
 
