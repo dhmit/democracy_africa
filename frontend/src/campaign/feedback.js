@@ -73,7 +73,7 @@ Feedback.propTypes = {
     speechProposal: PropTypes.object,
     campaignMap: PropTypes.object,
     feedbackTable: PropTypes.object,
-    citizenReactions: PropTypes.object,
+    citizenReactions: PropTypes.array,
 };
 
 export default Feedback;

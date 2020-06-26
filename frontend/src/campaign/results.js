@@ -84,7 +84,7 @@ class Results extends React.Component {
 
 
                         <div className='result-population col-lg-6 col-md-12'>
-                            <div className='result-population_header'>
+                            <div className='result-population_header' >
                                 Results for sample population
                                 of {this.props.clickedProvince
                                     ? this.props.clickedProvince
@@ -112,7 +112,7 @@ Results.propTypes = {
     map: PropTypes.object,
     clickedProvince: PropTypes.string,
     handleProvinceMapClick: PropTypes.func,
-    citizenReactions: PropTypes.object,
+    citizenReactions: PropTypes.array,
     feedbackTable: PropTypes.object,
 };
 
