@@ -1,6 +1,5 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
-import Citizen from './citizen';
 
 class Results extends React.Component {
     constructor(props) {
@@ -12,23 +11,6 @@ class Results extends React.Component {
         if (!resultsData) {
             return (<></>);
         }
-
-        const sample = [];
-        Object.keys(this.props.provinceData).forEach((province) => {
-            const provinceData = this.props.provinceData[province];
-            if (province === this.props.clickedProvince || this.props.clickedProvince === '') {
-                const citizens = provinceData['citizens'];
-                sample.push(...citizens.slice(0, Math.round(citizens.length * 0.25)));
-            }
-        });
-        const citizens = sample.map((citizen, k) => (
-            <Citizen
-                key={k}
-                data={citizen}
-                title={`Citizen of ${citizen['province']}`}
-                generateDescription={this.props.generateDescription}
-            />
-        ));
 
         const countryPercent = Math.round((this.props.countryData.totalSupport
                                                 / this.props.countryData.totalPopulation) * 100);
@@ -103,10 +85,16 @@ class Results extends React.Component {
 
                         <div className='result-population col-lg-6 col-md-12'>
                             <div className='result-population_header'>
-                                Results for sample population of size {sample.length}
+                                Results for sample population
+                                of {this.props.clickedProvince
+                                    ? this.props.clickedProvince
+                                    : this.props.countryName}
                             </div>
-                            <div className='result-population_svg'>
-                                {citizens}
+                            <div className='result-population_svg' style={{ marginBottom: '30px' }}>
+                                {this.props.citizenReactions}
+                            </div>
+                            <div className="w-100" >
+                                {this.props.feedbackTable}
                             </div>
                         </div>
                     </div>
@@ -124,6 +112,8 @@ Results.propTypes = {
     map: PropTypes.object,
     clickedProvince: PropTypes.string,
     handleProvinceMapClick: PropTypes.func,
+    citizenReactions: PropTypes.object,
+    feedbackTable: PropTypes.object,
 };
 
 export default Results;

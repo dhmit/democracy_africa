@@ -15,6 +15,7 @@ import Feedback from './feedback';
 import Results from './results';
 import CountrySelectorPopup from './countrySelectorPopup';
 import IntroView from '../chooseAdventure/introView';
+import Citizen from './citizen';
 
 const generateOverlayText = (services, prefixText) => {
     let newText = prefixText;
@@ -446,6 +447,12 @@ export class CampaignView extends React.Component {
                 + ' has revealed about the needs of its inhabitants.';
 
             return (<div className="row">
+                <div className='col-md-12 col-lg-7'>
+                    <p className="d-block d-lg-none">
+                        {infoInstructions}
+                    </p>
+                    {campaign_map}
+                </div>
                 <div className='col-md-12 col-lg-5'>
                     <p className="d-none d-lg-block">
                         {infoInstructions}
@@ -472,14 +479,54 @@ export class CampaignView extends React.Component {
                         </div>
                     </button>
                 </div>
-                <div className='col-md-12 col-lg-7'>
-                    <p className="d-block d-lg-none">
-                        {infoInstructions}
-                    </p>
-                    {campaign_map}
-                </div>
             </div>);
         }
+
+        let sample = [];
+        let citizenReactions = '';
+        if (this.state.view === 'submitted' && clickedProvince === '') {
+            sample = Object.keys(populationData).reduce((acc, province) => {
+                return acc.concat(populationData[province].citizens.slice(0, 10));
+            }, []);
+        } else if (clickedProvince) {
+            sample = populationData[clickedProvince]['citizens'].slice(0, 100);
+        }
+        citizenReactions = sample.map((citizen, k) => (
+            <Citizen
+                key={k}
+                data={citizen}
+                title={`Citizen of ${citizen['province']}`}
+                generateDescription={this.generateDescription}
+            />
+        ));
+
+        const feedbackTable = (<div className='feedback-pop'>
+            <table border="1" className={'resultTable'}>
+                <tbody>
+                    <tr>
+                        <th>Service</th>
+                        <th>Percentage of Sample Satisfied</th>
+                    </tr>
+                    {this.state.topicNames.map((topic, k) => {
+                        const numSatisfied = sample.reduce((acc, citizen) => {
+                            if (citizen.traits[topic]
+                                <= this.state.speechProposal[topic]) {
+                                return acc + 1;
+                            }
+                            return acc;
+                        }, 0);
+                        const pctSatisfied = Math.round((numSatisfied
+                            / sample.length) * 100);
+                        return (
+                            <tr key={k}>
+                                <td>{topic}</td>
+                                <td>{pctSatisfied}%</td>
+                            </tr>
+                        );
+                    })}
+                </tbody>
+            </table>
+        </div>);
 
         if (this.state.view === 'submitted') {
             return (
@@ -492,6 +539,8 @@ export class CampaignView extends React.Component {
                         generateDescription={this.generateDescription}
                         map={campaign_map}
                         clickedProvince={this.state.clickedProvince}
+                        feedbackTable={feedbackTable}
+                        citizenReactions={citizenReactions}
                     />
                     <div className="retry-button d-none d-lg-flex">
                         <button
@@ -536,11 +585,12 @@ export class CampaignView extends React.Component {
                         clickedProvince={clickedProvince}
                         round={this.state.round}
                         generateDescription={this.generateDescription}
-                        results={populationData}
                         nextRound={() => this.changeView({ view: 'speechMaker' })}
                         topicNames={this.state.topicNames}
                         speechProposal={this.state.speechProposal}
                         campaignMap={campaign_map}
+                        feedbackTable={feedbackTable}
+                        citizenReactions={citizenReactions}
                     />
                 </div>
             );

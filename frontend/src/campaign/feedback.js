@@ -1,6 +1,5 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
-import Citizen from './citizen';
 
 class Feedback extends React.Component {
     constructor(props) {
@@ -8,20 +7,10 @@ class Feedback extends React.Component {
     }
 
     render() {
-        const { results, clickedProvince, campaignMap } = this.props;
-        let sample = [];
-        let citizenReactions = '';
-        if (clickedProvince) {
-            sample = results[clickedProvince]['citizens'].slice(0, 100);
-            citizenReactions = sample.map((citizen, k) => (
-                <Citizen
-                    key={k}
-                    data={citizen}
-                    title={`Citizen of ${citizen['province']}`}
-                    generateDescription={this.props.generateDescription}
-                />
-            ));
-        }
+        const {
+            feedbackTable, citizenReactions, clickedProvince, campaignMap,
+        } = this.props;
+
         const description = (<div>
             {clickedProvince
                 ? (<strong>
@@ -50,35 +39,7 @@ class Feedback extends React.Component {
                             {citizenReactions}
                         </div>
                         {description}
-                        <div className='feedback-pop'>
-                            {clickedProvince
-                                && <table border="1" className={'resultTable'}>
-                                    <tbody>
-                                        <tr>
-                                            <th>Service</th>
-                                            <th>Percentage of Sample Satisfied</th>
-                                        </tr>
-                                        {this.props.topicNames.map((topic, k) => {
-                                            const numSatisfied = sample.reduce((acc, citizen) => {
-                                                if (citizen.traits[topic]
-                                                    <= this.props.speechProposal[topic]) {
-                                                    return acc + 1;
-                                                }
-                                                return acc;
-                                            }, 0);
-                                            const pctSatisfied = Math.round((numSatisfied
-                                                / sample.length) * 100);
-                                            return (
-                                                <tr key={k}>
-                                                    <td>{topic}</td>
-                                                    <td>{pctSatisfied}%</td>
-                                                </tr>
-                                            );
-                                        })}
-                                    </tbody>
-                                </table>
-                            }
-                        </div>
+                        { clickedProvince && feedbackTable}
                         <button
                             className='campaign-btn d-none d-lg-block'
                             onClick={this.props.nextRound}
@@ -106,12 +67,13 @@ class Feedback extends React.Component {
 Feedback.propTypes = {
     clickedProvince: PropTypes.string,
     generateDescription: PropTypes.func,
-    results: PropTypes.object,
     round: PropTypes.number,
     nextRound: PropTypes.func,
     topicNames: PropTypes.array,
     speechProposal: PropTypes.object,
     campaignMap: PropTypes.object,
+    feedbackTable: PropTypes.object,
+    citizenReactions: PropTypes.object,
 };
 
 export default Feedback;
