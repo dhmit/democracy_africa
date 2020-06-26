@@ -136,19 +136,20 @@ class About extends React.Component {
                         a variety of starting conditions.
                     </p>
                     <p>
-                        This project consists of two simulations. The first one is the Choose
-                        Your Own Adventure simulation which puts you into the life of a
-                        South African university student during the Fees Must Fall movement in 2015.
+                        This project consists of two simulations. The first one is
+                        the <a href={'/adventure'}>Choose Your Own Adventure</a> simulation which
+                        puts you into the life of a South African university student during the
+                        Fees Must Fall movement in 2015.
                         In this simulation, you can choose different actions to take with respect
                         to the protest, leading you to experience various perspective of the
                         movement.
                     </p>
                     <p>
-                        The second simulation is the Campaign Game. In this game, you are a
-                        politician running for a position. Using the information you are given
-                        about the needs of the citizens from your country, you will make a campaign
-                        that places varying levels of focus on different services in order to get
-                        a majority of the votes.
+                        The second simulation is the <a href={'/campaign_game'}>Campaign Game</a>.
+                        In this game, you are a politician running for a position. Using the
+                        information you are given about the needs of the citizens from your
+                        country, you will make a campaign that places varying levels of focus
+                        on different services in order to get a majority of the votes.
                     </p>
                 </div>
                 <div className='team'>
