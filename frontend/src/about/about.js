@@ -154,6 +154,10 @@ class About extends React.Component {
                             country, you will make a campaign that places varying levels of focus
                             on different services in order to get a majority of the votes.
                         </p>
+                        <p>
+                            The code for this project is located
+                            on <a href="https://github.com/dhmit/democracy_africa">Github</a>
+                        </p>
                     </div>
                 </div>
                 <div className='team'>
