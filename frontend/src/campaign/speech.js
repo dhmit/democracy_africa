@@ -74,10 +74,10 @@ export class Speech extends React.Component {
     constructor(props) {
         super(props);
         this.max_priority_points = get_country_prop(this.props.countryName, 'max_priority_points');
-        const bucketedSpeechProposal = this.makeBucketedProposalDict(this.props.rawSpeechProposal);
+        const bucketPriorities = this.makeBucketedProposalDict(this.props.rawSpeechProposal);
         this.state = {
             rawSpeechProposal: this.props.rawSpeechProposal,
-            bucketedSpeechProposal: bucketedSpeechProposal,
+            bucketPriorities: bucketPriorities,
             result: 0,
             total: Object.keys(this.props.rawSpeechProposal).reduce((acc, topic) => {
                 return acc + this.props.rawSpeechProposal[topic];
@@ -148,7 +148,7 @@ export class Speech extends React.Component {
     }
 
     validateSpeech = () => {
-        const proposalDict = this.state.bucketedSpeechProposal;
+        const proposalDict = this.state.bucketPriorities;
         const unacceptable_priorities = [];
         for (const priority of Object.keys(this.max_priority_points)) {
             if (proposalDict[priority] > this.max_priority_points[priority]) {
@@ -182,11 +182,11 @@ export class Speech extends React.Component {
         const newVal = parseInt(e.target.value);
         const oldVal = newProposal[topic];
         newProposal[topic] = newVal;
-        const bucketedSpeechProposal = this.makeBucketedProposalDict(newProposal);
+        const bucketPriorities = this.makeBucketedProposalDict(newProposal);
 
         this.setState({
             rawSpeechProposal: newProposal,
-            bucketedSpeechProposal: bucketedSpeechProposal,
+            bucketPriorities: bucketPriorities,
             total: this.state.total + newVal - oldVal,
             result: this.countSupporters(),
         });
@@ -251,23 +251,25 @@ export class Speech extends React.Component {
             );
         });
 
-        const columnHeaders = (<>
-            <div>
-                Low<br/>
-                {this.state.bucketedSpeechProposal.low} /
-                {this.max_priority_points.low}
-            </div>
-            <div>
-                Medium<br/>
-                {this.state.bucketedSpeechProposal.medium} /
-                {this.max_priority_points.medium}
-            </div>
-            <div>
-                High<br/>
-                {this.state.bucketedSpeechProposal.high} /
-                {this.max_priority_points.high}
-            </div>
-        </>);
+        function ColumnHeader(props) {
+            let textClass;
+            if (props.currentValue > props.maxAllowed) {
+                textClass = 'text-danger font-weight-bold';
+            } else if (props.currentValue === props.maxAllowed) {
+                textClass = 'text-dark font-weight-bold';
+            } else {
+                textClass = 'text-dark';
+            }
+
+            return (
+                <div className='text-center'>
+                    {props.heading}<br/>
+                    <span className={textClass}>
+                    {props.currentValue} / {props.maxAllowed}
+                    </span>
+                </div>
+            );
+        }
 
         return (
             <div className="row w-100">
@@ -279,7 +281,21 @@ export class Speech extends React.Component {
                     </div>
                     <div className='speech-options'>
                         <div className='speech-option-desc'>
-                            {columnHeaders}
+                            <ColumnHeader
+                                heading={'Low'}
+                                currentValue={this.state.bucketPriorities.low}
+                                maxAllowed={this.max_priority_points.low}
+                            />
+                            <ColumnHeader
+                                heading={'Medium'}
+                                currentValue={this.state.bucketPriorities.medium}
+                                maxAllowed={this.max_priority_points.medium}
+                            />
+                            <ColumnHeader
+                                heading={'High'}
+                                currentValue={this.state.bucketPriorities.high}
+                                maxAllowed={this.max_priority_points.high}
+                            />
                         </div>
                         <div className='speech-context_points text-danger text-right'>
                             {this.state.cannotSubmitError}
@@ -313,3 +329,4 @@ Speech.propTypes = {
     round: PropTypes.number,
     campaign_map: PropTypes.object,
 };
+
