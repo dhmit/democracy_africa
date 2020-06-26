@@ -143,7 +143,7 @@ export class Speech extends React.Component {
         const electionMonthIndex = monthsArray.indexOf(electionMonth);
         const maxNumberOfDays = getMaxNumberOfDays(electionMonthIndex);
         const newRoundDates = this.state.roundDates;
-        const currentDay = Math.round(Math.random() * maxNumberOfDays - 1) + 1;
+        const currentDay = Math.round(Math.random() * (maxNumberOfDays - 1)) + 1;
         let currentMonth = '';
         if (this.props.round === 1) {
             let monthIndex = Math.round(Math.random()
