@@ -1,9 +1,25 @@
+.about {
+    padding: 0 55px;
+}
+
 .about-title {
     font-size: 50px;
     font-weight: bold;
     text-align: center;
 }
 
-.about-text {
-    padding: 0 55px;
+.staff {
+    display: flex;
+}
+
+.students {
+    display: flex;
+}
+
+.staff-member {
+    padding: 10px;
+}
+
+.student-member {
+    padding: 10px;
 }
