@@ -81,6 +81,7 @@ export class Speech extends React.Component {
                 return acc + this.props.speechProposal[topic];
             }, 0),
             atMaxStatement: this.noProblem(this.makeProposalDict(this.props.speechProposal))[1],
+            acceptable: this.noProblem(this.makeProposalDict(this.props.speechProposal))[0],
         };
         this.difference_threshold = get_country_prop(this.props.countryName, 'supportThreshold');
     }
@@ -147,9 +148,19 @@ export class Speech extends React.Component {
         let acceptable = true;
         let atMaxStatement = '';
         for (const priority of Object.keys(this.max_priority_points)) {
-            if (dict[priority] > this.max_priority_points[priority]) {
+            if (this.max_priority_points[priority] - dict[priority] < 0) {
                 acceptable = false;
-            } else {
+                this.setState({
+                acceptable: false,
+            });
+            } /* else */
+            if (this.max_priority_points[priority] - dict[priority] >= 0) {
+                acceptable = true;
+                this.setState({
+                acceptable: true,
+            });
+            }
+            if (priority !== 'low') {
                 const priority_points_left = this.max_priority_points[priority] - dict[priority];
                 atMaxStatement += (
                     `You can have ${priority_points_left} more sectors at ${priority} priority.\n`
@@ -174,7 +185,7 @@ export class Speech extends React.Component {
         const updateData = this.noProblem(this.makeProposalDict(newProposal));
         const acceptableConfiguration = updateData[0];
         const newAtMaxStatement = updateData[1];
-        if (acceptableConfiguration) {
+        /* if (acceptableConfiguration) {
             newProposal[topic] = newVal;
             this.setState({
                 speechProposal: newProposal,
@@ -184,7 +195,14 @@ export class Speech extends React.Component {
             });
         } else {
             newProposal[topic] = oldVal;
-        }
+        } */
+         newProposal[topic] = newVal;
+            this.setState({
+                speechProposal: newProposal,
+                total: this.state.total + newVal - oldVal,
+                result: this.countSupporters(),
+                atMaxStatement: newAtMaxStatement,
+            });
     };
 
     /**
@@ -218,6 +236,20 @@ export class Speech extends React.Component {
         this.props.updatePopulation(this.props.population);
         return count;
     };
+
+    badSubmission() {
+        return 'You have too many medium/high priorities!';
+    }
+
+    handleSubmission() {
+        let returnable;
+        if (this.state.acceptable) {
+            returnable = this.props.submitPriorities;
+        } else {
+            returnable = this.badSubmission();
+        }
+        return returnable;
+    }
 
     render() {
         const topics = this.props.topicNames.map((topic, key) => {
@@ -254,6 +286,7 @@ export class Speech extends React.Component {
                     </p>
                     <div className='speech-context_points'>
                         {this.state.atMaxStatement}
+                        {this.handleSubmission()}
                     </div>
                 </div>
                 <div className='speech-options'>
@@ -266,7 +299,7 @@ export class Speech extends React.Component {
                 <div className='reset_button'>
                     <button
                         className='campaign-btn speech-btn'
-                        onClick={this.props.submitPriorities}
+                        onClick={this.handleSubmission()}
                     >
                         Submit
                     </button>
