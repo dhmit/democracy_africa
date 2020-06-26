@@ -124,6 +124,11 @@ const twitter_img_props = {
     </>),
 };
 
+const sitInURL = 'https://www.iol.co.za/news/south-africa/western-cape/uct-students-to-protest-'
+    + 'over-fees-1931927';
+const blockadeURL = 'https://www.news24.com/news24/southafrica/news/Student-protests-hit-Rhodes'
+    + '-University-20151019';
+
 const STAGE_1 = {
     'text': <div>A friend texts you about a sit-in at the administrative offices. What is your
         initial reaction?</div>,
@@ -134,6 +139,7 @@ const STAGE_1 = {
             'stageName': 'STAGE_1A',
             'endDetail': '',
             'showOnEnd': true,
+            'additionalDetail': '',
         },
         {
             'text': <div>Agree; however, you’re a little skeptical about how the sit-in will be
@@ -141,6 +147,11 @@ const STAGE_1 = {
             'stageName': 'STAGE_1B_INT',
             'endDetail': '',
             'showOnEnd': true,
+            'additionalDetail': <p>
+                On the 19th of October, you did not go to
+                the <a href={sitInURL}>sit-in</a> at the administrative building where
+                the student <a href={blockadeURL}>protesters blockaded access</a> to the university.
+            </p>,
         },
         {
             'text': <div>Disagree; you’re really not comfortable being part of the sit-in right
@@ -148,6 +159,7 @@ const STAGE_1 = {
             'stageName': 'STAGE_1C_INT',
             'endDetail': '',
             'showOnEnd': true,
+            'additionalDetail': '',
         },
     ],
 };
@@ -163,12 +175,14 @@ const STAGE_1A = {
         'stageName': 'STAGE_1AA_INT',
         'endDetail': '',
         'showOnEnd': true,
+        'additionalDetail': '',
     },
     {
         'text': <div>Stay with the movement and help block the roads with burning tires</div>,
         'stageName': 'STAGE_1AB_INT',
         'endDetail': '',
         'showOnEnd': true,
+        'additionalDetail': '',
     }],
 };
 
@@ -188,6 +202,11 @@ const STAGE_1AA_INT = {
         'stageName': 'STAGE_2',
         'endDetail': '',
         'showOnEnd': false,
+        'additionalDetail': <p>
+            On the 19th of October, you decided to sneak out from
+            the <a href={sitInURL}>sit-in</a> because you were afraid that the students who
+            were <a href={blockadeURL}>blockading the roads</a> will escalate the situation.
+        </p>,
     }],
 };
 
@@ -209,6 +228,13 @@ const STAGE_1AB_INT = {
         'stageName': 'STAGE_2',
         'endDetail': '',
         'showOnEnd': false,
+        'additionalDetail': <p>
+            On the 19th of October, you helped the
+            students <a href={blockadeURL}>block roads</a> on campus in Rhodes University with
+            various objects like burning tires, benches, and rocks. You also participated in
+            the <a href={sitInURL}>sit-in</a> at the administrative building which led to your
+            arrest. Luckily, you were released after students called for your release.
+        </p>,
     }],
 };
 
@@ -222,18 +248,21 @@ const STAGE_1B_INT = {
         'stageName': 'STAGE_1BA_INT',
         'endDetail': '',
         'showOnEnd': true,
+        'additionalDetail': '',
     },
     {
         'text': <div>Ask your family</div>,
         'stageName': 'STAGE_1BB_INT',
         'endDetail': '',
         'showOnEnd': true,
+        'additionalDetail': '',
     },
     {
         'text': <div>Talk to your friends and other students</div>,
         'stageName': 'STAGE_1BC_INT',
         'endDetail': '',
         'showOnEnd': true,
+        'additionalDetail': '',
     }],
 };
 
@@ -258,6 +287,7 @@ const STAGE_1BA_INT = {
         'stageName': 'STAGE_2',
         'endDetail': '',
         'showOnEnd': false,
+        'additionalDetail': '',
     }],
 };
 
@@ -283,6 +313,7 @@ const STAGE_1BB_INT = {
         'stageName': 'STAGE_2',
         'endDetail': '',
         'showOnEnd': false,
+        'additionalDetail': '',
     }],
 };
 
@@ -307,6 +338,7 @@ const STAGE_1BC_INT = {
         'stageName': 'STAGE_2',
         'endDetail': '',
         'showOnEnd': false,
+        'additionalDetail': '',
     }],
 };
 
@@ -340,8 +372,12 @@ const STAGE_1C_INT = {
         'stageName': 'STAGE_2_1C',
         'endDetail': '',
         'showOnEnd': false,
+        'additionalDetail': '',
     }],
 };
+
+const socialMediaURL = 'https://memeburn.com/2015/10/feesmustfall-how-sas-students-are-using-'
+    + 'social-to-subvert-traditional-media-narratives/';
 
 const STAGE_2 = {
     'text': <div>After the recent sit-in, you hear about a potential march on Parliament on the
@@ -354,18 +390,25 @@ const STAGE_2 = {
             will be taken against students and staff members who participated in the
             protests.</div>,
         'showOnEnd': true,
+        'additionalDetail': '',
     },
     {
         'text': <div>Participate by social media</div>,
         'stageName': 'STAGE_2B_INT',
         'endDetail': '',
         'showOnEnd': true,
+        'additionalDetail': <p>
+            On the 21st of October, you supported the #FeesMustFall movement through the use
+            of <a href={socialMediaURL}>social media</a>. You helped to disseminate information
+            about the movement to other students, strengthening the movement.
+        </p>,
     },
     {
         'text': <div>Do nothing</div>,
         'stageName': 'STAGE_2C_INT',
         'endDetail': '',
         'showOnEnd': true,
+        'additionalDetail': '',
     }],
 };
 
@@ -380,12 +423,18 @@ const STAGE_2_1C = {
             will be taken against students and staff members who participated in the
             protests.</div>,
         'showOnEnd': true,
+        'additionalDetail': '',
     },
     {
         'text': <div>Participate by social media</div>,
         'stageName': 'STAGE_2B_INT',
         'endDetail': '',
         'showOnEnd': true,
+        'additionalDetail': <p>
+            On the 21st of October, you supported the #FeesMustFall movement through the use
+            of <a href={socialMediaURL}>social media</a>. You helped to disseminate information
+            about the movement to other students, strengthening the movement.
+        </p>,
     },
     {
         'text': <div>Do nothing again because you are still uncomfortable about everything</div>,
@@ -396,8 +445,11 @@ const STAGE_2_1C = {
             together. However, no one replies to you. Perhaps, you’ve been affected after all.
         </div>,
         'showOnEnd': true,
+        'additionalDetail': '',
     }],
 };
+
+const marchURL = 'https://www.iol.co.za/news/riot-police-vs-student-power-1933836#.VikYJ_mqpBc';
 
 const STAGE_2A_INT = {
     'text': <div>
@@ -419,6 +471,12 @@ const STAGE_2A_INT = {
         'stageName': null,
         'endDetail': '',
         'showOnEnd': false,
+        'additionalDetail': <p>
+            On the 21st of October, you participated in
+            the <a href={marchURL}>march at Parliament</a> which intensified as protesters
+            broke through the gates leading the riot police to fight back with tasers
+            and colored gas.
+        </p>,
     }],
 };
 
@@ -438,6 +496,7 @@ const STAGE_2B_INT = {
             media platforms because in South Africa, it was mostly the elites who used Twitter.
         </div>,
         'showOnEnd': true,
+        'additionalDetail': '',
     },
     {
         'text': <div>Use WhatsApp</div>,
@@ -448,12 +507,14 @@ const STAGE_2B_INT = {
             make a big statement to the education officials.
         </div>,
         'showOnEnd': true,
+        'additionalDetail': '',
     },
     {
         'text': <div>Use Facebook</div>,
         'stageName': 'STAGE_2BC_INT',
         'endDetail': '',
         'showOnEnd': true,
+        'additionalDetail': '',
     }],
 };
 
@@ -480,6 +541,7 @@ const STAGE_2BA_INT = {
         'stageName': null,
         'endDetail': '',
         'showOnEnd': false,
+        'additionalDetail': '',
     }],
 };
 
@@ -502,6 +564,7 @@ const STAGE_2BB_INT = {
         'stageName': null,
         'endDetail': '',
         'showOnEnd': false,
+        'additionalDetail': '',
     }],
 };
 
@@ -518,6 +581,7 @@ const STAGE_2BC_INT = {
         'stageName': null,
         'endDetail': '',
         'showOnEnd': false,
+        'additionalDetail': '',
     }],
 };
 
@@ -532,6 +596,7 @@ const STAGE_2C_INT = {
         'stageName': null,
         'endDetail': '',
         'showOnEnd': false,
+        'additionalDetail': '',
     }],
 };
 
@@ -579,12 +644,15 @@ const introDesc = (
 const endDesc = (
     <>
         <p>
-            On 23 October 2015, South African President Zuma announced that there would
-            be no tuition increases in 2016.
+            On October 23, 2015, South African President Zuma announced that there would
+            be <a href="https://www.bbc.com/news/world-africa-34618724">
+            no tuition increases</a> in 2016.
         </p>
         <p>
             Protesters hailed this as a victory, but this announcement did not spell
-            the end of the Fallist movement.
+            the end of the <a href="https://en.wikipedia.org/wiki/FeesMustFall">
+                Fallist
+            </a> movement.
         </p>
         <p>
             In 2016, similar rumors about tuition increases started circulating,
