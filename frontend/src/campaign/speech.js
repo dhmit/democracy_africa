@@ -74,13 +74,15 @@ export class Speech extends React.Component {
     constructor(props) {
         super(props);
         this.max_priority_points = get_country_prop(this.props.countryName, 'max_priority_points');
+        const bucketedSpeechProposal = this.makeBucketedProposalDict(this.props.rawSpeechProposal);
         this.state = {
-            speechProposal: this.props.speechProposal,
+            rawSpeechProposal: this.props.rawSpeechProposal,
+            bucketedSpeechProposal: bucketedSpeechProposal,
             result: 0,
-            total: Object.keys(this.props.speechProposal).reduce((acc, topic) => {
-                return acc + this.props.speechProposal[topic];
+            total: Object.keys(this.props.rawSpeechProposal).reduce((acc, topic) => {
+                return acc + this.props.rawSpeechProposal[topic];
             }, 0),
-            atMaxStatement: this.noProblem(this.makeProposalDict(this.props.speechProposal))[1],
+            atMaxStatement: this.isProposalAcceptable(this.makeBucketedProposalDict(this.props.rawSpeechProposal))[1],
         };
         this.difference_threshold = get_country_prop(this.props.countryName, 'supportThreshold');
     }
@@ -91,7 +93,7 @@ export class Speech extends React.Component {
      */
     resetSpeech = () => {
         this.setState({
-            speechProposal: get_default_proposal(this.props.topicNames),
+            rawSpeechProposal: get_default_proposal(this.props.topicNames),
             total: 30,
         }, () => {
             this.setState({ result: this.countSupporters() });
@@ -127,7 +129,9 @@ export class Speech extends React.Component {
         }
     }
 
-    makeProposalDict(speech) {
+    makeBucketedProposalDict(speech) {
+        // Takes raw values from proposal which are 1-5, and maps those to 'low', 'medium', 'high'
+
         const dict = {
             'low': 0, 'medium': 0, 'high': 0,
         };
@@ -143,7 +147,7 @@ export class Speech extends React.Component {
         return dict;
     }
 
-    noProblem(dict) {
+    isProposalAcceptable(dict) {
         let acceptable = true;
         let atMaxStatement = '';
         for (const priority of Object.keys(this.max_priority_points)) {
@@ -168,23 +172,21 @@ export class Speech extends React.Component {
 
     handleButtonOnChange = (e, topic) => {
         const newVal = parseInt(e.target.value);
-        const newProposal = this.props.speechProposal;
+        const newProposal = this.props.rawSpeechProposal;
         const oldVal = newProposal[topic];
         newProposal[topic] = newVal;
-        const updateData = this.noProblem(this.makeProposalDict(newProposal));
+        const bucketedSpeechProposal = this.makeBucketedProposalDict(newProposal);
+        const updateData = this.isProposalAcceptable(bucketedSpeechProposal);
         const acceptableConfiguration = updateData[0];
         const newAtMaxStatement = updateData[1];
-        if (acceptableConfiguration) {
-            newProposal[topic] = newVal;
-            this.setState({
-                speechProposal: newProposal,
-                total: this.state.total + newVal - oldVal,
-                result: this.countSupporters(),
-                atMaxStatement: newAtMaxStatement,
-            });
-        } else {
-            newProposal[topic] = oldVal;
-        }
+        newProposal[topic] = newVal;
+        this.setState({
+            rawSpeechProposal: newProposal,
+            bucketedSpeechProposal: bucketedSpeechProposal,
+            total: this.state.total + newVal - oldVal,
+            result: this.countSupporters(),
+            atMaxStatement: newAtMaxStatement,
+        });
     };
 
     /**
@@ -197,10 +199,10 @@ export class Speech extends React.Component {
             let numSupporters = 0;
             this.props.population[province]['citizens'].forEach((citizen) => {
                 let difference_score = 0;
-                for (const topic of Object.keys(this.state.speechProposal)) {
-                    if (this.state.speechProposal[topic] < citizen['traits'][topic]) {
+                for (const topic of Object.keys(this.state.rawSpeechProposal)) {
+                    if (this.state.rawSpeechProposal[topic] < citizen['traits'][topic]) {
                         difference_score += (citizen['traits'][topic]
-                            - this.state.speechProposal[topic]) ** 2;
+                            - this.state.rawSpeechProposal[topic]) ** 2;
                     }
                 }
 
@@ -230,7 +232,7 @@ export class Speech extends React.Component {
                     name={topic}
                     id={'inlineRadio' + (2 * i + 1)}
                     value={2 * i + 1}
-                    checked={this.state.speechProposal[topic] === (2 * i + 1)}
+                    checked={this.state.rawSpeechProposal[topic] === (2 * i + 1)}
                     onChange={(e) => this.handleButtonOnChange(e, topic)}
                 />);
             }
@@ -259,8 +261,18 @@ export class Speech extends React.Component {
                     </div>
                     <div className='speech-options'>
                         <div className='speech-option-desc'>
-                            <span>Low priority</span>
-                            <span>High priority</span>
+                            <div>
+                                Low<br/>
+                                {this.state.bucketedSpeechProposal.low} / {this.max_priority_points.low}
+                            </div>
+                            <div>
+                                Medium<br/>
+                                {this.state.bucketedSpeechProposal.medium} / {this.max_priority_points.medium}
+                            </div>
+                            <div>
+                                High<br/>
+                                {this.state.bucketedSpeechProposal.high} / {this.max_priority_points.high}
+                            </div>
                         </div>
                         {topics}
                     </div>
@@ -285,7 +297,7 @@ Speech.propTypes = {
     countryName: PropTypes.string,
     updatePopulation: PropTypes.func,
     submitPriorities: PropTypes.func,
-    speechProposal: PropTypes.object,
+    rawSpeechProposal: PropTypes.object,
     topicNames: PropTypes.array,
     canReset: PropTypes.bool,
     round: PropTypes.number,
