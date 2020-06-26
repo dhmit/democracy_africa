@@ -41,6 +41,9 @@ class EndView extends React.Component {
             }
             <div className="row">
                 <div className="col-6">
+                    {this.props.history.map((option) => {
+                        return option.additionalDetail;
+                    })}
                     {desc}
                 </div>
                 <div className="col-6">
