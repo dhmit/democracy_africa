@@ -107,50 +107,54 @@ class About extends React.Component {
                 <div className='about-title'>
                     About This Project
                 </div>
-                <div className='about-text'>
-                    <img
-                        className='evan-img'
-                        src={'/static/img/team/evan_lieberman.jpg'}
-                        alt='Evan Lieberman'
-                        align='left'
-                    />
-                    <p>
-                        <i>Gamifying "Democracy and Development: Perspectives from Africa"</i> is a
-                        project by
-                        the <a href='https://digitalhumanities.mit.edu/'>
-                        MIT Digital Humanities Lab</a> in collaboration with our
-                        Spring 2020 Faculty Fellow, Evan Lieberman, Total Professor of Political
-                        Science and Contemporary Africa at MIT.
-                    </p>
-                    <p>
-                        We are collaborating to create interactive simulations and games around
-                        topics affecting democratic development in Africa, which will be
-                        integrated into the EdX
-                        Course <a href={edXURL}><i>Democracy and Development: Perspectives
-                        from Africa</i></a>.
-                    </p>
-                    <p>
-                        Simulations can empower students by providing hands-on engagement with
-                        concepts that are otherwise abstract or theoretical. Researchers and
-                        policy-makers can use simulations to understand how models play out under
-                        a variety of starting conditions.
-                    </p>
-                    <p>
-                        This project consists of two simulations. The first one is
-                        the <a href={'/adventure'}>Choose Your Own Adventure</a> simulation which
-                        puts you into the life of a South African university student during the
-                        Fees Must Fall movement in 2015.
-                        In this simulation, you can choose different actions to take with respect
-                        to the protest, leading you to experience various perspective of the
-                        movement.
-                    </p>
-                    <p>
-                        The second simulation is the <a href={'/campaign_game'}>Campaign Game</a>.
-                        In this game, you are a politician running for a position. Using the
-                        information you are given about the needs of the citizens from your
-                        country, you will make a campaign that places varying levels of focus
-                        on different services in order to get a majority of the votes.
-                    </p>
+                <div className='about-text row'>
+                    <div className='evan-img-div col-md-12 col-lg-3'>
+                        <img
+                            className='evan-img'
+                            src={'/static/img/team/evan_lieberman.jpg'}
+                            alt='Evan Lieberman'
+                            align='left'
+                        />
+                    </div>
+                    <div className='col-md-12 col-lg-9'>
+                        <p>
+                            <i>Gamifying "Democracy and Development: Perspectives from Africa"</i>
+                            is a project by the <a href='https://digitalhumanities.mit.edu/'> MIT
+                            Digital Humanities Lab</a> in collaboration with our Spring 2020
+                            Faculty Fellow, Evan Lieberman, Total Professor of Political Science
+                            and Contemporary Africa at MIT.
+                        </p>
+                        <p>
+                            We are collaborating to create interactive simulations and games around
+                            topics affecting democratic development in Africa, which will be
+                            integrated into the EdX
+                            Course <a href={edXURL}><i>Democracy and Development: Perspectives
+                            from Africa</i></a>.
+                        </p>
+                        <p>
+                            Simulations can empower students by providing hands-on engagement with
+                            concepts that are otherwise abstract or theoretical. Researchers and
+                            policy-makers can use simulations to understand how models play out
+                            under a variety of starting conditions.
+                        </p>
+                        <p>
+                            This project consists of two simulations. The first one is
+                            the <a href={'/adventure'}>Choose Your Own Adventure</a> simulation
+                            which puts you into the life of a South African university student
+                            during the Fees Must Fall movement in 2015.
+                            In this simulation, you can choose different actions to take with
+                            respect to the protest, leading you to experience various perspective
+                            of the movement.
+                        </p>
+                        <p>
+                            The second simulation is
+                            the <a href={'/campaign_game'}>Campaign Game</a>.
+                            In this game, you are a politician running for a position. Using the
+                            information you are given about the needs of the citizens from your
+                            country, you will make a campaign that places varying levels of focus
+                            on different services in order to get a majority of the votes.
+                        </p>
+                    </div>
                 </div>
                 <div className='team'>
                     <div className='about-title'>Staff</div>
