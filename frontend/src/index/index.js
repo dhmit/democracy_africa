@@ -94,9 +94,9 @@ export class IndexView extends React.Component {
                     <div className="col-12">
                         These projects are part of the MIT Programs in Digital Humanities, funded
                         by the Andrew W. Mellon
-                        Foundation, a collaboration between the staff and students of the MIT DH Lab and
-                        Professor Evan Lieberman, Total Professor of Political Science and Contemporary
-                        Africa at MIT and the DH Faculty Fellow for Spring 2020.
+                        Foundation, a collaboration between the staff and students of the MIT DH
+                        Lab and Professor Evan Lieberman, Total Professor of Political Science and
+                        Contemporary Africa at MIT and the DH Faculty Fellow for Spring 2020.
                     </div>
                 </div>
             </>
