@@ -447,7 +447,7 @@ export class CampaignView extends React.Component {
                 + ' has revealed about the needs of its inhabitants.';
 
             return (<div className="row">
-                <div className='col-md-12 col-lg-7'>
+                <div className='col-md-12 col-lg-7 d-lg-none'>
                     <p className="d-block d-lg-none">
                         {infoInstructions}
                     </p>
@@ -478,6 +478,12 @@ export class CampaignView extends React.Component {
                             I am ready to set my campaign's priorities!
                         </div>
                     </button>
+                </div>
+                <div className='col-md-12 col-lg-7 d-none d-lg-block'>
+                    <p className="d-block d-lg-none">
+                        {infoInstructions}
+                    </p>
+                    {campaign_map}
                 </div>
             </div>);
         }
