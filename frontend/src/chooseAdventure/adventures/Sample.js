@@ -23,18 +23,21 @@ const STAGE_1 = {
             'stageName': 'STAGE_1A',
             'endDetail': <div>Chose option A</div>,
             'showOnEnd': true,
+            'additionalDetail': '',
         },
         {
             'text': <div>Option B</div>,
             'stageName': 'STAGE_1B',
             'endDetail': <div>Chose option B</div>,
             'showOnEnd': true,
+            'additionalDetail': '',
         },
         {
             'text': <div>Option C</div>,
             'stageName': 'STAGE_1C',
             'endDetail': <div>Chose option C</div>,
             'showOnEnd': true,
+            'additionalDetail': '',
         },
     ],
 };
@@ -47,6 +50,9 @@ const STAGE_1A = {
         'stageName': null,
         'endDetail': '',
         'showOnEnd': false,
+        'additionalDetail': <div>
+            This is the additional detail for option A.
+        </div>,
     }],
 };
 
@@ -57,6 +63,9 @@ const STAGE_1B = {
         'stageName': null,
         'endDetail': '',
         'showOnEnd': false,
+        'additionalDetail': <div>
+            This is the additional detail for option B.
+        </div>,
     }],
 };
 
@@ -68,6 +77,9 @@ const STAGE_1C = {
         'stageName': null,
         'endDetail': '',
         'showOnEnd': false,
+        'additionalDetail': <div>
+            This is the additional detail for option C.
+        </div>,
     }],
 };
 
