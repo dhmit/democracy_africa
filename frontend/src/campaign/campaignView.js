@@ -434,8 +434,12 @@ export class CampaignView extends React.Component {
                 </div>
                 <div className='col-md-12 col-lg-5'>
                     <p>
-                        Click on each province to learn what your initial polling has revealed
-                        about the needs of its inhabitants.
+                        Your campaign team has compiled some research they did on the needs of the
+                        inhabitants of each province.
+                    </p>
+                    <p>
+                        Click on each province to see what your team
+                        has found out about what issues the citizens prefer to have more priority.
                     </p>
                     <p>
                         You will be asked to prioritize the following issues:
