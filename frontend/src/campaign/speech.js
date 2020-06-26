@@ -265,7 +265,7 @@ export class Speech extends React.Component {
                 <div className='text-center'>
                     {props.heading}<br/>
                     <span className={textClass}>
-                    {props.currentValue} / {props.maxAllowed}
+                        {props.currentValue} / {props.maxAllowed}
                     </span>
                 </div>
             );
