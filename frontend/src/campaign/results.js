@@ -90,7 +90,9 @@ class Results extends React.Component {
                                     ? this.props.clickedProvince
                                     : this.props.countryName}
                             </div>
-                            <div className='result-population_svg' style={{ marginBottom: '30px' }}>
+                            <div
+                                className='citizen-reactions'
+                                style={{ marginBottom: '30px' }}>
                                 {this.props.citizenReactions}
                             </div>
                             <div className="w-100" >
