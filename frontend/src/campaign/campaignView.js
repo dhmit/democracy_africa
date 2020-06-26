@@ -126,7 +126,7 @@ export class CampaignView extends React.Component {
             if (low_value.length !== 0) {
                 low_text = generateOverlayText(
                     low_value,
-                    'Citizens of this province have a high priority for ',
+                    'Citizens of this province have a low priority for ',
                 );
             }
             return low_text
@@ -426,11 +426,18 @@ export class CampaignView extends React.Component {
         }
         const windowHeight = document.documentElement.clientHeight;
         const windowWidth = document.documentElement.clientWidth;
+        let provinceDisplayInfo = <p>{''}</p>;
+        if ((windowHeight < 500 || windowWidth < 500) && this.state.view === 'countryInfo') {
+            provinceDisplayInfo = overlay_content;
+        }
         const campaign_map = (
             <div className='campaign-map'>
                 <b>{ provinceDesc }</b>
+                <div className='province-popover-info'>
+                    {provinceDisplayInfo}
+                </div>
                 {(['countryInfo', 'feedback', 'speechMaker'].includes(this.state.view)
-                    && (windowHeight > 500 && windowWidth >= 500))
+                    && (windowHeight >= 500 && windowWidth >= 500))
                     ? <OverlayTrigger
                         trigger="hover"
                         placement="auto"
