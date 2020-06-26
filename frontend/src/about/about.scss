@@ -2,18 +2,54 @@
     padding: 0 55px;
 }
 
+.about-text {
+    font-size: 20px;
+    padding-bottom: 30px;
+}
+
 .about-title {
     font-size: 50px;
     font-weight: bold;
     text-align: center;
+    margin-bottom: 20px;
 }
 
 .staff {
-    display: flex;
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.staff-name {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.staff-img {
+    width: 250px;
+    height: 250px;
+    border-radius: 270px;
 }
 
 .students {
-    display: flex;
+    padding: 0 10%;
+}
+
+.student-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 270px;
+}
+
+.student-name {
+    margin-top: 5px;
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+}
+
+.job-title {
+    color: grey;
+    font-size: 18px;
 }
 
 .staff-member {
@@ -21,5 +57,13 @@
 }
 
 .student-member {
-    padding: 10px;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.evan-img {
+    border-radius: 270px;
+    width: 300px;
+    height: 300px;
+    margin-right: 20px;
 }
