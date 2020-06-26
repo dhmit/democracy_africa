@@ -69,6 +69,30 @@ export const get_default_proposal = (topic_names) => {
     return proposal;
 };
 
+function ColumnHeader(props) {
+    let textClass;
+    if (props.currentValue > props.maxAllowed) {
+        textClass = 'text-danger font-weight-bold';
+    } else if (props.currentValue === props.maxAllowed) {
+        textClass = 'text-dark font-weight-bold';
+    } else {
+        textClass = 'text-dark';
+    }
+
+    return (
+        <div className='text-center'>
+            {props.heading}<br/>
+            <span className={textClass}>
+                {props.currentValue} / {props.maxAllowed}
+            </span>
+        </div>
+    );
+}
+ColumnHeader.propTypes = {
+    heading: PropTypes.string,
+    currentValue: PropTypes.number,
+    maxAllowed: PropTypes.number,
+};
 
 export class Speech extends React.Component {
     constructor(props) {
@@ -251,25 +275,6 @@ export class Speech extends React.Component {
             );
         });
 
-        function ColumnHeader(props) {
-            let textClass;
-            if (props.currentValue > props.maxAllowed) {
-                textClass = 'text-danger font-weight-bold';
-            } else if (props.currentValue === props.maxAllowed) {
-                textClass = 'text-dark font-weight-bold';
-            } else {
-                textClass = 'text-dark';
-            }
-
-            return (
-                <div className='text-center'>
-                    {props.heading}<br/>
-                    <span className={textClass}>
-                        {props.currentValue} / {props.maxAllowed}
-                    </span>
-                </div>
-            );
-        }
 
         return (
             <div className="row w-100">
