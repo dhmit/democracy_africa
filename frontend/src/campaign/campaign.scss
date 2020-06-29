@@ -45,13 +45,13 @@ $edx-button-color: #e7e7e7;
             justify-content: space-between;
         }
 
-    }
-}
+        &_priority {
+            width: 40%;
+            display: flex;
+            justify-content: space-between;
+        }
 
-.speech-option-desc {
-    width: 60%;
-    display: flex;
-    justify-content: space-between;
+    }
 }
 
 .campaign-map {

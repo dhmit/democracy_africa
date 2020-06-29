@@ -294,7 +294,8 @@ export class Speech extends React.Component {
                         <div className='speech-context_points text-danger text-right'>
                             {this.state.cannotSubmitError}
                         </div>
-                        <div className='speech-option-desc'>
+                        <div className='speech-option_label'></div>
+                        <div className='speech-option_priority'>
                             <ColumnHeader
                                 heading={'Low'}
                                 currentValue={this.state.bucketPriorities.low}
