@@ -1,4 +1,5 @@
 import React from 'react';
+import * as PropTypes from 'prop-types';
 
 const staffMembers = [
     {
@@ -8,7 +9,7 @@ const staffMembers = [
     },
     {
         name: 'Ryaan Ahmed',
-        title: 'Technical Director Senior Research Engineer',
+        title: 'Technical Director & Senior Research Engineer',
         photoSrc: 'ryaan_ahmed.jpg',
     },
     {
@@ -100,30 +101,70 @@ const studentMembers = [
 
 const edXURL = 'https://www.edx.org/course/democracy-and-development-perspectives-from-afri-2';
 
+function TeamMember(props) {
+    const className = props.isUROP
+        ? 'student-member col-12 col-sm-6 col-md-4 col-lg-3'
+        : 'staff-member col-12 col-sm-6 col-lg-3';
+
+    const imgClassName = props.isUROP ? 'student-img' : 'staff-img';
+    const nameClassName = props.isUROP ? 'student-name' : 'staff-name';
+    return (
+        <div className={className} >
+            <img
+                className={imgClassName}
+                src={'/static/img/team/' + props.photoSrc}
+                alt={props.name}
+            />
+            <div className={nameClassName}>
+                {props.name}
+            </div>
+            {!props.isUROP
+                && <div className='job-title'>
+                    {props.title}
+                </div>
+            }
+        </div>
+    );
+}
+TeamMember.propTypes = {
+    isUROP: PropTypes.bool,
+    name: PropTypes.string,
+    title: PropTypes.string,
+    photoSrc: PropTypes.string,
+};
+
+
 class About extends React.Component {
     render() {
         return (
             <div className='about'>
                 <div className='about-nav'>
                     <div className='nav-title'>
-                        Democracy And Development Perspectives From Africa
+                        <a className='about-nav-link' href='/'>
+                            Democracy And Development Perspectives From Africa
+                        </a>
                     </div>
-                    <a className='about-nav-link' href='/'>Home</a>
                     <a className='about-nav-link' href='/campaign_game/'>Campaign Game</a>
-                    <a className='about-nav-link' href='/adventure/'>Choose Your Own Adventure</a>
+                    <a className='about-nav-link' href='/adventure/'>#FeesMustFall</a>
                     <a className='about-nav-link' href='/about/'>About</a>
                 </div>
                 <div className='about-title'>
                     About This Project
                 </div>
                 <div className='about-text row'>
-                    <div className='evan-img-div col-md-12 col-lg-3'>
-                        <img
-                            className='evan-img'
-                            src={'/static/img/team/evan_lieberman.jpg'}
-                            alt='Evan Lieberman'
-                            align='left'
-                        />
+                    <div className='evan-img-div text-center col-md-12 col-lg-3'>
+                        <figure className="figure">
+                            <img
+                                className='evan-img'
+                                src={'/static/img/team/evan_lieberman.jpg'}
+                                alt='Evan Lieberman'
+                                align='left'
+                            />
+                            <div className='staff-name'>Evan Lieberman</div>
+                            <figcaption className="figure-caption">
+                                Total Professor of Political Science and Contemporary Africa
+                            </figcaption>
+                        </figure>
                     </div>
                     <div className='col-md-12 col-lg-9'>
                         <p>
@@ -173,43 +214,25 @@ class About extends React.Component {
                     <div className='about-title'>Staff</div>
                     <div className='staff row'>
                         {staffMembers.map((member, k) => (
-                            <div
-                                className='staff-member col-12 col-sm-6 col-lg-3'
+                            <TeamMember
                                 key={k}
-                            >
-                                <img
-                                    className='staff-img'
-                                    src={'/static/img/team/' + member.photoSrc}
-                                    alt={member.name}
-                                />
-                                <div className='staff-name'>
-                                    {member.name}
-                                </div>
-                                <div className='job-title'>
-                                    {member.title}
-                                </div>
-                            </div>
+                                isUROP={false}
+                                name={member.name}
+                                title={member.title}
+                                photoSrc={member.photoSrc}
+                            />
                         ))}
                     </div>
                     <div className='about-title'>UROP Members</div>
                     <div className='students row'>
                         {studentMembers.map((member, k) => (
-                            <div
-                                className='student-member col-12 col-sm-6 col-md-4 col-lg-3'
+                            <TeamMember
                                 key={k}
-                            >
-                                <img
-                                    className='student-img'
-                                    src={'/static/img/team/' + member.photoSrc}
-                                    alt={member.name}
-                                />
-                                <div className='student-name'>
-                                    {member.name}
-                                </div>
-                                <div className='job-title'>
-                                    UROP
-                                </div>
-                            </div>
+                                isUROP={true}
+                                name={member.name}
+                                title={member.title}
+                                photoSrc={member.photoSrc}
+                            />
                         ))}
                     </div>
                 </div>
