@@ -20,10 +20,10 @@ import Citizen from './citizen';
 const generateOverlayText = (services, prefixText) => {
     let newText = prefixText;
     for (let i = 0; i < services.length; i++) {
-        newText += services[i];
+        newText += services[i].toLowerCase();
         if (services.length === 1) {
             newText += '.';
-        } else if (i === 0 && services.length === 2) {
+        } else if (i === services.length - 2) {
             newText += ' and ';
         } else if (i < services.length - 1 && services.length > 2) {
             newText += ', ';
@@ -129,6 +129,11 @@ export class CampaignView extends React.Component {
                     'Citizens of this province have a low priority for ',
                 );
             }
+
+            if (!high_text) {
+                return (<div>{low_text}</div>);
+            }
+
             return low_text
                 ? (<div>{high_text}<br/><br/>{low_text}</div>)
                 : (<div>{high_text}</div>);
