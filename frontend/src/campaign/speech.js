@@ -255,17 +255,6 @@ export class Speech extends React.Component {
     };
 
     render() {
-        const priorityLabels = (
-            <div className='speech-option'>
-                <div className='speech-option_label'></div>
-                <div className='speech-option_priority'>
-                    <span>Low</span>
-                    <span>Med</span>
-                    <span>High</span>
-                </div>
-            </div>
-        );
-
         const topics = this.props.topicNames.map((topic, key) => {
             const inputs = [];
             for (let i = 0; i < 3; i++) {
