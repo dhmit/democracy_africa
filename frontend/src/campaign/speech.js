@@ -325,7 +325,7 @@ export class Speech extends React.Component {
                     <div className='reset_button d-flex d-lg-none'>
                         <button
                             className='campaign-btn speech-btn w-100'
-                            onClick={this.props.submitPriorities}
+                            onClick={this.validateSpeech}
                         >
                             Submit
                         </button>
