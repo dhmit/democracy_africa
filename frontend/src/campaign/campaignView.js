@@ -548,7 +548,7 @@ export class CampaignView extends React.Component {
                         countryName={countryName}
                         updatePopulation={this.updatePopulation}
                         submitPriorities={this.submitPriorities}
-                        speechProposal={this.state.speechProposal}
+                        rawSpeechProposal={this.state.speechProposal}
                         topicNames={this.state.topicNames}
                         canReset={this.state.round === 1}
                         round={this.state.round}
