@@ -101,18 +101,51 @@ const studentMembers = [
 const edXURL = 'https://www.edx.org/course/democracy-and-development-perspectives-from-afri-2';
 
 class About extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            showNav: false,
+        };
+    }
+
     render() {
         return (
             <div className='about'>
                 <div className='about-nav'>
-                    <div className='nav-title'>
+                    <div className='nav-title d-sm-block d-none'>
                         Democracy And Development Perspectives From Africa
                     </div>
-                    <a className='about-nav-link' href='/'>Home</a>
-                    <a className='about-nav-link' href='/campaign_game/'>Campaign Game</a>
-                    <a className='about-nav-link' href='/adventure/'>Choose Your Own Adventure</a>
-                    <a className='about-nav-link' href='/about/'>About</a>
+                    <div className='nav-title-small d-block d-sm-none'>
+                        Democracy And Development Perspectives From Africa
+                    </div>
+                    <div className='d-none d-lg-block'>
+                        <a className='about-nav-link' href='/'>Home</a>
+                        <a className='about-nav-link' href='/campaign_game/'>Campaign Game</a>
+                        <a className='about-nav-link' href='/adventure/'>
+                            Choose Your Own Adventure
+                        </a>
+                        <a className='about-nav-link' href='/about/'>About</a>
+                    </div>
+                    <div
+                        className="hamburger d-block d-lg-none"
+                        onClick={() => { this.setState({ showNav: !this.state.showNav }); }}
+                    >
+                        <div className="rectangle"/>
+                        <div className="rectangle"/>
+                        <div className="rectangle"/>
+                    </div>
                 </div>
+                {
+                    this.state.showNav
+                    && <div className='alternate-nav d-block d-lg-none'>
+                        <a className='alternate-link' href='/'>Home</a>
+                        <a className='alternate-link' href='/campaign_game/'>Campaign Game</a>
+                        <a className='alternate-link' href='/adventure/'>
+                            Choose Your Own Adventure
+                        </a>
+                        <a className='alternate-link' href='/about/'>About</a>
+                    </div>
+                }
                 <div className='about-title'>
                     About This Project
                 </div>
@@ -127,8 +160,9 @@ class About extends React.Component {
                     </div>
                     <div className='col-md-12 col-lg-9'>
                         <p>
-                            <i>Gamifying "Democracy and Development: Perspectives from Africa"</i>
-                            is a project by the <a href='https://digitalhumanities.mit.edu/'> MIT
+                            <i>Gamifying "Democracy and Development:
+                                Perspectives from Africa"</i> is a project by
+                            the <a href='https://digitalhumanities.mit.edu/'> MIT
                             Digital Humanities Lab</a> in collaboration with our Spring 2020
                             Faculty Fellow, Evan Lieberman, Total Professor of Political Science
                             and Contemporary Africa at MIT.
