@@ -8,15 +8,17 @@
 
 import React from 'react';
 import * as PropTypes from 'prop-types';
+import Navbar from '../about/Navbar';
 
 export class IndexView extends React.Component {
     render() {
         return (
-            <>
-                <h1 className="mb-4">
+            <div className='landing-page'>
+                <Navbar/>
+                <div className="landing-title">
                     Gamifying Democracy and Development:<br/> Perspectives from Africa
-                </h1>
-
+                </div>
+                <img src='/static/img/man_voting.jpg' alt='A South African man voting.'/>
                 <div className="row">
                     <div className="col-12 col-sm-6">
                         <IndexCard
@@ -99,7 +101,7 @@ export class IndexView extends React.Component {
                         Contemporary Africa at MIT and the DH Faculty Fellow for Spring 2020.
                     </div>
                 </div>
-            </>
+            </div>
         );
     }
 }
