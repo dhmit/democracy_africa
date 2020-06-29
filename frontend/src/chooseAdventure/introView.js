@@ -20,19 +20,19 @@ class IntroView extends React.Component {
             <div>
                 <div className='row'>
                     <div
-                        className='col-lg-8 col-md-12 order-12 order-lg-1'
+                        className='col-md-8 col-sm-12 order-12 order-md-1'
                         style={ { marginBottom: '20px' } }
                     >
                         <div style={ { marginBottom: '40px' } }>
                             {desc}
                         </div>
-                        <div className='intro-btn-container d-none d-lg-block'>
+                        <div className='intro-btn-container d-none d-sm-block'>
                             <div className={`${this.props.buttonStyle} start-button`}
                                 onClick={() => this.props.setView('stage')}>
                                 Get started
                             </div>
                         </div>
-                        <div className='intro-btn-container d-block d-lg-none'>
+                        <div className='intro-btn-container d-block d-sm-none'>
                             <div className={`${this.props.buttonStyle} start-button w-100`}
                                 onClick={() => this.props.setView('stage')}>
                                 Get started
@@ -40,7 +40,7 @@ class IntroView extends React.Component {
                         </div>
                     </div>
                     <div
-                        className='col-lg-4 col-md-12 order-1 order-lg-12'
+                        className='col-md-4 col-sm-12 order-1 order-md-12'
                         style={ { textAlign: 'center' } }
                     >
                         {imgFilename

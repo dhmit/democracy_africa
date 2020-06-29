@@ -459,14 +459,14 @@ export class CampaignView extends React.Component {
                 + ' has revealed about the needs of its inhabitants.';
 
             return (<div className="row">
-                <div className='col-md-12 col-lg-7 d-lg-none'>
-                    <p className="d-block d-lg-none">
+                <div className='col-sm-12 col-md-7 d-md-none'>
+                    <p className="d-block d-md-none">
                         {infoInstructions}
                     </p>
                     {campaign_map}
                 </div>
-                <div className='col-md-12 col-lg-5'>
-                    <p className="d-none d-lg-block">
+                <div className='col-sm-12 col-md-5'>
+                    <p className="d-none d-md-block">
                         {infoInstructions}
                     </p>
                     <p>
@@ -476,14 +476,14 @@ export class CampaignView extends React.Component {
                         {this.state.topicNames.map((topic, i) => <li key={i}>{topic}</li>)}
                     </ul>
                     <button
-                        className='campaign-btn d-none d-lg-block'
+                        className='campaign-btn d-none d-md-block'
                         onClick={this.startGame}
                         style={{ textAlign: 'center' }}
                     >
                         I am ready to set my campaign's priorities!
                     </button>
                     <button
-                        className='campaign-btn d-block d-lg-none w-100'
+                        className='campaign-btn d-block d-md-none w-100'
                         onClick={this.startGame}
                     >
                         <div style={{ textAlign: 'center' }}>
@@ -491,8 +491,8 @@ export class CampaignView extends React.Component {
                         </div>
                     </button>
                 </div>
-                <div className='col-md-12 col-lg-7 d-none d-lg-block'>
-                    <p className="d-block d-lg-none">
+                <div className='col-sm-12 col-md-7 d-none d-md-block'>
+                    <p className="d-block d-md-none">
                         {infoInstructions}
                     </p>
                     {campaign_map}
