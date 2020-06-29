@@ -1,5 +1,5 @@
 .about {
-    padding: 0 55px;
+    padding: 55px 55px 0;
 }
 
 .about-text {
@@ -71,4 +71,33 @@
     border-radius: 270px;
     width: 100%;
     margin-right: 20px;
+}
+
+.about-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    padding: 20px;
+    background-color: #333;
+    width: 100%;
+    z-index: 2;
+}
+
+.nav-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    margin-right: 50px;
+}
+
+.about-nav-link {
+    text-decoration: none;
+    color: white;
+    padding: 3px 10px 0;
+}
+
+.about-nav-link:hover {
+    text-decoration: none;
+    color: #d3d3d3;
 }

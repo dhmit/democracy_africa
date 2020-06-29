@@ -104,6 +104,15 @@ class About extends React.Component {
     render() {
         return (
             <div className='about'>
+                <div className='about-nav'>
+                    <div className='nav-title'>
+                        Democracy And Development Perspectives From Africa
+                    </div>
+                    <a className='about-nav-link' href='/'>Home</a>
+                    <a className='about-nav-link' href='/campaign_game/'>Campaign Game</a>
+                    <a className='about-nav-link' href='/adventure/'>Choose Your Own Adventure</a>
+                    <a className='about-nav-link' href='/about/'>About</a>
+                </div>
                 <div className='about-title'>
                     About This Project
                 </div>
