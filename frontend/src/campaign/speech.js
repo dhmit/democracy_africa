@@ -183,7 +183,6 @@ export class Speech extends React.Component {
         if (unacceptable_priorities.length === 0) {
             this.props.submitPriorities();
         } else {
-            // TODO: need commas / 'and' when we have multiple here
             let cannotSubmitError = 'You have too many ';
             for (let i = 0; i < unacceptable_priorities.length; i++) {
                 cannotSubmitError += unacceptable_priorities[i];
@@ -217,6 +216,7 @@ export class Speech extends React.Component {
         this.setState({
             rawSpeechProposal: newProposal,
             bucketPriorities: bucketPriorities,
+            cannotSubmitError: '',
             total: this.state.total + newVal - oldVal,
             result: this.countSupporters(),
         });
@@ -291,6 +291,9 @@ export class Speech extends React.Component {
                         </p>
                     </div>
                     <div className='speech-options'>
+                        <div className='speech-context_points text-danger text-right'>
+                            {this.state.cannotSubmitError}
+                        </div>
                         <div className='speech-option-desc'>
                             <ColumnHeader
                                 heading={'Low'}
@@ -307,9 +310,6 @@ export class Speech extends React.Component {
                                 currentValue={this.state.bucketPriorities.high}
                                 maxAllowed={this.max_priority_points.high}
                             />
-                        </div>
-                        <div className='speech-context_points text-danger text-right'>
-                            {this.state.cannotSubmitError}
                         </div>
                         {topics}
                     </div>
