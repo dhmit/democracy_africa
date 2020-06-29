@@ -64,7 +64,7 @@ export function get_country_prop(country_name, prop_name) {
 export const get_default_proposal = (topic_names) => {
     const proposal = {};
     topic_names.forEach((topic) => {
-        proposal[topic] = 1;
+        proposal[topic] = 0;
     });
     return proposal;
 };
