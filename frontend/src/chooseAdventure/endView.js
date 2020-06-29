@@ -40,7 +40,7 @@ class EndView extends React.Component {
                 </div>
             }
             <div className="row">
-                <div className="col-6">
+                <div className="col-md-12 col-lg-6">
                     {this.props.history.map((option) => {
                         return option.additionalDetail;
                     })}
