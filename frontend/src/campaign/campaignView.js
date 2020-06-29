@@ -17,10 +17,11 @@ import CountrySelectorPopup from './countrySelectorPopup';
 import IntroView from '../chooseAdventure/introView';
 import Citizen from './citizen';
 
-const generateOverlayText = (services, prefixText) => {
-    let newText = prefixText;
+const generateOverlayText = (services, priorityType) => {
+    let newText = ' ';
     for (let i = 0; i < services.length; i++) {
-        newText += services[i].toLowerCase();
+        newText += services[i];
+        priorityType = priorityType.toUpperCase();
         if (services.length === 1) {
             newText += '.';
         } else if (i === services.length - 2) {
@@ -31,7 +32,12 @@ const generateOverlayText = (services, prefixText) => {
             newText += '.';
         }
     }
-    return newText;
+    return (
+        <p className='popover-text'>
+            Citizens of this province have a <strong>{priorityType}</strong> priority for
+            {newText}
+        </p>
+    );
 };
 
 export class CampaignView extends React.Component {
@@ -118,7 +124,7 @@ export class CampaignView extends React.Component {
             if (high_value.length !== 0) {
                 high_text = generateOverlayText(
                     high_value,
-                    'Citizens of this province have a high priority for ',
+                    'high',
                 );
             }
 
@@ -126,17 +132,17 @@ export class CampaignView extends React.Component {
             if (low_value.length !== 0) {
                 low_text = generateOverlayText(
                     low_value,
-                    'Citizens of this province have a low priority for ',
+                    'low',
                 );
             }
 
             if (!high_text) {
-                return (<div>{low_text}</div>);
+                return low_text;
             }
 
             return low_text
-                ? (<div>{high_text}<br/><br/>{low_text}</div>)
-                : (<div>{high_text}</div>);
+                ? (<div>{high_text}<br></br>{low_text}</div>)
+                : high_text;
         }
         return '';
     }
@@ -371,8 +377,8 @@ export class CampaignView extends React.Component {
         } = this.state;
 
         const aggregateResult = this.countTotalSupport();
-        const overlay_title = clickedProvince === null || clickedProvince === '' ? 'No province'
-            + ' selected' : clickedProvince;
+        const overlay_title = clickedProvince === null || clickedProvince === '' ? 'Click on'
+            + ' a province' : clickedProvince;
         const overlay_content = this.determine_overlay_content(clickedProvince);
 
         const province_info_overlay = (
