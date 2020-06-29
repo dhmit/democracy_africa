@@ -185,10 +185,16 @@ export class Speech extends React.Component {
         } else {
             // TODO: need commas / 'and' when we have multiple here
             let cannotSubmitError = 'You have too many ';
-            for (const category of unacceptable_priorities) {
-                cannotSubmitError += category + ' ';
+            for (let i = 0; i < unacceptable_priorities.length; i++) {
+                cannotSubmitError += unacceptable_priorities[i];
+                if (i === unacceptable_priorities.length - 2) {
+                    cannotSubmitError += ' and ';
+                } else if (i < unacceptable_priorities.length - 1
+                    && unacceptable_priorities.length > 2) {
+                    cannotSubmitError += ', ';
+                }
             }
-            cannotSubmitError += 'priority sectors.';
+            cannotSubmitError += ' priority sectors.';
             this.setState({ cannotSubmitError });
         }
     };
