@@ -18,7 +18,21 @@ export class IndexView extends React.Component {
                 <div className="landing-title">
                     Gamifying Democracy and Development:<br/> Perspectives from Africa
                 </div>
-                <img src='/static/img/man_voting.jpg' alt='A South African man voting.'/>
+                <div className="row" >
+                    <img
+                        className='col-lg-6 col-md-12'
+                        src='/static/img/man_voting.jpg'
+                        alt='A South African man voting.'
+                    />
+                    <div className='landing-text col-lg-6 col-md-12'>
+                        Have you ever taken an online course only to find that you feel
+                        disengaged after taking the same types of quizzes over and over again? Don't
+                        you wish that there was a more interactive way to explore the course
+                        material? We might have the solution for you! By creating simulations
+                        and gamifying various aspects of democratic life in Africa, we show how it
+                        is possible to make learning with edX fun.
+                    </div>
+                </div>
                 <div className="row">
                     <div className="col-12 col-sm-6">
                         <IndexCard
