@@ -106,7 +106,7 @@ export class Speech extends React.Component {
             total: Object.keys(this.props.rawSpeechProposal).reduce((acc, topic) => {
                 return acc + this.props.rawSpeechProposal[topic];
             }, 0),
-            cannotSubmitError: '',
+            cannotSubmitError: ' ',
         };
         this.difference_threshold = get_country_prop(this.props.countryName, 'supportThreshold');
     }
@@ -216,7 +216,7 @@ export class Speech extends React.Component {
         this.setState({
             rawSpeechProposal: newProposal,
             bucketPriorities: bucketPriorities,
-            cannotSubmitError: '',
+            cannotSubmitError: ' ',
             total: this.state.total + newVal - oldVal,
             result: this.countSupporters(),
         });
@@ -290,10 +290,17 @@ export class Speech extends React.Component {
                             {this.generateStory()}
                         </p>
                     </div>
-                    <div className='speech-options'>
-                        <div className='speech-context_points text-danger text-right'>
+                    <div className='speech-warning d-none d-lg-flex'>
+                        <div className='speech-context_points text-danger'>
                             {this.state.cannotSubmitError}
                         </div>
+                    </div>
+                    <div className='speech-warning d-flex d-lg-none'>
+                        <div className='speech-context_points_small text-danger'>
+                            {this.state.cannotSubmitError}
+                        </div>
+                    </div>
+                    <div className='speech-options'>
                         <div className='speech-option_label'></div>
                         <div className='speech-option_priority'>
                             <ColumnHeader

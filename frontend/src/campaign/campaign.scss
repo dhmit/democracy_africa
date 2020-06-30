@@ -6,7 +6,6 @@ $edx-button-color: #e7e7e7;
     flex-direction: column;
     justify-content: left;
     align-items: flex-start;
-    margin-bottom: 1em;
     text-align: left;
 
     &_points {
@@ -14,6 +13,12 @@ $edx-button-color: #e7e7e7;
         text-align: left;
         font-weight: 600;
         white-space: pre-wrap; //Makes '\n' display correctly on page
+        &_small {
+            font-size: 18px;
+            text-align: left;
+            font-weight: 600;
+            white-space: pre-wrap;
+        }
     }
     &_count {
         margin-bottom: 0;
@@ -277,4 +282,11 @@ $edx-button-color: #e7e7e7;
 
 .feedback-pop {
     margin-bottom: 30px;
+}
+
+.speech-warning {
+    display: flex;
+    flex-basis: 0;
+    flex-wrap: wrap;
+    justify-content: flex-start;
 }
