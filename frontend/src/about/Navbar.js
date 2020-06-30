@@ -13,16 +13,17 @@ class Navbar extends Component {
             <div>
                 <div className='about-nav'>
                     <div className='nav-title d-sm-block d-none'>
-                        Democracy And Development Perspectives From Africa
+                        <a className='about-nav-link' href='/'>
+                            Democracy And Development: Perspectives From Africa
+                        </a>
                     </div>
                     <div className='nav-title-small d-block d-sm-none'>
-                        Democracy And Development Perspectives From Africa
+                        Democracy And Development: Perspectives From Africa
                     </div>
-                    <div className='d-none d-lg-block'>
-                        <a className='about-nav-link' href='/'>Home</a>
-                        <a className='about-nav-link' href='/campaign_game/'>Campaign Game</a>
+                    <div className='d-none d-lg-block ml-auto'>
+                        <a className='about-nav-link' href='/campaign_game/'>Campaign Simulation</a>
                         <a className='about-nav-link' href='/adventure/'>
-                            Choose Your Own Adventure
+                            #FeesMustFall
                         </a>
                         <a className='about-nav-link' href='/about/'>About</a>
                     </div>
@@ -39,7 +40,7 @@ class Navbar extends Component {
                     this.state.showNav
                     && <div className='alternate-nav d-block d-lg-none'>
                         <a className='alternate-link' href='/'>Home</a>
-                        <a className='alternate-link' href='/campaign_game/'>Campaign Game</a>
+                        <a className='alternate-link' href='/campaign_game/'>Campaign Simulation</a>
                         <a className='alternate-link' href='/adventure/'>
                             Choose Your Own Adventure
                         </a>

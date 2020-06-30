@@ -9,46 +9,42 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
 import Navbar from '../about/Navbar';
+import { CaptionedImage, Footer } from '../UILibrary/components';
 
 export class IndexView extends React.Component {
     render() {
-        return (
+        return (<>
             <div className='landing-page'>
                 <Navbar/>
-                <div className="landing-title">
-                    Gamifying Democracy and Development:<br/> Perspectives from Africa
-                </div>
                 <div className="row" >
-                    <img
-                        className='col-lg-6 col-md-12'
-                        src='/static/img/man_voting.jpg'
-                        alt='A South African man voting.'
-                    />
-                    <div className='landing-text col-lg-6 col-md-12'>
-                        Have you ever taken an online course only to find that you feel
-                        disengaged after taking the same types of quizzes over and over again? Don't
-                        you wish that there was a more interactive way to explore the course
-                        material? We might have the solution for you! By creating simulations
-                        and gamifying various aspects of democratic life in Africa, we show how it
-                        is possible to make learning with edX fun.
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-12 col-sm-6">
-                        <IndexCard
-                            url='/adventure/'
-                            title='#FeesMustFall'
-                            description='
-                                Take the role of a student during the 2015-16
-                                #FeelsMustFall movement in South Africa.'
+                    <div className='col-lg-6 col-md-12'>
+                        <CaptionedImage
+                            alt='A South African man voting.'
+                            caption='A South African man voting.'
+                            filename='man_voting.jpg'
                         />
                     </div>
-                    <div className="col-12 col-sm-6">
-                        <IndexCard
-                            url='/campaign_game/'
-                            title='Campaign Game'
-                            description='Make a speech to try and get people to vote for you.'
-                        />
+                    <div className='landing-text mt-4 mt-lg-0 col-lg-6 col-md-12'>
+                        <div className='row'>
+                            <div className="col-12 col-md-6">
+                                <IndexCard
+                                    url='/adventure/'
+                                    title='#FeesMustFall'
+                                    description='
+                                    Take the role of a student during the 2015-16
+                                    #FeelsMustFall movement in South Africa.'
+                                />
+                            </div>
+                            <div className="col-12 col-md-6">
+                                <IndexCard
+                                    url='/campaign_game/'
+                                    title='Campaign Game'
+                                    description='Take on the role of a politician setting policy
+                                    proposals based on survey data from constitutents.
+                                    '
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -116,7 +112,8 @@ export class IndexView extends React.Component {
                     </div>
                 </div>
             </div>
-        );
+            <Footer />
+        </>);
     }
 }
 

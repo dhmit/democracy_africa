@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Navbar from './Navbar';
+import { Footer } from '../UILibrary/components';
 
 const staffMembers = [
     {
@@ -137,7 +138,7 @@ TeamMember.propTypes = {
 
 class About extends React.Component {
     render() {
-        return (
+        return (<>
             <div className='about'>
                 <Navbar />
                 <div className='about-title'>
@@ -230,7 +231,8 @@ class About extends React.Component {
                     </div>
                 </div>
             </div>
-        );
+            <Footer />
+        </>);
     }
 }
 
