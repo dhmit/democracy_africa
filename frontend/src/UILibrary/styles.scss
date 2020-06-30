@@ -9,3 +9,32 @@
 @import "../chooseAdventure/chooseAdventure";
 @import '../campaign/campaign';
 @import '../about/about';
+@import '../index/index';
+
+html {
+    position: relative;
+    height: 100% !important;
+}
+
+body {
+    height: 100% !important;
+}
+
+#root {
+    height: 100% !important;
+    @extend .d-flex;
+    @extend .flex-column;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer-img {
+    height: 80px;
+    max-height: 10vh;
+    max-width: 20vw;
+    object-fit: contain;
+}
