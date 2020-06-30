@@ -69,6 +69,7 @@ export class CampaignView extends React.Component {
         this.setState({
             ...newState,
         }, () => { window.scrollTo(0, 0); });
+        this.setState({clickedProvince: ''});
     };
 
     calculate_averages() {
@@ -316,9 +317,7 @@ export class CampaignView extends React.Component {
         this.setState({
             view: 'speechMaker',
             round: 1,
-            clickedProvince: this.state.clickedProvince
-                ? this.state.clickedProvince
-                : Object.keys(this.state.populationData)[0],
+            clickedProvince: '',
         });
     };
 
