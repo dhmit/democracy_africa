@@ -2,6 +2,7 @@ import React from 'react';
 import * as PropTypes from 'prop-types';
 
 import { CaptionedImage } from '../UILibrary/components';
+import Navbar from '../about/Navbar';
 
 
 /**
@@ -18,6 +19,7 @@ class IntroView extends React.Component {
         const { imgFilename, imgAlt, imgCaption } = img;
         return (
             <div>
+                <Navbar/>
                 <div className='row'>
                     <div
                         className='col-md-8 col-sm-12 order-12 order-md-1'
