@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Navbar from '../about/Navbar';
 
 class AdventureSelector extends Component {
     constructor(props) {
@@ -10,7 +9,6 @@ class AdventureSelector extends Component {
     render() {
         return (
             <div className="adventure-selector">
-                <Navbar/>
                 <h1>Welcome to Choose Your Own Adventure!</h1>
                 <p>Which adventure would you like to embark on today?</p>
                 <select onChange={(e) => this.props.setAdventure(e.target.value)}>

@@ -1,7 +1,6 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
 import { CaptionedImage } from '../UILibrary/components';
-import Navbar from '../about/Navbar';
 
 /**
  * Component for displaying choose your own adventure skeleton
@@ -29,7 +28,6 @@ class EndView extends React.Component {
         const { imgFilename, imgAlt, imgCaption } = img;
 
         return (<>
-            <Navbar/>
             {imgFilename
                 && <div className="row">
                     <div className="text-center col my-auto">
