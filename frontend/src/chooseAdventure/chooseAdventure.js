@@ -1,10 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import IntroView from './introView.js';
 import StageView from './stageView.js';
 import EndView from './endView.js';
-import AdventureSelector from './adventureSelector';
-import { adventures } from './adventures';
-
 
 /**
  * Component for displaying choose your own adventure skeleton
@@ -13,15 +12,11 @@ export class ChooseAdventureView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            view: 'adventureSelector',
+            view: 'intro',
             history: [],
-            adventure: Object.keys(adventures)[0],
+            adventure: this.props.adventure,
         };
     }
-
-    setAdventure = (adventure) => {
-        this.setState({ adventure: adventure });
-    };
 
     setView = (view) => {
         this.setState({ view: view });
@@ -39,44 +34,34 @@ export class ChooseAdventureView extends React.Component {
         });
     };
 
-    tryNewAdventure = () => {
-        this.setState({
-            view: 'adventureSelector',
-            history: [],
-            adventure: Object.keys(adventures)[0],
-        });
-    };
-
     render() {
+        console.log(this.state);
         switch (this.state.view) {
-        case 'adventureSelector':
-            return (<AdventureSelector
-                options={Object.keys(adventures)}
-                setAdventure={this.setAdventure}
-                setView={this.setView}
-            />);
         case 'intro':
             return (<IntroView
-                introDescriptions={adventures[this.state.adventure].intro}
+                introDescriptions={this.state.adventure.intro}
                 setView={this.setView}
                 buttonStyle='cyoa-button'
+                currentPage={this.state.adventure.pageName}
             />);
         case 'stage':
             return (<StageView
-                NAME_TO_STAGE={adventures[this.state.adventure].NAME_TO_STAGE}
+                NAME_TO_STAGE={this.state.adventure.NAME_TO_STAGE}
                 setView={this.setView}
                 updateHistory={this.updateHistory}
             />);
         case 'end':
             return (<EndView
-                endDescriptions={adventures[this.state.adventure].end}
+                endDescriptions={this.state.adventure.end}
                 history={this.state.history}
                 setView={this.setView}
                 resetProgress={this.resetProgress}
-                tryNewAdventure={this.tryNewAdventure}
             />);
         default:
             return (<>Loading...</>);
         }
     }
 }
+ChooseAdventureView.propTypes = {
+    adventure: PropTypes.object,
+};

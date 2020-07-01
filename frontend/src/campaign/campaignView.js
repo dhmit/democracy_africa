@@ -362,7 +362,7 @@ export class CampaignView extends React.Component {
             };
             return (
                 <>
-                    <Navbar/>
+                    <Navbar currentPage='campaign'/>
                     {this.state.showCountrySelector
                         && <CountrySelectorPopup
                             changeCountry={this.changeCountry}
@@ -384,6 +384,7 @@ export class CampaignView extends React.Component {
                         setView={() => { this.setState({ showCountrySelector: true }); }}
                         introDescriptions={campaignIntroDesc}
                         buttonStyle='campaign-btn'
+                        currentPage='campaign'
                     />
                 </>
             );
@@ -498,7 +499,7 @@ export class CampaignView extends React.Component {
             );
 
             return (<div className="row">
-                <Navbar />
+                <Navbar currentPage='campaign'/>
                 <div className='col-sm-12 col-md-7 d-md-none'>
                     <div className="d-block d-md-none">
                         {infoInstructions}
@@ -589,7 +590,7 @@ export class CampaignView extends React.Component {
         if (this.state.view === 'submitted') {
             return (
                 <div>
-                    <Navbar/>
+                    <Navbar currentPage='campaign'/>
                     <Results
                         provinceData={populationData}
                         countryData={aggregateResult}
@@ -640,7 +641,7 @@ export class CampaignView extends React.Component {
         if (this.state.view === 'feedback') {
             return (
                 <div>
-                    <Navbar/>
+                    <Navbar currentPage='campaign'/>
                     <Feedback
                         clickedProvince={clickedProvince}
                         round={this.state.round}
@@ -659,7 +660,7 @@ export class CampaignView extends React.Component {
         if (this.state.view === 'speechMaker') {
             return (
                 <div className='speech-maker'>
-                    <Navbar/>
+                    <Navbar currentPage='campaign'/>
                     <Speech
                         population={populationData}
                         countryName={countryName}
