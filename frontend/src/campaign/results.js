@@ -1,6 +1,5 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
-import Citizen from './citizen';
 
 class Results extends React.Component {
     constructor(props) {
@@ -13,24 +12,6 @@ class Results extends React.Component {
             return (<></>);
         }
 
-        // TODO: possibly refactor this further since it is similar to CampaignView
-        const sample = [];
-        Object.keys(this.props.provinceData).forEach((province) => {
-            const provinceData = this.props.provinceData[province];
-            if (province === this.props.clickedProvince || this.props.clickedProvince === '') {
-                const citizens = provinceData['citizens'];
-                sample.push(...citizens.slice(0, Math.round(citizens.length * 0.25)));
-            }
-        });
-        const citizens = sample.map((citizen, k) => (
-            <Citizen
-                key={k}
-                data={citizen}
-                title={`Citizen of ${citizen['province']}`}
-                generateDescription={this.props.generateDescription}
-            />
-        ));
-
         const countryPercent = Math.round((this.props.countryData.totalSupport
                                                 / this.props.countryData.totalPopulation) * 100);
 
@@ -41,7 +22,7 @@ class Results extends React.Component {
                 <p className={'resultHeader'}>
                     {countryPercent >= 50 ? winText : loseText}
                 </p>
-                <table border="1" className={'resultTable'}>
+                <table className={'resultTable'}>
                     <tbody>
                         <tr>
                             <th>Province Name</th>
@@ -60,11 +41,19 @@ class Results extends React.Component {
                                     <tr
                                         key={k}
                                     >
-                                        <td className="table-provinces">{province}</td>
+                                        <td className="table-provinces">
+                                            {province}
+                                        </td>
                                         <td>{supporters}</td>
                                         <td>{total}</td>
-                                        <td className={percentage >= 50 ? 'support' : 'unsupport'}
-                                        >{percentage}%</td>
+                                        <td>
+                                            <span className={percentage >= 50
+                                                ? 'support'
+                                                : 'unsupport'}
+                                            >
+                                                {percentage}%
+                                            </span>
+                                        </td>
                                     </tr>
                                 );
                             }
@@ -74,12 +63,15 @@ class Results extends React.Component {
                             <th>{this.props.countryName}</th>
                             <th>{this.props.countryData.totalSupport}</th>
                             <th>{this.props.countryData.totalPopulation}</th>
-                            <th className={`${countryPercent >= 50
-                                ? 'support'
-                                : 'unsupport'}`}
-                            >
-                                {Math.round((this.props.countryData.totalSupport
+                            <th>
+                                <span
+                                    className={`${countryPercent >= 50
+                                        ? 'support'
+                                        : 'unsupport'}`}
+                                >
+                                    {Math.round((this.props.countryData.totalSupport
                                                 / this.props.countryData.totalPopulation) * 100)}%
+                                </span>
                             </th>
                         </tr>
                     </tbody>
@@ -90,12 +82,21 @@ class Results extends React.Component {
                             {this.props.map}
                         </div>
 
+
                         <div className='result-population col-lg-6 col-md-12'>
-                            <div className='result-population_header'>
-                                Results for sample population of size {sample.length}
+                            <div className='result-population_header' >
+                                Results for sample population
+                                of {this.props.clickedProvince
+                                    ? this.props.clickedProvince
+                                    : this.props.countryName}
                             </div>
-                            <div className='result-population_svg'>
-                                {citizens}
+                            <div
+                                className='citizen-reactions'
+                                style={{ marginBottom: '30px' }}>
+                                {this.props.citizenReactions}
+                            </div>
+                            <div className="w-100" >
+                                {this.props.feedbackTable}
                             </div>
                         </div>
                     </div>
@@ -112,6 +113,9 @@ Results.propTypes = {
     generateDescription: PropTypes.func,
     map: PropTypes.object,
     clickedProvince: PropTypes.string,
+    handleProvinceMapClick: PropTypes.func,
+    citizenReactions: PropTypes.array,
+    feedbackTable: PropTypes.object,
 };
 
 export default Results;

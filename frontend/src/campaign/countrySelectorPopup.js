@@ -41,6 +41,7 @@ class CountrySelectorPopup extends React.Component {
                                         </tbody></table>
                                     </div>
                                     <button
+                                        className='country-button'
                                         onClick={() => this.selectCountryClosePopup(country.name)}
                                     >Start</button>
                                 </div>

@@ -18,6 +18,30 @@ import Navbar from '../about/Navbar';
 
 import { project_features_and_create_svg_paths } from '../common';
 
+import Citizen from './citizen';
+
+const generateOverlayText = (services, priorityType) => {
+    let newText = ' ';
+    for (let i = 0; i < services.length; i++) {
+        newText += services[i];
+        priorityType = priorityType.toUpperCase();
+        if (services.length === 1) {
+            newText += '.';
+        } else if (i === services.length - 2) {
+            newText += ' and ';
+        } else if (i < services.length - 1 && services.length > 2) {
+            newText += ', ';
+        } else {
+            newText += '.';
+        }
+    }
+    return (
+        <p className='popover-text'>
+            Citizens of this province have a <strong>{priorityType}</strong> priority for
+            {newText}
+        </p>
+    );
+};
 
 const roundAggregateData = { };
 
@@ -25,20 +49,17 @@ export class CampaignView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            populationData: null,
-            mapData: null,
             clickedProvince: null,
             countryName: null,
-            view: 'intro',
+            mapData: null,
+            populationData: null,
             round: 0,
-            speechProposal: null,
-            topicNames: [],
             sampleSize: 75,
             showCountrySelector: false,
+            speechProposal: null,
+            view: 'intro',
+            topicNames: [],
         };
-        this.map_height = 500;
-        this.map_width = 500;
-        this.updatePopulation = this.updatePopulation.bind(this);
     }
 
     componentDidUpdate() {
@@ -52,6 +73,7 @@ export class CampaignView extends React.Component {
     changeView = (newState) => {
         this.setState({
             ...newState,
+            clickedProvince: '',
         }, () => { window.scrollTo(0, 0); });
     };
 
@@ -120,19 +142,29 @@ export class CampaignView extends React.Component {
             if (high_value.length === 0 && low_value.length === 0) {
                 return 'Citizens of this province are equally concerned about all of the issues.';
             }
-            if (high_value.length === 0) {
-                const return_text_low = this.generateProvincePopoverStatement(low_value,
-                    'low');
-                return return_text_low;
+            let high_text;
+            if (high_value.length !== 0) {
+                high_text = generateOverlayText(
+                    high_value,
+                    'high',
+                );
             }
-            if (low_value.length === 0) {
-                const return_text_high = this.generateProvincePopoverStatement(high_value,
-                    'high');
-                return return_text_high;
+
+            let low_text;
+            if (low_value.length !== 0) {
+                low_text = generateOverlayText(
+                    low_value,
+                    'low',
+                );
             }
-            const return_text_high = this.generateProvincePopoverStatement(high_value, 'high');
-            const return_text_low = this.generateProvincePopoverStatement(low_value, 'low');
-            return return_text_high + ' ' + return_text_low;
+
+            if (!high_text) {
+                return low_text;
+            }
+
+            return low_text
+                ? (<div>{high_text}<br></br>{low_text}</div>)
+                : high_text;
         }
         return '';
     }
@@ -203,11 +235,11 @@ export class CampaignView extends React.Component {
         }
     }
 
-    updatePopulation(newPopulation) {
+    updatePopulation = (newPopulation) => {
         this.setState({
             populationData: newPopulation,
         });
-    }
+    };
 
     countTotalSupport() {
         let totalSupport = 0;
@@ -302,12 +334,20 @@ export class CampaignView extends React.Component {
         return desc;
     };
 
+    startGame = () => {
+        this.setState({
+            view: 'speechMaker',
+            round: 1,
+            clickedProvince: '',
+        });
+    };
+
     render() {
         if (this.state.view === 'intro') {
             const altText = 'Nelson Mandela voting in the 1994 South African general election.';
             const campaignIntroDesc = {
                 desc: (<>
-                    <p>Welcome to the Campaign Game!</p>
+                    <h1>Welcome to the Campaign Game!</h1>
                     <p>In this game, you will create a political campaign and try to
                     appeal to the most people in a country.</p>
                     <p>You will have two rounds to set your campaign's priorities and gather
@@ -343,6 +383,7 @@ export class CampaignView extends React.Component {
                     <IntroView
                         setView={() => { this.setState({ showCountrySelector: true }); }}
                         introDescriptions={campaignIntroDesc}
+                        buttonStyle='campaign-btn'
                     />
                 </>
             );
@@ -358,8 +399,9 @@ export class CampaignView extends React.Component {
 
         const aggregateResult = this.countTotalSupport();
         roundAggregateData[this.state.round] = aggregateResult;
-        const overlay_title = clickedProvince === null || clickedProvince === '' ? 'No province'
-            + ' selected' : clickedProvince;
+        const overlay_title = clickedProvince === null || clickedProvince === '' ? 'Click on'
+            + ' a province' : clickedProvince;
+
         const overlay_content = this.determine_overlay_content(clickedProvince);
 
         const province_info_overlay = (
@@ -373,7 +415,7 @@ export class CampaignView extends React.Component {
 
         const map_svg = (
             <svg
-                viewBox="0 0 550 550"
+                viewBox="-20 -20 875 875"
                 id='content'
                 onClick={(e) => this.handleProvinceMapClick(e, '')}
             >
@@ -409,20 +451,30 @@ export class CampaignView extends React.Component {
         );
 
         let provinceDesc;
-        if (this.state.view === 'speechMaker') {
+        if (['speechMaker', 'feedback'].includes(this.state.view)) {
             provinceDesc = '';
         } else if (clickedProvince) {
             provinceDesc = clickedProvince;
         } else {
             provinceDesc = countryName;
         }
+        const windowHeight = document.documentElement.clientHeight;
+        const windowWidth = document.documentElement.clientWidth;
+        let provinceDisplayInfo = <p>{''}</p>;
+        if ((windowHeight < 500 || windowWidth < 500) && this.state.view === 'countryInfo') {
+            provinceDisplayInfo = overlay_content;
+        }
         const campaign_map = (
             <div className='campaign-map'>
                 <b>{ provinceDesc }</b>
-                {['countryInfo', 'feedback', 'speechMaker'].includes(this.state.view)
+                <div className='province-popover-info'>
+                    {provinceDisplayInfo}
+                </div>
+                {(['countryInfo', 'feedback', 'speechMaker'].includes(this.state.view)
+                    && (windowHeight >= 500 && windowWidth >= 500))
                     ? <OverlayTrigger
                         trigger="hover"
-                        placement="right"
+                        placement='top-end'
                         overlay={province_info_overlay}
                     >{map_svg}
                     </OverlayTrigger>
@@ -432,12 +484,8 @@ export class CampaignView extends React.Component {
         );
 
         if (this.state.view === 'countryInfo') {
-            return (<div className="row">
-                <Navbar />
-                <div className='col-md-12 col-lg-7'>
-                    {campaign_map}
-                </div>
-                <div className='col-md-12 col-lg-5'>
+            const infoInstructions = (
+                <>
                     <p>
                         Your campaign team has compiled some research they did on the needs of the
                         inhabitants of each province.
@@ -446,25 +494,97 @@ export class CampaignView extends React.Component {
                         Click on each province to see what your team
                         has found out about what issues the citizens prefer to have more priority.
                     </p>
+                </>
+            );
+
+            return (<div className="row">
+                <Navbar />
+                <div className='col-sm-12 col-md-7 d-md-none'>
+                    <div className="d-block d-md-none">
+                        {infoInstructions}
+                    </div>
+                    {campaign_map}
+                </div>
+                <div className='col-sm-12 col-md-5'>
+                    <div className="d-none d-md-block">
+                        {infoInstructions}
+                    </div>
                     <p>
                         You will be asked to prioritize the following issues:
                     </p>
-                    <ul>
+                    <ul style={{ marginBottom: '30px' }}>
                         {this.state.topicNames.map((topic, i) => <li key={i}>{topic}</li>)}
                     </ul>
-
-                    <button className='intro-campaign-btn' onClick={() => this.setState({
-                        view: 'speechMaker',
-                        round: 1,
-                        clickedProvince: this.state.clickedProvince
-                            ? this.state.clickedProvince
-                            : Object.keys(populationData)[0],
-                    })}>
-                    I am ready to set my campaign's priorities!
+                    <button
+                        className='campaign-btn d-none d-md-block'
+                        onClick={this.startGame}
+                        style={{ textAlign: 'center' }}
+                    >
+                        I am ready to set my campaign's priorities!
                     </button>
+                    <button
+                        className='campaign-btn d-block d-md-none w-100'
+                        onClick={this.startGame}
+                    >
+                        <div style={{ textAlign: 'center' }}>
+                            I am ready to set my campaign's priorities!
+                        </div>
+                    </button>
+                </div>
+                <div className='col-sm-12 col-md-7 d-none d-md-block'>
+                    <p className="d-block d-md-none">
+                        {infoInstructions}
+                    </p>
+                    {campaign_map}
                 </div>
             </div>);
         }
+
+        let sample = [];
+        let citizenReactions = '';
+        if (this.state.view === 'submitted' && clickedProvince === '') {
+            sample = Object.keys(populationData).reduce((acc, province) => {
+                return acc.concat(populationData[province].citizens.slice(0, 10));
+            }, []);
+        } else if (clickedProvince) {
+            sample = populationData[clickedProvince]['citizens'].slice(0, 100);
+        }
+        citizenReactions = sample.map((citizen, k) => (
+            <Citizen
+                key={k}
+                data={citizen}
+                title={`Citizen of ${citizen['province']}`}
+                generateDescription={this.generateDescription}
+            />
+        ));
+
+        const feedbackTable = (<div className='feedback-pop'>
+            <table border="1" className={'resultTable'}>
+                <tbody>
+                    <tr>
+                        <th>Service</th>
+                        <th>Percentage of Sample Satisfied</th>
+                    </tr>
+                    {this.state.topicNames.map((topic, k) => {
+                        const numSatisfied = sample.reduce((acc, citizen) => {
+                            if (citizen.traits[topic]
+                                <= this.state.speechProposal[topic]) {
+                                return acc + 1;
+                            }
+                            return acc;
+                        }, 0);
+                        const pctSatisfied = Math.round((numSatisfied
+                            / sample.length) * 100);
+                        return (
+                            <tr key={k}>
+                                <td>{topic}</td>
+                                <td>{pctSatisfied}%</td>
+                            </tr>
+                        );
+                    })}
+                </tbody>
+            </table>
+        </div>);
 
         if (this.state.view === 'submitted') {
             return (
@@ -478,10 +598,20 @@ export class CampaignView extends React.Component {
                         generateDescription={this.generateDescription}
                         map={campaign_map}
                         clickedProvince={this.state.clickedProvince}
+                        feedbackTable={feedbackTable}
+                        citizenReactions={citizenReactions}
                     />
-                    <div className="retry-button">
+                    <div className="retry-button d-none d-lg-flex">
                         <button
                             className='campaign-btn'
+                            onClick={() => this.setState({ showCountrySelector: true })}
+                        >
+                            Try again or switch countries
+                        </button>
+                    </div>
+                    <div className="retry-button d-flex d-lg-none">
+                        <button
+                            className='campaign-btn w-100'
                             onClick={() => this.setState({ showCountrySelector: true })}
                         >
                             Try again or switch countries
@@ -515,11 +645,12 @@ export class CampaignView extends React.Component {
                         clickedProvince={clickedProvince}
                         round={this.state.round}
                         generateDescription={this.generateDescription}
-                        results={populationData}
                         nextRound={() => this.changeView({ view: 'speechMaker' })}
                         topicNames={this.state.topicNames}
                         speechProposal={this.state.speechProposal}
                         campaignMap={campaign_map}
+                        feedbackTable={feedbackTable}
+                        citizenReactions={citizenReactions}
                     />
                 </div>
             );

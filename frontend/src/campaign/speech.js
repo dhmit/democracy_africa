@@ -67,7 +67,7 @@ export function get_country_prop(country_name, prop_name) {
 export const get_default_proposal = (topic_names) => {
     const proposal = {};
     topic_names.forEach((topic) => {
-        proposal[topic] = 1;
+        proposal[topic] = 0;
     });
     return proposal;
 };
@@ -110,7 +110,7 @@ function ColumnHeader(props) {
     return (
         <div className='text-center'>
             {props.heading}<br/>
-            <span className={textClass}>
+            <span className={`priority-nums ${textClass}`}>
                 {props.currentValue} / {props.maxAllowed}
             </span>
         </div>
@@ -136,7 +136,7 @@ export class Speech extends React.Component {
                 return acc + this.props.rawSpeechProposal[topic];
             }, 0),
             roundDates: [null, null, null, null],
-            cannotSubmitError: '',
+            cannotSubmitError: ' ',
         };
         this.difference_threshold = get_country_prop(this.props.countryName, 'supportThreshold');
         this.electionDate = get_country_prop(this.props.countryName, 'election_date');
@@ -355,7 +355,7 @@ export class Speech extends React.Component {
         this.setState({
             rawSpeechProposal: newProposal,
             bucketPriorities: bucketPriorities,
-            cannotSubmitError: '',
+            cannotSubmitError: ' ',
             total: this.state.total + newVal - oldVal,
             result: this.countSupporters(),
         });
@@ -422,18 +422,26 @@ export class Speech extends React.Component {
 
 
         return (
-            <div className="row w-100">
-                <div className='col-sm-12 col-lg-6'>
+            <div className="row w-110">
+                <div className='col-sm-12 col-lg-6' style={ { marginBottom: '20px' } }>
                     <div className='speech-context'>
                         <p className='speech-context_count'>
                             {this.generateStory()}
                         </p>
                     </div>
-                    <div className='speech-options'>
-                        <div className='speech-context_points text-danger text-right'>
+                    <div className='speech-warning d-none d-lg-flex'>
+                        <div className='speech-context_points text-danger'>
                             {this.state.cannotSubmitError}
                         </div>
-                        <div className='speech-option-desc'>
+                    </div>
+                    <div className='speech-warning d-flex d-lg-none'>
+                        <div className='speech-context_points_small text-danger'>
+                            {this.state.cannotSubmitError}
+                        </div>
+                    </div>
+                    <div className='speech-options'>
+                        <div className='speech-option_label'></div>
+                        <div className='speech-option_priority'>
                             <ColumnHeader
                                 heading={'Low'}
                                 currentValue={this.state.bucketPriorities.low}
@@ -452,7 +460,7 @@ export class Speech extends React.Component {
                         </div>
                         {topics}
                     </div>
-                    <div className='reset_button'>
+                    <div className='reset_button d-none d-lg-flex'>
                         <button
                             className='campaign-btn speech-btn'
                             onClick={this.validateSpeech}
@@ -460,8 +468,16 @@ export class Speech extends React.Component {
                             Submit
                         </button>
                     </div>
+                    <div className='reset_button d-flex d-lg-none'>
+                        <button
+                            className='campaign-btn speech-btn w-100'
+                            onClick={this.validateSpeech}
+                        >
+                            Submit
+                        </button>
+                    </div>
                 </div>
-                <div className="col-sm-12 col-lg-6">
+                <div className="col-sm-12 col-lg-6 d-none d-lg-block">
                     {this.props.campaign_map}
                 </div>
             </div>
@@ -480,4 +496,3 @@ Speech.propTypes = {
     campaign_map: PropTypes.object,
     roundAggregateData: PropTypes.object,
 };
-
