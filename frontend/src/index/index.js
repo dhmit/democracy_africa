@@ -102,7 +102,7 @@ class IndexCard extends React.Component {
 
         return (
             <div className='card mb-4 w-100'>
-                <a className="btn-link btn-block" href={this.props.url}>
+                <a className="text-dark" href={this.props.url}>
                     <div className='card-header'>{this.props.title} </div>
                 </a>
                 <div
