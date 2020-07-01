@@ -18,6 +18,7 @@ $edx-button-color: #e7e7e7;
     &_count {
         margin-bottom: 0;
         white-space: pre-wrap;
+        @extend .text-left;
     }
 }
 
