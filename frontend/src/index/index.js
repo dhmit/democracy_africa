@@ -88,37 +88,6 @@ export class IndexView extends React.Component {
                         />
                     </div>
                 </div>
-
-                <h3>Quick links</h3>
-                <ul>
-                    <li>
-                        <a href="https://www.edx.org/course/democracy-and-development-perspectives-from-afri-2">
-                            The course on edX: Democracy and Development: Perspectives from Africa
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="https://docs.google.com/document/d/1k5J-yIODumamCIt0DdmvV-ISXFxIVRvQpVubuP0KPqU/edit">
-                            Brainstorming Doc
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="https://drive.google.com/drive/folders/1EfQKscfSVw9GlMRiJ1N3B66COrKMo6e1?usp=sharing">
-                            Google Drive folder
-                        </a>
-                    </li>
-                </ul>
-                <h3>About these Projects</h3>
-                <div className="row">
-                    <div className="col-12">
-                        These projects are part of the MIT Programs in Digital Humanities, funded
-                        by the Andrew W. Mellon
-                        Foundation, a collaboration between the staff and students of the MIT DH
-                        Lab and Professor Evan Lieberman, Total Professor of Political Science and
-                        Contemporary Africa at MIT and the DH Faculty Fellow for Spring 2020.
-                    </div>
-                </div>
             </div>
             <Footer />
         </>);

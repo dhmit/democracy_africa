@@ -312,3 +312,9 @@ $edx-button-color: #e7e7e7;
         outline: none;
     }
 }
+
+.text-wrap {
+    float: left;
+    margin: 10px;
+    flex-wrap: wrap;
+}
