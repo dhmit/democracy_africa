@@ -82,7 +82,7 @@ function ColumnHeader(props) {
     return (
         <div className='text-center'>
             {props.heading}<br/>
-            <span className={textClass}>
+            <span className={`priority-nums ${textClass}`}>
                 {props.currentValue} / {props.maxAllowed}
             </span>
         </div>

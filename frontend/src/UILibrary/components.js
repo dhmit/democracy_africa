@@ -160,7 +160,7 @@ EdXView.propTypes = {
 export class Footer extends React.Component {
     render() {
         return (
-            <footer className="footer bg-white text-dark text-center mt-auto">
+            <footer className="dh-footer bg-white text-dark text-center mt-auto">
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-4 py-3">
