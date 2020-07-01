@@ -102,12 +102,9 @@ class IndexCard extends React.Component {
 
         return (
             <div className='card mb-4 w-100'>
-                <div className='card-header'>
-                    <a
-                        className="btn btn-primary mr-4"
-                        href={this.props.url}
-                    >{this.props.title}</a>
-                </div>
+                <a className="btn-link btn-block" href={this.props.url}>
+                    <div className='card-header'>{this.props.title} </div>
+                </a>
                 <div
                     className='card-body'
                     dangerouslySetInnerHTML={createMarkup()}
