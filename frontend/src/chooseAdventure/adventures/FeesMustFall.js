@@ -194,7 +194,7 @@ const STAGE_1A = {
 const STAGE_1AA_INT = {
     'text': <div>
         <p>
-            When you arrived home, you hear about how the sit-in had escalated, resulting in the
+            When you arrive home, you hear about how the sit-in had escalated, resulting in the
             arrest of many protesters. You feel a sense of relief that you were not taken to jail.
         </p>
         <p>
@@ -208,9 +208,9 @@ const STAGE_1AA_INT = {
         'endDetail': '',
         'showOnEnd': false,
         'additionalDetail': <p>
-            On the 19th of October, you decided to sneak out from
-            the <a href={sitInURL}>sit-in</a> because you were afraid that the students who
-            were <a href={blockadeURL}>blockading the roads</a> will escalate the situation.
+            On the 19th of October, you decide to sneak out from
+            the <a href={sitInURL}>sit-in</a> because you are afraid that the students who
+            are <a href={blockadeURL}>blockading the roads</a> will escalate the situation.
         </p>,
     }],
 };
@@ -219,7 +219,7 @@ const STAGE_1AB_INT = {
     'text': <div>
         <p>
             After blocking the roads, you join the other protesters at the sit-in and occupy
-            the admin building, but that was when things started to escalate! You try to
+            the admin building, but that's when things started to escalate! You try to
             escape, but you get caught by the riot police.
         </p>
         <p>
@@ -276,8 +276,8 @@ const STAGE_1BA_INT = {
         <p>
             You decide to spend some time educating yourself about the #FeesMustFall movement
             instead of going to the sit-in. After some research, you become even more aware of
-            the vast extent to which your country's higher education system is still, structurally
-            and financially, affected by the legacies of the apartheid era. With this new
+            the vast extent to which your country's higher education system is still structurally
+            and financially affected by the legacies of the apartheid era. With this new
             knowledge, you gain a better understanding of the students' sentiment and how
             frustrating it must feel to have a system that works against you.
         </p>
@@ -300,7 +300,7 @@ const STAGE_1BB_INT = {
     'text': <div>
         <p>
             After mentioning the student demonstrations, such as the sit-in, to your family
-            members, they give you some warnings. They didn't think it was worth the risk of
+            members, they give you some warnings. They don't think it is worth the risk of
             getting expelled from school or having any disciplinary and criminal records
             that might make it more difficult for you to find jobs in the future.
         </p>
@@ -326,7 +326,7 @@ const STAGE_1BC_INT = {
     'text': <div>
         <p>
             As you leave your final class of the day, you ask your peers whether they are going to
-            the sit-in. There are mixed responses between them. They acknowledge the importance of
+            the sit-in. There are mixed responses among them. They acknowledge the importance of
             calling out the government for enacting unfair policies, but also see the
             danger that comes from being in the front lines of the protests, where police can
             physically harm you. After hearing the arguments made by your peers, you decide that
@@ -351,13 +351,13 @@ const STAGE_1C_INT = {
     'text': <div>
         <p>You’re really not comfortable being part of this right now.</p>
         <p>
-            You are the first in your family to attend university and over the past school year, you
-            have focused on getting good marks. You hope to graduate and ultimately secure a
-            job. Because you have a lot of upcoming exams, you have spent time
-            reviewing in the university library. When groups of students start coming into the
-            library with weapons to protest, you feel a bit intimidated. On Facebook and
-            other social media platforms, other students accuse you for sympathizing with
-            the government; they say that you don’t care enough about the consequences of the
+            You are the first in your family to attend university. Over the past school year, you
+            have really focused on getting good marks. You hope to graduate and ultimately secure a
+            job. Because you have a lot of upcoming exams, you spend time reviewing in the
+            university library. When groups of students start coming into the
+            library with weapons to protest, you feel a bit intimidated. Other students accuse you
+            for sympathizing with the government on Facebook and other social media platforms;
+            they say that you don’t care enough about the consequences of the
             fee increase for other students.
         </p>
         <p>
@@ -508,7 +508,7 @@ const STAGE_2B_INT = {
         'stageName': 'STAGE_2BB_INT',
         'endDetail': <div>It turns out that as many as 5000 people showed up to protest at the
             Parliament. Thanks to your help of actively inviting your friends to join the
-            WhatsApp group chat, you were able to increase the number of people at the march and
+            WhatsApp group chat, you're able to increase the number of people at the march and
             make a big statement to the education officials.
         </div>,
         'showOnEnd': true,
@@ -531,7 +531,7 @@ const STAGE_2BA_INT = {
             spread to students who are willing and able to participate in the protests.
         </p>
         <p>
-            After the day of the march, you feel a mixed sense of relief and horror as you hear
+            After the day of the march, you feel a mixed sense of horror and relief as you hear
             about that chaos towards the end.
         </p>
         <p>
@@ -641,7 +641,7 @@ const introDesc = (
         <p>
         Many students are worried that these higher fees will shut poorer students out of
         education. However, other students are concerned that the disruption caused by a protest
-        will be more harmful to the ability to learn.
+        will be more harmful to their ability to learn.
         </p>
     </>
 );
