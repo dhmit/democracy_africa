@@ -146,7 +146,7 @@ class About extends React.Component {
                 </div>
                 <div className='about-text'>
                     <div className='evan-img-div text-wrap col-xs-2 col-sm-5 col-md-5 col-lg-3'>
-                        <figure className="figure">
+                        <figure className="figure text-center">
                             <img
                                 className='evan-img'
                                 src={'/static/img/team/evan_lieberman.jpg'}
@@ -154,7 +154,7 @@ class About extends React.Component {
                                 align='left'
                             />
                             <div className='staff-name'>Evan Lieberman</div>
-                            <figcaption className="figure-caption">
+                            <figcaption className="figure-caption text-center">
                                 Total Professor of Political Science and Contemporary Africa
                             </figcaption>
                         </figure>
