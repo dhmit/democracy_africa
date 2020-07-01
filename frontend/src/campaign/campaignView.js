@@ -73,8 +73,8 @@ export class CampaignView extends React.Component {
     changeView = (newState) => {
         this.setState({
             ...newState,
+            clickedProvince: '',
         }, () => { window.scrollTo(0, 0); });
-        this.setState({ clickedProvince: '' });
     };
 
     calculate_averages() {
