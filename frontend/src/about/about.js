@@ -139,7 +139,7 @@ TeamMember.propTypes = {
 class About extends React.Component {
     render() {
         return (<>
-            <div className='about'>
+            <div className='about' col-lg-12>
                 <Navbar />
                 <div className='about-title'>
                     About This Project
@@ -179,16 +179,15 @@ class About extends React.Component {
                             Simulations can empower students by providing hands-on engagement with
                             concepts that are otherwise abstract or theoretical. Researchers and
                             policy-makers can use simulations to understand how models play out
-                            under a variety of starting conditions.
+                            under a variety of starting conditions. We present two finished games.
                         </p>
                         <p>
-                            This project consists of two simulations. The first one is
-                            the <a href={'/adventure'}>Choose Your Own Adventure</a> simulation
-                            which puts you into the life of a South African university student
-                            during the Fees Must Fall movement in 2015.
-                            In this simulation, you can choose different actions to take with
-                            respect to the protest, leading you to experience various perspective
-                            of the movement.
+                            The first, <a href={'/adventure'}>#FeesMustFall</a>, is a work of
+                            interactive fiction, which puts you into the life of a South African
+                            university student during the #FeesMustFall movement (2015-2016).
+                            By engaging with the difficult choices that student participants
+                            in this movement had to make, the player gains a visceral understanding
+                            of the movement and the stakes for its participants.
                         </p>
                         <p>
                             The second simulation is
@@ -199,8 +198,9 @@ class About extends React.Component {
                             on different services in order to get a majority of the votes.
                         </p>
                         <p>
-                            The code for this project is located
-                            on <a href="https://github.com/dhmit/democracy_africa">Github</a>
+                            This project is fully open source: we welcome contributions, commentary,
+                            and engagement on <a href="https://github.com/dhmit/democracy_africa">
+                            GitHub</a>.
                         </p>
                     </div>
                 </div>
