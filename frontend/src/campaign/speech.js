@@ -69,18 +69,44 @@ export const get_default_proposal = (topic_names) => {
     return proposal;
 };
 
+function ColumnHeader(props) {
+    let textClass;
+    if (props.currentValue > props.maxAllowed) {
+        textClass = 'text-danger font-weight-bold';
+    } else if (props.currentValue === props.maxAllowed) {
+        textClass = 'text-dark font-weight-bold';
+    } else {
+        textClass = 'text-dark';
+    }
+
+    return (
+        <div className='text-center'>
+            {props.heading}<br/>
+            <span className={textClass}>
+                {props.currentValue} / {props.maxAllowed}
+            </span>
+        </div>
+    );
+}
+ColumnHeader.propTypes = {
+    heading: PropTypes.string,
+    currentValue: PropTypes.number,
+    maxAllowed: PropTypes.number,
+};
 
 export class Speech extends React.Component {
     constructor(props) {
         super(props);
         this.max_priority_points = get_country_prop(this.props.countryName, 'max_priority_points');
+        const bucketPriorities = this.makeBucketedProposalDict(this.props.rawSpeechProposal);
         this.state = {
-            speechProposal: this.props.speechProposal,
+            rawSpeechProposal: this.props.rawSpeechProposal,
+            bucketPriorities: bucketPriorities,
             result: 0,
-            total: Object.keys(this.props.speechProposal).reduce((acc, topic) => {
-                return acc + this.props.speechProposal[topic];
+            total: Object.keys(this.props.rawSpeechProposal).reduce((acc, topic) => {
+                return acc + this.props.rawSpeechProposal[topic];
             }, 0),
-            atMaxStatement: this.noProblem(this.makeProposalDict(this.props.speechProposal))[1],
+            cannotSubmitError: '',
         };
         this.difference_threshold = get_country_prop(this.props.countryName, 'supportThreshold');
     }
@@ -91,7 +117,7 @@ export class Speech extends React.Component {
      */
     resetSpeech = () => {
         this.setState({
-            speechProposal: get_default_proposal(this.props.topicNames),
+            rawSpeechProposal: get_default_proposal(this.props.topicNames),
             total: 30,
         }, () => {
             this.setState({ result: this.countSupporters() });
@@ -127,7 +153,9 @@ export class Speech extends React.Component {
         }
     }
 
-    makeProposalDict(speech) {
+    makeBucketedProposalDict(speech) {
+        // Takes raw values from proposal which are 1-5, and maps those to 'low', 'medium', 'high'
+
         const dict = {
             'low': 0, 'medium': 0, 'high': 0,
         };
@@ -143,21 +171,32 @@ export class Speech extends React.Component {
         return dict;
     }
 
-    noProblem(dict) {
-        let acceptable = true;
-        let atMaxStatement = '';
+    validateSpeech = () => {
+        const proposalDict = this.state.bucketPriorities;
+        const unacceptable_priorities = [];
         for (const priority of Object.keys(this.max_priority_points)) {
-            if (dict[priority] > this.max_priority_points[priority]) {
-                acceptable = false;
-            } else {
-                const priority_points_left = this.max_priority_points[priority] - dict[priority];
-                atMaxStatement += (
-                    `You can have ${priority_points_left} more sectors at ${priority} priority.\n`
-                );
+            if (proposalDict[priority] > this.max_priority_points[priority]) {
+                unacceptable_priorities.push(priority);
             }
         }
-        return [acceptable, atMaxStatement];
-    }
+
+        if (unacceptable_priorities.length === 0) {
+            this.props.submitPriorities();
+        } else {
+            let cannotSubmitError = 'You have too many ';
+            for (let i = 0; i < unacceptable_priorities.length; i++) {
+                cannotSubmitError += unacceptable_priorities[i];
+                if (i === unacceptable_priorities.length - 2) {
+                    cannotSubmitError += ' and ';
+                } else if (i < unacceptable_priorities.length - 1
+                    && unacceptable_priorities.length > 2) {
+                    cannotSubmitError += ', ';
+                }
+            }
+            cannotSubmitError += ' priority sectors.';
+            this.setState({ cannotSubmitError });
+        }
+    };
 
     /**
      * Handles when the slider changes by changing the state of what the maximum values should
@@ -167,24 +206,20 @@ export class Speech extends React.Component {
      */
 
     handleButtonOnChange = (e, topic) => {
+        // Update value of raw proposal dict
+        const newProposal = this.props.rawSpeechProposal;
         const newVal = parseInt(e.target.value);
-        const newProposal = this.props.speechProposal;
         const oldVal = newProposal[topic];
         newProposal[topic] = newVal;
-        const updateData = this.noProblem(this.makeProposalDict(newProposal));
-        const acceptableConfiguration = updateData[0];
-        const newAtMaxStatement = updateData[1];
-        if (acceptableConfiguration) {
-            newProposal[topic] = newVal;
-            this.setState({
-                speechProposal: newProposal,
-                total: this.state.total + newVal - oldVal,
-                result: this.countSupporters(),
-                atMaxStatement: newAtMaxStatement,
-            });
-        } else {
-            newProposal[topic] = oldVal;
-        }
+        const bucketPriorities = this.makeBucketedProposalDict(newProposal);
+
+        this.setState({
+            rawSpeechProposal: newProposal,
+            bucketPriorities: bucketPriorities,
+            cannotSubmitError: '',
+            total: this.state.total + newVal - oldVal,
+            result: this.countSupporters(),
+        });
     };
 
     /**
@@ -197,10 +232,10 @@ export class Speech extends React.Component {
             let numSupporters = 0;
             this.props.population[province]['citizens'].forEach((citizen) => {
                 let difference_score = 0;
-                for (const topic of Object.keys(this.state.speechProposal)) {
-                    if (this.state.speechProposal[topic] < citizen['traits'][topic]) {
+                for (const topic of Object.keys(this.state.rawSpeechProposal)) {
+                    if (this.state.rawSpeechProposal[topic] < citizen['traits'][topic]) {
                         difference_score += (citizen['traits'][topic]
-                            - this.state.speechProposal[topic]) ** 2;
+                            - this.state.rawSpeechProposal[topic]) ** 2;
                     }
                 }
 
@@ -230,7 +265,7 @@ export class Speech extends React.Component {
                     name={topic}
                     id={'inlineRadio' + (2 * i + 1)}
                     value={2 * i + 1}
-                    checked={this.state.speechProposal[topic] === (2 * i + 1)}
+                    checked={this.state.rawSpeechProposal[topic] === (2 * i + 1)}
                     onChange={(e) => this.handleButtonOnChange(e, topic)}
                 />);
             }
@@ -246,6 +281,7 @@ export class Speech extends React.Component {
             );
         });
 
+
         return (
             <div className="row w-100">
                 <div className='col-sm-12 col-lg-6'>
@@ -253,21 +289,34 @@ export class Speech extends React.Component {
                         <p className='speech-context_count'>
                             {this.generateStory()}
                         </p>
-                        <div className='speech-context_points'>
-                            {this.state.atMaxStatement}
-                        </div>
                     </div>
                     <div className='speech-options'>
+                        <div className='speech-context_points text-danger text-right'>
+                            {this.state.cannotSubmitError}
+                        </div>
                         <div className='speech-option-desc'>
-                            <span>Low priority</span>
-                            <span>High priority</span>
+                            <ColumnHeader
+                                heading={'Low'}
+                                currentValue={this.state.bucketPriorities.low}
+                                maxAllowed={this.max_priority_points.low}
+                            />
+                            <ColumnHeader
+                                heading={'Medium'}
+                                currentValue={this.state.bucketPriorities.medium}
+                                maxAllowed={this.max_priority_points.medium}
+                            />
+                            <ColumnHeader
+                                heading={'High'}
+                                currentValue={this.state.bucketPriorities.high}
+                                maxAllowed={this.max_priority_points.high}
+                            />
                         </div>
                         {topics}
                     </div>
                     <div className='reset_button'>
                         <button
                             className='campaign-btn speech-btn'
-                            onClick={this.props.submitPriorities}
+                            onClick={this.validateSpeech}
                         >
                             Submit
                         </button>
@@ -285,9 +334,10 @@ Speech.propTypes = {
     countryName: PropTypes.string,
     updatePopulation: PropTypes.func,
     submitPriorities: PropTypes.func,
-    speechProposal: PropTypes.object,
+    rawSpeechProposal: PropTypes.object,
     topicNames: PropTypes.array,
     canReset: PropTypes.bool,
     round: PropTypes.number,
     campaign_map: PropTypes.object,
 };
+
