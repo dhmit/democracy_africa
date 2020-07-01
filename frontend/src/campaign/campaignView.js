@@ -454,7 +454,7 @@ export class CampaignView extends React.Component {
                     && (windowHeight >= 500 && windowWidth >= 500))
                     ? <OverlayTrigger
                         trigger="hover"
-                        placement="auto"
+                        placement='top-end'
                         overlay={province_info_overlay}
                     >{map_svg}
                     </OverlayTrigger>
@@ -469,7 +469,6 @@ export class CampaignView extends React.Component {
 
             return (<div className="row">
                 <Navbar />
-                <div className='col-md-12 col-lg-7'>
                 <div className='col-sm-12 col-md-7 d-md-none'>
                     <p className="d-block d-md-none">
                         {infoInstructions}
