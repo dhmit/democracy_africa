@@ -135,15 +135,18 @@ const STAGE_1 = {
     ...rhodes_campus_img_props,
     'options': [
         {
-            'text': <div>Agree; you want to participate in the sit-in!</div>,
+            'text': <div>You want to participate in the sit-in!</div>,
             'stageName': 'STAGE_1A',
             'endDetail': '',
             'showOnEnd': true,
             'additionalDetail': '',
         },
         {
-            'text': <div>Agree; however, you’re a little skeptical about how the sit-in will be
-                effective. You want to learn more about the movement</div>,
+            'text':
+                <div>
+                    You’re a little skeptical about how the sit-in will be
+                    effective. You want to learn more about the movement.
+                </div>,
             'stageName': 'STAGE_1B_INT',
             'endDetail': '',
             'showOnEnd': true,
@@ -154,8 +157,10 @@ const STAGE_1 = {
             </p>,
         },
         {
-            'text': <div>Disagree; you’re really not comfortable being part of the sit-in right
-                now</div>,
+            'text':
+                <div>
+                    You’re not comfortable being part of the sit-in right now.
+                </div>,
             'stageName': 'STAGE_1C_INT',
             'endDetail': '',
             'showOnEnd': true,
@@ -169,7 +174,7 @@ const STAGE_1A = {
     </div>,
     ...blockade_img_props,
     'options': [{
-        'text': <div> Sneak out before things get worse; You are worried that the
+        'text': <div>Sneak out before things get worse. You are worried that the
              sit-in might escalate from a purely peaceful protest because students
              are starting to blockade road access.</div>,
         'stageName': 'STAGE_1AA_INT',
@@ -178,7 +183,7 @@ const STAGE_1A = {
         'additionalDetail': '',
     },
     {
-        'text': <div>Stay with the movement and help block the roads with burning tires</div>,
+        'text': <div>Stay with the movement and help block the roads with burning tires.</div>,
         'stageName': 'STAGE_1AB_INT',
         'endDetail': '',
         'showOnEnd': true,
@@ -244,21 +249,21 @@ const STAGE_1B_INT = {
             How would you like to learn more?</p>
     </div>,
     'options': [{
-        'text': <div>Read articles and social media posts on the Internet</div>,
+        'text': <div>Read articles and social media posts on the Internet.</div>,
         'stageName': 'STAGE_1BA_INT',
         'endDetail': '',
         'showOnEnd': true,
         'additionalDetail': '',
     },
     {
-        'text': <div>Ask your family</div>,
+        'text': <div>Ask your family.</div>,
         'stageName': 'STAGE_1BB_INT',
         'endDetail': '',
         'showOnEnd': true,
         'additionalDetail': '',
     },
     {
-        'text': <div>Talk to your friends and other students</div>,
+        'text': <div>Talk to your friends and other students.</div>,
         'stageName': 'STAGE_1BC_INT',
         'endDetail': '',
         'showOnEnd': true,
@@ -384,7 +389,7 @@ const STAGE_2 = {
         21st of October. What do you want to do this time?</div>,
     ...demonstration_img_props,
     'options': [{
-        'text': <div>Join the march</div>,
+        'text': <div>Join the march!/div>,
         'stageName': 'STAGE_2A_INT',
         'endDetail': <div>WITS university administration announces that no disciplinary action
             will be taken against students and staff members who participated in the
@@ -393,7 +398,7 @@ const STAGE_2 = {
         'additionalDetail': '',
     },
     {
-        'text': <div>Participate by social media</div>,
+        'text': <div>Participate by social media.</div>,
         'stageName': 'STAGE_2B_INT',
         'endDetail': '',
         'showOnEnd': true,
@@ -404,7 +409,7 @@ const STAGE_2 = {
         </p>,
     },
     {
-        'text': <div>Do nothing</div>,
+        'text': <div>Do nothing.</div>,
         'stageName': 'STAGE_2C_INT',
         'endDetail': '',
         'showOnEnd': true,
@@ -417,7 +422,7 @@ const STAGE_2_1C = {
         21st of October. What do you want to do this time?</div>,
     ...demonstration_img_props,
     'options': [{
-        'text': <div>Join the march</div>,
+        'text': <div>Join the march!</div>,
         'stageName': 'STAGE_2A_INT',
         'endDetail': <div>WITS university administration announces that no disciplinary action
             will be taken against students and staff members who participated in the
@@ -426,7 +431,7 @@ const STAGE_2_1C = {
         'additionalDetail': '',
     },
     {
-        'text': <div>Participate by social media</div>,
+        'text': <div>Participate by social media.</div>,
         'stageName': 'STAGE_2B_INT',
         'endDetail': '',
         'showOnEnd': true,
@@ -437,7 +442,7 @@ const STAGE_2_1C = {
         </p>,
     },
     {
-        'text': <div>Do nothing again because you are still uncomfortable about everything</div>,
+        'text': <div>Do nothing again because you are still uncomfortable about everything.</div>,
         'stageName': 'STAGE_2C_INT',
         'endDetail': <div>
             You’ve remained outside the action the whole time; you feel terrible that your friends
@@ -489,7 +494,7 @@ const STAGE_2B_INT = {
     </div>,
     ...social_media_img_props,
     'options': [{
-        'text': <div>Use Twitter</div>,
+        'text': <div>Use Twitter.</div>,
         'stageName': 'STAGE_2BA_INT',
         'endDetail': <div>Through Twitter, you spread awareness of the movement and the march.
             However, your retweets were not able to reach many of your peers who use other social
@@ -499,7 +504,7 @@ const STAGE_2B_INT = {
         'additionalDetail': '',
     },
     {
-        'text': <div>Use WhatsApp</div>,
+        'text': <div>Use WhatsApp.</div>,
         'stageName': 'STAGE_2BB_INT',
         'endDetail': <div>It turns out that as many as 5000 people showed up to protest at the
             Parliament. Thanks to your help of actively inviting your friends to join the
@@ -510,7 +515,7 @@ const STAGE_2B_INT = {
         'additionalDetail': '',
     },
     {
-        'text': <div>Use Facebook</div>,
+        'text': <div>Use Facebook.</div>,
         'stageName': 'STAGE_2BC_INT',
         'endDetail': '',
         'showOnEnd': true,
