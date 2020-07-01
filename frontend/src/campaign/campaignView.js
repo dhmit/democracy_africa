@@ -19,6 +19,8 @@ import Navbar from '../about/Navbar';
 import { project_features_and_create_svg_paths } from '../common';
 
 
+const roundAggregateData = { };
+
 export class CampaignView extends React.Component {
     constructor(props) {
         super(props);
@@ -83,6 +85,23 @@ export class CampaignView extends React.Component {
         });
     }
 
+    generateProvincePopoverStatement(value, type) {
+        let statement = 'Citizens of this province have a ' + type + ' priority for ';
+        for (let i = 0; i < value.length; i++) {
+            statement += value[i];
+            if (value.length === 1) {
+                statement += '.';
+            } else if (i === 0 && value.length === 2) {
+                statement += ' and ';
+            } else if (i < value.length - 1 && value.length > 2) {
+                statement += ', ';
+            } else {
+                statement += '.';
+            }
+        }
+        return statement;
+    }
+
     determine_overlay_content(selected_province) {
         const high_value = [];
         const low_value = [];
@@ -102,65 +121,18 @@ export class CampaignView extends React.Component {
                 return 'Citizens of this province are equally concerned about all of the issues.';
             }
             if (high_value.length === 0) {
-                let return_text_low = 'Citizens of this province have a low priority for ';
-                for (let i = 0; i < low_value.length; i++) {
-                    return_text_low += low_value[i];
-                    if (low_value.length === 1) {
-                        return_text_low += '.';
-                    } else if (i === 0 && low_value.length === 2) {
-                        return_text_low += ' and ';
-                    } else if (i < low_value.length - 1 && low_value.length > 2) {
-                        return_text_low += ', ';
-                    } else {
-                        return_text_low += '.';
-                    }
-                }
+                const return_text_low = this.generateProvincePopoverStatement(low_value,
+                    'low');
                 return return_text_low;
             }
             if (low_value.length === 0) {
-                let return_text_high = 'Citizens of this province have a high priority for ';
-                for (let i = 0; i < high_value.length; i++) {
-                    return_text_high += high_value[i];
-                    if (high_value.length === 1) {
-                        return_text_high += '.';
-                    } else if (i === 0 && high_value.length === 2) {
-                        return_text_high += ' and ';
-                    } else if (i < high_value.length - 1 && high_value.length > 2) {
-                        return_text_high += ', ';
-                    } else {
-                        return_text_high += '.';
-                    }
-                }
+                const return_text_high = this.generateProvincePopoverStatement(high_value,
+                    'high');
                 return return_text_high;
             }
-            let return_text_high = 'Citizens of this province have a high priority for ';
-            for (let i = 0; i < high_value.length; i++) {
-                return_text_high += high_value[i];
-                if (high_value.length === 1) {
-                    return_text_high += '.';
-                } else if (i === 0 && high_value.length === 2) {
-                    return_text_high += ' and ';
-                } else if (i < high_value.length - 1 && high_value.length > 2) {
-                    return_text_high += ', ';
-                } else {
-                    return_text_high += '.';
-                }
-            }
-
-            let return_text_low = 'Citizens of this province have a low priority for ';
-            for (let i = 0; i < low_value.length; i++) {
-                return_text_low += low_value[i];
-                if (low_value.length === 1) {
-                    return_text_low += '.';
-                } else if (i === 0 && low_value.length === 2) {
-                    return_text_low += ' and ';
-                } else if (i < low_value.length - 1 && low_value.length > 2) {
-                    return_text_low += ', ';
-                } else {
-                    return_text_low += '.';
-                }
-            }
-            return (<div>{return_text_high}<br/><br/>{return_text_low}</div>);
+            const return_text_high = this.generateProvincePopoverStatement(high_value, 'high');
+            const return_text_low = this.generateProvincePopoverStatement(low_value, 'low');
+            return return_text_high + ' ' + return_text_low;
         }
         return '';
     }
@@ -385,6 +357,7 @@ export class CampaignView extends React.Component {
         } = this.state;
 
         const aggregateResult = this.countTotalSupport();
+        roundAggregateData[this.state.round] = aggregateResult;
         const overlay_title = clickedProvince === null || clickedProvince === '' ? 'No province'
             + ' selected' : clickedProvince;
         const overlay_content = this.determine_overlay_content(clickedProvince);
@@ -466,8 +439,12 @@ export class CampaignView extends React.Component {
                 </div>
                 <div className='col-md-12 col-lg-5'>
                     <p>
-                        Click on each province to learn what your initial polling has revealed
-                        about the needs of its inhabitants.
+                        Your campaign team has compiled some research they did on the needs of the
+                        inhabitants of each province.
+                    </p>
+                    <p>
+                        Click on each province to see what your team
+                        has found out about what issues the citizens prefer to have more priority.
                     </p>
                     <p>
                         You will be asked to prioritize the following issues:
@@ -475,7 +452,8 @@ export class CampaignView extends React.Component {
                     <ul>
                         {this.state.topicNames.map((topic, i) => <li key={i}>{topic}</li>)}
                     </ul>
-                    <button onClick={() => this.setState({
+
+                    <button className='intro-campaign-btn' onClick={() => this.setState({
                         view: 'speechMaker',
                         round: 1,
                         clickedProvince: this.state.clickedProvince
@@ -561,6 +539,7 @@ export class CampaignView extends React.Component {
                         canReset={this.state.round === 1}
                         round={this.state.round}
                         campaign_map={campaign_map}
+                        roundAggregateData={roundAggregateData}
                     />
                 </div>
             );

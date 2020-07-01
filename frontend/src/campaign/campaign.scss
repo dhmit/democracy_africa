@@ -17,6 +17,8 @@ $edx-button-color: #e7e7e7;
     }
     &_count {
         margin-bottom: 0;
+        white-space: pre-wrap;
+        @extend .text-left;
     }
 }
 
@@ -240,4 +242,19 @@ $edx-button-color: #e7e7e7;
 
 .citizen-text {
     margin-bottom: 10px;
+}
+
+.intro-campaign-btn {
+    background-color: white !important;
+    border: 1px solid $edx-border-color;
+    padding: 0.2em 1em;
+    border-radius: 0.25em;
+    transition: 0.2s ease-in;
+
+    &:hover {
+        background-color: #f7f7f7 !important;
+    }
+    &:focus {
+        outline: none;
+    }
 }
