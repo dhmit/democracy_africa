@@ -12,13 +12,15 @@ class Navbar extends Component {
         return (
             <div>
                 <div className='about-nav'>
-                    <div className='nav-title d-sm-block d-none'>
-                        <a className='about-nav-link' href='/'>
+                    <div className='d-sm-block d-none'>
+                        <a className='nav-title' href='/'>
                             Democracy And Development: Perspectives From Africa
                         </a>
                     </div>
-                    <div className='nav-title-small d-block d-sm-none'>
-                        Democracy And Development: Perspectives From Africa
+                    <div className='d-block d-sm-none'>
+                        <a className='nav-title-small' href='/'>
+                            Democracy And Development: Perspectives From Africa
+                        </a>
                     </div>
                     <div className='d-none d-lg-block ml-auto'>
                         <a className='about-nav-link' href='/campaign_game/'>Campaign Simulation</a>
