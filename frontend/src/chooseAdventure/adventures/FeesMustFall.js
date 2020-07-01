@@ -389,7 +389,7 @@ const STAGE_2 = {
         21st of October. What do you want to do this time?</div>,
     ...demonstration_img_props,
     'options': [{
-        'text': <div>Join the march!/div>,
+        'text': <div>Join the march!</div>,
         'stageName': 'STAGE_2A_INT',
         'endDetail': <div>WITS university administration announces that no disciplinary action
             will be taken against students and staff members who participated in the
