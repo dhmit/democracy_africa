@@ -140,7 +140,7 @@ class About extends React.Component {
     render() {
         return (<>
             <div className='about'>
-                <Navbar />
+                <Navbar currentPage='about'/>
                 <div className='about-title'>
                     About This Project
                 </div>
