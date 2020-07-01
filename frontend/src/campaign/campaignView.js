@@ -43,6 +43,8 @@ const generateOverlayText = (services, priorityType) => {
     );
 };
 
+const roundAggregateData = { };
+
 export class CampaignView extends React.Component {
     constructor(props) {
         super(props);
@@ -105,6 +107,23 @@ export class CampaignView extends React.Component {
         });
     }
 
+    generateProvincePopoverStatement(value, type) {
+        let statement = 'Citizens of this province have a ' + type + ' priority for ';
+        for (let i = 0; i < value.length; i++) {
+            statement += value[i];
+            if (value.length === 1) {
+                statement += '.';
+            } else if (i === 0 && value.length === 2) {
+                statement += ' and ';
+            } else if (i < value.length - 1 && value.length > 2) {
+                statement += ', ';
+            } else {
+                statement += '.';
+            }
+        }
+        return statement;
+    }
+
     determine_overlay_content(selected_province) {
         const high_value = [];
         const low_value = [];
@@ -123,7 +142,6 @@ export class CampaignView extends React.Component {
             if (high_value.length === 0 && low_value.length === 0) {
                 return 'Citizens of this province are equally concerned about all of the issues.';
             }
-
             let high_text;
             if (high_value.length !== 0) {
                 high_text = generateOverlayText(
@@ -380,8 +398,10 @@ export class CampaignView extends React.Component {
         } = this.state;
 
         const aggregateResult = this.countTotalSupport();
+        roundAggregateData[this.state.round] = aggregateResult;
         const overlay_title = clickedProvince === null || clickedProvince === '' ? 'Click on'
             + ' a province' : clickedProvince;
+
         const overlay_content = this.determine_overlay_content(clickedProvince);
 
         const province_info_overlay = (
@@ -464,21 +484,31 @@ export class CampaignView extends React.Component {
         );
 
         if (this.state.view === 'countryInfo') {
-            const infoInstructions = 'Click on each province to learn what your initial polling'
-                + ' has revealed about the needs of its inhabitants.';
+            const infoInstructions = (
+                <>
+                    <p>
+                        Your campaign team has compiled some research they did on the needs of the
+                        inhabitants of each province.
+                    </p>
+                    <p>
+                        Click on each province to see what your team
+                        has found out about what issues the citizens prefer to have more priority.
+                    </p>
+                </>
+            );
 
             return (<div className="row">
                 <Navbar />
                 <div className='col-sm-12 col-md-7 d-md-none'>
-                    <p className="d-block d-md-none">
+                    <div className="d-block d-md-none">
                         {infoInstructions}
-                    </p>
+                    </div>
                     {campaign_map}
                 </div>
-                <div className='col-sm-12 col-md-5'>
-                    <p className="d-none d-md-block">
+                <div className='col-md-12 col-lg-5'>
+                    <div className="d-none d-md-block">
                         {infoInstructions}
-                    </p>
+                    </div>
                     <p>
                         You will be asked to prioritize the following issues:
                     </p>
@@ -640,6 +670,7 @@ export class CampaignView extends React.Component {
                         canReset={this.state.round === 1}
                         round={this.state.round}
                         campaign_map={campaign_map}
+                        roundAggregateData={roundAggregateData}
                     />
                 </div>
             );
