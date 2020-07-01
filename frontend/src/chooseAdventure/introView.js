@@ -28,13 +28,13 @@ class IntroView extends React.Component {
                         <div style={ { marginBottom: '40px' } }>
                             {desc}
                         </div>
-                        <div className='intro-btn-container d-none d-sm-block'>
+                        <div className='intro-btn-container d-none d-md-block'>
                             <div className={`${this.props.buttonStyle} start-button`}
                                 onClick={() => this.props.setView('stage')}>
                                 Get started
                             </div>
                         </div>
-                        <div className='intro-btn-container d-block d-sm-none'>
+                        <div className='intro-btn-container d-block d-md-none'>
                             <div className={`${this.props.buttonStyle} start-button w-100`}
                                 onClick={() => this.props.setView('stage')}>
                                 Get started
