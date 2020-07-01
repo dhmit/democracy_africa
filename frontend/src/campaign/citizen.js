@@ -26,6 +26,9 @@ class Citizen extends React.Component {
     }
 
     render() {
+        const windowHeight = document.documentElement.clientHeight;
+        const windowWidth = document.documentElement.clientWidth;
+        // let description = '';
         const description = (
             <Popover id='popover-basic'>
                 <Popover.Title>
@@ -36,21 +39,34 @@ class Citizen extends React.Component {
                 </Popover.Content>
             </Popover>
         );
-        return (
-            <OverlayTrigger
-                overlay={description}
-                placement='bottom'
-            >
-                <svg
-                    className='citizen'
-                    height='20'
-                    width='20'
-                    viewBox="0 0 512 512"
-                    fill={this.props.data.will_support ? '#5abf5a' : '#db5653'}
+        if (!(windowHeight < 500 || windowWidth < 500)) {
+            return (
+                <OverlayTrigger
+                    overlay={description}
+                    placement='bottom'
                 >
-                    <path d={PERSON_ICON_PATH}/>
-                </svg>
-            </OverlayTrigger>
+                    <svg
+                        className='citizen'
+                        height='20'
+                        width='20'
+                        viewBox="0 0 512 512"
+                        fill={this.props.data.will_support ? '#5abf5a' : '#db5653'}
+                    >
+                        <path d={PERSON_ICON_PATH}/>
+                    </svg>
+                </OverlayTrigger>
+            );
+        }
+        return (
+            <svg
+                className='citizen'
+                height='20'
+                width='20'
+                viewBox="0 0 512 512"
+                fill={this.props.data.will_support ? '#5abf5a' : '#db5653'}
+            >
+                <path d={PERSON_ICON_PATH}/>
+            </svg>
         );
     }
 }

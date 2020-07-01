@@ -42,13 +42,13 @@ class EndView extends React.Component {
                 </div>
             }
             <div className="row">
-                <div className="col-6">
+                <div className="col-md-12 col-lg-6">
                     {this.props.history.map((option) => {
                         return option.additionalDetail;
                     })}
                     {desc}
                 </div>
-                <div className="col-6">
+                <div className="col-md-12 col-lg-6">
                     <div>You chose to:</div>
                     {choices}
                 </div>
@@ -59,12 +59,6 @@ class EndView extends React.Component {
                     onClick={() => this.resetAdventure()}
                 >
                     Try again
-                </button>
-                <button
-                    className='cyoa-button end-button'
-                    onClick={() => this.props.tryNewAdventure()}
-                >
-                    Try A Different Adventure
                 </button>
             </div>
         </>);
@@ -77,7 +71,6 @@ EndView.propTypes = {
     setView: PropTypes.func,
     history: PropTypes.array,
     resetProgress: PropTypes.func,
-    tryNewAdventure: PropTypes.func,
 };
 
 

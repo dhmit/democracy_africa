@@ -139,8 +139,8 @@ TeamMember.propTypes = {
 class About extends React.Component {
     render() {
         return (<>
-            <div className='about' col-lg-12>
-                <Navbar />
+            <div className='about'>
+                <Navbar currentPage='about'/>
                 <div className='about-title'>
                     About This Project
                 </div>
@@ -182,7 +182,7 @@ class About extends React.Component {
                             under a variety of starting conditions. We present two finished games.
                         </p>
                         <p>
-                            The first, <a href={'/adventure'}>#FeesMustFall</a>, is a work of
+                            The first, <a href={'/feesmustfall'}>#FeesMustFall</a>, is a work of
                             interactive fiction, which puts you into the life of a South African
                             university student during the #FeesMustFall movement (2015-2016).
                             By engaging with the difficult choices that student participants

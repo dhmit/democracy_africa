@@ -62,15 +62,9 @@ class StageView extends React.Component {
 
         return (
             <div className='wrapper'>
-                <Navbar/>
+                <Navbar currentPage='feesmustfall'/>
                 <div className='row'>
-                    <div className='col-sm-12 col-md-6' style={{ marginBottom: '10px' }}>
-                        <div>{stage.text}</div>
-                        <div className="option-selectors-list">
-                            {optionComponents}
-                        </div>
-                    </div>
-                    <div className='col-sm-12 col-md-6'>
+                    <div className='col-sm-12 col-md-6 order-sm-0 order-md-1'>
                         {stage.imgFilename
                             && <CaptionedImage
                                 alt={stage.imgAlt}
@@ -79,6 +73,16 @@ class StageView extends React.Component {
                             />
                         }
                     </div>
+                    <div
+                        className='col-sm-12 col-md-6 order-sm-1 order-md-0'
+                        style={{ marginBottom: '10px' }}
+                    >
+                        <div>{stage.text}</div>
+                        <div className="option-selectors-list">
+                            {optionComponents}
+                        </div>
+                    </div>
+
                 </div>
             </div>
         );
