@@ -10,16 +10,12 @@ import Navbar from '../about/Navbar';
  */
 
 class IntroView extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         const { desc, img } = this.props.introDescriptions;
         const { imgFilename, imgAlt, imgCaption } = img;
         return (
             <div>
-                <Navbar/>
+                <Navbar currentPage={this.props.currentPage}/>
                 <div className='row'>
                     <div
                         className='col-md-8 col-sm-12 order-12 order-md-1'
@@ -60,6 +56,7 @@ class IntroView extends React.Component {
 }
 IntroView.propTypes = {
     introDescriptions: PropTypes.object,
+    currentPage: PropTypes.string,
     setView: PropTypes.func,
     buttonStyle: PropTypes.string,
 };
