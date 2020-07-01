@@ -62,7 +62,7 @@ class StageView extends React.Component {
 
         return (
             <div className='wrapper'>
-                <Navbar/>
+                <Navbar currentPage='feesmustfall'/>
                 <div className='row'>
                     <div className='col-sm-12 col-md-6 order-sm-0 order-md-1'>
                         {stage.imgFilename

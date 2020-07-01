@@ -143,4 +143,5 @@ export const sampleAdventure = {
     NAME_TO_STAGE: NAME_TO_STAGE,
     intro: { desc: introDesc, img: introImg },
     end: { desc: endDesc, img: endImg },
+    pageName: 'sampleadventure',
 };
