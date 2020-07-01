@@ -106,7 +106,7 @@ const edXURL = 'https://www.edx.org/course/democracy-and-development-perspective
 function TeamMember(props) {
     const className = props.isUROP
         ? 'student-member col-12 col-sm-6 col-md-4 col-lg-3'
-        : 'staff-member col-12 col-sm-6 col-lg-3';
+        : 'staff-member col-12 col-md-6';
 
     const imgClassName = props.isUROP ? 'student-img' : 'staff-img';
     const nameClassName = props.isUROP ? 'student-name' : 'staff-name';
