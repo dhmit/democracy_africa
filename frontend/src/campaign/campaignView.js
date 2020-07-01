@@ -469,45 +469,43 @@ export class CampaignView extends React.Component {
 
             return (<div className="row">
                 <Navbar />
-                <div className='col-md-12 col-lg-7'>
-                    <div className='col-sm-12 col-md-7 d-md-none'>
-                        <p className="d-block d-md-none">
-                            {infoInstructions}
-                        </p>
-                        {campaign_map}
-                    </div>
-                    <div className='col-sm-12 col-md-5'>
-                        <p className="d-none d-md-block">
-                            {infoInstructions}
-                        </p>
-                        <p>
-                            You will be asked to prioritize the following issues:
-                        </p>
-                        <ul style={{ marginBottom: '30px' }}>
-                            {this.state.topicNames.map((topic, i) => <li key={i}>{topic}</li>)}
-                        </ul>
-                        <button
-                            className='campaign-btn d-none d-md-block'
-                            onClick={this.startGame}
-                            style={{ textAlign: 'center' }}
-                        >
+                <div className='col-sm-12 col-md-7 d-md-none'>
+                    <p className="d-block d-md-none">
+                        {infoInstructions}
+                    </p>
+                    {campaign_map}
+                </div>
+                <div className='col-sm-12 col-md-5'>
+                    <p className="d-none d-md-block">
+                        {infoInstructions}
+                    </p>
+                    <p>
+                        You will be asked to prioritize the following issues:
+                    </p>
+                    <ul style={{ marginBottom: '30px' }}>
+                        {this.state.topicNames.map((topic, i) => <li key={i}>{topic}</li>)}
+                    </ul>
+                    <button
+                        className='campaign-btn d-none d-md-block'
+                        onClick={this.startGame}
+                        style={{ textAlign: 'center' }}
+                    >
+                        I am ready to set my campaign's priorities!
+                    </button>
+                    <button
+                        className='campaign-btn d-block d-md-none w-100'
+                        onClick={this.startGame}
+                    >
+                        <div style={{ textAlign: 'center' }}>
                             I am ready to set my campaign's priorities!
-                        </button>
-                        <button
-                            className='campaign-btn d-block d-md-none w-100'
-                            onClick={this.startGame}
-                        >
-                            <div style={{ textAlign: 'center' }}>
-                                I am ready to set my campaign's priorities!
-                            </div>
-                        </button>
-                    </div>
-                    <div className='col-sm-12 col-md-7 d-none d-md-block'>
-                        <p className="d-block d-md-none">
-                            {infoInstructions}
-                        </p>
-                        {campaign_map}
-                    </div>
+                        </div>
+                    </button>
+                </div>
+                <div className='col-sm-12 col-md-7 d-none d-md-block'>
+                    <p className="d-block d-md-none">
+                        {infoInstructions}
+                    </p>
+                    {campaign_map}
                 </div>
             </div>);
         }

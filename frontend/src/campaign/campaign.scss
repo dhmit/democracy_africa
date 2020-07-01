@@ -37,13 +37,13 @@ $edx-button-color: #e7e7e7;
         display: flex;
 
         &_label {
-            padding: 0.5em;
-            width: 40%;
+            padding: 0.5em 1.5em 0.5em 0.5em;
+            width: 50%;
             font-weight: 700;
         }
 
         &_btns {
-            width: 40%;
+            width: 50%;
             padding: 0.5em;
             display: flex;
             //flex-basis: 0;
@@ -51,7 +51,7 @@ $edx-button-color: #e7e7e7;
         }
 
         &_priority {
-            width: 40%;
+            width: 50%;
             display: flex;
             justify-content: space-between;
         }
@@ -290,3 +290,13 @@ $edx-button-color: #e7e7e7;
     flex-wrap: wrap;
     justify-content: flex-start;
 }
+
+.priority-nums {
+    font-size: 16px;
+}
+
+//@media (max-width: 575px) {
+//    .priority-nums {
+//        font-size: 11px;
+//    }
+//}
