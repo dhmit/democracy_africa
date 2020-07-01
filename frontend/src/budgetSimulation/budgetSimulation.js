@@ -5,6 +5,7 @@ import Popover from 'react-bootstrap/Popover';
 import PopoverContent from 'react-bootstrap/PopoverContent';
 import Citizen from '../campaign/citizen';
 import { getCookie } from '../common';
+import Navbar from '../about/Navbar';
 
 
 // hardcoded list of resources for now
@@ -220,6 +221,7 @@ class Budget extends React.Component {
 
         return (
             <>
+                <Navbar/>
                 <div>
                     {budgetOptions}
                 </div>

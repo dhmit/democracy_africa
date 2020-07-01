@@ -18,7 +18,10 @@ const jail_img_props = {
     'imgFilename': 'FMF_jail.png',
     'imgAlt': 'Student protesters in a holding cell during the #FeesMustFall movement',
     'imgCaption': (<>
-        <a href="https://twitter.com/Icyboyaya/status/656895466060300288">Twitter</a>
+        <br/>Photo credit:&nbsp;
+        <a href="https://twitter.com/Icyboyaya/status/656895466060300288">
+            Twitter
+        </a>
     </>),
 };
 
