@@ -5,12 +5,12 @@
 $edx-border-color: #c8c8c8; // from edX
 
 .edx-course-content {
-    @extend .mb-4;
     @extend .container;
     max-width: 1200px;  // TBD -- we can set the width of our modal in edX
     border: 1px solid $edx-border-color; // from edX
     padding: 0;
     margin-top: 80px;
+    margin-bottom: 120px;
 }
 
 .edx-page-header {
