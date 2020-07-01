@@ -8,43 +8,31 @@
 
 import React from 'react';
 import * as PropTypes from 'prop-types';
-import Navbar from '../about/Navbar';
-import { CaptionedImage, Footer } from '../UILibrary/components';
 
 export class IndexView extends React.Component {
     render() {
-        return (<>
-            <div className='landing-page'>
-                <Navbar/>
-                <div className="row" >
-                    <div className='col-lg-6 col-md-12'>
-                        <CaptionedImage
-                            alt='A South African man voting.'
-                            caption='A South African man voting.'
-                            filename='man_voting.jpg'
+        return (
+            <>
+                <h1 className="mb-4">
+                    Gamifying Democracy and Development:<br/> Perspectives from Africa
+                </h1>
+
+                <div className="row">
+                    <div className="col-12 col-sm-6">
+                        <IndexCard
+                            url='/adventure/'
+                            title='#FeesMustFall'
+                            description='
+                                Take the role of a student during the 2015-16
+                                #FeelsMustFall movement in South Africa.'
                         />
                     </div>
-                    <div className='landing-text mt-4 mt-lg-0 col-lg-6 col-md-12'>
-                        <div className='row'>
-                            <div className="col-12 col-md-6">
-                                <IndexCard
-                                    url='/adventure/'
-                                    title='#FeesMustFall'
-                                    description='
-                                    Take the role of a student during the 2015-16
-                                    #FeelsMustFall movement in South Africa.'
-                                />
-                            </div>
-                            <div className="col-12 col-md-6">
-                                <IndexCard
-                                    url='/campaign_game/'
-                                    title='Campaign Game'
-                                    description='Take on the role of a politician setting policy
-                                    proposals based on survey data from constitutents.
-                                    '
-                                />
-                            </div>
-                        </div>
+                    <div className="col-12 col-sm-6">
+                        <IndexCard
+                            url='/campaign_game/'
+                            title='Campaign Game'
+                            description='Make a speech to try and get people to vote for you.'
+                        />
                     </div>
                 </div>
 
@@ -111,9 +99,8 @@ export class IndexView extends React.Component {
                         Contemporary Africa at MIT and the DH Faculty Fellow for Spring 2020.
                     </div>
                 </div>
-            </div>
-            <Footer />
-        </>);
+            </>
+        );
     }
 }
 

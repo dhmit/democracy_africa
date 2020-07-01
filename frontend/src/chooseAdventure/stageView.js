@@ -1,7 +1,6 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
 import { CaptionedImage } from '../UILibrary/components';
-import Navbar from '../about/Navbar';
 
 class Option extends React.Component {
     render() {
@@ -62,7 +61,6 @@ class StageView extends React.Component {
 
         return (
             <div className='wrapper'>
-                <Navbar/>
                 <div className='row'>
                     <div className='col-sm-12 col-md-6 order-sm-0 order-md-1'>
                         {stage.imgFilename

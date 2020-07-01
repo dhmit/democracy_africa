@@ -6,6 +6,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import PopoverTitle from 'react-bootstrap/PopoverTitle';
 // eslint-disable-next-line no-unused-vars
 import PopoverContent from 'react-bootstrap/PopoverContent';
+import { project_features_and_create_svg_paths } from '../common';
 
 import { MapPath } from '../UILibrary/components';
 
@@ -14,10 +15,6 @@ import Feedback from './feedback';
 import Results from './results';
 import CountrySelectorPopup from './countrySelectorPopup';
 import IntroView from '../chooseAdventure/introView';
-import Navbar from '../about/Navbar';
-
-import { project_features_and_create_svg_paths } from '../common';
-
 import Citizen from './citizen';
 
 const generateOverlayText = (services, priorityType) => {
@@ -344,7 +341,6 @@ export class CampaignView extends React.Component {
             };
             return (
                 <>
-                    <Navbar/>
                     {this.state.showCountrySelector
                         && <CountrySelectorPopup
                             changeCountry={this.changeCountry}
@@ -468,8 +464,6 @@ export class CampaignView extends React.Component {
                 + ' has revealed about the needs of its inhabitants.';
 
             return (<div className="row">
-                <Navbar />
-                <div className='col-md-12 col-lg-7'>
                 <div className='col-sm-12 col-md-7 d-md-none'>
                     <p className="d-block d-md-none">
                         {infoInstructions}
@@ -560,7 +554,6 @@ export class CampaignView extends React.Component {
         if (this.state.view === 'submitted') {
             return (
                 <div>
-                    <Navbar/>
                     <Results
                         provinceData={populationData}
                         countryData={aggregateResult}
@@ -611,7 +604,6 @@ export class CampaignView extends React.Component {
         if (this.state.view === 'feedback') {
             return (
                 <div>
-                    <Navbar/>
                     <Feedback
                         clickedProvince={clickedProvince}
                         round={this.state.round}
@@ -630,7 +622,6 @@ export class CampaignView extends React.Component {
         if (this.state.view === 'speechMaker') {
             return (
                 <div className='speech-maker'>
-                    <Navbar/>
                     <Speech
                         population={populationData}
                         countryName={countryName}

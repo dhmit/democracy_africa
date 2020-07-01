@@ -1,7 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import Navbar from './Navbar';
-import { Footer } from '../UILibrary/components';
+import * as PropTypes from 'prop-types';
 
 const staffMembers = [
     {
@@ -137,10 +135,52 @@ TeamMember.propTypes = {
 
 
 class About extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            showNav: false,
+        };
+    }
+
     render() {
-        return (<>
+        return (
             <div className='about'>
-                <Navbar />
+                <div className='about-nav'>
+                    <div className='nav-title d-sm-block d-none'>
+                        <a className='about-nav-link' href='/'>
+                            Democracy And Development Perspectives From Africa
+                        </a>
+                    </div>
+                    <div className='nav-title-small d-block d-sm-none'>
+                        Democracy And Development Perspectives From Africa
+                    </div>
+                    <div className='d-none d-lg-block'>
+                        <a className='about-nav-link' href='/campaign_game/'>Campaign Game</a>
+                        <a className='about-nav-link' href='/adventure/'>
+                            #FeesMustFall
+                        </a>
+                        <a className='about-nav-link' href='/about/'>About</a>
+                    </div>
+                    <div
+                        className="hamburger d-block d-lg-none"
+                        onClick={() => { this.setState({ showNav: !this.state.showNav }); }}
+                    >
+                        <div className="rectangle"/>
+                        <div className="rectangle"/>
+                        <div className="rectangle"/>
+                    </div>
+                </div>
+                {
+                    this.state.showNav
+                    && <div className='alternate-nav d-block d-lg-none'>
+                        <a className='alternate-link' href='/'>Home</a>
+                        <a className='alternate-link' href='/campaign_game/'>Campaign Game</a>
+                        <a className='alternate-link' href='/adventure/'>
+                            Choose Your Own Adventure
+                        </a>
+                        <a className='alternate-link' href='/about/'>About</a>
+                    </div>
+                }
                 <div className='about-title'>
                     About This Project
                 </div>
@@ -231,8 +271,7 @@ class About extends React.Component {
                     </div>
                 </div>
             </div>
-            <Footer />
-        </>);
+        );
     }
 }
 
