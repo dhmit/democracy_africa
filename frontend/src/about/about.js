@@ -15,6 +15,11 @@ const staffMembers = [
         photoSrc: 'ryaan_ahmed.jpg',
     },
     {
+        name: 'Stephan Risi',
+        title: 'Postdoctoral Associate',
+        photoSrc: 'stephan_risi.jpg',
+    },
+    {
         name: 'Erica Zimmer',
         title: 'Postdoctoral Associate',
         photoSrc: 'erica_zimmer.jpg',

@@ -32,7 +32,7 @@ export class IndexView extends React.Component {
                                     title='#FeesMustFall'
                                     description='
                                     Take the role of a student during the 2015-16
-                                    #FeelsMustFall movement in South Africa.'
+                                    #FeesMustFall movement in South Africa.'
                                 />
                             </div>
                             <div className='col col-lg-12'>

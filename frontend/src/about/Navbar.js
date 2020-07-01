@@ -56,8 +56,8 @@ class Navbar extends Component {
                     && <div className='alternate-nav d-block d-lg-none'>
                         <a className='alternate-link' href='/'>Home</a>
                         <a className='alternate-link' href='/campaign_game/'>Campaign Simulation</a>
-                        <a className='alternate-link' href='/adventure/'>
-                            Choose Your Own Adventure
+                        <a className='alternate-link' href='/feesmustfall/'>
+                            #FeesMustFall
                         </a>
                         <a className='alternate-link' href='/about/'>About</a>
                     </div>
