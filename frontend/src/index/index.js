@@ -26,7 +26,7 @@ export class IndexView extends React.Component {
                     </div>
                     <div className='landing-text mt-4 mt-lg-0 col-lg-6 col-md-12'>
                         <div className='row'>
-                            <div className="col-12 col-md-6">
+                            <div className='col col-lg-12'>
                                 <IndexCard
                                     url='/feesmustfall/'
                                     title='#FeesMustFall'
@@ -35,7 +35,7 @@ export class IndexView extends React.Component {
                                     #FeelsMustFall movement in South Africa.'
                                 />
                             </div>
-                            <div className="col-12 col-md-6">
+                            <div className='col col-lg-12'>
                                 <IndexCard
                                     url='/campaign_game/'
                                     title='Campaign Game'
