@@ -4,19 +4,26 @@ $edx-button-color: #e7e7e7;
 .speech-context {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 1em;
-    text-align: center;
+    justify-content: left;
+    align-items: flex-start;
+    text-align: left;
 
     &_points {
         font-size: 20px;
-        text-align: center;
+        text-align: left;
         font-weight: 600;
         white-space: pre-wrap; //Makes '\n' display correctly on page
+        &_small {
+            font-size: 19px;
+            text-align: left;
+            font-weight: 600;
+            white-space: pre-wrap;
+        }
     }
     &_count {
         margin-bottom: 0;
+        white-space: pre-wrap;
+        @extend .text-left;
     }
 }
 
@@ -24,33 +31,34 @@ $edx-button-color: #e7e7e7;
     display: flex;
     flex-basis: 0;
     flex-wrap: wrap;
-    justify-content: flex-end;
+    margin-bottom: 50px;
+    justify-content: flex-start;
 
     .speech-option {
         width: 100%;
         display: flex;
 
         &_label {
-            padding: 0.5em;
-            width: 40%;
+            padding: 0.5em 1.5em 0.5em 0.5em;
+            width: 50%;
             font-weight: 700;
         }
 
         &_btns {
-            width: 60%;
+            width: 45%;
             padding: 0.5em;
             display: flex;
             //flex-basis: 0;
             justify-content: space-between;
         }
 
-    }
-}
+        &_priority {
+            width: 45%;
+            display: flex;
+            justify-content: space-between;
+        }
 
-.speech-option-desc {
-    width: 60%;
-    display: flex;
-    justify-content: space-between;
+    }
 }
 
 .campaign-map {
@@ -59,6 +67,15 @@ $edx-button-color: #e7e7e7;
 
 .province-info-text {
     margin-bottom: 20px;
+}
+
+.popover-text {
+    margin-bottom: 0px;
+}
+
+.province-popover-info {
+    text-align: left;
+    align-content: flex-start;
 }
 
 .button-containers{
@@ -84,9 +101,9 @@ $edx-button-color: #e7e7e7;
 
     td,
     th {
+        border: 1px $edx-border-color solid;
         padding: 0.5em 0;
     }
-
 }
 
 .table-provinces{
@@ -108,7 +125,7 @@ $edx-button-color: #e7e7e7;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    padding: 0;
 
     &_header {
         font-weight: 600;
@@ -169,7 +186,6 @@ $edx-button-color: #e7e7e7;
 
 .speech-btn {
     width: 100px;
-    margin: 0 0.5rem;
 }
 
 .campaign-header {
@@ -186,7 +202,8 @@ $edx-button-color: #e7e7e7;
 
     &-results {
         margin-bottom: 1em;
-        text-align: center;
+        text-align: left;
+        padding: 0;
     }
 }
 
@@ -234,10 +251,64 @@ $edx-button-color: #e7e7e7;
     text-align: center;
 }
 
+.country-button {
+    background-color: white !important;
+    border: 1px solid $edx-border-color;
+    padding: 0.75em 1em;
+    border-radius: 0.25em;
+    margin: -10px 0 0;
+    width: 100%;
+    transition: 0.2s ease-in;
+
+    &:hover {
+        background-color: #f7f7f7 !important;
+    }
+
+    &:focus {
+        outline: none;
+    }
+}
+
 .citizen-reactions {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    width: 70%;
 }
 
 .citizen-text {
     margin-bottom: 10px;
+}
+
+.feedback-instructions {
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.feedback-pop {
+    margin-bottom: 30px;
+}
+
+.speech-warning {
+    display: flex;
+    flex-basis: 0;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.priority-nums {
+    font-size: 16px;
+}
+
+.intro-campaign-btn {
+    background-color: white !important;
+    border: 1px solid $edx-border-color;
+    padding: 0.2em 1em;
+    border-radius: 0.25em;
+    transition: 0.2s ease-in;
+
+    &:hover {
+        background-color: #f7f7f7 !important;
+    }
+    &:focus {
+        outline: none;
+    }
 }

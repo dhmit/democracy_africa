@@ -13,7 +13,7 @@
     border-radius: 1rem;
     background: #f7f7f7;
     transition: 0.8s;
-    margin-top: 10px;
+    margin: 10px auto 0;
     padding: 10px;
 }
 
@@ -41,6 +41,7 @@
     //color: white;
     text-align: center;
     width: 10em;
+    cursor: pointer;
 }
 
 .start-button:hover {
