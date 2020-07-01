@@ -26,16 +26,16 @@ export class IndexView extends React.Component {
                     </div>
                     <div className='landing-text mt-4 mt-lg-0 col-lg-6 col-md-12'>
                         <div className='row'>
-                            <div className="col-12 col-md-6">
+                            <div className='col col-lg-12'>
                                 <IndexCard
-                                    url='/adventure/'
+                                    url='/feesmustfall/'
                                     title='#FeesMustFall'
                                     description='
                                     Take the role of a student during the 2015-16
                                     #FeelsMustFall movement in South Africa.'
                                 />
                             </div>
-                            <div className="col-12 col-md-6">
+                            <div className='col col-lg-12'>
                                 <IndexCard
                                     url='/campaign_game/'
                                     title='Campaign Game'
@@ -50,17 +50,14 @@ export class IndexView extends React.Component {
 
                 <h3>Prototypes</h3>
                 <div className="row">
-                    <div className="col-12 col-lg-4 d-flex align-items-stretch">
+                    <div className="col-12 col-lg-6 d-flex align-items-stretch">
                         <IndexCard
                             url='/map_quiz/'
                             title='Africa Map Quiz'
-                            description='
-                                        Learn the names of all the countries in Africa.
-                                        Put your score up on the board.
-                                    '
+                            description='Learn the names of all the countries in Africa.'
                         />
                     </div>
-                    <div className="col-12 col-lg-4 d-flex align-items-stretch">
+                    <div className="col-12 col-lg-6 d-flex align-items-stretch">
                         <IndexCard
                             url='/heat_map/'
                             title='Electoral Democracy Scores'
@@ -70,12 +67,23 @@ export class IndexView extends React.Component {
                         />
                     </div>
 
-                    <div className="col-12 col-lg-4 d-flex align-items-stretch">
+                    <div className="col-12 col-lg-6 d-flex align-items-stretch">
                         <IndexCard
                             url='/budget_voting_simulation/'
                             title='Budget Simulator'
                             description='
                                 Try to make a budget that meets the needs of the most citizens.
+                            '
+                        />
+                    </div>
+                    <div className="col-12 col-lg-6 d-flex align-items-stretch">
+                        <IndexCard
+                            url='/sample/'
+                            title='Sample Adventure'
+                            description='
+                                A template interactive fiction to show how our infrastructure
+                                for #FeesMustFall could be used to create other interactive
+                                narratives
                             '
                         />
                     </div>
