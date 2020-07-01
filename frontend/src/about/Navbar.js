@@ -24,7 +24,7 @@ class Navbar extends Component {
                     </div>
                     <div className='d-none d-lg-block ml-auto'>
                         <a className='about-nav-link' href='/campaign_game/'>Campaign Simulation</a>
-                        <a className='about-nav-link' href='/adventure/'>
+                        <a className='about-nav-link' href='/feesmustfall/'>
                             #FeesMustFall
                         </a>
                         <a className='about-nav-link' href='/about/'>About</a>

@@ -183,7 +183,7 @@ class About extends React.Component {
                         </p>
                         <p>
                             This project consists of two simulations. The first one is
-                            the <a href={'/adventure'}>Choose Your Own Adventure</a> simulation
+                            the <a href={'/feesmustfall'}>Choose Your Own Adventure</a> simulation
                             which puts you into the life of a South African university student
                             during the Fees Must Fall movement in 2015.
                             In this simulation, you can choose different actions to take with

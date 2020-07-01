@@ -60,12 +60,6 @@ class EndView extends React.Component {
                 >
                     Try again
                 </button>
-                <button
-                    className='cyoa-button end-button'
-                    onClick={() => this.props.tryNewAdventure()}
-                >
-                    Try A Different Adventure
-                </button>
             </div>
         </>);
     }
@@ -77,7 +71,6 @@ EndView.propTypes = {
     setView: PropTypes.func,
     history: PropTypes.array,
     resetProgress: PropTypes.func,
-    tryNewAdventure: PropTypes.func,
 };
 
 

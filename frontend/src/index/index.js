@@ -28,7 +28,7 @@ export class IndexView extends React.Component {
                         <div className='row'>
                             <div className="col-12 col-md-6">
                                 <IndexCard
-                                    url='/adventure/'
+                                    url='/feesmustfall/'
                                     title='#FeesMustFall'
                                     description='
                                     Take the role of a student during the 2015-16
@@ -50,7 +50,7 @@ export class IndexView extends React.Component {
 
                 <h3>Prototypes</h3>
                 <div className="row">
-                    <div className="col-12 col-lg-4 d-flex align-items-stretch">
+                    <div className="col-12 col-lg-6 d-flex align-items-stretch">
                         <IndexCard
                             url='/map_quiz/'
                             title='Africa Map Quiz'
@@ -60,7 +60,7 @@ export class IndexView extends React.Component {
                                     '
                         />
                     </div>
-                    <div className="col-12 col-lg-4 d-flex align-items-stretch">
+                    <div className="col-12 col-lg-6 d-flex align-items-stretch">
                         <IndexCard
                             url='/heat_map/'
                             title='Electoral Democracy Scores'
@@ -70,13 +70,23 @@ export class IndexView extends React.Component {
                         />
                     </div>
 
-                    <div className="col-12 col-lg-4 d-flex align-items-stretch">
+                    <div className="col-12 col-lg-6 d-flex align-items-stretch">
                         <IndexCard
                             url='/budget_voting_simulation/'
                             title='Budget Simulator'
                             description='
                                 Try to make a budget that meets the needs of the most citizens.
                             '
+                        />
+                    </div>
+                    <div className="col-12 col-lg-6 d-flex align-items-stretch">
+                        <IndexCard
+                            url='/sample/'
+                            title='Sample Adventure'
+                            description='
+                                        A sample adventure to help future students write their
+                                        own adventures using our infrastructure.
+                                    '
                         />
                     </div>
                 </div>
