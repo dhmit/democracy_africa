@@ -13,8 +13,8 @@ class Navbar extends Component {
         const campaignClassName = (
             `about-nav-link ${this.props.currentPage === 'campaign' && 'font-weight-bold'}`
         );
-        const adventureClassName = (
-            `about-nav-link ${this.props.currentPage === 'adventure' && 'font-weight-bold'}`
+        const feesmustfallClassName = (
+            `about-nav-link ${this.props.currentPage === 'feesmustfall' && 'font-weight-bold'}`
         );
         const aboutClassName = (
             `about-nav-link ${this.props.currentPage === 'about' && 'font-weight-bold'}`
@@ -37,7 +37,7 @@ class Navbar extends Component {
                         <a className={campaignClassName} href='/campaign_game/'>
                             Campaign Simulation
                         </a>
-                        <a className={adventureClassName} href='/adventure/'>
+                        <a className={feesmustfallClassName} href='/feesmustfall/'>
                             #FeesMustFall
                         </a>
                         <a className={aboutClassName} href='/about/'>About</a>

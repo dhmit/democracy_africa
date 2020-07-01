@@ -384,6 +384,7 @@ export class CampaignView extends React.Component {
                         setView={() => { this.setState({ showCountrySelector: true }); }}
                         introDescriptions={campaignIntroDesc}
                         buttonStyle='campaign-btn'
+                        currentPage='campaign'
                     />
                 </>
             );
