@@ -279,10 +279,11 @@ const STAGE_1BA_INT = {
             the vast extent to which your country's higher education system is still structurally
             and financially affected by the legacies of the apartheid era. With this new
             knowledge, you gain a better understanding of the students' sentiment and how
-            frustrating it must feel to have a system that works against you.
+            frustrating it must feel to exist in a system that works against you.
+
         </p>
         <p>
-            In the meantime, the university closes regardless and on the 19th of October, the
+            In the meantime, the university closes regardless, and on the 19th of October, the
             university agrees to begin new negotiations with the students.
         </p>
     </div>,
@@ -296,22 +297,26 @@ const STAGE_1BA_INT = {
     }],
 };
 
+const university_closes_anyway = (
+    <p>
+    In the meantime, the university closes anyway and on the 19th of October, the university
+    agrees to begin new negotiations with the students.
+    </p>
+);
+
 const STAGE_1BB_INT = {
     'text': <div>
         <p>
             After mentioning the student demonstrations, such as the sit-in, to your family
-            members, they give you some warnings. They don't think it is worth the risk of
-            getting expelled from school or having any disciplinary and criminal records
+            members, they give you some warnings. They don't think it will be worth the risk of
+            getting expelled from school or having a disciplinary or even criminal record
             that might make it more difficult for you to find jobs in the future.
         </p>
         <p>
             Ultimately, you decide that you will support the movement in a less confrontational
             way.
         </p>
-        <p>
-            In the meantime, the university closes anyway and on the 19th of October, the
-            university agrees to begin new negotiations with the students.
-        </p>
+        {university_closes_anyway}
     </div>,
     'options': [{
         'text': <div>Next</div>,
@@ -326,16 +331,16 @@ const STAGE_1BC_INT = {
     'text': <div>
         <p>
             As you leave your final class of the day, you ask your peers whether they are going to
-            the sit-in. There are mixed responses among them. They acknowledge the importance of
+            the sit-in. Their responses are mixed. They acknowledge the importance of
             calling out the government for enacting unfair policies, but also see the
             danger that comes from being in the front lines of the protests, where police can
-            physically harm you. After hearing the arguments made by your peers, you decide that
-            you will look for other ways to support this movement.
+            physically harm you.
         </p>
         <p>
-            In the meantime, the university closes anyway and on the 19th of October, the university
-            agrees to begin new negotiations with the students.
+            After hearing the arguments made by your peers, you decide that
+            you will look for other ways to support this movement.
         </p>
+        {university_closes_anyway}
     </div>,
     ...friends_img_props,
     'options': [{
@@ -389,7 +394,7 @@ const STAGE_2 = {
         21st of October. What do you want to do this time?</div>,
     ...demonstration_img_props,
     'options': [{
-        'text': <div>Join the march!/div>,
+        'text': <div>Join the march!</div>,
         'stageName': 'STAGE_2A_INT',
         'endDetail': <div>WITS university administration announces that no disciplinary action
             will be taken against students and staff members who participated in the
