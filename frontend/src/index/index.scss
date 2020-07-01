@@ -19,8 +19,15 @@ code {
 }
 
 .landing-page {
-    margin: 55px;
+    padding: 55px 55px 120px;
 }
+
+@media (max-width: 575px) {
+    .landing-page {
+        padding: 55px 0 120px;
+    }
+}
+
 
 .landing-title {
     font-size: 40px;
@@ -31,4 +38,11 @@ code {
 
 .landing-text {
     font-size: 20px;
+}
+
+.dh-footer {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    bottom: 0;
 }

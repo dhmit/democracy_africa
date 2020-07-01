@@ -1,5 +1,11 @@
 .about {
-    padding: 55px 55px 0;
+    padding: 55px;
+}
+
+@media (max-width: 575px) {
+    .about {
+        padding: 55px 0 60px;
+    }
 }
 
 .about-text {
@@ -89,12 +95,14 @@
     font-weight: bold;
     color: white;
     margin-right: 30px;
+    text-decoration: none;
 }
 
 .nav-title-small {
     font-size: 15px;
     font-weight: bold;
     color: white;
+    text-decoration: none;
 }
 
 .about-nav-link {
@@ -104,6 +112,8 @@
     font-size: 15px;
 }
 
+.nav-title:hover,
+.nav-title-small:hover,
 .about-nav-link:hover {
     text-decoration: none;
     color: #d3d3d3;
