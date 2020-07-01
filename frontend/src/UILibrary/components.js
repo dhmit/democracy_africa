@@ -145,6 +145,7 @@ export class EdXView extends React.Component {
                         </nav>
                     </div>
                 </main>
+                <Footer/>
             </section>
         );
     }
