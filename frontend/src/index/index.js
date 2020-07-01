@@ -54,10 +54,7 @@ export class IndexView extends React.Component {
                         <IndexCard
                             url='/map_quiz/'
                             title='Africa Map Quiz'
-                            description='
-                                        Learn the names of all the countries in Africa.
-                                        Put your score up on the board.
-                                    '
+                            description='Learn the names of all the countries in Africa.'
                         />
                     </div>
                     <div className="col-12 col-lg-6 d-flex align-items-stretch">
@@ -84,9 +81,10 @@ export class IndexView extends React.Component {
                             url='/sample/'
                             title='Sample Adventure'
                             description='
-                                        A sample adventure to help future students write their
-                                        own adventures using our infrastructure.
-                                    '
+                                A template interactive fiction to show how our infrastructure
+                                for #FeesMustFall could be used to create other interactive
+                                narratives
+                            '
                         />
                     </div>
                 </div>

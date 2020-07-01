@@ -42,6 +42,7 @@ export class ChooseAdventureView extends React.Component {
                 introDescriptions={this.state.adventure.intro}
                 setView={this.setView}
                 buttonStyle='cyoa-button'
+                currentPage={this.state.adventure.pageName}
             />);
         case 'stage':
             return (<StageView
