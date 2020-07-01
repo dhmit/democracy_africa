@@ -19,12 +19,12 @@ code {
 }
 
 .landing-page {
-    padding: 55px 55px 120px;
+    padding: 55px;
 }
 
 @media (max-width: 575px) {
     .landing-page {
-        padding: 55px 0 120px;
+        padding: 55px 0 55px;
     }
 }
 
@@ -41,7 +41,7 @@ code {
 }
 
 .dh-footer {
-    position: fixed;
+    position: relative;
     width: 100%;
     left: 0;
     bottom: 0;
