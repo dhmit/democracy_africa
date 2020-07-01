@@ -454,7 +454,7 @@ export class CampaignView extends React.Component {
                     && (windowHeight >= 500 && windowWidth >= 500))
                     ? <OverlayTrigger
                         trigger="hover"
-                        placement="auto"
+                        placement='top-end'
                         overlay={province_info_overlay}
                     >{map_svg}
                     </OverlayTrigger>
