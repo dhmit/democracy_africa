@@ -30,7 +30,7 @@ class Navbar extends Component {
                     </div>
                     <div className='d-block d-sm-none'>
                         <a className='nav-title-small' href='/'>
-                            Democracy And Development: Perspectives From Africa
+                            Democracy And Development:<br/>Perspectives From Africa
                         </a>
                     </div>
                     <div className='d-none d-lg-block ml-auto'>
