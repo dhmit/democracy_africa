@@ -144,8 +144,8 @@ class About extends React.Component {
                 <div className='about-title'>
                     About This Project
                 </div>
-                <div className='about-text row'>
-                    <div className='evan-img-div text-center col-md-12 col-lg-3'>
+                <div className='about-text'>
+                    <div className='evan-img-div text-wrap col-xs-2 col-sm-5 col-md-5 col-lg-3'>
                         <figure className="figure">
                             <img
                                 className='evan-img'
@@ -159,7 +159,7 @@ class About extends React.Component {
                             </figcaption>
                         </figure>
                     </div>
-                    <div className='col-md-12 col-lg-9'>
+                    <div>
                         <p>
                             <i>Gamifying "Democracy and Development:
                                 Perspectives from Africa"</i> is a project by
