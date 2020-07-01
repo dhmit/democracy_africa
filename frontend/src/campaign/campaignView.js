@@ -505,7 +505,7 @@ export class CampaignView extends React.Component {
                     </div>
                     {campaign_map}
                 </div>
-                <div className='col-md-12 col-lg-5'>
+                <div className='col-sm-12 col-md-5'>
                     <div className="d-none d-md-block">
                         {infoInstructions}
                     </div>
