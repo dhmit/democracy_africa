@@ -19,7 +19,7 @@ class IntroView extends React.Component {
         const { imgFilename, imgAlt, imgCaption } = img;
         return (
             <div>
-                <Navbar/>
+                <Navbar currentPage='campaign'/>
                 <div className='row'>
                     <div
                         className='col-md-8 col-sm-12 order-12 order-md-1'

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import * as PropTypes from 'prop-types';
 
 class Navbar extends Component {
     constructor(props) {
@@ -9,6 +10,16 @@ class Navbar extends Component {
     }
 
     render() {
+        const campaignClassName = (
+            `about-nav-link ${this.props.currentPage === 'campaign' && 'font-weight-bold'}`
+        );
+        const adventureClassName = (
+            `about-nav-link ${this.props.currentPage === 'adventure' && 'font-weight-bold'}`
+        );
+        const aboutClassName = (
+            `about-nav-link ${this.props.currentPage === 'about' && 'font-weight-bold'}`
+        );
+
         return (
             <div>
                 <div className='about-nav'>
@@ -23,11 +34,13 @@ class Navbar extends Component {
                         </a>
                     </div>
                     <div className='d-none d-lg-block ml-auto'>
-                        <a className='about-nav-link' href='/campaign_game/'>Campaign Simulation</a>
-                        <a className='about-nav-link' href='/adventure/'>
+                        <a className={campaignClassName} href='/campaign_game/'>
+                            Campaign Simulation
+                        </a>
+                        <a className={adventureClassName} href='/adventure/'>
                             #FeesMustFall
                         </a>
-                        <a className='about-nav-link' href='/about/'>About</a>
+                        <a className={aboutClassName} href='/about/'>About</a>
                     </div>
                     <div
                         className="hamburger d-block d-lg-none"
@@ -53,5 +66,8 @@ class Navbar extends Component {
         );
     }
 }
+Navbar.propTypes = {
+    currentPage: PropTypes.string,
+};
 
 export default Navbar;
