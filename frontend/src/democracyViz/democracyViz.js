@@ -8,6 +8,7 @@ import {
     getCookie,
     project_features_and_create_svg_paths,
 } from '../common';
+import Navbar from '../about/Navbar';
 
 /**
  * Main component for the map quiz.
@@ -65,6 +66,7 @@ export class DemocracyViz extends React.Component {
         }
         return (
             <>
+                <Navbar/>
                 <h1>Democracy in Africa Over Time</h1><hr/>
                 Democracy Score Type: &nbsp;
                 <select onChange={(e) => this.handleScoreTypeChange(e)}>

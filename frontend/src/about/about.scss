@@ -87,7 +87,7 @@
     padding: 18px 0 18px 18px;
     background-color: #333;
     width: 100%;
-    z-index: 2;
+    z-index: 1061; /* Popovers have z-index 1060 */
 }
 
 .nav-title {
