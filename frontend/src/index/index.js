@@ -19,8 +19,8 @@ export class IndexView extends React.Component {
                 <div className="row" >
                     <div className='col-lg-6 col-md-12'>
                         <CaptionedImage
-                            alt='A South African man voting.'
-                            caption='A South African man voting.'
+                            alt='A South African voter casting his ballot.'
+                            caption='A South African voter casting his ballot.'
                             filename='man_voting.jpg'
                         />
                     </div>
