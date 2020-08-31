@@ -47,7 +47,7 @@ def iframe_embed_path(route, component_name):
     TODO(ra): remove navbar and other UI chrome for embeddable version
     """
     return path(
-        route + '/embed/',
+        route + 'embed/',
         render_react_view,
         {
             'component_name': component_name,
@@ -83,5 +83,10 @@ urlpatterns = [
     edx_path('campaign_game/', 'CampaignView'),
 
     # Views without edX UI for embedding
-    iframe_embed_path('feesmustfall', 'FeesMustFallView'),
+    iframe_embed_path('feesmustfall/', 'FeesMustFallView'),
+    iframe_embed_path('sample/', 'SampleView'),
+    iframe_embed_path('map_quiz/', 'MapQuiz'),
+    iframe_embed_path('budget_voting_simulation/', 'BudgetVotingSimViz'),
+    iframe_embed_path('heat_map/', 'DemocracyViz'),
+    iframe_embed_path('campaign_game/', 'CampaignView'),
 ]
