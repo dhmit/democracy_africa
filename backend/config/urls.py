@@ -52,6 +52,7 @@ def iframe_embed_path(route, component_name):
         {
             'component_name': component_name,
             'edx_view': False,
+            'xframe_exempt': True,
         },
     )
 
