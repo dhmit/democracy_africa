@@ -29,6 +29,7 @@ def render_react_view(request, component_name=None, edx_view=False, xframe_exemp
     else:
         return render(request, template, context)
 
+
 @xframe_options_exempt
-def render_xframe_exempt(request, template, context)
+def render_xframe_exempt(request, template, context):
     return render(request, template, context)
