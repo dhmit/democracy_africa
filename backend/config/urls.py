@@ -16,6 +16,7 @@ Including another URL configuration
 """
 from django.contrib import admin
 from django.urls import path
+from django.views.decorators.clickjacking import xframe_options_exempt
 
 from app.common import render_react_view
 from app.views import (
@@ -40,6 +41,22 @@ def edx_path(route, component_name):
     )
 
 
+@xframe_options_exempt
+def iframe_embed_path(route, component_name):
+    """
+    Convenience function for paths that are to be embedded in an iFrame within edX
+    TODO(ra): remove navbar and other UI chrome for embeddable version
+    """
+    return path(
+        route + '/embed/',
+        render_react_view,
+        {
+            'component_name': component_name,
+            'edx_view': False,
+        },
+    )
+
+
 urlpatterns = [
     # Django admin page
     path('admin/', admin.site.urls),
@@ -56,6 +73,8 @@ urlpatterns = [
     path('', render_react_view, {'component_name': 'IndexView'}),
     path('all_view/', render_react_view, {'component_name': 'AllView'}),
     path('about/', render_react_view, {'component_name': 'About'}),
+
+    # Views mocked up with edX UI
     edx_path('feesmustfall/', 'FeesMustFallView'),
     edx_path('sample/', 'SampleView'),
     edx_path('map_quiz/', 'MapQuiz'),
@@ -63,4 +82,6 @@ urlpatterns = [
     edx_path('heat_map/', 'DemocracyViz'),
     edx_path('campaign_game/', 'CampaignView'),
 
+    # Views without edX UI for embedding
+    iframe_embed_path('feesmustfall', 'FeesMustFallView'),
 ]
