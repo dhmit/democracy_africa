@@ -40,6 +40,21 @@ def edx_path(route, component_name):
     )
 
 
+def iframe_embed_path(route, component_name):
+    """
+    Convenience function for paths that are to be embedded in an iFrame within edX
+    TODO(ra): remove navbar and other UI chrome for embeddable version
+    """
+    return path(
+        route + '/embed/',
+        render_react_view,
+        {
+            'component_name': component_name,
+            'edx_view': False,
+        },
+    )
+
+
 urlpatterns = [
     # Django admin page
     path('admin/', admin.site.urls),
