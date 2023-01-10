@@ -183,6 +183,7 @@ export class CampaignView extends React.Component {
             });
 
             const populationData = await res.json();
+            console.log(populationData);
             // restructure population data
             const population = {};
             populationData.citizen_list.forEach((citizen) => {
