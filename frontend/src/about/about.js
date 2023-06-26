@@ -235,6 +235,10 @@ class About extends React.Component {
                         ))}
                     </div>
                 </div>
+                <div>
+                    <div className = "about-title">Citation</div>
+                    <p>Evan Lieberman, Melissa Calvert, Angelica Castillejos, Crista Falk, Benjamin Gao, Montserrat Garza, Michelle He, Meesue Kim, Amy Lei, Ning-Er Lei, Felix Li, Jason Lin, Ivy Mao, Mayowa Songonuga, Justice Vidal, Dylan Weber, Jordan Wilke, Samantha York, Ophelia Zhu, Ryaan Ahmed, Michael Scott Cuthbert, Nicole Fountain, Stephan Risi, Erica Zimmer, "Democracy and Development: Perspectives from Africa," Web resource. 2020. https://democracy-africa.dhlab.mit.edu/ </p>
+                </div>
             </div>
             <Footer />
         </>);
