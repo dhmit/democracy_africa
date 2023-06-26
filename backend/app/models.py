@@ -2,72 +2,82 @@
 Models for the democracy_africa app.
 """
 # from django.db import models
-# TODO: implement me!
 import random
 
 # Demographics from Afrobarometer 2016/2018 results
 # https://www.afrobarometer.org/online-data-analysis/analyse-online?fbclid=IwAR1iKKoydnKdD0UTDPIqH_PEn6bJuJjYPuVvOA657hrNaN6HHsfpp6vxBpg
-africa_demographics_by_country = {"Botswana": {"electricity_access": 93.2,
-                                               "rural_households": 31.0,
-                                               "piped_water_access": 90.1,
-                                               "sewage_system_access": 41.7,
-                                               "some_formal_education": 88.8,
-                                               },
-                                  "Cameroon": {"electricity_access": 78.0,
-                                               "rural_households": 47.6,
-                                               "piped_water_access": 75.7,
-                                               "sewage_system_access": 49.1,
-                                               "some_formal_education": 88.3,
-                                               },
-                                  "Ghana": {"electricity_access": 91.3,
-                                            "rural_households": 45.6,
-                                            "piped_water_access": 85.6,
-                                            "sewage_system_access": 43.5,
-                                            "some_formal_education": 84.1,
-                                            },
-                                  "Guinea": {"electricity_access": 32.2,
-                                             "rural_households": 67.5,
-                                             "piped_water_access": 24.0,
-                                             "sewage_system_access": 10.4,
-                                             "some_formal_education": 58.0,
-                                             },
-                                  "Kenya": {"electricity_access": 74.8,
-                                            "rural_households": 64.0,
-                                            "piped_water_access": 40.8,
-                                            "sewage_system_access": 21.6,
-                                            "some_formal_education": 93.0,
-                                            },
-                                  "Nigeria": {"electricity_access": 83.3,
-                                              "rural_households": 56.5,
-                                              "piped_water_access": 38.5,
-                                              "sewage_system_access": 35.1,
-                                              "some_formal_education": 92.6,
-                                              },
-                                  "South Africa": {"electricity_access": 94.2,
-                                                   "rural_households": 31.2,
-                                                   "piped_water_access": 78.3,
-                                                   "sewage_system_access": 62.7,
-                                                   "some_formal_education": 92.6,
-                                                   },
-                                  "Sudan": {"electricity_access": 76.3,
-                                            "rural_households": 62.2,
-                                            "piped_water_access": 58.4,
-                                            "sewage_system_access": 20.3,
-                                            "some_formal_education": 91.2,
-                                            },
-                                  "Tanzania": {"electricity_access": 55.5,
-                                               "rural_households": 66.8,
-                                               "piped_water_access": 38.8,
-                                               "sewage_system_access": 5.4,
-                                               "some_formal_education": 88.2,
-                                               },
-                                  "Uganda": {"electricity_access": 35.3,
-                                             "rural_households": 75.1,
-                                             "piped_water_access": 25.0,
-                                             "sewage_system_access": 15.5,
-                                             "some_formal_education": 88.7,
-                                             }
-                                  }
+africa_demographics_by_country = {
+    'Botswana': {
+        'electricity_access': 93.2,
+        'rural_households': 31.0,
+        'piped_water_access': 90.1,
+        'sewage_system_access': 41.7,
+        'some_formal_education': 88.8,
+    },
+    'Cameroon': {
+        'electricity_access': 78.0,
+        'rural_households': 47.6,
+        'piped_water_access': 75.7,
+        'sewage_system_access': 49.1,
+        'some_formal_education': 88.3,
+    },
+    'Ghana': {
+        'electricity_access': 91.3,
+        'rural_households': 45.6,
+        'piped_water_access': 85.6,
+        'sewage_system_access': 43.5,
+        'some_formal_education': 84.1,
+    },
+    'Guinea': {
+        'electricity_access': 32.2,
+        'rural_households': 67.5,
+        'piped_water_access': 24.0,
+        'sewage_system_access': 10.4,
+        'some_formal_education': 58.0,
+    },
+    'Kenya': {
+        'electricity_access': 74.8,
+        'rural_households': 64.0,
+        'piped_water_access': 40.8,
+        'sewage_system_access': 21.6,
+        'some_formal_education': 93.0,
+    },
+    'Nigeria': {
+        'electricity_access': 83.3,
+        'rural_households': 56.5,
+        'piped_water_access': 38.5,
+        'sewage_system_access': 35.1,
+        'some_formal_education': 92.6,
+    },
+    'South Africa': {
+        'electricity_access': 94.2,
+        'rural_households': 31.2,
+        'piped_water_access': 78.3,
+        'sewage_system_access': 62.7,
+        'some_formal_education': 92.6,
+    },
+    'Sudan': {
+        'electricity_access': 76.3,
+        'rural_households': 62.2,
+        'piped_water_access': 58.4,
+        'sewage_system_access': 20.3,
+        'some_formal_education': 91.2,
+    },
+    'Tanzania': {
+        'electricity_access': 55.5,
+        'rural_households': 66.8,
+        'piped_water_access': 38.8,
+        'sewage_system_access': 5.4,
+        'some_formal_education': 88.2,
+    },
+    'Uganda': {
+        'electricity_access': 35.3,
+        'rural_households': 75.1,
+        'piped_water_access': 25.0,
+        'sewage_system_access': 15.5,
+        'some_formal_education': 88.7,
+    }
+}
 
 
 class Citizen:
@@ -77,57 +87,18 @@ class Citizen:
     for now).
     """
 
-    # pylint: disable=too-many-arguments
-    def __init__(self, name,
-                 lives_in_rural_area=False,
-                 has_access_to_electricity=False,
-                 has_access_to_sanitation=False,
-                 has_access_to_water=False,
-                 is_educated=False,
-                 ):
+    def __init__(self, name):
         self.name = name
-        self.traits = {"lives_in_rural_area": lives_in_rural_area,
-                       "has_access_to_electricity": has_access_to_electricity,
-                       "has_access_to_sanitation": has_access_to_sanitation,
-                       "has_access_to_water": has_access_to_water,
-                       "is_educated": is_educated,
-                       }
+        self.province = ""
+        self.traits = {}
+        self.will_support = False
 
     def __str__(self):
         """
         Just to print out information on the Citizen for debugging, no actual use
         :return: String representation of the Citizen
         """
-        return_string = self.name + "\n"
-
-        if self.traits["lives_in_rural_area"]:
-            return_string += "Lives in a(n) rural area\n"
-        else:
-            return_string += "Lives in a(n) urban area\n"
-
-        if self.traits["has_access_to_water"]:
-            return_string += "Has access to clean/fresh water"
-        else:
-            return_string += "Does not have access to clean/fresh water"
-        return_string += "\n"
-
-        if self.traits["has_access_to_electricity"]:
-            return_string += "Has access to electricity"
-        else:
-            return_string += "Does not have access to electricity"
-        return_string += "\n"
-
-        if self.traits["has_access_to_sanitation"]:
-            return_string += "Has access to sanitation"
-        else:
-            return_string += "Does not have access to sanitation"
-        return_string += "\n"
-
-        if self.traits["is_educated"]:
-            return_string += "Has had some education"
-        else:
-            return_string += "Has not had any education"
-        return_string += "\n"
+        return_string = self.name + "\n" + str(self.traits)
 
         return return_string
 
@@ -147,7 +118,41 @@ class Population:
         self.country = country
         self.population_size = 0
 
-    def create_citizens(self, number_to_create):
+    def create_citizens_campaign_game(self, number_to_create, demographic_data=None):
+        """
+        Citizens are randomly generated (from the distribution) and added to citizen list
+        based on demographic data of provinces
+        :param number_to_create: Number of citizens to make
+        :param demographic_data: demographic data to base citizen creation on
+        :return: Nothing, just saves it to a class attribute
+        """
+        provinces = demographic_data["provinces"]
+        country_population = sum([province['population'] for province in provinces])
+        for province in provinces:
+            province['population'] = round(number_to_create * (province['population'] /
+                                                               country_population))
+        for k, province in enumerate(provinces):
+            people_to_create = province['population'] if k < len(provinces) - 1 \
+                else number_to_create - len(self.citizen_list)
+            for i in range(people_to_create):
+                current_citizen = Citizen(str(self.population_size + 1))
+                current_citizen.province = province['name']
+
+                for topic in province['topic_preferences']:
+                    preference_choice = random.randint(0, 100)
+                    accumulate = 0
+
+                    for j, percent in enumerate(topic['preferences']):
+                        accumulate += percent
+                        if preference_choice <= accumulate:
+                            # The data in the JSON file goes from bad to good
+                            # So if the government isn't giving you something, you would want it.
+                            current_citizen.traits[topic['name']] = 5 - j
+                            break
+                self.citizen_list.append(current_citizen)
+                self.population_size += 1
+
+    def create_citizens_budget_sim(self, number_to_create):
         """
         citizens are randomly generated (from the distribution) and added to citizen list
         :param number_to_create: Number of citizens to make
@@ -172,20 +177,20 @@ class Population:
         sanitation_access = random.randint(0, 100)
         educated = random.randint(0, 100)
 
-        if rural_area < africa_demographics_by_country[self.country]["rural_households"]:
-            citizen.traits["lives_in_rural_area"] = True
+        citizen.traits["lives_in_rural_area"] = rural_area < \
+            africa_demographics_by_country[self.country]["rural_households"]
 
-        if electricity_access < africa_demographics_by_country[self.country]["electricity_access"]:
-            citizen.traits["has_access_to_electricity"] = True
+        citizen.traits["has_access_to_electricity"] = electricity_access < \
+            africa_demographics_by_country[self.country]["electricity_access"]
 
-        if water_access < africa_demographics_by_country[self.country]["piped_water_access"]:
-            citizen.traits["has_access_to_water"] = True
+        citizen.traits["has_access_to_water"] = water_access < \
+            africa_demographics_by_country[self.country]["piped_water_access"]
 
-        if sanitation_access < africa_demographics_by_country[self.country]["sewage_system_access"]:
-            citizen.traits["has_access_to_sanitation"] = True
+        citizen.traits["has_access_to_sanitation"] = sanitation_access <\
+            africa_demographics_by_country[self.country]["sewage_system_access"]
 
-        if educated < africa_demographics_by_country[self.country]["some_formal_education"]:
-            citizen.traits["is_educated"] = True
+        citizen.traits["is_educated"] = educated <\
+            africa_demographics_by_country[self.country]["some_formal_education"]
 
         return citizen
 
@@ -201,38 +206,57 @@ class StatisticalDistributions:
     #  Population class
     def __init__(self):
         self.stats = {
-            "housing": {"formal dwelling": .776,
-                        "informal dwelling": 13.6,
-                        "traditional dwelling": 7.9,
-                        "Other": .9},
-            "sex": {"male": .482,
-                    "female": .518},
-            "education": {"none": .086,
-                          "some primary": .123,
-                          "completed primary": .046,
-                          "some secondary": .339,
-                          "grade 12": .285,
-                          "higher": .121},
-            "water_access": {"none": .088,
-                             "outside the yard": .179,
-                             "inside dwelling/yard": .734},
-            "housing_tenure": {"own/paid off": .413,
-                               "own/not paid off": .118,
-                               "rent": .25,
-                               "rent-free": .186},
-            "refuse_disposal": {"weekly by local authority": .621,
-                                "local authority": .015,
-                                "communal dump": .019,
-                                "own dump": .282,
-                                "no disposal": .054},
-            "toilet_access": {"flush w/ sewage system": .57,
-                              "flush w/ septic tank": .031,
-                              "pit w/ ventilation": .088,
-                              "pit w/o ventilation": .193,
-                              "chemical toilet": .025,
-                              "bucket toilet": .021,
-                              "none": .052},
-            "electricity_access": {"yes": .842,
-                                   "no": .158},
-            "house_location": {"rural": .357,
-                               "urban": .643}}
+            'housing': {
+                'formal dwelling': .776,
+                'informal dwelling': 13.6,
+                'traditional dwelling': 7.9,
+                'Other': .9
+            },
+            'sex': {
+                'male': .482,
+                'female': .518
+            },
+            'education': {
+                'none': .086,
+                'some primary': .123,
+                'completed primary': .046,
+                'some secondary': .339,
+                'grade 12': .285,
+                'higher': .121
+            },
+            'water_access': {
+                'none': .088,
+                'outside the yard': .179,
+                'inside dwelling/yard': .734
+            },
+            'housing_tenure': {
+                'own/paid off': .413,
+                'own/not paid off': .118,
+                'rent': .25,
+                'rent-free': .186
+            },
+            'refuse_disposal': {
+                'weekly by local authority': .621,
+                'local authority': .015,
+                'communal dump': .019,
+                'own dump': .282,
+                'no disposal': .054
+            },
+            'toilet_access': {
+                'flush w/ sewage system': .57,
+                'flush w/ septic tank': .031,
+                'pit w/ ventilation': .088,
+                'pit w/o ventilation': .193,
+                'chemical toilet': .025,
+                'bucket toilet': .021,
+                'none': .052
+            },
+            'electricity_access': {
+                'yes': .842,
+                'no': .158
+            },
+            'house_location': {
+                'rural': .357,
+                'urban': .643
+            }
+        }
