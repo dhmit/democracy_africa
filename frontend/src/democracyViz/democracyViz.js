@@ -1,15 +1,12 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
 import * as d3 from 'd3';
-
 import { MapPath } from '../UILibrary/components';
-
 import {
     getCookie,
     project_features_and_create_svg_paths,
 } from '../common';
 import Navbar from '../about/Navbar';
-
 /**
  * Main component for the map quiz.
  *
@@ -25,6 +22,7 @@ export class DemocracyViz extends React.Component {
             scoreType: 'v2x_polyarchy',
             year: '1981',
         };
+        this.interval = null;
     }
 
     /**
@@ -55,9 +53,28 @@ export class DemocracyViz extends React.Component {
      *  Handles the change in year
      */
     handleYearChange(e) {
+        clearInterval(this.interval);
+        this.interval = null;
         this.setState({
             year: e.target.value,
         });
+    }
+
+    /**
+     * Sets the year to 1981 and goes through every year until 2018
+     */
+    cycleThroughYears() {
+        this.setState({year: '1981'});
+        if (this.interval === null) {
+            this.interval = setInterval(() => {
+                const nextYear = (parseInt(this.state.year) + 1) + '';
+                if (nextYear === '2018') {
+                    clearInterval(this.interval);
+                    this.interval = null;
+                }
+                this.setState({year: nextYear});
+            }, 300);
+        }
     }
 
     render() {
@@ -76,15 +93,19 @@ export class DemocracyViz extends React.Component {
                 </select>
                 <br/><br/>
                 <div className = 'slidecontainer'>
-                    <div className={'map'}>
+                    <div>
                         <input onChange={(e) => this.handleYearChange(e)}
                             type='range' id = 'year' name = 'year' min = '1981' max = '2018'
-                            step = '1' className= 'slider'>
+                            step = '1' className= 'slider' value={this.state.year}>
                         </input>
                     </div>
                     {this.state.year}
                 </div>
 
+                <br/>
+                <button onClick={() => this.cycleThroughYears()}>
+                    Play
+                </button>
                 <br/>
                 Currently grey either means:
                 <ul>
@@ -104,11 +125,23 @@ export class DemocracyViz extends React.Component {
                         year={this.state.year}
 
                     />
+
                 </div>
+
+                <svg className={'svgrect'}>
+                    <rect className={'gradient'} />
+
+                </svg>
+                <div className={'low-label'}>
+                    Lowest score
+                </div>
+
+
             </>
         );
     }
 }
+
 
 export class DemocracyMap extends React.Component {
     constructor(props) {
