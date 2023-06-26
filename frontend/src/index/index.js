@@ -8,19 +8,44 @@
 
 import React from 'react';
 import * as PropTypes from 'prop-types';
+import { Modal, Button } from 'react-bootstrap';
 import Navbar from '../about/Navbar';
 import { CaptionedImage, Footer } from '../UILibrary/components';
 
 export class IndexView extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            show: true
+        };
+    }
+
     render() {
+        const handleClose = () => this.setState({show: false});
+
         return (<>
+            <Modal show={this.state.show} onHide={handleClose} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Archived Copy</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    "Democracy and Development: Perspectives from Africa” was a project by the <a href = "https://digitalhumanities.mit.edu/">MIT Programs in Digital Humanities</a> in collaboration with our Spring 2020 Faculty Fellow, <a href = "https://polisci.mit.edu/people/evan-lieberman">Evan Lieberman</a>, Total Professor of Political Science and Contemporary Africa at MIT. The project has been archived, and is no longer being actively maintained.
+                    <br/><br/>
+                    The project contains student work, and there may be features which are incomplete or inaccurate
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
             <div className='landing-page'>
                 <Navbar/>
                 <div className="row" >
                     <div className='col-lg-6 col-md-12'>
                         <CaptionedImage
-                            alt='A South African voter casting his ballot.'
-                            caption='A South African voter casting his ballot.'
+                            alt='A voter in Ghana casting his ballot.'
+                            caption='A voter in Ghana casting his ballot.'
                             filename='man_voting.jpg'
                         />
                     </div>
