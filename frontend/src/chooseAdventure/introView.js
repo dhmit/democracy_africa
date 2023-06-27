@@ -1,39 +1,66 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
 
+import { CaptionedImage } from '../UILibrary/components';
+import Navbar from '../about/Navbar';
+
 
 /**
  * Component for displaying choose your own adventure skeleton
  */
 
 class IntroView extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
+        const { desc, img } = this.props.introDescriptions;
+        const { imgFilename, imgAlt, imgCaption } = img;
         return (
             <div>
+                <Navbar currentPage={this.props.currentPage}/>
                 <div className='row'>
-                    <div className={'col-6'}>
-                        {this.props.desc}
+                    <div
+                        className='col-md-8 col-sm-12 order-12 order-md-1'
+                        style={ { marginBottom: '20px' } }
+                    >
+                        <div style={ { marginBottom: '40px' } }>
+                            {desc}
+                        </div>
+                        <div className='intro-btn-container d-none d-md-block'>
+                            <div className={`${this.props.buttonStyle} start-button`}
+                                onClick={() => this.props.setView('stage')}>
+                                Get started
+                            </div>
+                        </div>
+                        <div className='intro-btn-container d-block d-md-none'>
+                            <div className={`${this.props.buttonStyle} start-button w-100`}
+                                onClick={() => this.props.setView('stage')}>
+                                Get started
+                            </div>
+                        </div>
                     </div>
-                    <img className= 'col-6' src={this.props.imgFile} alt="Sample" />
-
+                    <div
+                        className='col-md-4 col-sm-12 order-1 order-md-12'
+                        style={ { textAlign: 'center' } }
+                    >
+                        {imgFilename
+                            && <CaptionedImage
+                                filename={imgFilename}
+                                alt={imgAlt}
+                                caption={imgCaption}
+                            />
+                        }
+                    </div>
                 </div>
-
-                <button className='col-5 cyoa-button' onClick={() => this.props.setView('stage')}>
-                    Get started
-                </button>
             </div>
         );
     }
 }
-
 IntroView.propTypes = {
-    desc: PropTypes.string,
+    introDescriptions: PropTypes.object,
+    currentPage: PropTypes.string,
     setView: PropTypes.func,
-    imgFile: PropTypes.string,
+    buttonStyle: PropTypes.string,
 };
 
 export default IntroView;
+
+

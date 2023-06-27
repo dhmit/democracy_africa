@@ -1,97 +1,24 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
-
-const START_STAGE = {
-    'text': 'Your school district\'s budget was cut!',
-    'options': [{
-        'text': 'Start a media campaign',
-        'stageName': 'MEDIA_STAGE',
-        'successFactor': 0.9,
-        'successDetail':
-            'Since elections are taking place soon, it\'s good to raise awareness'
-            + ' about your issue among potential voters.',
-    },
-    {
-        'text': 'Take direct action',
-        'stageName': 'DIRECT_STAGE',
-        'successFactor': 0.1,
-        'successDetail':
-            'Unfortunately, the school officials are corrupt in your district, so '
-            + 'direct action is not as effective.',
-    }],
-};
-
-const MEDIA_STAGE = {
-    'text': 'You chose to start a media campaign.',
-    'options': [{
-        'text': 'Twitter',
-        'stageName': null,
-        'successFactor': 0.8,
-        'successDetail':
-            'Twitter is huge in your country! You\'ve successfully raised awareness'
-            + ' about your issue. ',
-    },
-    {
-        'text': 'Facebook',
-        'stageName': null,
-        'successFactor': 0,
-        'successDetail': 'Facebook is banned in your country, so most people can\'t see your'
-            + ' posts.',
-    },
-    {
-        'text': 'Radio',
-        'stageName': null,
-        'successFactor': 0.6,
-        'successDetail': 'The people who run the most popular local radio station support your'
-            + ' cause, and agree to share your message with the community.',
-    }],
-};
-
-const DIRECT_STAGE = {
-    'text': 'You chose to take direct action against the school.',
-    'options': [{
-        'text': 'Sue the principal',
-        'stageName': null,
-        'successFactor': 0.1,
-        'successDetail': 'This was a joke filler option, it should be replaced with something'
-            + ' else.',
-    },
-    {
-        'text': 'Ask the principal nicely',
-        'stageName': null,
-        'successFactor': 0.5,
-        'successDetail': 'The principal says no and has security escort you out.',
-    }],
-};
-
-const NAME_TO_STAGE = {
-    'START_STAGE': START_STAGE,
-    'MEDIA_STAGE': MEDIA_STAGE,
-    'DIRECT_STAGE': DIRECT_STAGE,
-};
-
-const getStageFromName = (stageName) => {
-    return NAME_TO_STAGE[stageName];
-};
+import { CaptionedImage } from '../UILibrary/components';
+import Navbar from '../about/Navbar';
 
 class Option extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
-        const stage = getStageFromName(this.props.option.stageName);
+        const stage = this.props.NAME_TO_STAGE[this.props.option.stageName];
         const { option } = this.props;
         return (
-            <button
-                onClick={() => this.props.setStage(stage, option)}
-            >{this.props.option.text}</button>
+            <div className='cyoa-button' onClick={() => this.props.setStage(stage, option)}>
+                {this.props.option.text}
+            </div>
         );
     }
 }
 Option.propTypes = {
+    NAME_TO_STAGE: PropTypes.object,
     option: PropTypes.object,
     setStage: PropTypes.func,
+    img_url: PropTypes.string,
 };
 
 /**
@@ -102,15 +29,14 @@ class StageView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            stage: getStageFromName('START_STAGE'),
+            stage: this.props.NAME_TO_STAGE['STAGE_1'],
         };
     }
 
     setStage = (stage, option) => {
         this.props.updateHistory(option);
-        this.props.updateSuccess(option.successFactor);
         if (option.stageName) {
-            this.setState({ stage: getStageFromName(option.stageName) });
+            this.setState({ stage: this.props.NAME_TO_STAGE[option.stageName] });
         } else {
             this.props.setView('end');
         }
@@ -118,29 +44,54 @@ class StageView extends React.Component {
     };
 
     render() {
+        const stage = this.state.stage;
+
         let optionComponents = <div>Loading...</div>;
-        if (this.state.stage.options) {
-            optionComponents = this.state.stage.options.map((option, k) => {
+        if (stage.options) {
+            optionComponents = stage.options.map((option, k) => {
                 return (
                     <Option
-                        key={k} option={option} setStage={this.setStage}
+                        key={k}
+                        option={option}
+                        setStage={this.setStage}
+                        NAME_TO_STAGE={this.props.NAME_TO_STAGE}
                     />
                 );
             });
         }
+
         return (
-            <div className={'wrapper'}>
-                <p>{this.state.stage.text}</p>
-                {optionComponents}
+            <div className='wrapper'>
+                <Navbar currentPage='feesmustfall'/>
+                <div className='row'>
+                    <div className='col-sm-12 col-md-6 order-sm-0 order-md-1'>
+                        {stage.imgFilename
+                            && <CaptionedImage
+                                alt={stage.imgAlt}
+                                caption={stage.imgCaption}
+                                filename={stage.imgFilename}
+                            />
+                        }
+                    </div>
+                    <div
+                        className='col-sm-12 col-md-6 order-sm-1 order-md-0'
+                        style={{ marginBottom: '10px' }}
+                    >
+                        <div>{stage.text}</div>
+                        <div className="option-selectors-list">
+                            {optionComponents}
+                        </div>
+                    </div>
+
+                </div>
             </div>
         );
     }
 }
 StageView.propTypes = {
-    stageName: PropTypes.string,
+    NAME_TO_STAGE: PropTypes.object,
     updateHistory: PropTypes.func,
     setView: PropTypes.func,
-    updateSuccess: PropTypes.func,
 };
 
 export default StageView;

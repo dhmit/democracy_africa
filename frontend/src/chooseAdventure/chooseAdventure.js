@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import IntroView from './introView.js';
 import StageView from './stageView.js';
 import EndView from './endView.js';
-
 
 /**
  * Component for displaying choose your own adventure skeleton
@@ -13,12 +14,8 @@ export class ChooseAdventureView extends React.Component {
         this.state = {
             view: 'intro',
             history: [],
-            successTotal: 1,
+            adventure: this.props.adventure,
         };
-    }
-
-    componentDidMount() {
-        // do your fetch and set initial state
     }
 
     setView = (view) => {
@@ -31,57 +28,40 @@ export class ChooseAdventureView extends React.Component {
         }));
     };
 
-    updateSuccess = (successFactor) => {
-        this.setState((prevState) => ({
-            successTotal: prevState.successTotal * successFactor,
-        }));
-    };
-
     resetProgress = () => {
         this.setState({
-            successTotal: 1,
             history: [],
         });
     };
 
-
     render() {
-        const desc = 'example paragraph: Paragraphs are the building blocks of papers. Many '
-            + 'students '
-            + 'define paragraphs in terms of length: a paragraph is a group of at least five '
-            + 'sentences, '
-            + 'a paragraph is half a page long, etc. In reality, though, the unity and coherence '
-            + 'of '
-            + 'ideas among sentences is what constitutes a paragraph. A paragraph is defined as '
-            + '“a '
-            + 'group of sentences or a single sentence that forms a unit” (Lunsford and Connors '
-            + '116). '
-            + 'Length and appearance do not determine whether a section in a paper is a paragraph. '
-            + 'For instance, in some styles of writing, particularly journalistic styles, a '
-            + 'paragraph '
-            + 'can be just one sentence long. Ultimately, a paragraph is a sentence or group of '
-            + 'sentences that support one main idea. In this handout, we will refer to this as the '
-            + '“controlling idea,” because it controls what happens in the rest of the paragraph.';
-        console.log('rerendering');
-        return (
-            <div>
-                {this.state.view === 'intro' && <IntroView
-                    desc={desc}
-                    setView={this.setView}
-                    imgFile={'/static/img/sample.jpg'}
-                />}
-                {this.state.view === 'stage' && <StageView
-                    setView={this.setView}
-                    pdateSuccess={this.updateSuccess}
-                    updateHistory={this.updateHistory}
-                />}
-                {this.state.view === 'end' && <EndView
-                    successTotal={this.state.successTotal}
-                    history={this.state.history}
-                    setView={this.setView}
-                    resetProgress={this.resetProgress}
-                />}
-            </div>
-        );
+        console.log(this.state);
+        switch (this.state.view) {
+        case 'intro':
+            return (<IntroView
+                introDescriptions={this.state.adventure.intro}
+                setView={this.setView}
+                buttonStyle='cyoa-button'
+                currentPage={this.state.adventure.pageName}
+            />);
+        case 'stage':
+            return (<StageView
+                NAME_TO_STAGE={this.state.adventure.NAME_TO_STAGE}
+                setView={this.setView}
+                updateHistory={this.updateHistory}
+            />);
+        case 'end':
+            return (<EndView
+                endDescriptions={this.state.adventure.end}
+                history={this.state.history}
+                setView={this.setView}
+                resetProgress={this.resetProgress}
+            />);
+        default:
+            return (<>Loading...</>);
+        }
     }
 }
+ChooseAdventureView.propTypes = {
+    adventure: PropTypes.object,
+};

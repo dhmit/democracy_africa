@@ -2,6 +2,57 @@
 
 }
 
-.cyoa-button{
-    position: center;
+.intro-btn-container {
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.cyoa-button, .end-option {
+    border: 1px solid #d0d0d0;
+    border-radius: 1rem;
+    background: #f7f7f7;
+    transition: 0.8s;
+    margin: 10px auto 0;
+    padding: 10px;
+}
+
+.cyoa-button:hover {
+    background: #f0f0f0;
+    border: 1px solid #787878;
+    cursor: pointer;
+}
+
+.cyoa-button a:hover {
+    text-decoration: none;
+}
+
+.cyoa-button:focus {
+    outline: none;
+}
+
+.intro-img, .stage-img {
+    margin-bottom: 20px;
+}
+
+.start-button {
+    //border: 1px solid white !important;
+    //background-color: #6186b0;
+    //color: white;
+    text-align: center;
+    width: 10em;
+    cursor: pointer;
+}
+
+.start-button:hover {
+    //background-color: #6d95c2;
+}
+
+.end-button {
+    @extend .btn-block;
+    @extend .btn;
+}
+
+.adventure-selector {
+    text-align: center;
 }

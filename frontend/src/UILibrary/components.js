@@ -81,11 +81,31 @@ MapPath.propTypes = {
 };
 
 
+export class CaptionedImage extends React.Component {
+    render() {
+        return (
+            <figure className="figure w-100">
+                <img
+                    className='figure-img img-fluid w-100'
+                    src={'/static/img/' + this.props.filename}
+                    alt={this.props.alt}
+                />
+                <figcaption className="figure-caption" style={ { textAlign: 'left' } }>
+                    {this.props.caption}
+                </figcaption>
+            </figure>
 
-/**
- * TODO: create a border, navbar, etc. that emulates how these are going to look in
- *       the actual EdX environment
- */
+        );
+    }
+}
+CaptionedImage.propTypes = {
+    filename: PropTypes.string,
+    caption: PropTypes.object,
+    alt: PropTypes.string,
+};
+
+
+
 export class EdXView extends React.Component {
     render() {
         return (
@@ -114,7 +134,7 @@ export class EdXView extends React.Component {
                         </nav>
                     </div>
                     {this.props.app}
-                    <div className='text-center'>
+                    <div className='text-center bottom-buttons'>
                         <nav className='edx-sequence-nav'>
                             <button className='ml-auto'>
                                 <FontAwesomeIcon icon={faChevronLeft} /> Previous
@@ -125,6 +145,7 @@ export class EdXView extends React.Component {
                         </nav>
                     </div>
                 </main>
+                <Footer/>
             </section>
         );
     }
@@ -133,3 +154,46 @@ EdXView.propTypes = {
     app: PropTypes.element,
     title: PropTypes.string,
 };
+
+
+
+
+export class Footer extends React.Component {
+    render() {
+        return (
+            <footer className="footer bg-white text-dark text-center mt-auto">
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col-4 py-3">
+                            <a href="https://digitalhumanities.mit.edu/">
+                                <img
+                                    src="/static/img/dh_logo.svg"
+                                    className='footer-img'
+                                    alt='Digital Humanities at MIT Logo'
+                                />
+                            </a>
+                        </div>
+                        <div className="col-4 py-3">
+                            <a href="https://www.mit.edu/">
+                                <img
+                                    src="/static/img/mit_logo.svg"
+                                    className='footer-img'
+                                    alt='MIT Logo'
+                                />
+                            </a>
+                        </div>
+                        <div className="col-4 py-3">
+                            <a href="https://www.mellon.org/">
+                                <img
+                                    src="/static/img/mellon_logo.svg"
+                                    className='footer-img'
+                                    alt="Mellon Foundation Logo"
+                                />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        );
+    }
+}
