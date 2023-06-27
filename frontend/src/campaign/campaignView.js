@@ -50,7 +50,7 @@ export class CampaignView extends React.Component {
         super(props);
         this.state = {
             clickedProvince: null,
-            countryName: null,
+            countryName: 'South Africa',
             mapData: null,
             populationData: null,
             round: 0,
@@ -59,7 +59,10 @@ export class CampaignView extends React.Component {
             speechProposal: null,
             view: 'intro',
             topicNames: [],
+            hints_count: 0,
+            hints: null,
         };
+        this.updatePopulation = this.updatePopulation.bind(this);
     }
 
     componentDidUpdate() {
@@ -224,9 +227,7 @@ export class CampaignView extends React.Component {
             });
             const geo_json = await map.json();
             const mapData = project_features_and_create_svg_paths(
-                geo_json,
-                this.map_width,
-                this.map_height,
+                geo_json
             );
             this.setState({
                 mapData: mapData,
@@ -236,11 +237,37 @@ export class CampaignView extends React.Component {
         }
     }
 
-    updatePopulation = (newPopulation) => {
-        this.setState({
-            populationData: newPopulation,
-        });
-    };
+    async fetchHints() {
+        try {
+            const res = await fetch('/api/campaign_hints/', {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                },
+            });
+            const hints = await res.json();
+            this.setState({
+                hints: JSON.parse(JSON.stringify(hints)),
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    /**
+     * When this component is mounted to the DOM, get democracy score data from the server
+     */
+    async componentDidMount() {
+        this.fetchPopulation();
+        this.fetchCountryMap();
+        this.fetchHints();
+    }
+
+    updatePopulation(newCitizenList) {
+        const { populationData } = this.state;
+        populationData.citizen_list = newCitizenList;
+        this.setState({ populationData });
+    }
 
     countTotalSupport() {
         let totalSupport = 0;
@@ -269,6 +296,7 @@ export class CampaignView extends React.Component {
             countryName: name,
             clickedProvince: '',
             round: 0,
+            hints_count: 0
         },
         () => {
             this.fetchPopulation();
@@ -284,6 +312,18 @@ export class CampaignView extends React.Component {
             });
         } else {
             this.changeView({ view: 'submitted' });
+        }
+    };
+
+    displayHint = () => {
+        console.log('HINTS COUNT', this.state.hints_count);
+        if (this.state.hints_count < 3) {
+            alert(this.state.hints[this.state.countryName]['hints'][this.state.hints_count]);
+            this.setState({
+                hints_count: this.state.hints_count + 1,
+            });
+        } else {
+            alert('You have no hints left!');
         }
     };
 
@@ -390,7 +430,7 @@ export class CampaignView extends React.Component {
                 </>
             );
         }
-        if (!(this.state.populationData && this.state.mapData)) {
+        if (!(this.state.populationData && this.state.mapData && this.state.hints)) {
             return (<div>Loading!</div>);
         }
         const {
@@ -482,6 +522,16 @@ export class CampaignView extends React.Component {
                     </OverlayTrigger>
                     : map_svg
                 }
+                <div className={'campaign-container'}>
+                    <div className={'speech-maker'}>
+                        <div className='hint_button'>
+                            <button
+                                type={'button'}
+                                onClick={this.displayHint}
+                            > Hint </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
 
