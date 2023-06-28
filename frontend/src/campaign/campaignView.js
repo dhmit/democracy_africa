@@ -1,23 +1,19 @@
 import React from 'react';
 
-// eslint-disable-next-line no-unused-vars
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import PopoverTitle from 'react-bootstrap/PopoverTitle';
-// eslint-disable-next-line no-unused-vars
 import PopoverContent from 'react-bootstrap/PopoverContent';
 
 import { MapPath } from '../UILibrary/components';
 
 import { Speech, get_country_prop, get_default_proposal } from './speech';
+import { project_features_and_create_svg_paths } from '../common';
 import Feedback from './feedback';
 import Results from './results';
 import CountrySelectorPopup from './countrySelectorPopup';
 import IntroView from '../chooseAdventure/introView';
 import Navbar from '../about/Navbar';
-
-import { project_features_and_create_svg_paths } from '../common';
-
 import Citizen from './citizen';
 
 const generateOverlayText = (services, priorityType) => {
@@ -84,7 +80,6 @@ export class CampaignView extends React.Component {
         const population = this.state.populationData;
         Object.keys(population).forEach((province) => {
             Object.keys(population[province]['citizens']).forEach((citizen_name) => {
-                // eslint-disable-next-line max-len
                 const citizen = population[province]['citizens'][citizen_name];
                 const topicNames = get_country_prop(this.state.countryName, 'topicNames');
                 Object.keys(citizen['traits']).forEach((trait) => {
@@ -538,14 +533,12 @@ export class CampaignView extends React.Component {
         if (this.state.view === 'countryInfo') {
             const infoInstructions = (
                 <>
-                    <p>
-                        Your campaign team has compiled some research they did on the needs of the
-                        inhabitants of each province.
-                    </p>
-                    <p>
-                        Click on each province to see what your team
-                        has found out about what issues the citizens prefer to have more priority.
-                    </p>
+                    Your campaign team has compiled some research they did on the needs of the
+                    inhabitants of each province.
+                    <br/>
+                    Click on each province to see what your team
+                    has found out about what issues the citizens prefer to have more priority.
+                    <br/>
                 </>
             );
 
