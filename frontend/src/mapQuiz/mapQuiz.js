@@ -9,6 +9,7 @@ import {
     getCookie,
     project_features_and_create_svg_paths,
 } from '../common';
+import Navbar from '../about/Navbar';
 
 /**
  * Main component for the map quiz.
@@ -126,6 +127,7 @@ export class MapQuiz extends React.Component {
         }
         return (
             <div className="container-fluid">
+                <Navbar/>
                 <div className="row">
                     <div className="col">
                         <h1>Africa Map Quiz</h1>

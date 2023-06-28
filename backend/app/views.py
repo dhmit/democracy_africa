@@ -64,6 +64,15 @@ def africa_demographics_by_country(request):
     return Response(json.dumps(countries))
 
 
+@api_view(['GET'])
+def campaign_hints(request):
+    """
+    Retrieves hints for campaign game
+    """
+    hints = load_json('campaign_hints.json')
+    return Response(hints)
+
+
 @api_view(['POST'])
 def population(request):
     """

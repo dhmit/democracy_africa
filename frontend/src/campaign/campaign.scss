@@ -4,18 +4,26 @@ $edx-button-color: #e7e7e7;
 .speech-context {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 1em;
-    text-align: center;
+    justify-content: left;
+    align-items: flex-start;
+    text-align: left;
 
     &_points {
         font-size: 20px;
-        text-align: center;
+        text-align: left;
         font-weight: 600;
+        white-space: pre-wrap; //Makes '\n' display correctly on page
+        &_small {
+            font-size: 19px;
+            text-align: left;
+            font-weight: 600;
+            white-space: pre-wrap;
+        }
     }
     &_count {
         margin-bottom: 0;
+        white-space: pre-wrap;
+        @extend .text-left;
     }
 }
 
@@ -23,42 +31,63 @@ $edx-button-color: #e7e7e7;
     display: flex;
     flex-basis: 0;
     flex-wrap: wrap;
-    justify-content: flex-end;
+    margin-bottom: 50px;
+    justify-content: flex-start;
 
     .speech-option {
         width: 100%;
         display: flex;
 
         &_label {
-            padding: 0.5em;
-            width: 40%;
+            padding: 0.5em 1.5em 0.5em 0.5em;
+            width: 50%;
             font-weight: 700;
         }
 
         &_btns {
-            width: 60%;
+            width: 45%;
             padding: 0.5em;
             display: flex;
             //flex-basis: 0;
             justify-content: space-between;
         }
 
-    }
-}
+        &_priority {
+            width: 45%;
+            display: flex;
+            justify-content: space-between;
+        }
 
-.speech-option-desc {
-    width: 60%;
-    display: flex;
-    justify-content: space-between;
+    }
 }
 
 .campaign-map {
     text-align: center;
 }
 
+.province-info-text {
+    margin-bottom: 20px;
+}
+
+.popover-text {
+    margin-bottom: 0px;
+}
+
+.province-popover-info {
+    text-align: left;
+    align-content: flex-start;
+}
+
 .button-containers{
     padding-left: 10%;
     text-align: center;
+}
+
+.hint_button {
+    display: flex;
+    justify-content: center;
+    padding-top: 7px;
+    padding-bottom: 7px;
 }
 
 .score-button{
@@ -70,32 +99,22 @@ $edx-button-color: #e7e7e7;
     text-align: center;
 }
 
-.campaign-container{
-    display: flex;
-    flex-basis: 0;
-    justify-content: center;
-}
-
-.map-div{
-    width: 58%
-}
-
-.feedback,
-.speech-maker{
-    width: 42%
-}
-
 .resultTable{
     border: 1px $edx-border-color solid;
     text-align: center;
     width: 100%;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
+    overflow-x: auto;
 
     td,
     th {
-        padding: 0.5em 1em;
+        border: 1px $edx-border-color solid;
+        padding: 0.5em 0;
     }
+}
 
+.table-provinces{
+    padding: 0.5em !important;
 }
 
 .resultHeader{
@@ -109,44 +128,30 @@ $edx-button-color: #e7e7e7;
     border: 3px $edx-border-color solid;
 }
 
-
-.campaign-result_graphics {
+.result-population {
     display: flex;
-    flex-basis: 0;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0;
 
-    .result-map,
-    .result-population {
-        width: 50%;
-    }
-
-    .result-population {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
-        &_header {
-            font-weight: 600;
-            margin-bottom: 1em;
-        }
+    &_header {
+        font-weight: 600;
+        margin-bottom: 1em;
     }
 }
 
 .country-selector {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 50rem;
+    position: fixed;
+    left: 10%;
+    top: 20%;
+    width: 80%;
+    height: 55%;
+    overflow-y: auto;
     background-color: white;
     text-align: center;
     padding: 1.5em;
-    transform: translate(-50%, -50%);
-    border: 1px solid $edx-border-color; // from edX
+    border: 2px solid $edx-border-color; // from edX
+    border-radius: 8px;
     z-index: 10;
 
     option {
@@ -159,11 +164,23 @@ $edx-button-color: #e7e7e7;
 
 }
 
+.background {
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1;
+}
+
 .campaign-btn {
     background-color: white !important;
     border: 1px solid $edx-border-color;
     padding: 0.75em 1em;
     border-radius: 0.25em;
+    margin: 0 auto;
     transition: 0.2s ease-in;
 
     &:hover {
@@ -176,7 +193,6 @@ $edx-button-color: #e7e7e7;
 
 .speech-btn {
     width: 100px;
-    margin: 0 0.5rem;
 }
 
 .campaign-header {
@@ -193,5 +209,119 @@ $edx-button-color: #e7e7e7;
 
     &-results {
         margin-bottom: 1em;
+        text-align: left;
+        padding: 0;
     }
+}
+
+.retry-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#content {
+    cursor: pointer;
+}
+
+.support {
+    color: #5abf5a;
+}
+
+.unsupport {
+    color: #db5653;
+}
+
+.country-header {
+    display: flex;
+    padding: 1rem;
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 20px;
+    width: 100%;
+    .close {
+        margin: -1.5rem -1rem -1rem;
+        font-size: 40px;
+        cursor: pointer;
+    }
+    .country-title {
+        font-size: 30px;
+        margin: 0 auto;
+    }
+}
+
+.country-options {
+    display: flex;
+    margin: 0;
+}
+
+.map-col {
+    text-align: center;
+}
+
+.country-button {
+    background-color: white !important;
+    border: 1px solid $edx-border-color;
+    padding: 0.75em 1em;
+    border-radius: 0.25em;
+    margin: -10px 0 0;
+    width: 100%;
+    transition: 0.2s ease-in;
+
+    &:hover {
+        background-color: #f7f7f7 !important;
+    }
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.citizen-reactions {
+    margin-bottom: 30px;
+    width: 70%;
+}
+
+.citizen-text {
+    margin-bottom: 10px;
+}
+
+.feedback-instructions {
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.feedback-pop {
+    margin-bottom: 30px;
+}
+
+.speech-warning {
+    display: flex;
+    flex-basis: 0;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.priority-nums {
+    font-size: 16px;
+}
+
+.intro-campaign-btn {
+    background-color: white !important;
+    border: 1px solid $edx-border-color;
+    padding: 0.2em 1em;
+    border-radius: 0.25em;
+    transition: 0.2s ease-in;
+
+    &:hover {
+        background-color: #f7f7f7 !important;
+    }
+    &:focus {
+        outline: none;
+    }
+}
+
+.text-wrap {
+    float: left;
+    margin: 10px;
+    flex-wrap: wrap;
 }

@@ -1,545 +1,80 @@
 import React from 'react';
-import * as PropTypes from 'prop-types';
 
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import PopoverTitle from 'react-bootstrap/PopoverTitle';
 import PopoverContent from 'react-bootstrap/PopoverContent';
-import { project_features_and_create_svg_paths } from '../common';
 
 import { MapPath } from '../UILibrary/components';
-import './campaign.scss';
 
+import { Speech, get_country_prop, get_default_proposal } from './speech';
+import { project_features_and_create_svg_paths } from '../common';
+import Feedback from './feedback';
+import Results from './results';
+import CountrySelectorPopup from './countrySelectorPopup';
 import IntroView from '../chooseAdventure/introView';
+import Navbar from '../about/Navbar';
+import Citizen from './citizen';
 
-// NOTE(ra): this is a person icon path that I just bounced out of Illustrator and am hardcoding
-// here for expediency. We should really put this in an SVG file and get it into the project
-// in a more reasonable way!
-
-// eslint-disable-next-line max-len
-const PERSON_ICON_PATH = 'M437.02,330.98c-27.883-27.882-61.071-48.523-97.281-61.018C378.521,243.251,404,198.548,404,148 C404,66.393,337.607,0,256,0S108,66.393,108,148c0,50.548,25.479,95.251,64.262,121.962 c-36.21,12.495-69.398,33.136-97.281,61.018C26.629,379.333,0,443.62,0,512h40c0-119.103,96.897-216,216-216s216,96.897,216,216 h40C512,443.62,485.371,379.333,437.02,330.98z M256,256c-59.551,0-108-48.448-108-108S196.449,40,256,40 c59.551,0,108,48.448,108,108S315.551,256,256,256z';
-
-const get_default_proposal = (topic_names) => {
-    const proposal = {};
-    topic_names.forEach((topic) => {
-        proposal[topic] = 3;
-    });
-    return proposal;
+const generateOverlayText = (services, priorityType) => {
+    let newText = ' ';
+    for (let i = 0; i < services.length; i++) {
+        newText += services[i];
+        priorityType = priorityType.toUpperCase();
+        if (services.length === 1) {
+            newText += '.';
+        } else if (i === services.length - 2) {
+            newText += ' and ';
+        } else if (i < services.length - 1 && services.length > 2) {
+            newText += ', ';
+        } else {
+            newText += '.';
+        }
+    }
+    return (
+        <p className='popover-text'>
+            Citizens of this province have a <strong>{priorityType}</strong> priority for
+            {newText}
+        </p>
+    );
 };
 
-const COUNTRIES = [
-    {
-        name: 'Botswana',
-        ISO: 'BWA',
-        population: '2.254 million',
-        difficulty: 'Easy',
-        topicNames: [
-            'Education',
-            'Creating jobs',
-            'Fighting corruption',
-        ],
-        supportThreshold: 0.5,
-        max_priority_points: 12,
-    },
-    {
-        name: 'Kenya',
-        ISO: 'KEN',
-        population: '51.39 million',
-        difficulty: 'Medium',
-        topicNames: [
-            'Health services',
-            'Education',
-            'Water and sanitation',
-            'Equal rights for women',
-            'Creating jobs',
-            'Fighting corruption',
-        ],
-        supportThreshold: 2,
-        max_priority_points: 22,
-    },
-    {
-        name: 'South Africa',
-        ISO: 'ZAF',
-        population: '57.78 million',
-        difficulty: 'Hard',
-        topicNames: [
-            'Health services',
-            'Education',
-            'Water and sanitation',
-            'Roads and bridges',
-            'Electricity',
-            'Equal rights for women',
-            'Improving living standards for the poor',
-            'Creating jobs',
-            'Fighting corruption',
-            'Reducing violent community conflict',
-        ],
-        supportThreshold: 12,
-        max_priority_points: 35,
-    },
-];
-
-function get_country_prop(country_name, prop_name) {
-    // Each country has its own set of topicNames
-    const country = COUNTRIES.filter((obj) => {
-        return obj.name === country_name;
-    })[0];
-    return country[prop_name];
-}
-
-
-class Speech extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            speechProposal: this.props.speechProposal,
-            result: 0,
-            total: Object.keys(this.props.speechProposal).reduce((acc, topic) => {
-                return acc + this.props.speechProposal[topic];
-            }, 0),
-        };
-        this.difference_threshold = get_country_prop(this.props.countryName, 'supportThreshold');
-        this.max_priority_points = get_country_prop(this.props.countryName, 'max_priority_points');
-    }
-
-    /**
-     * Resets the speech such that every topic has a value of 1.
-     * Used when component mounts and upon onClick of a button
-     */
-    resetSpeech = () => {
-        this.setState({
-            speechProposal: get_default_proposal(this.props.topicNames),
-            total: 30,
-        }, () => {
-            this.setState({ result: this.countSupporters() });
-        });
-    };
-
-    componentDidMount() {
-        if (this.props.canReset) {
-            this.countSupporters(); // in the case that user changed nothing
-        }
-    }
-
-    generateStory() {
-        if (this.props.round === 1) {
-            return 'You just started your campaign and we want you to set out '
-                    + 'your policies so that we can conduct polls to gauge the initial reaction.';
-        }
-        if (this.props.round === 2) {
-            return 'We can do two more polls before elections.';
-        }
-        return 'This is the final policies that people will see in the election';
-    }
-
-    componentDidUpdate(prevProps) {
-        if (prevProps.countryName !== this.props.countryName) {
-            this.resetSpeech();
-        }
-        if (prevProps.countryName !== this.props.countryName
-            || prevProps.population !== this.props.population) {
-            this.setState({
-                result: this.countSupporters(),
-            });
-        }
-    }
-
-    /**
-     * Handles when the slider changes by changing the state of what the maximum values should
-     * be for each category and updates the number of supporters
-     * @param e The event that is triggered, use e.target.value to get the value of the slider
-     * @param topic Tells which topic the slider belongs to so that it updates the speech
-     */
-    handleButtonOnChange = (e, topic) => {
-        const newVal = parseInt(e.target.value);
-        const newProposal = this.props.speechProposal;
-        const oldVal = newProposal[topic];
-        if (this.state.total + newVal - oldVal <= this.max_priority_points) {
-            newProposal[topic] = newVal;
-            this.setState({
-                speechProposal: newProposal,
-                total: this.state.total + newVal - oldVal,
-                result: this.countSupporters(),
-            });
-        }
-    };
-
-    /**
-     * Determines whether a citizen will support you based on your speech.
-     * @returns {number} Number of people that will support you
-     */
-    countSupporters = () => {
-        let count = 0;
-        Object.keys(this.props.population).forEach((province) => {
-            let numSupporters = 0;
-            this.props.population[province]['citizens'].forEach((citizen) => {
-                let difference_score = 0;
-                for (const topic of Object.keys(this.state.speechProposal)) {
-                    if (this.state.speechProposal[topic] < citizen['traits'][topic]) {
-                        difference_score += (citizen['traits'][topic]
-                            - this.state.speechProposal[topic]) ** 2;
-                    }
-                }
-
-                if (difference_score > this.difference_threshold) {
-                    citizen.will_support = false;
-                } else {
-                    citizen.will_support = true;
-                    numSupporters += 1;
-                    count++;
-                }
-            });
-            this.props.population[province]['totalSupporters'] = numSupporters;
-        });
-
-        this.props.updatePopulation(this.props.population);
-        return count;
-    };
-
-    priorityPoint() {
-        if (this.max_priority_points - this.state.total > 0) {
-            return 'You can prioritize more things.';
-        }
-        return 'You need to de-prioritize others first';
-    }
-
-    render() {
-        const topics = this.props.topicNames.map((topic, key) => (
-            <div key={key} className='speech-option'>
-                <div className='speech-option_label'>
-                    {topic}
-                </div>
-                <div className='speech-option_btns'>
-                    {[...Array(5).keys()].map((score, j) => (
-                        <input className='speech-radio' type='radio' name={topic} key={j}
-                            id={'inlineRadio' + score + 1} value={score + 1}
-                            checked={this.state.speechProposal[topic] === score + 1}
-                            onChange={(e) => this.handleButtonOnChange(e, topic)}/>
-                    ))}
-                </div>
-            </div>
-        ));
-
-        return (
-            <div className="row w-100"><div className='col'>
-                <div className='speech-context'>
-                    <p className='speech-context_count'>
-                        {this.generateStory()}
-                    </p>
-                    <div className='speech-context_points'>
-                        {this.priorityPoint()}
-                    </div>
-                </div>
-                <div className='speech-options'>
-                    <div className='speech-option-desc'>
-                        <span>Low priority</span>
-                        <span>High priority</span>
-                    </div>
-                    {topics}
-                </div>
-                <div className='reset_button'>
-                    <button
-                        className='campaign-btn speech-btn'
-                        onClick={this.props.submitPriorities}
-                    >
-                        Submit
-                    </button>
-                </div>
-            </div></div>
-        );
-    }
-}
-Speech.propTypes = {
-    population: PropTypes.object,
-    countryName: PropTypes.string,
-    updatePopulation: PropTypes.func,
-    submitPriorities: PropTypes.func,
-    speechProposal: PropTypes.object,
-    topicNames: PropTypes.array,
-    canReset: PropTypes.bool,
-    round: PropTypes.number,
-};
-
-class Feedback extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        const { results, clickedProvince } = this.props;
-        let citizenReactions;
-        if (clickedProvince) {
-            const sample = results[clickedProvince]['citizens'].slice(0, 100);
-            citizenReactions = sample.map((citizen, k) => (
-                <Citizen
-                    key={k}
-                    data={citizen}
-                    title={`Citizen of ${citizen['province']}`}
-                    generateDescription={this.props.generateDescription}
-                />
-            ));
-        }
-        const description = (<div>
-            {clickedProvince
-                ? (<strong>
-                    Round {this.props.round - 1} results for {clickedProvince}
-                </strong>)
-                : (<></>)}
-        </div>);
-
-        return (
-            <div className='feedback'>
-                <div className='feedback-results'>
-                    <p>
-                    Click on a province, and then mouse over citizens to see their reactions to your
-                    proposal.
-                    </p>
-
-                    {description}
-                    <div className='feedback-pop'>{citizenReactions}</div>
-                </div>
-                <button className='campaign-btn' onClick={this.props.nextRound}>
-                    Next Round
-                </button>
-            </div>
-        );
-    }
-}
-Feedback.propTypes = {
-    clickedProvince: PropTypes.string,
-    generateDescription: PropTypes.func,
-    results: PropTypes.object,
-    round: PropTypes.number,
-    nextRound: PropTypes.func,
-};
-
-
-class Results extends React.Component {
-    constructor(props) {
-        super(props);
-        this.map_height = 500;
-        this.map_width = 500;
-    }
-
-    render() {
-        const resultsData = this.props.provinceData;
-        if (!resultsData) {
-            return (<></>);
-        }
-
-        // TODO: possibly refactor this further since it is similar to CampaignView
-        const sample = [];
-        Object.values(this.props.provinceData).forEach((province) => {
-            const citizens = province['citizens'];
-            sample.push(...citizens.slice(0, Math.round(citizens.length * 0.25)));
-        });
-        const citizens = sample.map((citizen, k) => (
-            <Citizen
-                key={k}
-                data={citizen}
-                title={`Citizen of ${citizen['province']}`}
-                generateDescription={this.props.generateDescription}
-            />
-        ));
-
-        return (
-            <div>
-                <table border='1' className={'resultTable'}>
-                    <tbody>
-                        <tr>
-                            <th>Province Name</th>
-                            <th>Number of Supporters</th>
-                            <th>Number of People</th>
-                            <th>Percentage of Votes</th>
-                        </tr>
-                        {Object.keys(resultsData).map((province, k) => (
-                            (
-                                province !== 'countryTotal'
-                                && province !== 'countrySupporters'
-                                && province !== 'countryName'
-                            )
-                            && <tr key={k}>
-                                <td>{province}</td>
-                                <td>{resultsData[province].totalSupporters}</td>
-                                <td>{resultsData[province].citizens.length}</td>
-                                <td>{Math.round((resultsData[province].totalSupporters
-                                    / resultsData[province].citizens.length) * 100)}%</td>
-                            </tr>
-                        ))}
-                        <tr className={'countryResult'}>
-                            <th>{this.props.countryName}</th>
-                            <th>{this.props.countryData.totalSupport}</th>
-                            <th>{this.props.countryData.totalPopulation}</th>
-                            <th>{Math.round((this.props.countryData.totalSupport
-                                                / this.props.countryData.totalPopulation) * 100)}%
-                            </th>
-                        </tr>
-                    </tbody>
-                </table>
-                <div className='campaign-result_graphics'>
-                    <svg
-                        height={this.map_height}
-                        width={this.map_width}
-                        id='content'
-                        className='result-map'
-                    >
-                        {this.props.mapData.map((province, i) => {
-                            let countryFill;
-                            if (province.name) {
-                                countryFill = resultsData[province.name].totalSupporters
-                                / resultsData[province.name].citizens.length > 0.5
-                                    ? '#5abf5a' : '#db5653';
-                            } else {
-                                countryFill = '#F6F4D2';
-                            }
-
-                            return <MapPath
-                                key={i}
-                                path={province.svg_path}
-                                id={province.postal}
-                                fill={countryFill}
-                                stroke='black'
-                                strokeWidth='1'
-                                useColorTransition={false}
-                            />;
-                        })}
-                    </svg>
-                    <div className='result-population'>
-                        <div className='result-population_header'>
-                            Results for sample population of size {sample.length}
-                        </div>
-                        <div className='result-population_svg'>
-                            {citizens}
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        );
-    }
-}
-Results.propTypes = {
-    provinceData: PropTypes.object,
-    countryData: PropTypes.object,
-    countryName: PropTypes.string,
-    mapData: PropTypes.array,
-    generateDescription: PropTypes.func,
-};
-
-/**
- * Component for displaying citizen information
- *
- * The fill indicates the citizen's stance on the budget,
- * and hovering over the component displays the citizen's traits
- */
-export class Citizen extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            show: false,
-        };
-    }
-
-    render() {
-        const description = (
-            <Popover id='popover-basic'>
-                <Popover.Title>
-                    {this.props.title}
-                </Popover.Title>
-                <Popover.Content>
-                    {this.props.generateDescription(this.props.data)}
-                </Popover.Content>
-            </Popover>
-        );
-        return (
-            <OverlayTrigger
-                overlay={description}
-                placement='right'
-            >
-                <svg
-                    className='citizen'
-                    height='20'
-                    width='20'
-                    viewBox="0 0 512 512"
-                    fill={this.props.data.will_support ? '#5abf5a' : '#db5653'}
-                >
-                    <path d={PERSON_ICON_PATH} />
-                </svg>
-            </OverlayTrigger>
-        );
-    }
-}
-Citizen.propTypes = {
-    data: PropTypes.object,
-    title: PropTypes.string,
-    generateDescription: PropTypes.func,
-};
-
-class CountrySelectorPopup extends React.Component {
-    selectCountryClosePopup = (country) => {
-        this.props.changeCountry(country);
-        this.props.closePopup();
-    };
-
-    render() {
-        return (
-            <div className='country-selector'>
-                <h3>Select a country</h3>
-                <div className='row w-100'>
-                    {COUNTRIES.map((country, key) => (
-                        <div key={key} className='col-4'>
-                            <div className='card' >
-                                <div className='card-header'>
-                                    <h5>{country.name}</h5>
-                                </div>
-                                <div className='card-body'>
-                                    <table className='table'><tbody>
-                                        <tr>
-                                            <td>Population</td>
-                                            <td>{country.population}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Difficulty</td>
-                                            <td>{country.difficulty}</td>
-                                        </tr>
-                                    </tbody></table>
-                                </div>
-                                <button
-                                    onClick={() => this.selectCountryClosePopup(country.name)}
-                                >Start</button>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        );
-    }
-}
-CountrySelectorPopup.propTypes = {
-    changeCountry: PropTypes.func,
-    closePopup: PropTypes.func,
-};
-
+const roundAggregateData = { };
 
 export class CampaignView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            populationData: null,
-            mapData: null,
             clickedProvince: null,
-            countryName: null,
-            view: 'intro',
+            countryName: 'South Africa',
+            mapData: null,
+            populationData: null,
             round: 0,
-            speechProposal: null,
-            topicNames: [],
             sampleSize: 75,
             showCountrySelector: false,
+            speechProposal: null,
+            view: 'intro',
+            topicNames: [],
+            hints_count: 0,
+            hints: null,
         };
-        this.map_height = 500;
-        this.map_width = 500;
         this.updatePopulation = this.updatePopulation.bind(this);
     }
+
+    componentDidUpdate() {
+        if (this.state.showCountrySelector) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    }
+
+    changeView = (newState) => {
+        this.setState({
+            ...newState,
+            clickedProvince: '',
+        }, () => { window.scrollTo(0, 0); });
+    };
 
     calculate_averages() {
         const population = this.state.populationData;
@@ -570,6 +105,23 @@ export class CampaignView extends React.Component {
         });
     }
 
+    generateProvincePopoverStatement(value, type) {
+        let statement = 'Citizens of this province have a ' + type + ' priority for ';
+        for (let i = 0; i < value.length; i++) {
+            statement += value[i];
+            if (value.length === 1) {
+                statement += '.';
+            } else if (i === 0 && value.length === 2) {
+                statement += ' and ';
+            } else if (i < value.length - 1 && value.length > 2) {
+                statement += ', ';
+            } else {
+                statement += '.';
+            }
+        }
+        return statement;
+    }
+
     determine_overlay_content(selected_province) {
         const high_value = [];
         const low_value = [];
@@ -580,46 +132,39 @@ export class CampaignView extends React.Component {
         if (selected_province !== '' && selected_province !== null) {
             Object.keys(averages).forEach((trait) => {
                 if (averages[trait] <= 2.5) {
-                    low_value.push(trait.toLowerCase());
+                    low_value.push(trait);
                 } else if (averages[trait] >= 3.5) {
-                    high_value.push(trait.toLowerCase());
+                    high_value.push(trait);
                 }
             });
             if (high_value.length === 0 && low_value.length === 0) {
                 return 'Citizens of this province are equally concerned about all of the issues.';
             }
-            const low_priority_description = this.generate_overlay_description_text('low',
-                low_value);
-            const high_priority_description = this.generate_overlay_description_text('high',
-                high_value);
-            if (high_value.length === 0) {
-                return low_priority_description;
+            let high_text;
+            if (high_value.length !== 0) {
+                high_text = generateOverlayText(
+                    high_value,
+                    'high',
+                );
             }
-            if (low_value.length === 0) {
-                return high_priority_description;
+
+            let low_text;
+            if (low_value.length !== 0) {
+                low_text = generateOverlayText(
+                    low_value,
+                    'low',
+                );
             }
-            return high_priority_description + ' ' + low_priority_description;
+
+            if (!high_text) {
+                return low_text;
+            }
+
+            return low_text
+                ? (<div>{high_text}<br></br>{low_text}</div>)
+                : high_text;
         }
         return '';
-    }
-
-    generate_overlay_description_text(high_or_low, values) {
-        let return_text = 'Citizens of this province (on average) have a ' + high_or_low
-            + ' priority for ';
-        for (let i = 0; i < values.length; i++) {
-            return_text += values[i];
-            if (i === values.length - 1) {
-                return_text += '.';
-            } else if (i === values.length - 2) {
-                if (values.length !== 2) {
-                    return_text += ',';
-                }
-                return_text += ' and ';
-            } else {
-                return_text += ', ';
-            }
-        }
-        return return_text;
     }
 
     async fetchPopulation() {
@@ -636,6 +181,7 @@ export class CampaignView extends React.Component {
             });
 
             const populationData = await res.json();
+            console.log(populationData);
             // restructure population data
             const population = {};
             populationData.citizen_list.forEach((citizen) => {
@@ -676,9 +222,7 @@ export class CampaignView extends React.Component {
             });
             const geo_json = await map.json();
             const mapData = project_features_and_create_svg_paths(
-                geo_json,
-                this.map_width,
-                this.map_height,
+                geo_json
             );
             this.setState({
                 mapData: mapData,
@@ -688,10 +232,36 @@ export class CampaignView extends React.Component {
         }
     }
 
-    updatePopulation(newPopulation) {
-        this.setState({
-            populationData: newPopulation,
-        });
+    async fetchHints() {
+        try {
+            const res = await fetch('/api/campaign_hints/', {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                },
+            });
+            const hints = await res.json();
+            this.setState({
+                hints: JSON.parse(JSON.stringify(hints)),
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    /**
+     * When this component is mounted to the DOM, get democracy score data from the server
+     */
+    async componentDidMount() {
+        this.fetchPopulation();
+        this.fetchCountryMap();
+        this.fetchHints();
+    }
+
+    updatePopulation(newCitizenList) {
+        const { populationData } = this.state;
+        populationData.citizen_list = newCitizenList;
+        this.setState({ populationData });
     }
 
     countTotalSupport() {
@@ -705,11 +275,13 @@ export class CampaignView extends React.Component {
     }
 
     handleProvinceMapClick(e, province) {
-        const tagname = e.target.tagName;
-        if (tagname === 'svg' || (tagname === 'path' && province)) {
+        const tagName = e.target.tagName;
+        if (tagName === 'svg' || (tagName === 'path' && province)) {
             this.setState({
                 clickedProvince: province,
-                sampleSize: Math.min(this.state.populationData[province]['citizens'].length, 75),
+                sampleSize: province
+                    ? Math.min(this.state.populationData[province]['citizens'].length, 75)
+                    : 0,
             });
         }
     }
@@ -719,6 +291,7 @@ export class CampaignView extends React.Component {
             countryName: name,
             clickedProvince: '',
             round: 0,
+            hints_count: 0
         },
         () => {
             this.fetchPopulation();
@@ -728,12 +301,24 @@ export class CampaignView extends React.Component {
 
     submitPriorities = () => {
         if (this.state.round < 3) {
-            this.setState({
+            this.changeView({
                 round: this.state.round + 1,
                 view: 'feedback',
             });
         } else {
-            this.setState({ view: 'submitted' });
+            this.changeView({ view: 'submitted' });
+        }
+    };
+
+    displayHint = () => {
+        console.log('HINTS COUNT', this.state.hints_count);
+        if (this.state.hints_count < 3) {
+            alert(this.state.hints[this.state.countryName]['hints'][this.state.hints_count]);
+            this.setState({
+                hints_count: this.state.hints_count + 1,
+            });
+        } else {
+            alert('You have no hints left!');
         }
     };
 
@@ -751,10 +336,23 @@ export class CampaignView extends React.Component {
             }
         });
         const desc = [];
+        // This is for when the citizen is completely one sided about all issues
+        if (pros.length === 0) {
+            desc.push(<div key={1}>
+                I am dissatisfied with the candidate's stance on everything.
+            </div>);
+            return desc;
+        }
+        if (cons.length === 0) {
+            desc.push(<div key={1}>
+                I am completely satisfied with the candidate's stance on everything.
+            </div>);
+            return desc;
+        }
+        const proSentence = 'I am satisfied with the candidate\'s stance on ';
+        const conSentence = 'I believe that the candidate does not give enough priority to ';
         [pros, cons].forEach((issueList, i) => {
-            let sentence = 'I am '
-                + (issueList === cons ? 'not ' : '')
-                + 'satisfied with the candidate\'s stance on ';
+            let sentence = issueList === cons ? conSentence : proSentence;
             issueList.forEach((issue, j) => {
                 let trait = issue.toLowerCase();
                 if (j === issueList.length - 1) {
@@ -772,41 +370,62 @@ export class CampaignView extends React.Component {
         return desc;
     };
 
+    startGame = () => {
+        this.setState({
+            view: 'speechMaker',
+            round: 1,
+            clickedProvince: '',
+        });
+    };
+
     render() {
         if (this.state.view === 'intro') {
-            const description = <>
-                <p>Welcome to the Campaign Game!</p>
-                <p>In this game, you will create a political campaign and try to
-                appeal to the most people in a country.</p>
-                <p>You will have two rounds to set your campaign's priorities and gather
-                survey data from citizens, and then one final chance to set your priorities
-                and see how you do in an election.</p>
-            </>;
             const altText = 'Nelson Mandela voting in the 1994 South African general election.';
+            const campaignIntroDesc = {
+                desc: (<>
+                    <h1>Welcome to the Campaign Game!</h1>
+                    <p>In this game, you will create a political campaign and try to
+                    appeal to the most people in a country.</p>
+                    <p>You will have two rounds to set your campaign's priorities and gather
+                    survey data from citizens, and then one final chance to set your priorities
+                    and see how you do in an election.</p>
+                </>),
+                img: {
+                    imgFilename: 'mandela_voting_in_1994.jpg',
+                    imgAlt: altText,
+                    imgCaption: (<>{altText}</>),
+                },
+            };
             return (
                 <>
+                    <Navbar currentPage='campaign'/>
                     {this.state.showCountrySelector
                         && <CountrySelectorPopup
                             changeCountry={this.changeCountry}
-                            closePopup={() => this.setState(
-                                { showCountrySelector: false, view: 'countryInfo' },
-                            )}
+                            closePopup={(startGame) => {
+                                if (startGame) {
+                                    this.changeView({
+                                        showCountrySelector: false,
+                                        view: 'countryInfo',
+                                    });
+                                } else {
+                                    this.setState(
+                                        { showCountrySelector: false },
+                                    );
+                                }
+                            }}
                         />
                     }
                     <IntroView
-                        desc={description}
                         setView={() => { this.setState({ showCountrySelector: true }); }}
-                        imgFile={'mandela_voting_in_1994.jpg'}
-                        altText={altText}
-                        imgCaption={altText}
+                        introDescriptions={campaignIntroDesc}
+                        buttonStyle='campaign-btn'
+                        currentPage='campaign'
                     />
                 </>
             );
         }
-
-
-
-        if (!(this.state.populationData && this.state.mapData)) {
+        if (!(this.state.populationData && this.state.mapData && this.state.hints)) {
             return (<div>Loading!</div>);
         }
         const {
@@ -816,8 +435,10 @@ export class CampaignView extends React.Component {
         } = this.state;
 
         const aggregateResult = this.countTotalSupport();
-        const overlay_title = clickedProvince === null || clickedProvince === '' ? 'No province'
-            + ' selected' : clickedProvince;
+        roundAggregateData[this.state.round] = aggregateResult;
+        const overlay_title = clickedProvince === null || clickedProvince === '' ? 'Click on'
+            + ' a province' : clickedProvince;
+
         const overlay_content = this.determine_overlay_content(clickedProvince);
 
         const province_info_overlay = (
@@ -831,8 +452,7 @@ export class CampaignView extends React.Component {
 
         const map_svg = (
             <svg
-                height={this.map_height}
-                width={this.map_width}
+                viewBox="-20 -20 875 875"
                 id='content'
                 onClick={(e) => this.handleProvinceMapClick(e, '')}
             >
@@ -840,9 +460,10 @@ export class CampaignView extends React.Component {
                     let countryFill = '#F6F4D2';
                     let width = '1';
                     if (this.state.round > 0
-                        && this.state.populationData[country.name]) {
+                        && this.state.populationData[country.name]
+                        && this.state.view !== 'speechMaker') {
                         const data = this.state.populationData[country.name];
-                        const supports = data['totalSupporters'] / data['citizens'].length > 0.5;
+                        const supports = data['totalSupporters'] / data['citizens'].length >= 0.5;
                         countryFill = supports ? '#B8E39B' : '#F19C79';
                     }
 
@@ -865,81 +486,196 @@ export class CampaignView extends React.Component {
                 })}
             </svg>
         );
+
+        let provinceDesc;
+        if (['speechMaker', 'feedback'].includes(this.state.view)) {
+            provinceDesc = '';
+        } else if (clickedProvince) {
+            provinceDesc = clickedProvince;
+        } else {
+            provinceDesc = countryName;
+        }
+        const windowHeight = document.documentElement.clientHeight;
+        const windowWidth = document.documentElement.clientWidth;
+        let provinceDisplayInfo = <p>{''}</p>;
+        if ((windowHeight < 500 || windowWidth < 500) && this.state.view === 'countryInfo') {
+            provinceDisplayInfo = overlay_content;
+        }
         const campaign_map = (
             <div className='campaign-map'>
-                {clickedProvince
-                    ? <div className='province-info-text'>
-                        <b>{clickedProvince}</b>
-                    </div>
-                    : <div className='province-info-text'>
-                        <b>{countryName}</b>
-                    </div>
-                }
-                {this.state.view === 'countryInfo'
+                <b>{ provinceDesc }</b>
+                <div className='province-popover-info'>
+                    {provinceDisplayInfo}
+                </div>
+                {(['countryInfo', 'feedback', 'speechMaker'].includes(this.state.view)
+                    && (windowHeight >= 500 && windowWidth >= 500))
                     ? <OverlayTrigger
                         trigger="hover"
-                        placement="bottom"
+                        placement='top-end'
                         overlay={province_info_overlay}
                     >{map_svg}
                     </OverlayTrigger>
                     : map_svg
                 }
+                <div className={'campaign-container'}>
+                    <div className={'speech-maker'}>
+                        <div className='hint_button'>
+                            <button
+                                type={'button'}
+                                onClick={this.displayHint}
+                            > Hint </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
 
         if (this.state.view === 'countryInfo') {
+            const infoInstructions = (
+                <>
+                    Your campaign team has compiled some research they did on the needs of the
+                    inhabitants of each province.
+                    <br/>
+                    Click on each province to see what your team
+                    has found out about what issues the citizens prefer to have more priority.
+                    <br/>
+                </>
+            );
+
             return (<div className="row">
-                <div className='map-div col'>
+                <Navbar currentPage='campaign'/>
+                <div className='col-sm-12 col-md-7 d-md-none'>
+                    <div className="d-block d-md-none">
+                        {infoInstructions}
+                    </div>
                     {campaign_map}
                 </div>
-                <div className='col'>
-                    <p>
-                        Your campaign team was able to do some initial polling, but unfortunately
-                        the results only give you a general idea of what people in each province
-                        want. As you submit your proposed campaign ideas, your team will be able to
-                        get more accurate data on how citizens are responding to your campaign's
-                        platform. <b>Click on each province </b> to learn what your initial polling
-                        has revealed about the needs of its inhabitants.
-                    </p>
+                <div className='col-sm-12 col-md-5'>
+                    <div className="d-none d-md-block">
+                        {infoInstructions}
+                    </div>
                     <p>
                         You will be asked to prioritize the following issues:
                     </p>
-                    <ul>
+                    <ul style={{ marginBottom: '30px' }}>
                         {this.state.topicNames.map((topic, i) => <li key={i}>{topic}</li>)}
                     </ul>
-
-                    <button onClick={() => this.setState({ view: 'speechMaker', round: 1 })}>
-                    I am ready to set my campaign's priorities!
+                    <button
+                        className='campaign-btn d-none d-md-block'
+                        onClick={this.startGame}
+                        style={{ textAlign: 'center' }}
+                    >
+                        I am ready to set my campaign's priorities!
                     </button>
+                    <button
+                        className='campaign-btn d-block d-md-none w-100'
+                        onClick={this.startGame}
+                    >
+                        <div style={{ textAlign: 'center' }}>
+                            I am ready to set my campaign's priorities!
+                        </div>
+                    </button>
+                </div>
+                <div className='col-sm-12 col-md-7 d-none d-md-block'>
+                    <p className="d-block d-md-none">
+                        {infoInstructions}
+                    </p>
+                    {campaign_map}
                 </div>
             </div>);
         }
 
+        let sample = [];
+        let citizenReactions = '';
+        if (this.state.view === 'submitted' && clickedProvince === '') {
+            sample = Object.keys(populationData).reduce((acc, province) => {
+                return acc.concat(populationData[province].citizens.slice(0, 10));
+            }, []);
+        } else if (clickedProvince) {
+            sample = populationData[clickedProvince]['citizens'].slice(0, 100);
+        }
+        citizenReactions = sample.map((citizen, k) => (
+            <Citizen
+                key={k}
+                data={citizen}
+                title={`Citizen of ${citizen['province']}`}
+                generateDescription={this.generateDescription}
+            />
+        ));
+
+        const feedbackTable = (<div className='feedback-pop'>
+            <table border="1" className={'resultTable'}>
+                <tbody>
+                    <tr>
+                        <th>Service</th>
+                        <th>Percentage of Sample Satisfied</th>
+                    </tr>
+                    {this.state.topicNames.map((topic, k) => {
+                        const numSatisfied = sample.reduce((acc, citizen) => {
+                            if (citizen.traits[topic]
+                                <= this.state.speechProposal[topic]) {
+                                return acc + 1;
+                            }
+                            return acc;
+                        }, 0);
+                        const pctSatisfied = Math.round((numSatisfied
+                            / sample.length) * 100);
+                        return (
+                            <tr key={k}>
+                                <td>{topic}</td>
+                                <td>{pctSatisfied}%</td>
+                            </tr>
+                        );
+                    })}
+                </tbody>
+            </table>
+        </div>);
+
         if (this.state.view === 'submitted') {
             return (
                 <div>
-                    <p className={'resultHeader'}>
-                        Final Results for {countryName}
-                    </p>
+                    <Navbar currentPage='campaign'/>
                     <Results
                         provinceData={populationData}
                         countryData={aggregateResult}
                         countryName={countryName}
                         mapData={this.state.mapData}
                         generateDescription={this.generateDescription}
+                        map={campaign_map}
+                        clickedProvince={this.state.clickedProvince}
+                        feedbackTable={feedbackTable}
+                        citizenReactions={citizenReactions}
                     />
-                    <button
-                        className='campaign-btn'
-                        onClick={() => this.setState({ showCountrySelector: true })}
-                    >
-                        Try again or switch countries
-                    </button>
+                    <div className="retry-button d-none d-lg-flex">
+                        <button
+                            className='campaign-btn'
+                            onClick={() => this.setState({ showCountrySelector: true })}
+                        >
+                            Try again or switch countries
+                        </button>
+                    </div>
+                    <div className="retry-button d-flex d-lg-none">
+                        <button
+                            className='campaign-btn w-100'
+                            onClick={() => this.setState({ showCountrySelector: true })}
+                        >
+                            Try again or switch countries
+                        </button>
+                    </div>
                     {this.state.showCountrySelector
                         && <CountrySelectorPopup
                             changeCountry={this.changeCountry}
-                            closePopup={() => this.setState(
-                                { showCountrySelector: false, view: 'countryInfo' },
-                            )}
+                            closePopup={(startGame) => {
+                                if (startGame) {
+                                    this.changeView(
+                                        { showCountrySelector: false, view: 'countryInfo' },
+                                    );
+                                } else {
+                                    this.setState(
+                                        { showCountrySelector: false },
+                                    );
+                                }
+                            }}
                         />
                     }
                 </div>
@@ -948,15 +684,19 @@ export class CampaignView extends React.Component {
 
         if (this.state.view === 'feedback') {
             return (
-                <div className={'campaign-container'}>
+                <div>
+                    <Navbar currentPage='campaign'/>
                     <Feedback
                         clickedProvince={clickedProvince}
                         round={this.state.round}
                         generateDescription={this.generateDescription}
-                        results={populationData}
-                        nextRound={() => this.setState({ view: 'speechMaker' })}
+                        nextRound={() => this.changeView({ view: 'speechMaker' })}
+                        topicNames={this.state.topicNames}
+                        speechProposal={this.state.speechProposal}
+                        campaignMap={campaign_map}
+                        feedbackTable={feedbackTable}
+                        citizenReactions={citizenReactions}
                     />
-                    {campaign_map}
                 </div>
             );
         }
@@ -964,15 +704,18 @@ export class CampaignView extends React.Component {
         if (this.state.view === 'speechMaker') {
             return (
                 <div className='speech-maker'>
+                    <Navbar currentPage='campaign'/>
                     <Speech
                         population={populationData}
                         countryName={countryName}
                         updatePopulation={this.updatePopulation}
                         submitPriorities={this.submitPriorities}
-                        speechProposal={this.state.speechProposal}
+                        rawSpeechProposal={this.state.speechProposal}
                         topicNames={this.state.topicNames}
                         canReset={this.state.round === 1}
                         round={this.state.round}
+                        campaign_map={campaign_map}
+                        roundAggregateData={roundAggregateData}
                     />
                 </div>
             );
